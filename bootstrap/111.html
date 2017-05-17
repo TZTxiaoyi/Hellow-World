@@ -17,6 +17,11 @@
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<style type="text/css">
+		body{
+			margin:0px;
+			padding:0px;
+			background-color:#FFFFFF;
+		}
 		button{
 			width:100px;
 			height:40px;
@@ -26,7 +31,7 @@
 			position:absolute;
 			top:0px;
 			left:0px;
-			width:1200px;
+			width:1300px;
 			height:60px;
 			background-color:#CCCCCC;
 		}
@@ -52,11 +57,21 @@
 			float:left;
 			width:110;
 			height:200;
-			margin-left:20px;
-			margin-top:20px;
+			margin-left:30px;
+			margin-top:30px;
 
 		}
-
+		h1{
+			margin-left:30px;
+			color:green;
+			
+		}
+		h2{
+			margin-left:30px;
+			color:yellow;
+			float:right;
+		}
+		
 	</style>
   </head>
   <body>
@@ -64,9 +79,14 @@
    
 <div class="container-fluid">
   <div class="row">
+  <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <!--頭部-->
   <div id="zbtap">
 	<h1 class="glyphicon glyphicon-home"></h1>
+	<h1 class="glyphicon glyphicon-map-marker">113</h1>
+	<h1 class="glyphicon glyphicon-bell">呼叫員工</h1>
+	<h2 class="glyphicon glyphicon-cutlery">已選3</h2>
+	<h2 class="glyphicon glyphicon-folder-open">落單記錄</h2>
   </div>
   <!--添加桌號-->
 	<div class="input-group input-group-lg" id="zbnum">
@@ -85,53 +105,54 @@
 	</div>
 <!--添加圖片-->
 	<div id ="zbimage">
-		<div id="zb1"><img src="image/1.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+		<div id="zb1"><img src="image/1.jpg"  class="img-circle">
+			<p><input type="checkbox" name="hobby"></p>
+			
 		</div>
 		<div id="zb1"><img src="image/2.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/3.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/4.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/5.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/6.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/7.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/8.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/9.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/10.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/11.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/12.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/1.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/2.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/3.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 		<div id="zb1"><img src="image/4.jpg" alt="..." class="img-circle">
-			<input type="checkbox" name="hobby">
+			<p><input type="checkbox" name="hobby"></p>
 		</div>
 
 
@@ -139,6 +160,34 @@
 
 
   </div>
+			<nav class="navbar-button navbar-fixed-bottom">
+					<button type="button" class="btn btn-lg btn-info col-md-offset-10" data-toggle="modal" data-target="#myMenu">我点的菜</button>
+				</nav>
+			
+			<div class="modal fade" id="myMenu"> <!-- modal把div的内容识别为模态框 fade模态框切换时内容淡入淡-->
+				<div class="modal-dialog">
+					<div class="modal-content"><!-- 模态框居中显示-->
+						<div class="modal-header"> <!-- 模态框标题-->
+							<button type="button" class="close"			data-dismiss=modal>×
+							</button>
+							<h4 class="modal-title" id="MyMenuLabel">		我点的菜
+							</h4>
+						</div>
+						<div class="modal-body"> <!-- 模态框显示的主要内容-->
+							已点的菜主体
+						</div>
+						
+						<div class="modal-footer"> <!-- 模态框下的关闭和保存按钮--> 
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								关闭
+							</button>
+							<button type="button" class="btn btn-danger">
+								立刻下单
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
