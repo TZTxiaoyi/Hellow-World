@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<script src="jquery/jquery-2.1.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<style>
+		#head{
+			height:50px;
+			line-height:50px;
+			font-size:20px;
+			background-color: #FFFFCC;
+		}
+		#left-subject{
+			max-height:700px;
+			background-color: #66ffcc;
+		}
+		#right-subject{
+			height:700px;
+			background-color: #66ccff;
+		}
+		#menu-height{
+			height:500px;
+			
+		}
+		#menu-within-height{
+			height:100px;
+			width:150px;
+			
+		}
+		#classify{
+			height:100px;
+			font-size:15px;
+			background-color: #FFCC00;
+		}
+		#classify-css{
+			border:2px;
+			height:40px;
+			line-height:50px;
+			font-size:20px;
+		}
+
+	</style>
+ </head>
+
+ <BODY>
+
+  <div class="container-fluid"><!--最外层 -->
+	
+	<div class="row" id="head"><!-- 头部-->
+		<div class="col-md-3">
+				菜品数量：
+		</div>
+		<div class="col-md-3">
+				桌位：
+		</div>
+		<div class="col-md-3">
+				单号：
+		</div>
+	</div>
+	
+	
+	<div class="row"> <!--主体 -->
+		<div class="col-md-6" id="left-subject"><!--左部主体内容-->
+			已订菜
+			<div class="pre-scrollable">
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+				<p>dfdf</p>
+
+			</div>
+
+		</div>
+
+		<div class="col-md-6" id="right-subject"><!--右部主体内容-->
+			菜品类别
+			
+			<div class="container-fluid" id="classify"><!--菜品分类-->
+				<div class="row">
+					<div class="col-md-3" id="classify-css">
+						热菜
+					</div>
+					<div class="col-md-3" id="classify-css">
+						凉菜
+					</div>
+					<div class="col-md-3" id="classify-css">
+						主食
+					</div>
+					<div class="col-md-3" id="classify-css">
+						饮品
+					</div>
+					<div class="col-md-3" id="classify-css">
+						汤类
+					</div>
+					
+				</div>
+			</div>	
+			
+
+			<div class="container-fluid" ><!-- 菜单-->
+				<div class="row " id="menu-height" >
+					<div class="col-md-3" id="menu-within-height">
+							菜名
+					</div>
+					<div class="col-md-3" id="menu-within-height">
+								菜名
+					</div>
+					<div class="col-md-3" id="menu-within-height">
+								菜名
+					</div>
+					<div class="col-md-3" id="menu-within-height">
+							菜名
+					</div>
+					<div class="col-md-3" id="menu-within-height">
+								菜名
+					</div>
+					<div class="col-md-3" id="menu-within-height">
+							菜名
+					</div>
+					<div class="col-md-3"id="menu-within-height">
+							菜名
+					</div>
+					<div class="col-md-3" id="menu-within-height">
+							菜名
+					</div>
+				</div>
+			</div>
+			<div><!--底部功能模块-->
+				<button type="button" class="btn btn-danger">整单取消</button>
+
+				<button type="button" class="btn btn-primary">取消菜品</button>
+
+				<button type="button" class="btn btn-info">备注</button>
+
+				<button type="button" class="btn btn-success">传菜</button>
+
+				<button type="button" class="btn btn-warning">催菜</button>
+
+				<button type="button" class="btn btn-success">电子结账</button>
+			</div>
+
+		</div>
+
+	</div>
+  </div>
+
+ </BODY>
+</HTML>
