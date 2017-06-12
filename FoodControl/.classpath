@@ -5,6 +5,10 @@
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="G:/JAVA/JavaJar/sqljdbc.jar"/>
+=======
+	<classpathentry kind="lib" path="D:/jar/sqljdbc.jar"/>
+>>>>>>> 49ad302c02dc4936214fa45520d8f580baa351f6
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
