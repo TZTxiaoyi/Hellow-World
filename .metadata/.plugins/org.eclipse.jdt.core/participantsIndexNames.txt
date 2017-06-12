@@ -1,3 +1,0 @@
-INDEX VERSION 1.126
-G:\NO9\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3061514561.index
-\FoodControl\src
