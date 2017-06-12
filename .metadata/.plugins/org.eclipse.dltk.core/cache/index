@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<cache:CacheIndex xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:cache="http://eclipse.org/dltk/cache_model" environment="org.eclipse.dltk.core.environment.localEnvironment">
+  <entries path="G:/NO9/FoodControl/WebRoot/bootstrap/jquery/jquery-2.1.3.js" timestamp="1497227863863" lastAccessTime="1497228865454"/>
+  <entries path="G:/NO9/FoodControl/WebRoot/bootstrap/jquery/jquery-2.1.3.min.js" timestamp="1497227863864" lastAccessTime="1497228865741"/>
+  <entries path="G:/NO9/FoodControl/WebRoot/bootstrap/jquery/js/jquery-1.9.1.js" timestamp="1497227864178" lastAccessTime="1497228867879"/>
+  <entries path="G:/NO9/FoodControl/WebRoot/bootstrap/jquery/js/jquery-ui-1.10.3.custom.js" timestamp="1497227864182" lastAccessTime="1497228868130"/>
+  <entries path="G:/NO9/FoodControl/WebRoot/bootstrap/jquery/js/jquery-ui-1.10.3.custom.min.js" timestamp="1497227864184" lastAccessTime="1497228868390"/>
+  <entries path="G:/NO9/FoodControl/WebRoot/bootstrap/js/bootstrap.js" timestamp="1497227864185" lastAccessTime="1497228868926"/>
+  <entries path="G:/NO9/FoodControl/WebRoot/bootstrap/js/bootstrap.min.js" timestamp="1497227864185" lastAccessTime="1497228869052"/>
+  <entries path="G:/NO9/FoodControl/WebRoot/bootstrap/js/npm.js" timestamp="1497227864186" lastAccessTime="1497228869169"/>
+</cache:CacheIndex>
