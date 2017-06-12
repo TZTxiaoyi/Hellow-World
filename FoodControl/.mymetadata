@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="FoodControl"
+  id="myeclipse.1497227421709"
+  context-root="/FoodControl"
+  j2ee-spec="5.0"
+  archive="FoodControl.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
