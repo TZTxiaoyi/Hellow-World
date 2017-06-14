@@ -17,13 +17,14 @@ create table codetable
 id		enterId
 账号 	account	
 密码 	pwd
-
+账号状态	enterState 详见码表
 */
 create table staffEnter
 (
 	enterId int identity(1,1)primary key,
 	account varchar(30) unique,
-	pwd varchar(20)
+	pwd varchar(20),
+	enterState int 
 )
 
 /*
@@ -224,7 +225,7 @@ create table orders_vegetable
 /*
 13建议表：
 字段		类型
-id			suggestId
+退单id			suggestId
 订单号		ordersId 外键 订单表（订单ID ）
 桌位id		deskId，外键 桌位表（桌位id）
 建议信息 	suggest
