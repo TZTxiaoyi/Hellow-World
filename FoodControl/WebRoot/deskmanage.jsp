@@ -21,7 +21,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </head>
-  
+  <!-- 
+  	桌台页面
+   -->
   <body>
 <div class="panel admin-panel">
   <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 桌台信息</strong></div>
@@ -32,7 +34,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      <ul class="search">
 	        <li>
 	          <button type="button"  class="button border-green" id="checkall"><span class="icon-check"></span> 全选</button>       
-	          <a class="button border-yellow" href=""><span class="icon-plus-square-o"></span> 添加桌台</a>
+	          
+	          
+	          <a type="button" class="button border-main" data-toggle="modal" data-target="#myModal">
+	          			<span class="icon-edit"></span>
+	          		修改</a>
+	          
+	          <a class="button border-yellow" href="" data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span> 添加桌台</a>
+         		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+						  </div>		 
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save changes</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
 	        </li>
 	        <li>
   				<input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />

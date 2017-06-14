@@ -5,9 +5,5 @@
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="D:/朱彬java/sqljdbc.jar"/>
-=======
->>>>>>> 8a610c6514fdd1364cb12c4576c68b34438141e6
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

@@ -15,9 +15,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="css/pintuer.css">
     <link rel="stylesheet" href="css/admin.css">
     <script src="js/jquery.js"></script>
-    <script src="js/pintuer.js"></script>  
+    <script src="js/pintuer.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"></link>
+	<script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
 </head>
-  
+  <!-- 
+  	员工信息页面
+   -->
   <body>
 <div class="panel admin-panel">
   <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 员工信息</strong></div>
@@ -29,14 +34,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <li>
 	          <button type="button"  class="button border-green" id="checkall"><span class="icon-check"></span> 全选</button>
 	          <button type="submit" class="button border-red"><span class="icon-trash-o"></span> 批量删除</button>
-	          <a class="button border-yellow" href=""><span class="icon-plus-square-o"></span> 添加员工</a>
+	          <!-- 
+	          	添加员工按钮
+	           -->
+	          <a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span> 添加员工</a>
+         		<!-- 
+         			添加员工模态框
+         		 -->
+         
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">员工信息更改</h4>
+							</div>
+							<!-- 
+								添加员工的输入框 ----form表单
+							 -->
+							<div class="modal-body1">
+								<form action="" method="post">
+									姓	名：<input type="text" name="name"><br/>
+									角	色：<input type="text" name="parts"><br/>
+									电	话：<input type="text" name="phone"><br/>
+									性	别：<input type="text" name="sex"><br/>
+									年	龄：<input type="text" name="age"><br/>
+									地	址：<input type="text" name="adress"><br/>
+									就职时间：<input type="text" name="jointime"><br/>
+									负责桌台：<input type="text" name="resdesk"><br/>									
+								</form>
+							</div>
+							<div class="modal-footer">
+								<!-- 
+									关闭模态框按钮
+								 -->
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<!-- 
+									保存模态框按钮   --- 可以此按钮跳转到一个servlet执行SQL语句，插入数据到数据库
+								 -->
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+					   </div>
+					</div>
+				</div>
 	        </li>
+	        <!-- 
+	        	搜索员工信息框
+	         -->
 	        <li>
 	        	<input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
           		<a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a></li>
 	        </li>
 	      </ul>
 	    </div>
+	    <!-- 
+	    	查询出来的员工信息生成的table
+	     -->
 	    <table class="table table-hover text-center">
 	      <tr>
 	        <th width="120">姓名</th>
