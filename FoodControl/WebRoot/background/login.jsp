@@ -14,7 +14,9 @@
     <script src="js/jquery.js"></script>
     <script src="js/pintuer.js"></script>  
 </head>
-  
+						  <!-- 
+						  	后台登录界面
+						   -->
   <body>
 <div class="bg"></div>
 <div class="container">

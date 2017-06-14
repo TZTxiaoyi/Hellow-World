@@ -26,6 +26,10 @@ create table staffEnter
 	pwd varchar(20),
 	enterState int 
 )
+use FoodControl
+go
+insert into staffEnter values(201706,1314)
+
 
 /*
 顾客账号密码表		
@@ -40,6 +44,7 @@ create table  customerEnter
 	account varchar(30) unique,
 	pwd varchar(20)
 )
+
 
 /*
 2角色表：
