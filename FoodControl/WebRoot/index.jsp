@@ -2,6 +2,9 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+<!-- 
+	后台主页面
+ -->
   <head>
     <meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -33,7 +36,7 @@
   <ul style="display:block">
     <li><a href="info.jsp" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
     <li><a href="pass.jsp" target="right"><span class="icon-caret-right"></span>菜品管理</a></li>
-    <li><a href="page.jsp" target="right"><span class="icon-caret-right"></span>桌台管理</a></li>  
+    <li><a href="page.jsp" target="right" id="tableAdmin"><span class="icon-caret-right"></span>桌台管理</a></li>  
     <li><a href="adv.jsp" target="right"><span class="icon-caret-right"></span>财务管理</a></li>   
     <li><a href="book.jsp" target="right"><span class="icon-caret-right"></span>留言管理</a></li>     
     <li><a href="column.jsp" target="right"><span class="icon-caret-right"></span>退单详情</a></li>
@@ -57,6 +60,25 @@ $(function(){
 		$(this).addClass("on");
   })
 });
+
+		$(function(){
+		
+			$("#tableAdmin").click(function(){
+			alert(1);
+				$.ajax({
+					url:"SxmTable_TableAdmin.action",
+					type:"post",
+					data:{},
+					success:function(data){
+					alert(5555);
+					 var json=JSON.parse(data);
+						if(josn==1){
+							alert(666);
+						}
+					},
+				});
+			});
+		})
 </script>
 <ul class="bread">
   <li><a href="{:U('Index/info')}" target="right" class="icon-home"> 首页</a></li>
