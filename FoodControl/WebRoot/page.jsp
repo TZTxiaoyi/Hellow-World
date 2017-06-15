@@ -6,7 +6,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-
 <head>
 	<!-- 
 		后台桌位详情页面
@@ -22,11 +21,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/jquery.js"></script>
 	<script src="js/pintuer.js"></script>
 	
-	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 		type="text/css"></link>
 	<script type="text/javascript"
-		src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
-	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+		src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 	
 	<style>
 		#modalform input {
@@ -69,7 +68,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</li>
 							</li>
 						</ul>
-
 					</div>
 					<table class="table table-hover text-center">
 						<tr>
@@ -151,7 +149,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="text-center margin-big padding-big-top">
 							<h1>桌位详细信息</h1>
 						</div>
-						 <form action="../SxmTable_appendTable.action"method="post" id="modalform"  onsubmit="return show()">
+						 <form action="SxmTable_appendTable.action"method="post" id="modalform"  onsubmit="return show()">
 					    	<div>
 					    		<span>桌位人数 </span><input type="text" name="st.personNum"/>
 					    	</div>
@@ -209,9 +207,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				添加桌子名字失焦时检测是否已存在改桌名的函数
 			*/
 			$("#tableName").blur(function(){
-				alert(1);
+
 				$.ajax({
-					url:"../SxmTable_equalTable.action",
+					url:"SxmTable_equalTable.action",
 					type:"post",
 					data:{stname:$(this).val()},
 					success:function(data){
