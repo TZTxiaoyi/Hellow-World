@@ -1,13 +1,15 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<base href="<%=basePath%>">
+	<!-- 前台主页面 -->
 
 <title>My JSP 'Home.jsp' starting page</title>
 
@@ -15,18 +17,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<link rel="stylesheet" type="text/css" href="styles.css">
 			-->
 
-
-
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script src="js/pintuer.js"></script>
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
-	type="text/css"></link>
-<script type="text/javascript"
-	src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
-
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-
+	
+	
+	
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script src="js/pintuer.js"></script>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
+		type="text/css"></link>
+	<script type="text/javascript"
+		src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
+	
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	
 
 
 	<style>

@@ -3,6 +3,9 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+<!-- 
+	后台主页面
+ -->
   <head>
     <meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -34,9 +37,18 @@
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
   <h2><span class="icon-user"></span>员工管理</h2>
   <ul style="display:block">
+<<<<<<< HEAD:FoodControl/WebRoot/index.jsp
+    <li><a href="info.jsp" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
+    <li><a href="pass.jsp" target="right"><span class="icon-caret-right"></span>菜品管理</a></li>
+    <li><a href="page.jsp" target="right" id="tableAdmin"><span class="icon-caret-right"></span>桌台管理</a></li>  
+    <li><a href="adv.jsp" target="right"><span class="icon-caret-right"></span>财务管理</a></li>   
+    <li><a href="book.jsp" target="right"><span class="icon-caret-right"></span>留言管理</a></li>     
+    <li><a href="column.jsp" target="right"><span class="icon-caret-right"></span>退单详情</a></li>
+=======
     <li><a href="employee.jsp" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
     <li><a href="employeeId.jsp" target="right"><span class="icon-caret-right"></span>员工账号</a></li>
     <li><a href="employeePower.jsp" target="right"><span class="icon-caret-right"></span>员工权限</a></li>                     
+>>>>>>> 0d4bb31bebba6a396efb64b6fc0b494502e7b6ef:FoodControl/WebRoot/background/index.jsp
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>餐厅管理</h2>
   <ul>
@@ -67,6 +79,25 @@ $(function(){
 		$(this).addClass("on");
   })
 });
+
+		$(function(){
+		
+			$("#tableAdmin").click(function(){
+			alert(1);
+				$.ajax({
+					url:"SxmTable_TableAdmin.action",
+					type:"post",
+					data:{},
+					success:function(data){
+					alert(5555);
+					 var json=JSON.parse(data);
+						if(josn==1){
+							alert(666);
+						}
+					},
+				});
+			});
+		})
 </script>
 <ul class="bread">
   <li><a href="{:U('Index/employee')}" target="right" class="icon-home"> 首页</a></li>
