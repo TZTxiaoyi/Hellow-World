@@ -62,7 +62,7 @@ create table part
 地址		varchar(20)，
 入职时间	accession	
 角色id		partId	参照角色表
-账号		enterID 
+账号		enterID		未建
 */
 create table staffInfo
 (
@@ -75,6 +75,7 @@ create table staffInfo
 	adress varchar(100),
 	accession datetime,
 	partId int foreign key references staffEnter(enterId )
+	
 )
 
 

@@ -33,9 +33,10 @@ public class ConPool {
 	 * @throws
 	 */
 	private void setcon(){
+		
 		dataScource = new BasicDataSource();
 		dataScource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		dataScource.setUrl("jdbc:sqlserver://localhost:1433; DatabaseName= Book");
+		dataScource.setUrl("jdbc:sqlserver://localhost:1433; DatabaseName= FoodControl");
 		dataScource.setUsername("sa");
 		dataScource.setPassword("123456");
 	}
