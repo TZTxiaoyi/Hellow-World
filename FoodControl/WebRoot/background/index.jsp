@@ -1,3 +1,4 @@
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -17,9 +18,11 @@
     <link rel="stylesheet" href="css/pintuer.css">
     <link rel="stylesheet" href="css/admin.css">
     
-	<script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
   </head>
-  
+														  <!-- 
+														  	后台主页面
+														   -->
  <body style="background-color:#f2f9fd;">
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
@@ -32,21 +35,29 @@
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
-  <h2><span class="icon-user"></span>基本设置</h2>
+  <h2><span class="icon-user"></span>员工管理</h2>
   <ul style="display:block">
-    <li><a href="info.jsp" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
-    <li><a href="pass.jsp" target="right"><span class="icon-caret-right"></span>菜品管理</a></li>
-    <li><a href="page.jsp" target="right" id="tableAdmin"><span class="icon-caret-right"></span>桌台管理</a></li>  
-    <li><a href="adv.jsp" target="right"><span class="icon-caret-right"></span>财务管理</a></li>   
-    <li><a href="book.jsp" target="right"><span class="icon-caret-right"></span>留言管理</a></li>     
-    <li><a href="column.jsp" target="right"><span class="icon-caret-right"></span>退单详情</a></li>
+  <li><a href="employee.jsp" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
+    <li><a href="employeeId.jsp" target="right"><span class="icon-caret-right"></span>员工账号</a></li>
+    <li><a href="employeePower.jsp" target="right"><span class="icon-caret-right"></span>员工权限</a></li>                     
+
   </ul>   
-  <h2><span class="icon-pencil-square-o"></span>权限管理</h2>
+  <h2><span class="icon-pencil-square-o"></span>餐厅管理</h2>
   <ul>
-    <li><a href="list.jsp" target="right"><span class="icon-caret-right"></span>员工账号</a></li>
-    <li><a href="add.jsp" target="right"><span class="icon-caret-right"></span>员工权限</a></li>
+  	<li><a href="deskmanage.jsp" target="right"><span class="icon-caret-right"></span>桌台管理</a></li>
+  	<li><a href="dishemanage.jsp" target="right"><span class="icon-caret-right"></span>菜品管理</a></li>    
     <li><a href="cate.jsp" target="right"><span class="icon-caret-right"></span>分类管理</a></li>        
-  </ul>  
+  </ul>
+  <h2><span class="icon-pencil-square-o"></span>财务管理</h2>
+  <ul>
+    <li><a href="chargeback.jsp" target="right"><span class="icon-caret-right"></span>退单详情</a></li>
+    <li><a href="finance.jsp" target="right"><span class="icon-caret-right"></span>财务管理</a></li>   
+    <li><a href="cate.jsp" target="right"><span class="icon-caret-right"></span>分类管理</a></li>        
+  </ul>
+  <h2><span class="icon-pencil-square-o"></span>其他</h2>
+  <ul>
+  	<li><a href="leaveword.jsp" target="right"><span class="icon-caret-right"></span>留言管理</a></li>      
+  </ul>    
 </div>
 <script type="text/javascript">
 $(function(){
@@ -81,13 +92,13 @@ $(function(){
 		})
 </script>
 <ul class="bread">
-  <li><a href="{:U('Index/info')}" target="right" class="icon-home"> 首页</a></li>
+  <li><a href="{:U('Index/employee')}" target="right" class="icon-home"> 首页</a></li>
   <li><a href="##" id="a_leader_txt">网站信息</a></li>
   
   
 </ul>
 <div class="admin">
-  <iframe scrolling="auto" rameborder="0" src="info.jsp" name="right" width="100%" height="100%"></iframe>
+  <iframe scrolling="auto" rameborder="0" src="employee.jsp" name="right" width="100%" height="100%"></iframe>
 </div>
 <div style="text-align:center;">
 

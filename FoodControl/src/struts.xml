@@ -5,5 +5,8 @@
 		<action	name="tzt_queryveg_*" class="com.achaction.TztQuerVegAction" method="{1}">
 			<result name="querok">/order_vegetable.jsp</result>
 		</action>
+		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
+			<result name="ok">/home.jsp</result>
+		</action>
 	</package>
 </struts>    
