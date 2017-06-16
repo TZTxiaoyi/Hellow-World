@@ -1,3 +1,4 @@
+
 /*
 码表
 序号		id	自增
@@ -62,7 +63,7 @@ create table part
 地址		varchar(20)，
 入职时间	accession	
 角色id		partId	参照角色表
-账号		enterID 
+账号		enterID		未建
 */
 create table staffInfo
 (
@@ -75,6 +76,7 @@ create table staffInfo
 	adress varchar(100),
 	accession datetime,
 	partId int foreign key references staffEnter(enterId )
+	
 )
 
 
@@ -138,8 +140,8 @@ create table kind
 )
 /*
 8菜品表：
-菜品编号 	vegetableId 自增 主键
-菜名 		vegetableName
+菜品编号 	dishId 自增 主键
+菜名 		dishName
 价格 		price
 类别编号 	kindId外键 类别表（类别编号）
 制作时长 	makeTime，
@@ -147,10 +149,10 @@ create table kind
 菜品图		pictureName 图片储存在本地数据库只储存名字
 最大并菜份数		int 
 */
-create table vegetable
+create table dish
 (
-	vegetableId int identity(1,1)primary key,
-	vegetableName varchar(20),
+	dishId int identity(1,1)primary key,
+	dishName varchar(20),
 	price int,
 	kindId int foreign key references kind(kindId),
 	makeTime int,
@@ -212,15 +214,19 @@ create table orders
 /*
 12订单点菜表：
 字段		类型
+id		id	自增
 订单ID		ordersId 外键 订单表（订单ID）
 菜品ID		vegetableId 外键 菜品表（菜品编号 ）
-菜品状态	vegetableStatus 参照码表(1：已上，2：在做，0：未做)		
+菜品状态	vegetableStatus 参照码表(1：已上，2：在做，0：未做)	
+桌号		diskId 外键桌号
 */
-create table orders_vegetable
+create table orders_dish
 (
+	id	int identity(1,1)primary key,
 	ordersId int foreign key references orders(ordersId),
-	vegetableId int foreign key references vegetable(vegetableId),
-	vegetableStatus int foreign key references codetable(id)
+	dishId int foreign key references dish(dishId),
+	dishStatus int foreign key references codetable(id),
+	deskId int  foreign key references desk(deskId),
 )
 /*
 13建议表：

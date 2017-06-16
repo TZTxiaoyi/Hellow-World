@@ -66,6 +66,7 @@ public class DaoFactory {
 			PreparedStatement ps= con.prepareStatement(sql);
 			Setparams(ps, params);
 			flag = ps.executeUpdate();
+			System.out.println(flag);
 			CloseAll(con, ps, null);
 		}catch(Exception e){
 			System.out.println(e.getMessage()+"com.utils.Daofactory.Updata()´íÎó");

@@ -1,0 +1,10 @@
+1.个人类前加姓名简拼
+2.entity实体类包名
+3.achaction	实现action的包名
+4.logic	逻辑类包名
+5.background	后台JSP文件夹名
+6.JSP命名全部使用小写加下划线形式。例：home_login.jsp
+7.Struts中的action路径名要写成跳转的action去掉Action后的全名
+并且使用小写和下划线
+例 action名字为tzthomeaction那么跳转到该Action的路径应为
+TztHome或者tzt_home_*
