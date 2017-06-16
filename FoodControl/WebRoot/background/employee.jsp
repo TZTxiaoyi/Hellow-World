@@ -17,8 +17,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="js/jquery.js"></script>
     <script src="js/pintuer.js"></script>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"></link>
-	<script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
-	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
+	<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+	<!-- 
+		触发点击事件后，先判断是否得到输入框中的值，
+		当有一个输入框中的值为空时，将不执行Ajax语句
+	 -->
+	<script type="text/javascript">
+		$(function(){
+			$("#addem").click(function(){
+				var emid=$("#emid").val();
+				var emname=$("#emname").val();
+				var emsex=$("#emsex").val();
+				var emage=$("#emage").val();
+				var emphone=$("#emphone").val();
+				var emadress=$("#emadress").val();
+				var emjointime=$("#emjointime").val();
+				var empartid=$("#empartid").val();								
+				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empartid){					
+					$.ajax({
+						type:"post",
+						url:"achieve_save.action",
+						data:{"employee.emid":emid,"employee.emname":emname,"employee.emsex":emsex,"employee.emage":emage,
+							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,"employee.empartid":empartid},
+						success:function(data){
+							alert("success");
+						}
+					});
+				}else{
+					alert("添加员工失败");
+				}
+			});
+		});	
+	</script>  
 </head>
   <!-- 
   	员工信息页面
@@ -27,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="panel admin-panel">
   <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 员工信息</strong></div>
  <div>
-	 <form method="post" action="">
+	 
 	  <div class="panel admin-panel">	    
 	    <div class="padding border-bottom">
 	      <ul class="search">
@@ -46,35 +77,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="myModalLabel">员工信息更改</h4>
+								
+								<h4 class="modal-title" id="myModalLabel">添加员工信息</h4>
 							</div>
 							<!-- 
-								添加员工的输入框 ----form表单
+								添加员工信息的输入框 ----
 							 -->
-							<div class="modal-body1">
-								<form action="asda.action" method="post">					
-									编	号：<input type="text" name="employee.emid"><br/>
-									姓	名：<input type="text" name="employee.emname"><br/>
-									性	别：<input type="text" name="employee.emsex"><br/>
-									年	龄：<input type="text" name="employee.emage"><br/>
-									电	话：<input type="text" name="employee.emphone"><br/>
-									角	色：<input type="text" name="employee.empart"><br/>
-									地	址：<input type="text" name="employee.emadress"><br/>
-									就职时间：<input type="text" name="employee.emjointime"><br/>
-									员工账号：<input type="text" name="employee.empartid">	
-											<input type="submit" value="添加"/>								
-								</form>
-							</div>
-							<div class="modal-footer">
+							 
+								<div class="modal-body1">
+													
+									编	号：<input type="text" id="emid" name="employee.emid"><br/>
+									姓	名：<input type="text" id="emname" name="employee.emname"><br/>
+									性	别：<input type="text" id="emsex" name="employee.emsex"><br/>
+									年	龄：<input type="text" id="emage" name="employee.emage"><br/>
+									电	话：<input type="text" id="emphone" name="employee.emphone"><br/> 									
+									地	址：<input type="text" id="emadress" name="employee.emadress"><br/>
+									就职时间：<input type="text" id="emjointime" name="employee.emjointime"><br/>
+									员工账号：<input type="text" id="empartid" name="employee.empartid">	<br/>
+										     
+								
+								</div>
+								<div class="modal-footer">
 								<!-- 
 									关闭模态框按钮
 								 -->
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
 								<!-- 
-									保存模态框按钮   --- 可以此按钮跳转到一个servlet执行SQL语句，插入数据到数据库
+									点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
 								 -->
-								<button type="button" class="btn btn-primary">Save changes</button>
+								 <input type="submit" class="btn btn-primary"  data-dismiss="modal" value="添加" id="addem"/>	
+								
+							
 							</div>
 					   </div>
 					</div>
@@ -84,6 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	搜索员工信息框
 	         -->
 	        <li>
+	        
 	        	<input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
           		<a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a></li>
 	        </li>
@@ -153,7 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      </tr>
 	    </table>
 	  </div>
-	</form>
+	
 </div>
 <script type="text/javascript">
 
