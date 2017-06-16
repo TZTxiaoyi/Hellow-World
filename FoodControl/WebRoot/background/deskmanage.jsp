@@ -78,7 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<th>桌台名</th>
 							<th>操作</th>
 						</tr>
-						<tr>
+						<tr id="modall-table">
 							<td><input type="checkbox" name="id[]" value="1" />101</td>
 							<td>娜美</td>
 							<td>SSR</td>
@@ -97,7 +97,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal"
 														aria-label="Close">
-														<span aria-hidden="true">&times;</span>
 													</button>
 													<h4 class="modal-title" id="myModalLabel">Modal title</h4>
 												</div>
@@ -222,6 +221,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					},
 				});
 			});
+		$(function(){
+			$.ajax({
+				url:"SxmTable_TableAdmin.action",
+				type:"post",
+				data:{map:null},
+				success:function(data){
+					 var json=JSON.parse(data);
+						$.each(json,function(index,value){
+								
+								var dd="<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td></tr>";
+								$("#modall-table").prepend(dd);
+								
+							});
+					},
+				});
+			
+		})
+		
 		</script>
 	</div>
 </body>

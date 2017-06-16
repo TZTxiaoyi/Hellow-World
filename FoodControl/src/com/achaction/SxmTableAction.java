@@ -2,6 +2,7 @@ package com.achaction;
 
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +15,7 @@ public class SxmTableAction {
 	SxmTable st;
 	String stname;
 	SxmTableSql sts=new SxmTableSql();
+	private Object request;
 	public String getStname() {
 		return stname;
 	}
@@ -64,12 +66,13 @@ public class SxmTableAction {
 		
 	}
 	public void TableAdmin(){
-		System.out.println("------------");
-		int flag=sts.selTableName(null);
-		System.out.println(flag);
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		Map map=sts.selTableAdmin(null);
+		System.out.println(map);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		try {
-			hsr.getWriter().print(flag);
+			hsr.getWriter().print(map);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
