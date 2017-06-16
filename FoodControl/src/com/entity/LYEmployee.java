@@ -1,12 +1,15 @@
-package com.insertemploy;
-
-public class Employee {	
+package com.entity;
+/**
+ * 
+ * @author Administrator
+ *
+ */
+public class LYEmployee {	
 	private int emid;
 	private String emname;
 	private int emsex;
 	private int emage;
-	private int emphone;
-	private String empart;		
+	private String emphone;			
 	private String emadress;
 	private String emjointime;
 	private int empartid;
@@ -34,17 +37,11 @@ public class Employee {
 	public void setEmage(int emage) {
 		this.emage = emage;
 	}
-	public int getEmphone() {
+	public String getEmphone() {
 		return emphone;
 	}
-	public void setEmphone(int emphone) {
+	public void setEmphone(String emphone) {
 		this.emphone = emphone;
-	}
-	public String getEmpart() {
-		return empart;
-	}
-	public void setEmpart(String empart) {
-		this.empart = empart;
 	}
 	public String getEmadress() {
 		return emadress;
