@@ -278,6 +278,3 @@ create table income
 	ordersum int,
 	total int
 )
-
-
-
