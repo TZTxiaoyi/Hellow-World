@@ -28,7 +28,11 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+	
+	<!--------------------------------自定义css样式----------------------------->
+		<style>
+			#modb ul li{margin-top:2%;list-style-type:none;}
+		</style>
 </head>
 
 <body>
@@ -41,9 +45,16 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-					<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+					<h4 class="modal-title" id="myModalLabel">添加菜品</h4>
 				</div>
-				<div class="modal-body">在这里添加一些文本</div>
+				<div class="modal-body"id="modb"><!--模态框中菜品添加框 -->
+					<ul>
+						<li>菜品名:<input name="FoodNmae"/></li>
+						<li>价格&nbsp&nbsp&nbsp&nbsp:<input name="FoodNmae"/></li>
+						<li>优先级:<input name="FoodNmae"/></li>
+						<li>口味&nbsp&nbsp&nbsp&nbsp:<input name="FoodNmae"/></li>
+					</ul>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 					</button>
