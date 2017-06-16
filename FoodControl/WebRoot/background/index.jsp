@@ -72,24 +72,7 @@ $(function(){
   })
 });
 
-		$(function(){
 		
-			$("#tableAdmin").click(function(){
-			alert(1);
-				$.ajax({
-					url:"SxmTable_TableAdmin.action",
-					type:"post",
-					data:{},
-					success:function(data){
-					alert(5555);
-					 var json=JSON.parse(data);
-						if(josn==1){
-							alert(666);
-						}
-					},
-				});
-			});
-		})
 </script>
 <ul class="bread">
   <li><a href="{:U('Index/employee')}" target="right" class="icon-home"> 首页</a></li>

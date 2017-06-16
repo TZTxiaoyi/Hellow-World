@@ -1,14 +1,13 @@
 package com.logic;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
 
 import com.daointerface.DaoInterface;
 import com.entity.SxmTable;
-import com.utils.ConPool;
 import com.utils.DaoFactory;
 
 /**
@@ -65,6 +64,7 @@ public class SxmTableSql implements DaoInterface{
 		return flag;
 	}
 	/**
+	 * @return 
 	 * 
 	     * 方法功能说明：  点击桌子管理按钮时查询数据库
 	     * 创建：2017-6-15 by Administrator   
@@ -74,13 +74,25 @@ public class SxmTableSql implements DaoInterface{
 	     * @return void     
 	     * @throws
 	 */
-	public List selTableAdmin(Object obj){
+	public Map selTableAdmin(Object obj){
 		String sql="select d.deskName,d.personNum,s.Name,d.deskState,s.staffId from" +
 				" desk d left outer join desk_staff ds on d.deskId=ds.deskId " +
 				"left join staffInfo s on s.staffId=ds.staffId";
 		List list=DaoFactory.Query(sql);
-		return list;
+		JSONObject json=new JSONObject();
+		for(int i=0;i<list.size();i++){
+			Map map=new HashMap();
+			map.put("df"+i,	list.get(i) );
+			json.accumulateAll(map);
+		}
+		return json;	
 	}
+
+			
+		
+		
+
+
 	/**
 	 * 
 	 * 方法功能说明：   删除桌子
