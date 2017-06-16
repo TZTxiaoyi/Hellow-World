@@ -12,18 +12,21 @@ import com.entity.SxmTable;
 import com.logic.SxmTableSql;
 
 public class SxmTableAction {
+	/**
+	 * 
+	     * 功能说明：  
+	     * 创建：2017-6-15 by Administrator   
+	     * 修改：日期 by songxianmeng
+	     * 修改内容：  
+	     * @参数：       st 实体类桌子
+	     * @参数：       stname 实体类桌子名字
+	     * sts 实例化SxmTableSql
+	     * deskId 实体类桌子id
+	     * @return void     
+	     * @throws
+	 */
 	SxmTable st;
-	String stname;
 	SxmTableSql sts=new SxmTableSql();
-	private Object request;
-	public String getStname() {
-		return stname;
-	}
-
-	public void setStname(String stname) {
-		this.stname = stname;
-	}
-
 	public SxmTable getSt() {
 		return st;
 	}
@@ -42,7 +45,14 @@ public class SxmTableAction {
 	     * @throws
 	 */
 	public void appendTable(){
-		sts.add(st);
+		int state=sts.add(st);
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		try {
+			hsr.getWriter().print(state);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * 
@@ -55,7 +65,7 @@ public class SxmTableAction {
 	     * @throws
 	 */
 	public void equalTable(){
-		int tname=sts.selTableName(stname);
+		int tname=sts.selTableName(st);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		try {
 			hsr.getWriter().print(tname);
@@ -65,12 +75,20 @@ public class SxmTableAction {
 		}
 		
 	}
-	public void TableAdmin(){
-		HttpServletResponse response=ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=UTF-8");
-		Map map=sts.selTableAdmin(null);
-		System.out.println(map);
+	/**
+	 * 
+	     * 方法功能说明：  后台进入桌位管理页面自动加载
+	     * 创建：2017-6-16 by Administrator   
+	     * 修改：日期 by songxianmeng
+	     * 修改内容：  
+	     * @参数：       
+	     * @return void     
+	     * @throws
+	 */
+	public void tableAdmin(){
 		HttpServletResponse hsr=ServletActionContext.getResponse();
+		hsr.setContentType("text/html;charset=UTF-8");
+		Map map=sts.selTableAdmin(null);
 		try {
 			hsr.getWriter().print(map);
 		} catch (IOException e) {
@@ -78,5 +96,16 @@ public class SxmTableAction {
 			e.printStackTrace();
 		}
 		
+	}
+	public void delLineTable(){
+		int tableid=sts.del(st);
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		System.out.println(tableid);
+		try {
+			hsr.getWriter().print(tableid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
