@@ -30,9 +30,7 @@
 					$.each(data,function(index,value){				
 					var dd="<tr>"+"<td>"+value[0]+"</td>"+"<td>"+value[1] +"</td>"+"<td><button class=\"btn btn-danger\" id=\"dynamicbtn\">制作</button></td>"+"</tr>";
 					$("#title").append(dd);
-					});
-					
-					
+					});z
  					}
 
  				});
