@@ -12,4 +12,12 @@
 			<result name="ok">/home.jsp</result>
 		</action>
 	</package>
+	<!-- 
+		有关员工的package
+	 -->
+	<package name="inser" extends="struts-default">
+		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
+			<result name="ok">/a123.jsp</result>
+		</action>
+	</package>
 </struts>    

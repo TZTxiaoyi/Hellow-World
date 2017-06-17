@@ -75,7 +75,9 @@ create table staffInfo
 	phone varchar(11),
 	adress varchar(100),
 	accession datetime,
-	partId int foreign key references staffEnter(enterId )
+	partId int foreign key references part(partId ),
+	endetId		int foreign key references staffEnter(enterId )
+	
 	
 )
 
@@ -278,7 +280,7 @@ create table income
 	ordersum int,
 	total int
 )
-<<<<<<< HEAD
+
 
 /*
 16.创建桌子信息视图
@@ -305,5 +307,3 @@ add constraint desk_unique unique(deskName)
 */
 alter table desk
 alter column deskName varchar(20) not null
-=======
->>>>>>> 1401dd94f1915f4c520eded1723e22e4f4949ffd
