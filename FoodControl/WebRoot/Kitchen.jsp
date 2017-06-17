@@ -96,21 +96,19 @@
 		<!-------------------------------------------------------------------------->
 		<div class="row" id="Cbody">
 			<div class="column" id="col1">
-				<div class="column" id="col1c01">
+		
 				<!-- 左边窗口 -->
-					<iframe scrolling="auto" rameborder="0" src="kitsystem.jsp"
+					<iframe scrolling="auto" rameborder="0" src="background/order_dishMading.jsp"
 						name="left" width="100%" height="100%"></iframe>
 				</div>
-			</div>
+
 			<div class="row" id="col2">
 				<!------------右边窗口-------------->
 				<div><iframe scrolling="auto" rameborder="0" src="background/order_dish.jsp"
 					name="left" width="100%" height="100%"></iframe></div>
 				
 			</div>
-			<div class="row" id="Bbotton">
-			
-			</div>
+	
 		</div>
 
 
