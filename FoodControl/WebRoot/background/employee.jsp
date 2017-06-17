@@ -23,7 +23,53 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		触发点击事件后，先判断是否得到输入框中的值，
 		当有一个输入框中的值为空时，将不执行Ajax语句
 	 -->
-	<script type="text/javascript">
+	<script type="text/javascript">	
+		$(function(){
+			
+		});	
+		$(function(){
+			$("#tableid").on('click',".deskbtn",function(){			
+				var deskbtn=$(this).attr("id");
+				var emhtml = $("#s"+deskbtn).html();
+				$.ajax({
+					url:"achieve_delem.action",
+					type:"post",
+					data:{"employee.emid":emhtml},
+					
+					success:function(data){
+					alert(data);
+						
+					}
+				});
+			});	
+		});
+		
+	$(function(){
+			
+			$.ajax({
+				url:"achieve_selem.action",
+				type:"post",
+				data:{map:null},
+				success:function(data){
+					 var json=JSON.parse(data);
+				 var th="<tr><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>负责桌台</td><td>操作</td></tr>";
+					 $("#trtab").before(th);
+						$.each(json,function(index,value){
+								var emtable=
+								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" />"+value[0]+
+								"</td><td id=\"snum"+value[1]+"\">"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+
+								"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+value[8]+"</td>"+
+								"<td><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\">"+
+								"<span class=\"icon-trash-o\"></span>删除 </button>"+
+								"<a type=\"button\" class=\"button border-main\"data-toggle=\"modal\" id=\"num"+value[1]+"\"0.>"+ 
+								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+								$("#trtab").before(emtable);								
+						});
+					},
+				});
+			
+		});
+		
 		$(function(){
 			$("#addem").click(function(){
 				var emid=$("#emid").val();
@@ -33,13 +79,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var emphone=$("#emphone").val();
 				var emadress=$("#emadress").val();
 				var emjointime=$("#emjointime").val();
-				var empartid=$("#empartid").val();								
-				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empartid){					
+				var empart=$("#empart").val();
+				var ementer=$("#ementer").val();	
+				
+											
+				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empart && ementer){					
 					$.ajax({
 						type:"post",
 						url:"achieve_save.action",
 						data:{"employee.emid":emid,"employee.emname":emname,"employee.emsex":emsex,"employee.emage":emage,
-							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,"employee.empartid":empartid},
+							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,"employee.empart":empart,"employee.ementer":ementer},
 						success:function(data){
 							alert("success");
 						}
@@ -93,7 +142,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									电	话：<input type="text" id="emphone" name="employee.emphone"><br/> 									
 									地	址：<input type="text" id="emadress" name="employee.emadress"><br/>
 									就职时间：<input type="text" id="emjointime" name="employee.emjointime"><br/>
-									员工账号：<input type="text" id="empartid" name="employee.empartid">	<br/>
+									员工角色：<input type="text" id="empart" name="empart"><br>
+									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>
 										     
 								
 								</div>
@@ -126,62 +176,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    <!-- 
 	    	查询出来的员工信息生成的table
 	     -->
-	    <table class="table table-hover text-center">
-	      <tr>
-	        <th width="120">姓名</th>
-	        <th>角色</th>
-	        <th>员工编号</th>       
-	        <th>电话</th>
-	        <th>性别</th>
-	        <th>年龄</th>
-	        <th width="25%">地址</th>
-	         <th width="120">就职时间</th>
-	         <th>负责桌台</th>
-	        <th>操作</th>       
-	      </tr>      
-	        <tr>
-	          <td><input type="checkbox" name="id[]" value="1" />路飞</td>
-	          <td>收银</td>
-	          <td>110</td>
-	          <td>18838972400</td>
-	          <td>男</td>  
-	           <td>15</td>         
-	          <td>海贼王之东海风车村</td>
-	          <td>2016-07-01</td>
-	          <td>1</td>
-	          <td>
-	          	<div class="button-group"> 
-	          		<a class="button border-red" href="javascript:void(0)" onclick="return del(1)">
-	          			<span class="icon-trash-o"></span> 删除
-	          		</a>
-	          		<a type="button" class="button border-main" href="#">
-	          			<span class="icon-edit"></span>
-	          		修改</a> 
-	          	</div>
-	          </td>
-	        </tr>
-	        <tr>
-	          <td><input type="checkbox" name="id[]" value="1" />索隆</td>
-	          <td>收银</td>
-	          <td>111</td>
-	          <td>18838972400</td>
-	          <td>男</td>  
-	          <td>16</td>         
-	          <td>海贼王之东海霜月村</td>
-	          <td>2016-07-01</td>
-	          <td>1</td>
-	          <td>
-	          	<div class="button-group"> 
-	          		<a class="button border-red" href="javascript:void(0)" onclick="return del(1)">
-	          			<span class="icon-trash-o"></span> 
-	          		删除</a>
-	          		<a type="button" class="button border-main" href="#">
-	          			<span class="icon-edit"></span>
-	          		修改</a> 
-	          	</div>
-	          </td>
-	        </tr>	        
-	      <tr>
+	    <table class="table table-hover text-center" id="tableid">
+	     
+	       
+	      <tr id="trtab">
 	        <td colspan="10">
 	        <div class="pagelist"> <a href="">上一页</a> <span class="current">1</span><a href="">2</a><a href="">3</a><a href="">下一页</a><a href="">尾页</a> </div></td>
 	      </tr>
