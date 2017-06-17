@@ -75,7 +75,9 @@ create table staffInfo
 	phone varchar(11),
 	adress varchar(100),
 	accession datetime,
-	partId int foreign key references staffEnter(enterId )
+	partId int foreign key references part(partId ),
+	endetId		int foreign key references staffEnter(enterId )
+	
 	
 )
 

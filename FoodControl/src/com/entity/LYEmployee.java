@@ -2,7 +2,7 @@ package com.entity;
 /**
  * 
  * @author Administrator
- *
+ * 功能：员工的实体类
  */
 public class LYEmployee {	
 	private int emid;
@@ -12,7 +12,22 @@ public class LYEmployee {
 	private String emphone;			
 	private String emadress;
 	private String emjointime;
-	private int empartid;
+	private int empart;
+	private int ementer;
+	
+	public int getEmenter() {
+		return ementer;
+	}
+	public void setEmenter(int ementer) {
+		this.ementer = ementer;
+	}
+	public int getEmpart() {
+		return empart;
+	}
+	public void setEmpart(int empart) {
+		this.empart = empart;
+	}
+	
 	public int getEmid() {
 		return emid;
 	}
@@ -55,10 +70,5 @@ public class LYEmployee {
 	public void setEmjointime(String emjointime) {
 		this.emjointime = emjointime;
 	}
-	public int getEmpartid() {
-		return empartid;
-	}
-	public void setEmpartid(int empartid) {
-		this.empartid = empartid;
-	}	
+	
 }
