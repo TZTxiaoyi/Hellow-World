@@ -60,12 +60,14 @@ public class DaoFactory {
 	 */
 	public static int Updata(String sql, Object[]params){
 		int flag=-1;
+		System.out.println("--------1111------");
 		try{
 			ConPool conpool=new ConPool();
 			Connection con= conpool.getConnection();
 			PreparedStatement ps= con.prepareStatement(sql);
 			Setparams(ps, params);
 			flag = ps.executeUpdate();
+			System.out.println("--------------");
 			System.out.println(flag);
 			CloseAll(con, ps, null);
 		}catch(Exception e){

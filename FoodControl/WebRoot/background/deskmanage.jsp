@@ -42,6 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		#modalform span{
 			font-size:20px;
 		}
+	
 	</style>
 </head>
 
@@ -71,69 +72,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</ul>
 
 					</div>
-					<table class="table table-hover text-center">
-						<tr>
-							<th>桌台编号</th>
-							<th>负责人</th>
-							<th>桌台名</th>
-							<th>操作</th>
-						</tr>
-						<tr id="modall-table">
-							<td><input type="checkbox" name="id[]" value="1" />101</td>
-							<td>娜美</td>
-							<td>SSR</td>
-							<td>
-								<div class="button-group">
-									<a class="button border-red" href="javascript:void(0)"
-										onclick="return del(1)"> <span class="icon-trash-o"></span>
-										删除 </a> <a type="button" class="button border-main"
-										data-toggle="modal" data-target="#myModal"> <span
-										class="icon-edit"></span> 修改</a>
-
-									<div class="modal fade" id="myModal" tabindex="-1"
-										role="dialog" aria-labelledby="myModalLabel">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
-													</button>
-													<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save
-														changes</button>
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-								</div></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="id[]" value="1" />102</td>
-							<td>罗宾</td>
-							<td>SR</td>
-							<td>
-								<div class="button-group">
-									<a class="button border-red" href="javascript:void(0)"
-										onclick="return del(1)"> <span class="icon-trash-o"></span>
-										删除</a> <a type="button" class="button border-main" href="#"> <span
-										class="icon-edit"></span> 修改</a>
-								</div></td>
-						</tr>
-						<tr>
-							<td colspan="4">
-								<div class="pagelist">
+					<table class="table table-hover text-center"  id="tab">
+						
+						
+					</table>
+					<div class="pagelist">
 									<a href="">上一页</a> <span class="current">1</span><a href="">2</a><a
 										href="">3</a><a href="">下一页</a><a href="">尾页</a>
 								</div>
-							</td>
-						</tr>
-					</table>
 				</div>
 			</form>
 		</div>
@@ -150,31 +96,88 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="text-center margin-big padding-big-top">
 							<h1>桌位详细信息</h1>
 						</div>
-						 <form action="../SxmTable_appendTable.action"method="post" id="modalform"  onsubmit="return show()">
+						 <div id="modalform">
 					    	<div>
-					    		<span>桌位人数 </span><input type="text" name="st.personNum"/>
+					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="personNum"/>
 					    	</div>
 					    	<div>
-					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName"/>
+					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"/>
 					    	</div>
 					    	<div>
-					    		<span>桌子状态</span><input  name="st.deskState"/>
+					    		<span>桌子状态</span><input  name="st.deskState" id="deskState"/>
 					    	</div>
 					    	<div>
-								<button type="submit" class="btn btn-warning btn-group-lg">确认添加</button>
+								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
 							</div>
-					    </form>
+					 </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 
+			修改按钮模态框
+		 -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close"></button>
+						<div class="text-center margin-big padding-big-top">
+							<h1>桌位详细信息</h1>
+						</div>
+						<div id="modalform">
+					    	<div>
+					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="personNum"/>
+					    	</div>
+					    	<div>
+					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"/>
+					    	</div>
+					    	<div>
+					    		<span>桌子状态</span><input  name="st.deskState" id="deskState"/>
+					    	</div>
+					    	
+					 </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" >确定更改</button>
+
 					</div>
 				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
+			/*
+				点击删除按钮删除一行数据;
+			*/
+			$("#tab").on('click',".deskbtn",function(){
 			
-			function del(id){
+				var deskbtn=$(this).attr("id");
+				var deskid=$("#desk"+deskbtn).html();
 				if(confirm("您确定要删除吗?")){
-					
+					$.ajax({
+						url:"SxmTable_delLineTable.action",
+						type:"post",
+						data:{"st.deskId":deskid},
+						success:function(data){
+							var json=JSON.parse(data);
+							if(json!=-1){
+								tabonload();
+							}else{
+								alert("删除失败！");
+							}
+						}
+					});
 				}
-			}
+			});
+		/*
+			点击修改按钮时页面自动显示该条数据
+		*/
+		$("#tab").on('click',".alterbtn",function(){
+			var deskal=$(this).attr("id");
+			
+		});
 			
 			$("#checkall").click(function(){ 
 			  $("input[name='id[]']").each(function(){
@@ -185,7 +188,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					  this.checked = true;
 				  }
 			  });
-			})
+			});
 			
 			function DelSelect(){
 				var Checkbox=false;
@@ -202,42 +205,80 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					alert("请选择您要删除的内容!");
 					return false;
 				}
-			}
+			};
 			
 			/*
 				添加桌子名字失焦时检测是否已存在改桌名的函数
 			*/
-			$("#tableName").blur(function(){
-				alert(1);
+			$(".tableName").blur(function(){
 				$.ajax({
 					url:"../SxmTable_equalTable.action",
 					type:"post",
-					data:{stname:$(this).val()},
+					data:{"st.deskName":$(this).val()},
 					success:function(data){
 						var json=JSON.parse(data);
-						if(json==1){
+						if(json!=-1){
 							alert("该桌名已存在！");
 						}
 					},
 				});
 			});
-		$(function(){
+		/*
+			页面加载时自动查询数据库，显示桌台信息
+		*/	
+		$(function(){tabonload();});
+		function tabonload(){
 			$.ajax({
-				url:"SxmTable_TableAdmin.action",
+				url:"SxmTable_tableAdmin.action",
 				type:"post",
 				data:{map:null},
 				success:function(data){
 					 var json=JSON.parse(data);
+					 var th="<tr><td></td><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
+					  $("#tab").html("");
+					 $("#tab").append(th);
 						$.each(json,function(index,value){
-								
-								var dd="<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td></tr>";
-								$("#modall-table").prepend(dd);
+								var dd=
+								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"desknumId"+value[0]+"\">"+value[0]+
+								"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td>"+
+								"<td><a class=\"button border-red deskbtn\"  id=\"numId"+value[0]+"\">"+
+								"<span class=\"icon-trash-o\"></span>删除 </a>"+
+								"<a class=\"button border-main alterbtn\" id=\"asd"+value[0]+"\"data-toggle=\"modal\" data-target=\"#myModal\">"+
+								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+								$("#tab").append(dd);
 								
 							});
 					},
 				});
 			
+		}
+		/*
+			添加桌子信息
+		*/
+		$(function(){
+			$(".confirm-btn").click(function(){
+				var pn=$("#personNum").val();
+				var dn=$(".tableName").val();
+				var ds=$("#deskState").val();
+				
+				alert(dn);
+					$.ajax({
+						url:"../SxmTable_appendTable.action",
+						type:"post",
+						data:{"st.personNum":pn,"st.deskName":dn,"st.deskState":ds},
+						success:function(data){
+						var json=JSON.parse(data);
+							if(json!=-1){
+								tabonload();//调用页面加载时自动查询数据库，显示桌台信息
+							}else{
+								alert("添加失败！");
+							}
+						},
+					});
+				
+			});
 		})
+	
 		
 		</script>
 	</div>

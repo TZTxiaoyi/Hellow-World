@@ -17,7 +17,6 @@
    			border:1px solid red;			
 			width:auto;
 			height:100px;
-			background-image:url(image/zhongguo.png);
    		}
    		#zbleft{
    			border:1px solid yellow;
@@ -65,6 +64,7 @@
    </head>
   
 <body>
+
   <div class="container-fluid">
 	<div class="row">
 <!-- 头部 -->
@@ -106,43 +106,18 @@
 		    </div>
 			</div>
 		</div>
-<!-- 右侧 -->
+<!-- 右侧打开网页自动添加菜单 -->
 		<div class=" col-md-10" id="zbright">
 			
-		<div>
-			<div><img  onclick = "show()" src="image/2.png" alt="..." class="img-circle" width="200" height="200"><br>
-				<span id="cm">红烧狮子头：</span><span id="UPrice">20</span><br>
-	        	<input type=button value="-1" id="remove" onclick="remove()">
-	  			<input type=text value="0" id="number" size="3">
-	  			<input type=button value="+1" id="add" onclick="add()">
-	        	<button id="addcc">添加</button>
-			</div>
-			<div id ="z1"></div>
-			<div id="z2"><input type="button" value="×" onclick="close1()"/>
-				<div><img src = "image/1.png" width="400" height ="400"></div>
-				<span>菜名打飞机洒垃圾分类法就是犯贱</span>
-		</div>
-			</div>
-			<div><img src="image/2.png" alt="..." class="img-circle" width="200" height="200"><br>
-				<span id="cm">红烧李金梁：</span><span id="UPrice">20</span><br>
-        		<input type=button value="-1" id="remove" onclick="remove()">
-  				<input type=text value="0" id="number" size="3">
-  				<input type=button value="+1" id="add" onclick="add()">
-        		<button id="addcc">添加</button>
-			</div>
-			<div><img src="image/2.png" alt="..." class="img-circle" width="200" height="200"></div>
-			<div><img src="image/2.png" alt="..." class="img-circle" width="200" height="200"></div>
-			<div><img src="image/2.png" alt="..." class="img-circle" width="200" height="200"></div>
-			<div><img src="image/2.png" alt="..." class="img-circle" width="200" height="200"></div>
-			<div><img src="image/2.png" alt="..." class="img-circle" width="200" height="200"></div>
+			
 			
 		</div>
 <!-- 底部 -->		
 		<div id="zbbottom">
    
 			<nav class="navbar-button navbar-fixed-bottom">
-						<button type="button" class="btn btn-lg btn-info col-md-offset-10" data-toggle="modal" data-target="#myMenu">我点的菜 价格：<span id="Total">0</span></button>
-					</nav>
+				<button type="button" id="LookOrder" class="btn btn-lg btn-info col-md-offset-10" data-toggle="modal" data-target="#myMenu">我点的菜 价格：<span id="Total">0</span></button>
+			</nav>
 				
 				<div class="modal fade" id="myMenu"> <!-- modal把div的内容识别为模态框 fade模态框切换时内容淡入淡-->
 					<div class="modal-dialog">
@@ -153,9 +128,10 @@
 								<h4 class="modal-title" id="MyMenuLabel">		我点的菜
 								</h4>
 							</div>
-							<div class="modal-body" id="modall-add"> <!-- 模态框显示的主要内容-->
-								
-								
+							<div class="modal-body" id="modall-add" > <!-- 模态框显示的主要内容-->
+								<table class="modall-table table table-striped" id="modall-table">
+									
+								</table>
 							</div>
 							
 							<div class="modal-footer"> <!-- 模态框下的关闭和保存按钮--> 
@@ -164,7 +140,7 @@
 								</button>
 								<button type="button" class="btn btn-danger">
 									立刻下单
-								</button>
+								</button> 
 							</div>
 						</div>
 					</div>
@@ -172,40 +148,76 @@
 	  		</div>
 		</div><!-- 底部div -->
 		
-	</div>
-  </div> 
+
   
   
-  
-	  <script>
-			function add() {
-	            var obj = document.getElementById("number");
-	 
-	            obj.value = parseInt(obj.value) + 1;
-	        }
-	 
-	        function remove() {
-	            var obj = document.getElementById("number");
-	 
-	            if(obj.value == 0) {
-	                return;
-	            }
-	 
-	            obj.value = parseInt(obj.value) - 1;
-	        }
-		</script>
+ 
 		<script>
-			$(function(){
-				$("#addcc").click(function(){
+			//页面加载自动添加4个菜品（测试）
+				$(function(){
+				for(var i=1;i<5;i++){
+					var show="<div><div><img  onclick = \"show()\" src=\"image/2.png\" alt=\"...\" class=\"img-circle\" width=\"200\" height=\"200\"><br/><span class=\"food-name-add"+i+"\">红烧狮子头"+i+"</span><span class=\"UPrice-add"+i+"\">20</span><br><input type=button value=\"-1\" class=\"remove\" id=\"add"+i+"\"><input type=text value=\"0\" id=\"number-add"+i+"\" size=\"3\" readonly><input type=button value=\"+1\" class=\"add\" id=\"add"+i+"\"></div></div>";
+					$("#zbright").append(show);
+				}
 				
-					var price=$("#UPrice").html()*$("#number").val();//价格*数量获得总价
-					var total=parseInt($("#Total").html())+price;//先转为int类型再做加法运算
-					
-					$("#Total").html(total);//把当前菜的总价格加上当前订单的金额
-					$("#modall-add").html("<div>"+"菜名："+$("#cm").html()+"单价："+$("#UPrice").html()+"数量："+$("#number").val()+"</div>");
 				});
-			});
-		</script> 
+				//更新菜单和总价
+				function upfood(btnid,foodname,uprice,number,price){	
+					$.ajax({
+						type:"post",
+						url:"addfood_addFood.action",
+						data:{"addfood.foodname":foodname,"addfood.uprice":uprice,"addfood.number":number,"addfood.price":price},
+						success:function(data){
+							var json=JSON.parse(data);
+							$("#Total").html(json);	
+						}
+					});
+				};
+				//减少点菜的数量更新总价
+				$("#zbright").on('click',".remove",function(){
+					var btnid=$(this).attr("id");//当前点击的按钮的id
+					var foodname=$(".food-name-"+btnid).html();//当前添加的菜名
+					var uprice=parseInt($(".UPrice-"+btnid).html());//单价
+					//var number=parseInt($("#number-"+btnid).val());//数量
+					var number=parseInt($("#number-"+btnid).val())-1;
+					if(number<0){
+						number=0;
+					}
+					var price=uprice*number;//价格*数量获得总价	
+					$("#number-"+btnid).val(number);
+						upfood(btnid,foodname,uprice,number,price);
+				});
+				//增加点菜的数量更新总价
+				$("#zbright").on('click',".add",function(){
+					var btnid=$(this).attr("id");//当前点击的按钮的id
+					var foodname=$(".food-name-"+btnid).html();//当前添加的菜名
+					var uprice=parseInt($(".UPrice-"+btnid).html());//单价
+					var number=parseInt($("#number-"+btnid).val())+1;
+					var price=uprice*number;//价格*数量获得总价	
+					$("#number-"+btnid).val(number);
+						upfood(btnid,foodname,uprice,number,price);
+				});
+				$("#modall-table").on('click',"#del",function(){
+					alert("确认删除？");
+				});
+				//查看已点的菜单
+				$("#LookOrder").click(function(){				
+					$.ajax({
+						type:"post",
+						url:"addfood_lookFood.action",
+						data:{"df":"df"},
+						success:function(data){
+							var json=JSON.parse(data);
+							$("#modall-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
+							$.each(json,function(index,value){
+								var dd="<tr>"+"<td>"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" id=\"del\">删除</button></td>"+"</tr>";
+								$("#modall-table").append(dd);
+							});	
+						}
+					});
+				});
+			
+		</script>
 		<script type="text/javascript" language="javascript">
 			var z1=document.getElementById("z1");
 			var z2=document.getElementById("z2");

@@ -56,5 +56,9 @@ public class TztDishOrderImp implements DaoInterface{
 		return DaoFactory.Updata(sql, ob);
 
 	}
+	public List queryMading(){
+		String sql="select  d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 12 and od.dishId=d.dishId group by d.dishName";
+		return DaoFactory.Query(sql);
+	}
 
 }

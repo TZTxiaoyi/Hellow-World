@@ -107,7 +107,7 @@
 		<div class="row"id="Cbody">
 			<div class="column"id="col1">
 				<div class="column"id="col1c01">
-					 <iframe scrolling="auto" rameborder="0" src="Jsp.jsp" name="left" width="100%" height="100%"></iframe>
+					 <iframe scrolling="auto" rameborder="0" src="kitsystem1.jsp" name="left" width="100%" height="100%"></iframe>
 				</div>
 				<div class="column"id="col1c02"><!-----------------------按钮模块----------------------->
 						<div class="column"><!--随机按钮-->
@@ -128,7 +128,7 @@
 				</div>
 			</div>
 			<div class="row"id="col2"><!------------新的菜品订单模块-------------->
-				<iframe scrolling="auto" rameborder="0" src="Jsp2.jsp" name="left" width="100%" height="100%"></iframe>
+				<iframe scrolling="auto" rameborder="0" src="kitsystem2.jsp" name="left" width="100%" height="100%"></iframe>
 		</div>
 		<div class="row"id="Bbotton">
 			<div class="row">

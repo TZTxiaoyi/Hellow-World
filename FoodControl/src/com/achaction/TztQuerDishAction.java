@@ -34,13 +34,14 @@ public class TztQuerDishAction {
 	 */
 	public void query() {
 		HttpServletResponse rep= ServletActionContext.getResponse();
+		rep.setContentType("text/html;charset=utf-8");
 		TztDishOrderImp dao =new TztDishOrderImp();
 		TztDishOrder dishorder = new TztDishOrder();
-		List result = dao.sel();
+		List result = dao.queryMading();
 		System.out.println(result.size());
 		try {
-			rep.getWriter().print(toJson.toJson("tztjs", result));
-			System.out.println(toJson.toJson("tztjs", result).toString());
+			rep.getWriter().print(toJson.toJson("tztjs", result).toString());
+			System.out.println(toJson.toJson("tztjs", result));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

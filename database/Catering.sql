@@ -280,6 +280,32 @@ create table income
 	ordersum int,
 	total int
 )
+<<<<<<< HEAD
 
+/*
+16.创建桌子信息视图
+desk 桌位表
+staffInfo 员工表
+desk_staff 桌位员工关系表
+codetable 码表
+*/
+create view desk_refresh
+as
+select d.deskId,d.deskName,d.personNum,s.Name,co.codeName from
+desk d left join desk_staff ds on d.deskId=ds.deskId
+left join staffInfo s on s.staffId=ds.staffId
+left join codetable co on d.deskState=co.id
 
+/*
+桌子名字添加约束--唯一
+*/
+alter table desk
+add constraint desk_unique unique(deskName)
 
+/*
+桌子名字添加约束--不能为空
+*/
+alter table desk
+alter column deskName varchar(20) not null
+=======
+>>>>>>> 1401dd94f1915f4c520eded1723e22e4f4949ffd
