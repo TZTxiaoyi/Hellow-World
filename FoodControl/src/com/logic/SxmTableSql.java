@@ -50,15 +50,18 @@ public class SxmTableSql implements DaoInterface {
 	public int selTableName(Object tab) {
 		String sql = "select deskName from desk";
 		List list = (List) DaoFactory.Query(sql);
-		int flag = 0;
+		int flag = -1;
 		for (int i = 0; i < list.size(); i++) {
-			String a = (String) tab;
+			System.out.println(555);
+			SxmTable a = (SxmTable) tab;
 			List li = (List) list.get(i);// ÐÐ
 			String st = (String) li.get(0);// ÁÐ
-			if (a.equals(st)) {
+			System.out.println(st);
+			if (a.getDeskName().equals(st)) {
 				flag = 1;
 			}
 		}
+		
 		return flag;
 	}
 
@@ -92,18 +95,16 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public int del(Object tabp) {
+		//delete from desk_staff where deskId=2
 		SxmTable tab = (SxmTable) tabp;
+		String sqlds="delete from desk_staff where deskId=?";
+		Object [] paramsds=new Object[] {tab.getDeskId()};
+		DaoFactory.Updata(sqlds, paramsds);
+		
 		String sql = "delete from desk where deskId=?";
-		try {
-
-			Object[] params = new Object[] { tab.getDeskId() };
-			System.out.println("asdgdsgs");
-			return DaoFactory.Updata(sql, params);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 1;
-
+		Object[] params = new Object[] { tab.getDeskId() };
+		return DaoFactory.Updata(sql, params);
+		
 	}
 
 	/**
