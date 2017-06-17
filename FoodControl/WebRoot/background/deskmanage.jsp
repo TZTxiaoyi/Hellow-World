@@ -63,9 +63,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								data-target="#myModaltable"><span class="icon-plus-square-o"></span>
 									添加桌台</a></li>
 							<li><input type="text" placeholder="请输入搜索关键字"
-								name="keywords" class="input"
-								style="width:250px; line-height:17px;display:inline-block" /> <a
-								href="javascript:void(0)" class="button border-main icon-search"
+								name="keywords" class="input"style="width:250px; line-height:17px;display:inline-block" /> <a
+								href="javascript:void(0)" class="button border-main icon-search fastsearch"
 								onclick="changesearch()"> 搜索</a>
 							</li>
 							</li>
@@ -129,19 +128,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</div>
 						<div id="modalform">
 					    	<div>
-					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="personNum"/>
+					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="pname"/>
 					    	</div>
 					    	<div>
-					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"/>
+					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName" class="tableName"/>
 					    	</div>
 					    	<div>
-					    		<span>桌子状态</span><input  name="st.deskState" id="deskState"/>
+					    		<span>桌子状态</span><input  name="st.deskState" id="dState"/>
 					    	</div>
 					    	
 					 </div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" >确定更改</button>
+						<button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >确定更改</button>
 
 					</div>
 				</div>
@@ -149,10 +148,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<script type="text/javascript">
 			/*
+				快速搜索
+			*/
+			$(".fastsearch").click(function(){
+				var allput=$(".input").val();
+				$.ajax({
+					url : "../SxmTable_searchTable.action",
+					type : "post",
+					data : {"search" :allput},
+					success:function(data){
+						var json = JSON.parse(data);
+						refresh(json);
+					}
+				});
+			});
+			/*
 				点击删除按钮删除一行数据;
 			*/
 			$("#tab").on('click',".deskbtn",function(){
-			
 				var deskbtn=$(this).attr("id");
 				var deskid=$("#desk"+deskbtn).html();
 				if(confirm("您确定要删除吗?")){
@@ -172,114 +185,154 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			});
 		/*
-			点击修改按钮时页面自动显示该条数据
+			点击修改按钮修改一行数据表单里自动获取这一行的值
 		*/
 		$("#tab").on('click',".alterbtn",function(){
-			var deskal=$(this).attr("id");
-			
+			var deskalter=$(this).attr("id");
+			var deskid=$(".desk"+deskalter).html();
+			var deskname=$("#name"+deskalter).html();
+			var deskperson=$("#person"+deskalter).html();
+			var deskstate=$("#state"+deskalter).html();
+			$("#pname").val(deskperson);
+			$(".tableName").val(deskname);
+			$("#dState").val(deskstate);
+			updata(deskid);
 		});
+		//点击确定修改按钮时执行；
 			
-			$("#checkall").click(function(){ 
-			  $("input[name='id[]']").each(function(){
-				  if (this.checked) {
-					  this.checked = false;
-				  }
-				  else {
-					  this.checked = true;
-				  }
-			  });
-			});
-			
-			function DelSelect(){
-				var Checkbox=false;
-				 $("input[name='id[]']").each(function(){
-				  if (this.checked==true) {		
-					Checkbox=true;	
-				  }
+		function updata(desk) {
+			//bind/unbind点击事件只执行一次
+			$(".modal-alterbtn").bind('click', function() {//绑定事件处理函数
+				$(this).unbind('click');//移除当前事件处理函数
+				var pn = $("#pname").val();
+				var dn = $("#tableName").val();
+				var ds = $("#dState").val();
+				$.ajax({
+					url : "SxmTable_upLineTable.action",
+					type : "post",
+					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn,"st.deskState" : ds},
+					success : function(data) {
+						var json = JSON.parse(data);
+						if (json != -1) {
+							alert(json);
+							tabonload();//调用页面加载时自动查询数据库，显示桌台信息
+							} else {
+								alert("更新失败！");
+						}
+					},
 				});
-				if (Checkbox){
-					var t=confirm("您确认要删除选中的内容吗？");
-					if (t==false) return false; 		
-				}
-				else{
+
+			});
+		};
+
+			$("#checkall").click(function() {
+				$("input[name='id[]']").each(function() {
+					if (this.checked) {
+						this.checked = false;
+					} else {
+						this.checked = true;
+					}
+				});
+			});
+
+			function DelSelect() {
+				var Checkbox = false;
+				$("input[name='id[]']").each(function() {
+					if (this.checked == true) {
+						Checkbox = true;
+					}
+				});
+				if (Checkbox) {
+					var t = confirm("您确认要删除选中的内容吗？");
+					if (t == false)
+						return false;
+				} else {
 					alert("请选择您要删除的内容!");
 					return false;
 				}
 			};
-			
+
 			/*
 				添加桌子名字失焦时检测是否已存在改桌名的函数
-			*/
-			$(".tableName").blur(function(){
+			 */
+			$(".tableName").blur(function() {
 				$.ajax({
-					url:"../SxmTable_equalTable.action",
-					type:"post",
-					data:{"st.deskName":$(this).val()},
-					success:function(data){
-						var json=JSON.parse(data);
-						if(json!=-1){
+					url : "../SxmTable_equalTable.action",
+					type : "post",
+					data : {"st.deskName" : $(this).val()},
+					success : function(data) {
+						var json = JSON.parse(data);
+						if (json != -1) {
 							alert("该桌名已存在！");
 						}
 					},
 				});
 			});
-		/*
-			页面加载时自动查询数据库，显示桌台信息
-		*/	
-		$(function(){tabonload();});
-		function tabonload(){
-			$.ajax({
-				url:"SxmTable_tableAdmin.action",
-				type:"post",
-				data:{map:null},
-				success:function(data){
-					 var json=JSON.parse(data);
-					 var th="<tr><td></td><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
-					  $("#tab").html("");
-					 $("#tab").append(th);
-						$.each(json,function(index,value){
-								var dd=
-								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"desknumId"+value[0]+"\">"+value[0]+
-								"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td>"+
-								"<td><a class=\"button border-red deskbtn\"  id=\"numId"+value[0]+"\">"+
-								"<span class=\"icon-trash-o\"></span>删除 </a>"+
-								"<a class=\"button border-main alterbtn\" id=\"asd"+value[0]+"\"data-toggle=\"modal\" data-target=\"#myModal\">"+
-								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
-								$("#tab").append(dd);
-								
-							});
-					},
+			/*
+				页面加载时自动查询数据库，显示桌台信息
+			 */
+			$(function() {
+				tabonload();
+			});
+			function tabonload() {
+				$.ajax({
+					url : "SxmTable_tableAdmin.action",
+					type : "post",
+					data : {map : null},
+					success : function flash(data) {
+						var json = JSON.parse(data);
+						refresh(json);
+					}
 				});
-			
-		}
-		/*
-			添加桌子信息
-		*/
-		$(function(){
-			$(".confirm-btn").click(function(){
-				var pn=$("#personNum").val();
-				var dn=$(".tableName").val();
-				var ds=$("#deskState").val();
+
+			};
+			function refresh(json) {
+				var th = "<tr><td></td><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
+					$("#tab").html("");
+					$("#tab").append(th);
+					$.each(json,function(index, value) {
+						var dd = "<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td class=\"deskalter"+
+						value[0]+"\" id=\"desknumId"+value[0]+"\">"+ value[0]+ "</td><td id=\"namealter"+value[0]+"\">"+ 
+						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td>"+ value[3]+
+						"</td><td id=\"statealter"+value[0]+"\">"+ value[4]+ "</td>"+
+						"<td><a class=\"button border-red deskbtn\"  id=\"numId"+value[0]+"\">"+ 
+						"<span class=\"icon-trash-o\"></span>删除 </a>"+ 
+						"<a class=\"button border-main alterbtn\" id=\"alter"+value[0]+
+					   	"\"data-toggle=\"modal\" data-target=\"#myModal\">"+ 
+					   	"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+						$("#tab").append(dd);
+					});
 				
-				alert(dn);
+			}
+			
+			/*
+				添加桌子信息
+			 */
+			$(function() {
+				$(".confirm-btn").click(function() {
+					var pn = $("#personNum").val();
+					var dn = $(".tableName").val();
+					var ds = $("#deskState").val();
 					$.ajax({
-						url:"../SxmTable_appendTable.action",
-						type:"post",
-						data:{"st.personNum":pn,"st.deskName":dn,"st.deskState":ds},
-						success:function(data){
-						var json=JSON.parse(data);
-							if(json!=-1){
+						url : "../SxmTable_appendTable.action",
+						type : "post",
+						data : {
+							"st.personNum" : pn,
+							"st.deskName" : dn,
+							"st.deskState" : ds
+						},
+						success : function(data) {
+							var json = JSON.parse(data);
+							if (json != -1) {
 								tabonload();//调用页面加载时自动查询数据库，显示桌台信息
-							}else{
+							} else {
 								alert("添加失败！");
 							}
 						},
 					});
-				
+
+				});
 			});
-		})
-	
-		
 		</script>
 	</div>
 </body>

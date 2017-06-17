@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
 import com.daointerface.DaoInterface;
 import com.entity.SxmTable;
 import com.utils.DaoFactory;
+import com.utils.toJson;
 
 /**
  * 
@@ -48,21 +50,25 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public int selTableName(Object tab) {
-		String sql = "select deskName from desk";
+		String sql = "select * from desk";
 		List list = (List) DaoFactory.Query(sql);
 		int flag = -1;
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println(555);
 			SxmTable a = (SxmTable) tab;
 			List li = (List) list.get(i);// пп
-			String st = (String) li.get(0);// ап
-			System.out.println(st);
+			String st = (String) li.get(2);// ап
 			if (a.getDeskName().equals(st)) {
 				flag = 1;
 			}
 		}
 		
 		return flag;
+	}
+	public List selTable(String ser) {
+		String sql = "select * from desk_refresh where deskId like'%"+ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
+		List list = DaoFactory.Query(sql);
+		
+		return list;
 	}
 
 	/**
@@ -95,7 +101,6 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public int del(Object tabp) {
-		//delete from desk_staff where deskId=2
 		SxmTable tab = (SxmTable) tabp;
 		String sqlds="delete from desk_staff where deskId=?";
 		Object [] paramsds=new Object[] {tab.getDeskId()};
