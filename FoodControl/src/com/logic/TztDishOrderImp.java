@@ -3,10 +3,9 @@ package com.logic;
 import java.util.List;
 
 import com.daointerface.DaoInterface;
-import com.entity.SxmTable;
 import com.entity.TztDishOrder;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.utils.DaoFactory;
+
 /**
  * 
  * 
@@ -28,9 +27,6 @@ public class TztDishOrderImp implements DaoInterface{
 		Object[] ob =new Object[]{dishOrder.getOrderId(),dishOrder.getDishId(),dishOrder.getDishStatus(),dishOrder.getDeskId()};
 		return DaoFactory.Updata(sql, ob);
 	}
-	/**
-	 * 
-	 */
 	public int del(Object obj) {
 		TztDishOrder dishOrder=(TztDishOrder)obj;
 		String sql ="delete from orders_dish where id=?";
@@ -56,9 +52,33 @@ public class TztDishOrderImp implements DaoInterface{
 		return DaoFactory.Updata(sql, ob);
 
 	}
-	public List queryMading(){
+	/**
+	 * 
+	 * 方法功能说明：  查询需要制作的菜品
+	 * 创建：2017-6-17 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List queryMade(){
 		String sql="select  d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 12 and od.dishId=d.dishId group by d.dishName";
 		return DaoFactory.Query(sql);
 	}
-
+	/**
+	 * 
+	 * 方法功能说明： 查询正在制作的菜品 
+	 * 创建：2017-6-17 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List queryMading()	{
+		String sql ="select  d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 13 and od.dishId=d.dishId group by d.dishName";
+		
+		return DaoFactory.Query(sql);
+	}
 }

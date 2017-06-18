@@ -182,15 +182,18 @@
 			user1.innerHTML="";
 		}
 		function userBlur(){
+		
 			var user2=document.getElementById("a1").value;
 			var user1=document.getElementById("aa1");
 			var reg=new RegExp("[^A-Za-z0-9]+","gi");
 			if (reg.test(user2)){
+			alert(1);
 				user1.innerHTML="用户名格式有误";
 				//user1.style.display="block";
 				return false;
 				
 			}else{
+			alert(11);
 				return true;
 			}
 		}
@@ -200,11 +203,14 @@
 			user1.innerHTML="";
 		}
 		function passBlur(){
+		
 			var user2=document.getElementById("a2").value;
 			var user1=document.getElementById("aa2");
 			if (user2.length>=6){
+			alert(2);
 				return true;
 			}else{
+			alert(3);
 				user1.innerHTML="密码不正确";
 				return false;
 			}

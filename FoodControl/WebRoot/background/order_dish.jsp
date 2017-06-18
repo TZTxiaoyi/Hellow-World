@@ -8,6 +8,12 @@
 <script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.js"></script>
 <script type="text/javascript"
 	src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
+	<style>
+		td{
+			width:100px;
+		}
+	
+	</style>
 </head>
 
 <body>
@@ -21,18 +27,16 @@
  		$(function(){
  			$("#query").click(function(){
  				$.ajax({
- 					url:"TztQueryDish_query.action",
+ 					url:"TztQueryDish_queryMade.action",
  					type:"post",
  					data:{"aaa":"aa"},
  					dataType:"json",
  					success:function(data){
- 					$("#title").html("<tr><td>菜名</td><td>数量</td></tr>");
+ 					$("#title").html("<tr><td>菜名</td><td>数量</td><td>操作</td></tr>");
 					$.each(data,function(index,value){				
 					var dd="<tr>"+"<td>"+value[0]+"</td>"+"<td>"+value[1] +"</td>"+"<td><button class=\"btn btn-danger\" id=\"dynamicbtn\">制作</button></td>"+"</tr>";
 					$("#title").append(dd);
 					});
-					
-					
  					}
 
  				});
