@@ -280,7 +280,7 @@ create table income
 	ordersum int,
 	total int
 )
-<<<<<<< HEAD
+
 
 /*
 16.创建桌子信息视图
@@ -307,5 +307,3 @@ add constraint desk_unique unique(deskName)
 */
 alter table desk
 alter column deskName varchar(20) not null
-=======
->>>>>>> 1401dd94f1915f4c520eded1723e22e4f4949ffd

@@ -314,6 +314,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var dn = $(".tableName").val();
 					var ds = $("#deskState").val();
 					$.ajax({
+<<<<<<< HEAD
+						url:"../SxmTable_appendTable.action",
+						type:"post",
+						data:{"st.personNum":pn,"st.deskName":dn,"st.deskState":ds},
+						success:function(data){
+						var json=JSON.parse(data);
+							if(json!=-1){
+							
+=======
 						url : "../SxmTable_appendTable.action",
 						type : "post",
 						data : {
@@ -324,16 +333,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						success : function(data) {
 							var json = JSON.parse(data);
 							if (json != -1) {
+>>>>>>> a65dd5256da99a31d3fa45ed6efa2da9c9417253
 								tabonload();//调用页面加载时自动查询数据库，显示桌台信息
 							} else {
 								alert("添加失败！");
 							}
 						},
-
+<<<<<<< HEAD
+					});			
+=======
 					});
 
 				});
-
+>>>>>>> a65dd5256da99a31d3fa45ed6efa2da9c9417253
 			});
 		</script>
 	</div>
