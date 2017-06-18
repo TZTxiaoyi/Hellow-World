@@ -269,13 +269,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						success:function(data){
 						var json=JSON.parse(data);
 							if(json!=-1){
+							
 								tabonload();//调用页面加载时自动查询数据库，显示桌台信息
 							}else{
 								alert("添加失败！");
 							}
 						},
-					});
-				
+					});			
 			});
 		})
 	
