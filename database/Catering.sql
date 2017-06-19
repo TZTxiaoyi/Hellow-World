@@ -74,13 +74,12 @@ create table staffInfo
 	age int,
 	phone varchar(11),
 	adress varchar(100),
-	accession datetime,
+	accession date,
 	partId int foreign key references part(partId ),
-	endetId		int foreign key references staffEnter(enterId )
-	
-	
+	endetId		int foreign key references staffEnter(enterId )	
 )
-
+select s1.Name,s1.staffId,s1.phone,s1.sex,s1.age,s1.adress,s1.accession,p1.partId,d1.deskId
+				from staffInfo s1,part p1, desk_staff d1
 
 /*
 3顾客信息表：
@@ -162,7 +161,8 @@ create table dish
 	picture varbinary,
 	maxCopies int
 )
-
+select * from staffInfo  where Name like '%u%'
+select * from staffInfo where Name like'%2%' or sex like'%2%' or age like'%2%' or phone like'%2%' or adress like'%2%' or accession like'%2%' or partId like'%2%'		
 /*
 
 9权限表：

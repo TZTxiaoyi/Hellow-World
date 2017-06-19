@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSON;
+
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.LYEmployId;
@@ -25,6 +27,7 @@ public class LYInsertEmployaction {
 	
 	private LYEmployee employee;
 	private LYEmployId employId;
+	private String putvalue;
 	
 	LYInsertEmployDao ied=new LYInsertEmployDao();
 	
@@ -78,9 +81,13 @@ public class LYInsertEmployaction {
 	 */
 	public void selem(){
 		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=GBK");
+		response.setCharacterEncoding("GBK");
 		List<String> list=ied.selemploy(employee);		
-		toJson json=new toJson();		
-		json.toJson("vlaue", list);		
+		toJson json=new toJson();
+		//System.out.println(list.size());
+		json.toJson("vlaue", list);	
+		//System.out.println(json.toJson("vlaue", list).toString());
 		try {
 			response.getWriter().print(json.toJson("vlaue", list).toString());
 			//System.out.println(json.toJson("vlaue", list).toString());
@@ -90,7 +97,7 @@ public class LYInsertEmployaction {
 		}		
 	}
 	/**
-	 * 
+	 * delem:
 	 */
 	public void delem(){
 		int flag=ied.delone(employee);
@@ -102,5 +109,40 @@ public class LYInsertEmployaction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * updatestaff:修改员工信息的action
+	 * 得到员工dao工厂返回给修改员工实现类的值，
+	 * 再将值给前台可判断是否修改成功与否；
+	 * @return
+	 */
+	public int updatestaff(){
+		int flag=9;
+		return flag=ied.update(employee);	
+	}
+	public void searchEM(){
+		System.out.println(putvalue);
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=GBK");
+		response.setCharacterEncoding("GBK");
+		System.out.println("hoihoh");
+		List<String> list=ied.searchsome(putvalue);
+		System.out.println(list);
+		toJson json=new toJson();
+		try {
+			
+			response.getWriter().print(json.toJson("value", list).toString());
+			System.out.println(json.toJson("value", list).toString());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	public String getPutvalue() {
+		return putvalue;
+	}
+
+	public void setPutvalue(String putvalue) {
+		this.putvalue = putvalue;
 	}
 }
