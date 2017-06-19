@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSON;
 
@@ -27,11 +28,25 @@ public class SxmTableAction {
 	     * sts 实例化SxmTableSql
 	     * deskId 实体类桌子id
 	     * search 快速查找输入框传的值
+	     * pagestate 分页状态
+	     * 
 	     * @return void     
 	     * @throws
 	 */
 	SxmTable st;
 	String search;
+	int currPage;
+
+	
+	public int getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
+
+	
 	SxmTableSql sts=new SxmTableSql();
 	
 	public String getSearch() {
@@ -91,7 +106,7 @@ public class SxmTableAction {
 		
 	}
 	/**
-	 * 
+	 
 	     * 方法功能说明：  后台进入桌位管理页面自动加载
 	     * 创建：2017-6-16 by Administrator   
 	     * 修改：日期 by songxianmeng
@@ -103,9 +118,12 @@ public class SxmTableAction {
 	public void tableAdmin(){
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
-		Map map=sts.selTableAdmin(null);
+		//Map map=sts.selTableAdmin(null);
+		List list=sts.selTableAdmin(null);
+		JSON json=toJson.toJson("aa", list);
 		try {
-			hsr.getWriter().print(map);
+			hsr.getWriter().print(json);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,14 +181,10 @@ public class SxmTableAction {
 	     * @throws
 	 */
 	public void searchTable(){
-		System.out.println("----------");
 		List ser=sts.selTable(search);
-		
 		JSON json=toJson.toJson("ss", ser);
-		System.out.println(json);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
-		//System.out.println(json);
 		try {
 			hsr.getWriter().print(json);
 		} catch (IOException e) {
@@ -178,4 +192,50 @@ public class SxmTableAction {
 			System.out.println(e.getMessage()+3333);
 		}
 	}
+	/**
+	 * 
+	     * 方法功能说明：  分页
+	     * 创建：2017-6-19 by Administrator   
+	     * 修改：日期 by songxianmeng
+	     * 修改内容：  
+	     * @参数：       
+	     * @return void     
+	     * @throws
+	 */
+	public void tabPage(){
+		System.out.println("---------");
+		System.out.println(currPage);
+		List list=sts.page(currPage);
+		JSON json=toJson.toJson("ss", list);
+		System.out.println(json);
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		hsr.setContentType("text/html;charset=UTF-8");
+		try {
+			hsr.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage()+3333);
+		}
+	}
+	/**
+	 * 
+	     * 方法功能说明：  总条数
+	     * 创建：2017-6-19 by Administrator   
+	     * 修改：日期 by songxianmeng
+	     * 修改内容：  
+	     * @参数：       
+	     * @return void     
+	     * @throws
+	 */
+	public void pageTotal(){
+		int total=sts.getCount();
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		try {
+			hsr.getWriter().print(total);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage()+3333);
+		}
+	}
+	
 }
