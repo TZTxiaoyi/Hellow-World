@@ -22,8 +22,9 @@ public class TztDishOrder {
 		this.dishStatus=dishStatus2;
 		this.dishId=deskid2;
 	}
-	public void TztDishOrder(){};
-	
+	public TztDishOrder() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getOrderId() {
 		return OrderId;
 	}

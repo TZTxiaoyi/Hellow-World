@@ -92,8 +92,7 @@ public class LjlAddFoodAction {
 		List list=dish.sel();
 		System.out.println("newFood:"+list);
 		request.setAttribute("dishList", list); 
-		return "newFood";
-		
+		return "newFood";	
 	}
 	/**
 	 * 
