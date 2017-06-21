@@ -317,7 +317,7 @@
 				}
 				$(function(){
 					newdate_1();
-					setInterval('newdate_1();', 3000);
+					setInterval('newdate_1();', 1000);
 				});
 		</script>
 		<script type="text/javascript" language="javascript">

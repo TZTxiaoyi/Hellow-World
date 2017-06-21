@@ -20,7 +20,14 @@ public class LYEmployee {
 	private String emjointime;
 	private int empart;
 	private int ementer;
-
+	private int staffinfoState;
+	public int getStaffinfoState() {
+		staffinfoState=19;
+		return staffinfoState;
+	}
+	public void setStaffinfoState(int staffinfoState) {
+		this.staffinfoState = staffinfoState;
+	}
 	public int getEmenter() {
 		return ementer;
 	}

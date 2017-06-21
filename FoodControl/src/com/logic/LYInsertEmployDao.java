@@ -30,8 +30,8 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int eminsert(LYEmployee em){
-		String sql="insert into staffinfo values(?,?,?,?,?,?,?,?,?)";
-		Object[] params=new Object[]{em.getEmid(),em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),em.getEmpart(),em.getEmenter()};		
+		String sql="insert into staffinfo values(?,?,?,?,?,?,?,?,?,?)";
+		Object[] params=new Object[]{em.getEmid(),em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),em.getEmpart(),em.getEmenter(),em.getStaffinfoState()};		
 		return DaoFactory.Updata(sql, params);	
 	}
 	/**
@@ -53,7 +53,7 @@ public class LYInsertEmployDao {
 	 */
 	
 	public int delone(LYEmployee lye){
-		String sql="truncate table staffInfo where staffId=?";
+		String sql="update staffInfo set staffinfoState=20 where staffId=?";
 		Object[] params = new Object[]{lye.getEmid()};
 		return DaoFactory.Updata(sql, params);
 	}
@@ -64,9 +64,9 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int update(LYEmployee em){
-		String sql="Update staffInfo set Name=?,sex=?,age=?,phone=?,adress=?,accession=? where staffId=?";
+		String sql="Update staffInfo set Name=?,sex=?,age=?,phone=?,adress=?,accession=?,staffinfoState=? where staffId=?";
 		
-		Object[] params=new Object[]{em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),em.getEmid()};
+		Object[] params=new Object[]{em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),em.getStaffinfoState(),em.getEmid()};
 		//System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+em.getEmid());
 		return DaoFactory.Updata(sql, params);
 	}
