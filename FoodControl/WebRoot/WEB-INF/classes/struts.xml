@@ -12,8 +12,11 @@
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok">/home.jsp</result>
 		</action>
-		<action name ="Home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
-			<result name="register">/Home1.jsp</result>
+
+<!-- 注册 -->
+		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
+			<result name="register">/home.jsp</result>
+
 			<result name ="list">/new.jsp</result>
 		</action>
 	</package>
@@ -23,6 +26,8 @@
 	<package name="inser" extends="struts-default">
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
+			<result name="success">/background/index.jsp</result>
+			<result name="false">/background/login.jsp</result>
 		</action>
 	</package>
 </struts>    

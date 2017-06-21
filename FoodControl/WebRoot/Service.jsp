@@ -169,11 +169,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div id="table">
 						<div class="input-group col-sm-6">
 							<span class="input-group-btn">
-								<button class="btn btn-info" type="button" >快速查找桌号：</button> </span> <input
-								type="text" class="form-control" id="inpbtn" placeholder="Search for...">
+								<button class="btn btn-info" type="button" >快速查找桌号：</button> 
+							</span> 
+								<input type="text" class="form-control" id="inpbtn" placeholder="Search for...">
 							<span class="input-group-btn" id="btn">
 								<button class="btn btn-default glyphicon glyphicon-search"
-									type="button" ></button> </span>
+									type="button" ></button> 
+							</span>
+							
 						</div>
 					</div>
 					<div id="all">
@@ -273,13 +276,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						var k=0;
 					$.each(json,function(index, value) {
 						
-						if(value[4]=="桌台可用"){
+						if(value[4]=="可用"){
 							var	tdiv="tdiv1";
 							i++;
-						}else if(value[4]=="桌台占用"){
+						}else if(value[4]=="占用"){
 							var tdiv="tdiv2";	
 							j++;
-						}else if(value[4]=="桌台脏台"){
+						}else if(value[4]=="脏台"){
 							var tdiv="tdiv3";	
 							k++;
 						}
@@ -327,11 +330,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					success:function(data){
 						var json = JSON.parse(data);
 						$.each(json,function(index, value) {
-							if(value[4]=="桌台可用"){
+							if(value[4]=="可用"){
 								var	tdiv="tdiv1";
-							}else if(value[4]=="桌台占用"){
+							}else if(value[4]=="占用"){
 								var tdiv="tdiv2";	
-							}else if(value[4]=="桌台脏台"){
+							}else if(value[4]=="脏台"){
 								var tdiv="tdiv3";	
 							}
 							var dd1= "<div class=\"pull-left col-sm-2 "+tdiv+"\" id=\"deskname"+value[0]+"\">"+ value[1]+"</div>";

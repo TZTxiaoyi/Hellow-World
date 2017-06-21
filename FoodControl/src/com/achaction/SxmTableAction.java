@@ -162,6 +162,7 @@ public class SxmTableAction {
 	public void upLineTable(){
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		int table=sts.update(st);
+		System.out.println(table);
 		try {
 			hsr.getWriter().print(table);
 		} catch (IOException e) {
