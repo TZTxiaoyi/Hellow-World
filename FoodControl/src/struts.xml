@@ -3,7 +3,6 @@
 <struts>
 	<package name="default" extends="struts-default">
 		<action name="addfood_*" class="com.achaction.LjlAddFoodAction" method="{1}">
-
 			<result name="addfood" type="dispatcher">/new.jsp</result>
 			<result name="newFood" type="dispatcher">/new.jsp</result>
 		</action>
