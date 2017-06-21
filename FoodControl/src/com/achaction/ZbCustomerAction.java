@@ -10,6 +10,7 @@ import net.sf.json.JSON;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.entity.ZbDesk;
 import com.entity.ZbUsagedata;
 import com.entity.ZbUserdata;
 import com.logic.ZbRegister;
@@ -28,8 +29,17 @@ import com.utils.toJson;
 public class ZbCustomerAction {
 	private ZbUserdata userdata;//注册
 	ZbUsagedata zbud;
+	ZbDesk zbde;
 	
 	
+	public ZbDesk getZbde() {
+		return zbde;
+	}
+
+	public void setZbde(ZbDesk zbde) {
+		this.zbde = zbde;
+	}
+
 	public ZbUsagedata getZbud() {
 		return zbud;
 	}
@@ -47,7 +57,33 @@ public class ZbCustomerAction {
 	}
 	/**
 	 * 
-	 * 方法功能说明：  
+	 * 方法功能说明： 开始点餐
+	 * 创建：2017-6-21 by zhubin   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @return      
+	 * @return String     
+	 * @throws
+	 */
+	public void orders(){
+		List list = re.quertDesk();
+		JSON json = toJson.toJson("js",list);
+		HttpServletResponse hsp = ServletActionContext.getResponse();
+		hsp.setContentType("text/html,charset=utf-8");
+		
+		hsp.setCharacterEncoding("utf-8");
+		
+		try {
+			hsp.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	/**
+	 * 
+	 * 方法功能说明：  、、、、注册
 	 * 创建：2017-6-20 by zhubin   
 	 * 修改：日期 by 修改者  
 	 * 修改内容：  
@@ -69,6 +105,16 @@ public class ZbCustomerAction {
 		
 		
 	}
+	/**
+	 * 
+	 * 方法功能说明：     。。。。登录
+	 * 创建：2017-6-21 by zhubin   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @return      
+	 * @return String     
+	 * @throws
+	 */
 	public String login(){
 		
 		

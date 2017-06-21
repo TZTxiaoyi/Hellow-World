@@ -1,5 +1,7 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*"%> 
+<%@ page import="java.text.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -75,8 +77,8 @@
 			<button type="button" class="btn btn-default" id="zbbutton1"><h1 class="glyphicon glyphicon-map-marker"><input type ="text" size="10px"/></h1></button><!-- 模糊查询菜名 -->
 			<button type="button" class="btn btn-default"id="zbbutton1"><h1 class="glyphicon glyphicon-bell">呼叫员工</h1></button><!-- 呼叫员工按钮 -->
 			
-			<span>当前系统时间：</span><span id="date_1"></span>
-			<span id="dishname">牡丹阁</span><span>桌</span>
+			<span id="desk1"></span>
+			<span id ="desk2"></span>
 		</div>
 <!-- 左侧 -->		
 		<div class=" col-md-2" id="zbleft">
@@ -276,49 +278,36 @@
 					});
 					
 				});
+				//下单获得订单信息和菜单信息，桌号
 				$("#order").click(function(){
 					alert("dff");
 					var orderStatus=15;
 					var orderPrice=parseInt($("#mtTotal").html());
 					var foodNum=parseInt($("#foodnum").html());
 					var cost=9;
+					//获得菜单数据
 					$.ajax({
 						type:"post",
 						url:"addfood_addOrder.action",
 						data:{"addorder.orderStatus":orderStatus,"addorder.orderPrice":orderPrice,"addorder.foodNum":foodNum,"addorder.cost":cost},
 						success:function(data){
-								if(data==1){
+								if(data!=-1){
 									alert("下单成功");
 								}
 						}
 					});
 							
 				});
-				function p(s) {
-   				 return s < 10 ? '0' + s: s;
-				}
-				function date_1(){
-					
-					var myDate = new Date();
-					//获取当前年
-					var year=myDate.getFullYear();
-					//获取当前月
-					var month=myDate.getMonth()+1;
-					//获取当前日
-					var date=myDate.getDate(); 
-					var h=myDate.getHours();       //获取当前小时数(0-23)
-					var m=myDate.getMinutes();     //获取当前分钟数(0-59)
-					var s=myDate.getSeconds();  
-					var now=year+'-'+p(month)+"-"+p(date)+" "+p(h)+':'+p(m)+":"+p(s);
-					return now;
-				}
-				function newdate_1(){
-					$("#date_1").html(date_1());
+				
+				
+				function getTime(){
+    				var time = new Date();
+   				 	$("#date_1").html(time.toLocaleString());
 				}
 				$(function(){
-					newdate_1();
-					setInterval('newdate_1();', 1000);
+    				setInterval("getTime()",1000);
 				});
+				
 		</script>
 		<script type="text/javascript" language="javascript">
 			var z1=document.getElementById("z1");

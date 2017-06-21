@@ -292,10 +292,14 @@ codetable 码表
 */
 create view desk_refresh
 as
-select d.deskId,d.deskName,d.personNum,s.Name,co.codeName from
-desk d left join desk_staff ds on d.deskId=ds.deskId
+select d.deskId,d.deskName,d.personNum,s.Name,co.codeName,d.deskdelState from
+desk d left join desk_staff ds on d.deskId=ds.deskId and d.deskdelState=19
 left join staffInfo s on s.staffId=ds.staffId
-left join codetable co on d.deskState=co.id
+left join codetable co on d.deskState=co.id 
+left join codetable co1 on d.deskdelState=co1.id and co.id=19 
+create view desk_restaff
+as
+select *from desk_refresh where deskdelState=19
 
 /*
 桌子名字添加约束--唯一

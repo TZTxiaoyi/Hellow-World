@@ -16,11 +16,17 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
+
 import com.entity.LjlAddFood;
 import com.entity.LjlAddOrder;
+import com.entity.TztDishOrder;
 import com.insertemploydao.LjlDish;
 import com.insertemploydao.LjlOrders;
+
 import com.utils.toJson;
+
+import com.insertemploydao.TztDishOrderImp;
+
 
 
 public class LjlAddFoodAction {
@@ -28,6 +34,8 @@ public class LjlAddFoodAction {
 	private LjlAddOrder addorder;
 	//private String datatime1;
 	LjlOrders orders=new LjlOrders();
+	LjlDish dish=new LjlDish();
+	TztDishOrderImp DishOrderImp=new TztDishOrderImp();
 	public LjlAddOrder getAddorder() {
 		return addorder;
 	}
@@ -40,11 +48,35 @@ public class LjlAddFoodAction {
 	public void setAddfood(LjlAddFood addfood) {
 		this.addfood = addfood;
 	}
+	/**
+	 * 
+	 * 方法功能说明：  下单功能
+	 * 创建：2017-6-21 by li   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：  addorder 订单实体类     
+	 * @return void     
+	 * @throws
+	 */
 	public void addOrder(){
-		int flag=orders.add(addorder);
+
+		int rsid=orders.rsadd(addorder);
+		int dishStatus=12;
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpSession session=request.getSession();
+		String[] foodnames=session.getValueNames();
+		System.out.println("ger:"+foodnames.length);
+		for (int i = 0; i < foodnames.length; i++) {
+			List list=dish.seldishName(foodnames[i]);
+			List listdish=(List) list.get(0);
+			int dishid=(Integer) listdish.get(0);
+			TztDishOrder dishorder=new TztDishOrder(rsid,dishid,dishStatus,addorder.getDeskid());
+			DishOrderImp.add(dishorder);
+		}
+
 		HttpServletResponse response=ServletActionContext.getResponse();
 		try {
-			response.getWriter().println(flag);
+			response.getWriter().println(rsid);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,11 +94,10 @@ public class LjlAddFoodAction {
 	 */
 	public String newFood(){
 		HttpServletRequest request=ServletActionContext.getRequest();
-		LjlDish dish=new LjlDish();
+		
 		List list=dish.sel();
 		request.setAttribute("dishList", list); 
-		return "newFood";
-		
+		return "newFood";	
 	}
 	/**
 	 * 

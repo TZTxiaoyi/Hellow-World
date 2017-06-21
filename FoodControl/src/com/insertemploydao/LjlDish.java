@@ -29,7 +29,12 @@ public class LjlDish implements DaoInterface{
 		List list=DaoFactory.Query(sql);
 		return list;
 	}
-
+	public List seldishName(String dishname) {
+		
+		String sql="select * from dish where dishName='"+dishname+"'";
+		List list=DaoFactory.Query(sql);
+		return list;
+	}
 	public int update(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
