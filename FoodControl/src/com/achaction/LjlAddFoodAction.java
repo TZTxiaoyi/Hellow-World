@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
@@ -20,6 +20,7 @@ import com.entity.LjlAddFood;
 import com.entity.LjlAddOrder;
 import com.insertemploydao.LjlDish;
 import com.insertemploydao.LjlOrders;
+import com.utils.toJson;
 
 
 public class LjlAddFoodAction {
@@ -40,7 +41,6 @@ public class LjlAddFoodAction {
 		this.addfood = addfood;
 	}
 	public void addOrder(){
-		System.out.println(addorder.getFoodNum()+","+addorder.getOrderPrice()+","+addorder.getOrderStatus()+","+addorder.getCost()+","+addorder.getOrdersTime()+","+addorder.getDeskid());
 		int flag=orders.add(addorder);
 		HttpServletResponse response=ServletActionContext.getResponse();
 		try {
@@ -64,7 +64,6 @@ public class LjlAddFoodAction {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		LjlDish dish=new LjlDish();
 		List list=dish.sel();
-		System.out.println("newFood:"+list);
 		request.setAttribute("dishList", list); 
 		return "newFood";
 		
@@ -110,7 +109,6 @@ public class LjlAddFoodAction {
 		int num=0;
 		for (int i = 0; i <sname.length; i++) {
 			LjlAddFood addf= (LjlAddFood)session.getAttribute(sname[i]);
-			System.out.println(addf.getFoodname()+","+addf.getNumber()+","+addf.getPrice()+","+addf.getUprice());
 			price=Integer.parseInt(addf.getPrice())+price;
 			num=Integer.parseInt(addf.getNumber())+num;
 		}
@@ -139,7 +137,7 @@ public class LjlAddFoodAction {
 	 * @throws
 	 */
 	public void clearfood(){
-		System.out.println("------------------");
+		
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		session.invalidate();
 	}
@@ -154,7 +152,6 @@ public class LjlAddFoodAction {
 	 * @throws
 	 */
 	public void delfood(){
-		System.out.println("del---------------");
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		session.removeAttribute(addfood.getFoodname());
 	}
@@ -172,7 +169,6 @@ public class LjlAddFoodAction {
 	public void lookFood(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
-		
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		String[] sname=session.getValueNames();
 		int price=0;
@@ -195,5 +191,33 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * 
+	 * 方法功能说明：  
+	 * 创建：2017-6-21 by sxm  
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：       
+	 * @return void     
+	 * @throws
+	 */
+	public void searchOrder(){
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd 00:00:00");//设置日期格式
+		String time=df.format(new Date());
+		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String time1=df1.format(new Date());
+		System.out.println("time"+time);
+		System.out.println("time1"+time1);
+		List list=orders.selOrder(time,time1);
+		System.out.println("list"+list);
+		JSON json=toJson.toJson("val", list);
+		
+		try {
+			hsr.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

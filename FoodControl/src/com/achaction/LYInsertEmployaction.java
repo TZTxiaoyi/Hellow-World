@@ -5,6 +5,7 @@ package com.achaction;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSON;
@@ -146,14 +147,10 @@ public class LYInsertEmployaction {
 	 */
 	public void searchEM(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
-<<<<<<< HEAD
+
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
-=======
-		response.setContentType("text/html;charset=utf-8");
-		response.setCharacterEncoding("utf-8");
-		System.out.println("hoihoh");
->>>>>>> 4a095e5ba5fa6ee569b1f28800e5cb9b8d7b524c
+
 		List<String> list=ied.searchsome(putvalue);
 		//System.out.println(list);
 		toJson json=new toJson();
@@ -177,7 +174,7 @@ public class LYInsertEmployaction {
 		//request.getSession().setAttribute("username", employId.getEmenter());		
 		List list = ied.selectemid(employId);
 		if (list.size()==1) {
-			request.setAttribute("username", employId.getEmenter());			
+			request.setAttribute("username", employId.getEmenter());
 			return "success";
 		}else {
 			request.setAttribute("cuo", "haha");

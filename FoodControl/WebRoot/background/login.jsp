@@ -16,7 +16,6 @@
     <script text="text/javascript">
     	$(function(){
     		var dd='${cuo}';
-    		//alert(dd);
     		if(dd=="haha"){ 
     			alert("密码错误或用户名输入有误");
     			dd=null;

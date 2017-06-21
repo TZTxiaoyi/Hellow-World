@@ -23,7 +23,7 @@ public class LYEmployee {
 	
 	public String getAccount() {
 		return account;
-
+	}
 	private int ementer;
 	private int staffinfoState;
 	public int getStaffinfoState() {
