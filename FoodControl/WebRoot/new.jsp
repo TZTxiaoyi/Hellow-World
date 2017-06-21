@@ -1,6 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
-
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -33,7 +32,7 @@
    			width:300px;
    			height:300px;
    			margin-top:00px;
-   			margin-left:20px;
+   			
    			text-align:center;
    		}
    		#zbbutton1{
@@ -60,6 +59,9 @@
 			
 			display:none;
 		}
+		#food-btn{
+			
+		}
    </style>
    </head>
   
@@ -72,6 +74,9 @@
 			<button type="button" class="btn btn-default"id="zbbutton1"><h1 class="glyphicon glyphicon-home"></h1></button><!-- 主页 -->
 			<button type="button" class="btn btn-default" id="zbbutton1"><h1 class="glyphicon glyphicon-map-marker"><input type ="text" size="10px"/></h1></button><!-- 模糊查询菜名 -->
 			<button type="button" class="btn btn-default"id="zbbutton1"><h1 class="glyphicon glyphicon-bell">呼叫员工</h1></button><!-- 呼叫员工按钮 -->
+			
+			<span>当前系统时间：</span><span id="date_1"></span>
+			<span id="dishname">牡丹阁</span><span>桌</span>
 		</div>
 <!-- 左侧 -->		
 		<div class=" col-md-2" id="zbleft">
@@ -108,8 +113,19 @@
 		</div>
 <!-- 右侧打开网页自动添加菜单 -->
 		<div class=" col-md-10" id="zbright">
-			
-			
+			<c:forEach var="next"  items="${dishList}" varStatus="statu">
+				<div>
+					<img  onclick = "show()" src="image/2.png" alt="..." class="img-circle" width="200" height="200"><br/>
+					<span name="name${statu.index}">${next[1]}</span>:  <span name="name${statu.index}">${next[2]}</span>元 / 份<br/>
+					<div class="row" >
+						<div class=" center-block"  id="food-btn">
+							<input type="button" name="name${statu.index}" value="-1" class="remove btn btn-default">
+							<input type="text" value="0" class="number-cl btn btn-default" size="3" name="name${statu.index}">
+							<input type="button" name="name${statu.index}" value="+1" class="add btn btn-default">
+						</div>
+					</div>
+				</div>
+			</c:forEach>
 			
 		</div>
 <!-- 底部 -->		
@@ -125,7 +141,9 @@
 							<div class="modal-header"> <!-- 模态框标题-->
 								<button type="button" class="close"			data-dismiss=modal>×
 								</button>
-								<h4 class="modal-title" id="MyMenuLabel">		我点的菜
+								<h4 class="modal-title" id="MyMenuLabel">		我点的菜<button type="button" id="clear" class="btn btn-danger">
+									清空菜单
+								</button> 
 								</h4>
 							</div>
 							<div class="modal-body" id="modall-add" > <!-- 模态框显示的主要内容-->
@@ -135,10 +153,11 @@
 							</div>
 							
 							<div class="modal-footer"> <!-- 模态框下的关闭和保存按钮--> 
+								<span>点菜数量：</span><span id="foodnum"></span> <span>总价：</span><span id="mtTotal"></span>
 								<button type="button" class="btn btn-default" data-dismiss="modal">
 									关闭
 								</button>
-								<button type="button" class="btn btn-danger">
+								<button type="button" class="btn btn-danger" id="order">
 									立刻下单
 								</button> 
 							</div>
@@ -153,55 +172,67 @@
   
  
 		<script>
-			//页面加载自动添加4个菜品（测试）
-				$(function(){
-				for(var i=1;i<5;i++){
-					var show="<div><div><img  onclick = \"show()\" src=\"image/2.png\" alt=\"...\" class=\"img-circle\" width=\"200\" height=\"200\"><br/><span class=\"food-name-add"+i+"\">红烧狮子头"+i+"</span><span class=\"UPrice-add"+i+"\">20</span><br><input type=button value=\"-1\" class=\"remove\" id=\"add"+i+"\"><input type=text value=\"0\" id=\"number-add"+i+"\" size=\"3\" readonly><input type=button value=\"+1\" class=\"add\" id=\"add"+i+"\"></div></div>";
-					$("#zbright").append(show);
-				}
-				
-				});
-				//更新菜单和总价
+			
+			
+				//添加菜品，更新菜单和总价
 				function upfood(btnid,foodname,uprice,number,price){	
 					$.ajax({
 						type:"post",
 						url:"addfood_addFood.action",
 						data:{"addfood.foodname":foodname,"addfood.uprice":uprice,"addfood.number":number,"addfood.price":price},
 						success:function(data){
+							OrderTotal();
+						}
+					});
+				};
+				
+				function OrderTotal(){
+					$.ajax({
+						type:"post",
+						url:"addfood_OrderTotal.action",
+						success:function(data){
 							var json=JSON.parse(data);
-							$("#Total").html(json);	
+							$("#Total").html(json.price);
+							$("#mtTotal").html(json.price);
+							$("#foodnum").html(json.num);
 						}
 					});
 				};
 				//减少点菜的数量更新总价
 				$("#zbright").on('click',".remove",function(){
-					var btnid=$(this).attr("id");//当前点击的按钮的id
-					var foodname=$(".food-name-"+btnid).html();//当前添加的菜名
-					var uprice=parseInt($(".UPrice-"+btnid).html());//单价
-					//var number=parseInt($("#number-"+btnid).val());//数量
-					var number=parseInt($("#number-"+btnid).val())-1;
+					var btnid=$(this).attr("name");//当前点击的按钮的name
+					alert(btnid);
+					var foodname=$($("span[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
+					var uprice=parseInt($($("span[name=\""+btnid+"\"]")[1]).html());//单价
+					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())-1;
+					//alert(btnid+","+foodname+","+uprice+","+number);
 					if(number<0){
 						number=0;
 					}
 					var price=uprice*number;//价格*数量获得总价	
-					$("#number-"+btnid).val(number);
+					$($("input[name=\""+btnid+"\"]")[1]).val(number);
 						upfood(btnid,foodname,uprice,number,price);
+				});
+				//输入框失焦事件更新总价
+				$("#zbright").on('blur',".number-cl",function(){
+					
 				});
 				//增加点菜的数量更新总价
 				$("#zbright").on('click',".add",function(){
-					var btnid=$(this).attr("id");//当前点击的按钮的id
-					var foodname=$(".food-name-"+btnid).html();//当前添加的菜名
-					var uprice=parseInt($(".UPrice-"+btnid).html());//单价
-					var number=parseInt($("#number-"+btnid).val())+1;
+					var btnid=$(this).attr("name");//当前点击的按钮的name
+					var foodname=$($("span[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
+					var uprice=parseInt($($("span[name=\""+btnid+"\"]")[1]).html());//单价
+					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())+1;
 					var price=uprice*number;//价格*数量获得总价	
-					$("#number-"+btnid).val(number);
+					$($("input[name=\""+btnid+"\"]")[1]).val(number);
 						upfood(btnid,foodname,uprice,number,price);
 				});
-				$("#modall-table").on('click',"#del",function(){
-					alert("确认删除？");
-				});
-				//查看已点的菜单
+				//点击查看我的菜单
 				$("#LookOrder").click(function(){				
+					LookOrder();
+				});
+				//刷新菜单
+				function LookOrder(){				
 					$.ajax({
 						type:"post",
 						url:"addfood_lookFood.action",
@@ -210,13 +241,84 @@
 							var json=JSON.parse(data);
 							$("#modall-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
-								var dd="<tr>"+"<td>"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" id=\"del\">删除</button></td>"+"</tr>";
+								var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
 								$("#modall-table").append(dd);
 							});	
+							OrderTotal();
+						}
+					});
+				}
+				
+				//清除所有我的菜单
+				$("#clear").click(function(){
+					//alert("dff");
+					$.ajax({
+						type:"post",
+						url:"addfood_clearfood.action",
+						data:{"df":"df"},
+						success:function(data){
+								//alert("ss");
+								LookOrder();
 						}
 					});
 				});
-			
+				$("#modall-table").on('click',"#del",function(){
+					var btnname=$(this).attr("name");
+					var foodname=$($("td[name=\""+btnname+"\"]")[0]).html();
+					$.ajax({
+						type:"post",
+						url:"addfood_delfood.action",
+						data:{"addfood.foodname":foodname},
+						success:function(data){
+								//alert("ss");
+								LookOrder();
+						}
+					});
+					
+				});
+				$("#order").click(function(){
+					alert("dff");
+					var orderStatus=15;
+					var orderPrice=parseInt($("#mtTotal").html());
+					var foodNum=parseInt($("#foodnum").html());
+					var cost=9;
+					$.ajax({
+						type:"post",
+						url:"addfood_addOrder.action",
+						data:{"addorder.orderStatus":orderStatus,"addorder.orderPrice":orderPrice,"addorder.foodNum":foodNum,"addorder.cost":cost},
+						success:function(data){
+								if(data==1){
+									alert("下单成功");
+								}
+						}
+					});
+							
+				});
+				function p(s) {
+   				 return s < 10 ? '0' + s: s;
+				}
+				function date_1(){
+					
+					var myDate = new Date();
+					//获取当前年
+					var year=myDate.getFullYear();
+					//获取当前月
+					var month=myDate.getMonth()+1;
+					//获取当前日
+					var date=myDate.getDate(); 
+					var h=myDate.getHours();       //获取当前小时数(0-23)
+					var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+					var s=myDate.getSeconds();  
+					var now=year+'-'+p(month)+"-"+p(date)+" "+p(h)+':'+p(m)+":"+p(s);
+					return now;
+				}
+				function newdate_1(){
+					$("#date_1").html(date_1());
+				}
+				$(function(){
+					newdate_1();
+					setInterval('newdate_1();', 3000);
+				});
 		</script>
 		<script type="text/javascript" language="javascript">
 			var z1=document.getElementById("z1");
