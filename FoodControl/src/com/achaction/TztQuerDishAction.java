@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.entity.TztDish;
 import com.entity.TztDishOrder;
+import com.insertemploydao.TztDishImp;
 import com.insertemploydao.TztDishOrderImp;
+import com.jspsmart.upload.Request;
 import com.utils.toJson;
 
 
@@ -24,12 +27,11 @@ import com.utils.toJson;
  * @版本：V1.0
  */
 public class TztQuerDishAction {
-	String dishId;
-	
-	public String getDishid() {
+	int dishId;
+	public int getDishId() {
 		return dishId;
 	}
-	public void setDishid(String dishid) {
+	public void setDishId(int dishId) {
 		this.dishId = dishId;
 	}
 	/**
@@ -47,10 +49,9 @@ public class TztQuerDishAction {
 		rep.setContentType("text/html;charset=utf-8");
 		TztDishOrderImp dao =new TztDishOrderImp();
 		List result = dao.queryMade();
-		System.out.println(result.size());
+		System.out.println(result);
 		try {
 			rep.getWriter().print(toJson.toJson("tztjs", result).toString());
-			System.out.println(toJson.toJson("tztjs", result));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,26 +74,67 @@ public class TztQuerDishAction {
 		rep.setContentType("html/text;charset =utf-8");
 		TztDishOrderImp  dao =new TztDishOrderImp();
 		List result = dao.queryMading();
-		System.out.println(result.size());
 		try {
 			rep.getWriter().print(toJson.toJson("tztjs", result).toString());
-			System.out.println(toJson.toJson("tztjs", result));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			e.getMessage();
 		}
 	}
+	/**
+	 * 
+	 * 方法功能说明：  点击制作按钮修改菜的状态为制作中
+	 * 创建：2017-6-21 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：       
+	 * @return void     
+	 * @throws
+	 */
 	public void make(){
 		HttpServletResponse rep = ServletActionContext.getResponse();
 		rep.setContentType("html/text;charset=utf-8");
-		TztDishOrderImp 
-		dao=new TztDishOrderImp();
-		TztDishOrder dish = new TztDishOrder();
+		TztDishImp dao=new TztDishImp();
+		TztDish dish = new TztDish();
 		dish.setDishId(dishId);
-		List madingdish =dao.sel(dish);
-		
-		
-		
+		List madedish =dao.sel(dish);
+		TztDishImp dishImp = new TztDishImp();
+		dishImp.changeDish(13,(List)madedish.get(0),12);
+		System.out.println("change");
+		try {
+			rep.getWriter().print("sucess");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	/**
+	 * 
+	 * 方法功能说明：点击制作完成按钮修改菜品状态为制作完成  
+	 * 创建：2017-6-21 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：       
+	 * @return void     
+	 * @throws
+	 */
+	public void makding(){
+		HttpServletResponse rep = ServletActionContext.getResponse();
+		rep.setContentType("html/text;charset=utf-8");
+		TztDishImp dao=new TztDishImp();
+		TztDish dish = new TztDish();
+		dish.setDishId(dishId);
+		List madedish =dao.sel(dish);
+		TztDishImp dishImp = new TztDishImp();
+		dishImp.changeDish(14,(List)madedish.get(0),13);
+		System.out.println("change");
+		try {
+			rep.getWriter().print("sucess");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

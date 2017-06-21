@@ -69,7 +69,7 @@ td{
 			<div class="column" id="col1">
 		
 				<!-- 左边窗口 -->
-				<input id="querymading" type="button" value="查询" />
+				<input class="btn btn-info" id="querymading" type="button" value="刷新" />
 				<div >
 				<table id="titlemading">
 						
@@ -79,7 +79,7 @@ td{
 
 			<div class="row" id="col2">
 				<!------------右边窗口-------------->
-				<input id="querymade" type="button" value="查询" />
+				<input  class="btn btn-info" "id="querymade" type="button" value="刷新" />
 				<div >
 					<table id="titlemade">
 			
@@ -129,7 +129,6 @@ td{
  			});
  		function queryMading(){
  				$.ajax({
- 				
  					url:"TztQueryDish_queryMading.action",
  					type:"post",
  					data:{},
@@ -137,13 +136,33 @@ td{
  					success:function(data){
  					$("#titlemading").html("<tr><td>菜名</td><td>数量</td><td>操作</td></tr>");
 					$.each(data,function(index,value){				
-					var dd="<tr>"+"<td name =\""+value[0]+"\">"+value[1]+"</td>"+"<td>"+value[2] +"</td>"+"<td><button class=\"btn btn-danger\" id=\"dynamicbtn\">制作完成</button></td>"+"</tr>";
+					var dd="<tr>"+"<td >"+value[1]+"</td>"+"<td>"+value[2] +"</td>"+"<td><button class=\"btn btn-danger\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button></td>"+"</tr>";
 					$("#titlemading").prepend(dd);		
 					});
 					}
  					});
  				}
- 				
+ 		$(function(){
+ 			$("#titlemading").on('click',"#madingbutton",function(){
+ 				var aa=$(this).attr("name");
+ 				alert(aa);
+ 				$.ajax({
+ 					url:"TztQueryDish_makding.action",
+ 					type:"post",
+ 					data:{"dishId":aa},
+ 					dataType:"text",
+ 					complete:function(data){
+ 						alert(2);
+ 						queryMading();
+						queryMade();
+ 						
+ 					}
+ 				});
+ 			});
+ 		});
+ 		
+ 		
+ 		
  			$("#querymade").click( function(){
  				queryMade();
  			});
@@ -153,7 +172,7 @@ td{
  				$.ajax({
  					url:"TztQueryDish_queryMade.action",
  					type:"post",
- 					data:{"aaa":"aa"},
+ 					data:{},
  					dataType:"json",
  					success:function(data){
  					$("#titlemade").html("<tr><td>菜名</td><td>数量</td><td>操作</td></tr>");
@@ -166,20 +185,21 @@ td{
  			}
  		$(function(){
  			$("#titlemade").on('click',"#makebutton",function(){
- 				alert(1);
- 				var id=$(this).attr("name");
- 				alert(id);
+ 				var aa=$(this).attr("name");
  				$.ajax({
  					url:"TztQueryDish_make.action",
  					type:"post",
- 					data:{"dishId":id},
- 					dataType:"json",
- 					success:function(data){
+ 					data:{"dishId":aa},
+ 					dataType:"text",
+ 					complete:function(data){
+ 						queryMading();
+						queryMade();
  						
  					}
  				});
  			});
  		});
+ 	
  	</script>
 </body>
 </html>

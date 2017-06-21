@@ -10,39 +10,39 @@ package com.entity;
  * @°æ±¾£ºV1.0
  */
 public class TztDishOrder {
-	String OrderId;
-	String dishId;
-	String dishStatus;
-	String id;
-	String deskId;
-	public String getOrderId() {
+	int OrderId;
+	int dishId;
+	int dishStatus;
+	int id;
+	int deskId;
+	public int getOrderId() {
 		return OrderId;
 	}
-	public void setOrderId(String orderId) {
+	public void setOrderId(int orderId) {
 		OrderId = orderId;
 	}
-	public String getDishId() {
+	public int getDishId() {
 		return dishId;
 	}
-	public void setDishId(String dishId) {
+	public void setDishId(int dishId) {
 		this.dishId = dishId;
 	}
-	public String getDishStatus() {
+	public int getDishStatus() {
 		return dishStatus;
 	}
-	public void setDishStatus(String dishStatus) {
+	public void setDishStatus(int dishStatus) {
 		this.dishStatus = dishStatus;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDeskId() {
+	public int getDeskId() {
 		return deskId;
 	}
-	public void setDeskId(String deskId) {
+	public void setDeskId(int deskId) {
 		this.deskId = deskId;
 	}
 	
