@@ -81,8 +81,8 @@ public class LYInsertEmployaction {
 	 */
 	public void selem(){
 		HttpServletResponse response=ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=GBK");
-		response.setCharacterEncoding("GBK");
+		response.setContentType("text/html;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
 		List<String> list=ied.selemploy(employee);		
 		toJson json=new toJson();
 		//System.out.println(list.size());
@@ -123,8 +123,8 @@ public class LYInsertEmployaction {
 	public void searchEM(){
 		System.out.println(putvalue);
 		HttpServletResponse response=ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=GBK");
-		response.setCharacterEncoding("GBK");
+		response.setContentType("text/html;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
 		System.out.println("hoihoh");
 		List<String> list=ied.searchsome(putvalue);
 		System.out.println(list);

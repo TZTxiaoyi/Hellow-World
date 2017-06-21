@@ -64,12 +64,26 @@ public class SxmTableSql implements DaoInterface {
 		
 		return flag;
 	}
+	/**
+	 * 后台桌子快速查询
+	 * @param ser
+	 * @return
+	 */
 	public List selTable(String ser) {
 		String sql = "select * from desk_refresh where deskId like'%"+ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
 		List list = DaoFactory.Query(sql);
 		return list;
 	}
-
+	/**
+	 * 前台桌子快速查询
+	 * @param ser
+	 * @return
+	 */
+	public List serviceTable(String ser) {
+		String sql = "select * from desk_refresh where deskName like'%"+ser+"%'";
+		List list = DaoFactory.Query(sql);
+		return list;
+	}
 	/**
 	 * @return
 	 * 
@@ -80,7 +94,7 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public List selTableAdmin(Object obj) {
-		String sql = "select top ("+3+") * from desk_refresh where deskId not in(select top "+0+" deskId from desk_refresh)";
+		String sql = "select * from desk_refresh";
 		List list = DaoFactory.Query(sql);
 		
 		return list;
@@ -116,13 +130,12 @@ public class SxmTableSql implements DaoInterface {
 	 */
 	public int update(Object tabp) {
 		SxmTable tab = (SxmTable) tabp;
-		String sql = "update desk set personNum=?,deskName=?,deskState=? where deskId=?  order by deskId desc";
+		String sql = "update desk set personNum=?,deskName=?,deskState=? where deskId=?";
 		Object[] params = new Object[] { tab.getPersonNum(), tab.getDeskName(),
 				tab.getDeskState(), tab.getDeskId() };
 		return DaoFactory.Updata(sql, params);
 
 	}
-
 	/**
 	 * @return 
 	 * 

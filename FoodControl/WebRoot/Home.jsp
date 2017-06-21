@@ -103,12 +103,12 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss=modal></button>
+					<button type="button" class="close" data-dismiss=modal>×</button>
 					<div class="text-center margin-big padding-big-top">
 						<h1>餐饮管理系统</h1>
 					</div>
 				</div>
-				<form action="Home.jsp" method="get" onsubmit="return show()">
+				<form action="home.jsp" method="get" onsubmit="return show()">
 					<div>
 						<input placeholder="手机号/用户名/邮箱" type="text" id="a1"
 							onfocus="return userFocus()" onblur="return userBlur()" /> <span
@@ -148,10 +148,10 @@
 					<button type="button" class="close" data-dismiss=modal>×</button>
 					<h4 class="modal-title margin-big padding-big-top"
 						id="myModalLabel">
-						如有账号， <a href="Home.jsp">请登录</a>
+						如有账号， <a href="home.jsp">请登录</a>
 					</h4>
 				</div>
-				<form action="Home.jsp" method="get" onsubmit="return show()">
+				<form action="home.jsp" method="get" onsubmit="return show()">
 					<div>
 						<input placeholder="手机号/用户名/邮箱" type="text" id="a1"
 							onfocus="return userFocus()" onblur="return userBlur()" /> <span

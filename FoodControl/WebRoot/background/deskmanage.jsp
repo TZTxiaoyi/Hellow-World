@@ -179,7 +179,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					
 					if(name=="first"){
-						inpval=1;alert(inpval);
+						inpval=1;
 					}
 					if(name=="minus"){
 						inpval=inpval-1;
@@ -200,15 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 					$("#pageinp").val(inpval);
 					var curr=inpval-1;
-					$.ajax({
-						url:"SxmTable_tabPage.action",
-						type:"post",
-						data:{"currPage":curr},
-						success:function(data){
-							var json = JSON.parse(data);
-						refresh(json);
-						},
-					});
+					tabonload(curr);
 				});
 			})
 			/*
@@ -278,10 +270,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					success : function(data) {
 						var json = JSON.parse(data);
 						if (json != -1) {
-							alert(json);
 							tabonload();//调用页面加载时自动查询数据库，显示桌台信息
-							} else {
-								alert("更新失败！");
+						} else {
+							alert("更新失败！");
 						}
 					},
 				});
@@ -336,13 +327,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				页面加载时自动查询数据库，显示桌台信息
 			 */
 			$(function() {
-				tabonload();
+				var currpage=0;
+				tabonload(currpage);
 			});
-			function tabonload() {
+			function tabonload(curr) {
 				$.ajax({
-					url : "SxmTable_tableAdmin.action",
+					url : "SxmTable_tabPage.action",
 					type : "post",
-					data : {map : null},
+					data : {"currPage":curr},
 					success : function flash(data) {
 						var json = JSON.parse(data);
 						refresh(json);
