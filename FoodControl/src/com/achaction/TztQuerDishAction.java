@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.TztDishOrder;
-import com.logic.TztDishOrderImp;
+import com.insertemploydao.TztDishOrderImp;
 import com.utils.toJson;
+
+
 
 /**
  * 
@@ -22,6 +24,14 @@ import com.utils.toJson;
  * @版本：V1.0
  */
 public class TztQuerDishAction {
+	String dishId;
+	
+	public String getDishid() {
+		return dishId;
+	}
+	public void setDishid(String dishid) {
+		this.dishId = dishId;
+	}
 	/**
 	 * 
 	 * 方法功能说明：  查询需要制作的菜
@@ -36,7 +46,6 @@ public class TztQuerDishAction {
 		HttpServletResponse rep= ServletActionContext.getResponse();
 		rep.setContentType("text/html;charset=utf-8");
 		TztDishOrderImp dao =new TztDishOrderImp();
-		TztDishOrder dishorder = new TztDishOrder();
 		List result = dao.queryMade();
 		System.out.println(result.size());
 		try {
@@ -63,7 +72,6 @@ public class TztQuerDishAction {
 		HttpServletResponse rep =ServletActionContext.getResponse();
 		rep.setContentType("html/text;charset =utf-8");
 		TztDishOrderImp  dao =new TztDishOrderImp();
-		TztDishOrder dishorder = new TztDishOrder();
 		List result = dao.queryMading();
 		System.out.println(result.size());
 		try {
@@ -74,5 +82,17 @@ public class TztQuerDishAction {
 			e.printStackTrace();
 			e.getMessage();
 		}
+	}
+	public void make(){
+		HttpServletResponse rep = ServletActionContext.getResponse();
+		rep.setContentType("html/text;charset=utf-8");
+		TztDishOrderImp 
+		dao=new TztDishOrderImp();
+		TztDishOrder dish = new TztDishOrder();
+		dish.setDishId(dishId);
+		List madingdish =dao.sel(dish);
+		
+		
+		
 	}
 }
