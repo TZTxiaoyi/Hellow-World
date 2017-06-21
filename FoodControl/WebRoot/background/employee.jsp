@@ -24,6 +24,173 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		当有一个输入框中的值为空时，将不执行Ajax语句
 	 -->
 	<script type="text/javascript">
+		
+		$(function(){
+			$("#searchem").click(function(){
+				var putvalue=$("#condition").val();	
+				alert(putvalue);			
+				$.ajax({
+					url:"achieve_searchEM.action",
+					type:"post",
+					data:{"putvalue":putvalue},		
+					datatype:"json"	,	
+					success:function(data){
+					var json=JSON.parse(data);
+					$("#tableid").html("");
+						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>负责桌台</td><td>操作</td></tr>";
+					 	$("#tableid").append(th);
+						$.each(json,function(index,value){
+						
+						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
+							var emtable=
+								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
+								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
+								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
+								"<span class=\"icon-trash-o\"></span>删除 </button>"+
+								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
+								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+								$("#tableid").append(emtable);
+																
+						});
+						var emtable="<tr id=\"trtab\">"+
+	        				"<td colspan=\"10\">"+
+	        				"<div class=\"pagelist\"> <a href=\"\">上一页</a> <span class=\"current\">1</span><a href=\"\">2</a><a href=\"\">3</a><a href=\"\">下一页</a><a href=\"\">尾页</a> </div></td></tr>"
+						
+						$("#tableid").append(emtable);
+						
+				
+					}
+				});
+			});
+		});
+		/*
+		* tableid：表id
+		* 点击修改按钮触发点击事件，获得每行数据放到模态框中
+		* alterbtn：修改按钮的类名
+		* 修改某个或者某几个当前行属性值后，调用修改函数
+		* 
+		*/		
+		$(function(){
+			$("#tableid").on('click',".alterbtn",function(){
+				var alterbtn = $(this).attr("id");
+				
+				var namehtml =$("#a"+alterbtn).html();				
+				var idhtml =$("#b"+alterbtn).html();
+				var phonehtml =$("#c"+alterbtn).html();
+				var sexhtml =$("#d"+alterbtn).html();
+				var agehtml =$("#e"+alterbtn).html();
+				var adresshtml =$("#f"+alterbtn).html();
+				var timehtml =$("#g"+alterbtn).html();
+				//var parthtml =$("#h"+alterbtn).html();
+				//ar tablehtml =$("#i"+alterbtn).html();
+				  
+				
+				$("#per").val(namehtml);//将要修改某行的数据放入到模态框中
+				$("#perid").val(idhtml);
+				$("#perphone").val(phonehtml);
+				$("#persex").val(sexhtml);
+				$("#perage").val(agehtml);
+				$("#perdress").val(adresshtml);
+				$("#pertime").val(timehtml);
+				//$("#perpart").val(parthtml);
+				//$("#pertable").val(tablehtml);		
+				
+				update(idhtml);					
+			});
+			function update(idhtml){
+				$("#sureup").bind('click',function(){
+					$(this).unbind('click');
+					var sname=$("#per").val();//修改后将值
+					var sid=$("#perid").val();
+					var sphone=$("#perphone").val();
+					var ssex=$("#persex").val();
+					var sage=$("#perage").val();
+					var sadress=$("#perdress").val();
+					var stime=$("#pertime").val();
+					//var spart=$("#per").val();
+					//var stable=$("#per").val();
+					alert(stime);
+					$.ajax({
+						url:"achieve_updatestaff.action",
+						type:"post",
+						data:{"employee.emid":sid,"employee.emname":sname,"employee.emsex":ssex,"employee.emage":sage,"employee.emphone":sphone,"employee.emadress":sadress,"employee.emjointime":stime},
+						success:function(data){
+									alert("ssss");			
+						}
+					});
+				});
+			}
+		});
+			/*
+			* tableid：表id
+			* deskbtn：删除id
+			* 点击删除按钮触发点击事件
+			* 
+			* 
+			* 
+			*/
+		$(function(){
+			$("#tableid").on('click',".deskbtn",function(){			
+				var deskbtn=$(this).attr("id");
+				var emhtml = $("#b"+deskbtn).html();
+				$.ajax({
+					url:"achieve_delem.action",
+					type:"post",
+					data:{"employee.emid":emhtml},					
+					success:function(data){
+						if(data==-1){
+							alert("删除失败");
+						}else{
+							alert("删除成功");
+						}										
+					}
+				});
+			});	
+		});
+		
+			/*
+			* 自动运行查询函数
+			* tableid：表id
+			* deskbtn：删除id
+			* 点击删除按钮触发点击事件
+			* 		
+			*/
+	$(function(){			
+			$.ajax({
+				url:"achieve_selem.action",
+				type:"post",
+				data:{map:null},
+				datatype:"text",
+				success:function(data){
+				var json=JSON.parse(data);				 
+				var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>负责桌台</td><td>操作</td></tr>";
+					 $("#trtab").before(th);
+						$.each(json,function(index,value){
+						
+						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
+							var emtable=
+								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
+								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
+								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
+								"<span class=\"icon-trash-o\"></span>删除 </button>"+
+								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
+								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+								$("#trtab").before(emtable);
+																
+						});
+					}
+				});
+			
+		});
+			/*
+			* 添加员工按钮，弹出模态框
+			* 
+			* addem：点击添加按钮触发点击事件
+			* 先判断输入框中有没有空值，如果有，将插入失败，你有那么多属性就得给我加上，我不管数据库要求是否为空，
+			* 在我这就是不能为空
+			*/
 		$(function(){
 			$("#addem").click(function(){
 				var emid=$("#emid").val();
@@ -33,13 +200,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var emphone=$("#emphone").val();
 				var emadress=$("#emadress").val();
 				var emjointime=$("#emjointime").val();
-				var empartid=$("#empartid").val();								
-				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empartid){					
+				var empart=$("#empart").val();
+				var ementer=$("#ementer").val();	
+				
+											
+				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empart && ementer){					
 					$.ajax({
 						type:"post",
 						url:"achieve_save.action",
 						data:{"employee.emid":emid,"employee.emname":emname,"employee.emsex":emsex,"employee.emage":emage,
-							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,"employee.empartid":empartid},
+							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,"employee.empart":empart,"employee.ementer":ementer},
 						success:function(data){
 							alert("success");
 						}
@@ -93,10 +263,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									电	话：<input type="text" id="emphone" name="employee.emphone"><br/> 									
 									地	址：<input type="text" id="emadress" name="employee.emadress"><br/>
 									就职时间：<input type="text" id="emjointime" name="employee.emjointime"><br/>
-									员工账号：<input type="text" id="empartid" name="employee.empartid">	<br/>
+									员工角色：<input type="text" id="empart" name="empart"><br>
+									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>
 										     
 								
 								</div>
+								
+								
+															
 								<div class="modal-footer">
 								<!-- 
 									关闭模态框按钮
@@ -113,75 +287,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 				</div>
 	        </li>
+	        
 	        <!-- 
 	        	搜索员工信息框
 	         -->
 	        <li>
 	        
-	        	<input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-          		<a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a></li>
+	        	<input id="condition"type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          		<a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchem"> 搜索</a></li>
 	        </li>
 	      </ul>
 	    </div>
 	    <!-- 
 	    	查询出来的员工信息生成的table
 	     -->
-	    <table class="table table-hover text-center">
-	      <tr>
-	        <th width="120">姓名</th>
-	        <th>角色</th>
-	        <th>员工编号</th>       
-	        <th>电话</th>
-	        <th>性别</th>
-	        <th>年龄</th>
-	        <th width="25%">地址</th>
-	         <th width="120">就职时间</th>
-	         <th>负责桌台</th>
-	        <th>操作</th>       
-	      </tr>      
-	        <tr>
-	          <td><input type="checkbox" name="id[]" value="1" />路飞</td>
-	          <td>收银</td>
-	          <td>110</td>
-	          <td>18838972400</td>
-	          <td>男</td>  
-	           <td>15</td>         
-	          <td>海贼王之东海风车村</td>
-	          <td>2016-07-01</td>
-	          <td>1</td>
-	          <td>
-	          	<div class="button-group"> 
-	          		<a class="button border-red" href="javascript:void(0)" onclick="return del(1)">
-	          			<span class="icon-trash-o"></span> 删除
-	          		</a>
-	          		<a type="button" class="button border-main" href="#">
-	          			<span class="icon-edit"></span>
-	          		修改</a> 
-	          	</div>
-	          </td>
-	        </tr>
-	        <tr>
-	          <td><input type="checkbox" name="id[]" value="1" />索隆</td>
-	          <td>收银</td>
-	          <td>111</td>
-	          <td>18838972400</td>
-	          <td>男</td>  
-	          <td>16</td>         
-	          <td>海贼王之东海霜月村</td>
-	          <td>2016-07-01</td>
-	          <td>1</td>
-	          <td>
-	          	<div class="button-group"> 
-	          		<a class="button border-red" href="javascript:void(0)" onclick="return del(1)">
-	          			<span class="icon-trash-o"></span> 
-	          		删除</a>
-	          		<a type="button" class="button border-main" href="#">
-	          			<span class="icon-edit"></span>
-	          		修改</a> 
-	          	</div>
-	          </td>
-	        </tr>	        
-	      <tr>
+	    <table class="table table-hover text-center" id="tableid">
+	     
+	       
+	      <tr id="trtab">
 	        <td colspan="10">
 	        <div class="pagelist"> <a href="">上一页</a> <span class="current">1</span><a href="">2</a><a href="">3</a><a href="">下一页</a><a href="">尾页</a> </div></td>
 	      </tr>
@@ -189,6 +312,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </div>
 	
 </div>
+
+
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+				<div class="text-center margin-big padding-big-top">
+							<h1>当前要修改的员工</h1>
+				</div>
+				<div id="modalform">
+					<div>
+					    <span>员工姓名</span><input type="text" name="st.personNum" id="per"/>
+					</div>
+					 <div>
+					   <span>员工编号</span><input type="text" name="st.deskName" id="perid"/>
+					 </div>
+					  <div>
+					    <span>电话</span><input type="text" name="st.deskState" id="perphone"/>
+					  </div>
+					   <div>
+					    	<span>性别</span><input type="text" name="st.deskState" id="persex"/>
+					   </div>
+					   <div>
+					    	<span>年龄</span><input type="text" name="st.deskState" id="perage"/>
+					   </div>
+					   <div>
+					    	<span>地址</span><input type="text" name="st.deskState" id="perdress"/>
+					    </div>
+					    <div>
+					    	<span>就职时间</span><input type="text" name="st.deskState" id="pertime"/>
+					    </div>
+					    <div>
+					    	<span>角色</span><input type="text" name="st.deskState" id="perpart"/>
+					    </div>
+					    <div>
+					    	<span>负责桌台</span><input type="text" name="st.deskState" id="pertable"/>
+					    </div>	
+					 </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
 <script type="text/javascript">
 
 function del(id){

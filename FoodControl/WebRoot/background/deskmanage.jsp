@@ -42,6 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		#modalform span{
 			font-size:20px;
 		}
+	
 	</style>
 </head>
 
@@ -62,78 +63,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								data-target="#myModaltable"><span class="icon-plus-square-o"></span>
 									添加桌台</a></li>
 							<li><input type="text" placeholder="请输入搜索关键字"
-								name="keywords" class="input"
-								style="width:250px; line-height:17px;display:inline-block" /> <a
-								href="javascript:void(0)" class="button border-main icon-search"
+								name="keywords" class="input"style="width:250px; line-height:17px;display:inline-block" /> <a
+								href="javascript:void(0)" class="button border-main icon-search fastsearch"
 								onclick="changesearch()"> 搜索</a>
 							</li>
 							</li>
 						</ul>
 
 					</div>
-					<table class="table table-hover text-center">
-						<tr>
-							<th>桌台编号</th>
-							<th>负责人</th>
-							<th>桌台名</th>
-							<th>操作</th>
-						</tr>
-						<tr id="modall-table">
-							<td><input type="checkbox" name="id[]" value="1" />101</td>
-							<td>娜美</td>
-							<td>SSR</td>
-							<td>
-								<div class="button-group">
-									<a class="button border-red" href="javascript:void(0)"
-										onclick="return del(1)"> <span class="icon-trash-o"></span>
-										删除 </a> <a type="button" class="button border-main"
-										data-toggle="modal" data-target="#myModal"> <span
-										class="icon-edit"></span> 修改</a>
-
-									<div class="modal fade" id="myModal" tabindex="-1"
-										role="dialog" aria-labelledby="myModalLabel">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
-													</button>
-													<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save
-														changes</button>
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-								</div></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="id[]" value="1" />102</td>
-							<td>罗宾</td>
-							<td>SR</td>
-							<td>
-								<div class="button-group">
-									<a class="button border-red" href="javascript:void(0)"
-										onclick="return del(1)"> <span class="icon-trash-o"></span>
-										删除</a> <a type="button" class="button border-main" href="#"> <span
-										class="icon-edit"></span> 修改</a>
-								</div></td>
-						</tr>
-						<tr>
-							<td colspan="4">
-								<div class="pagelist">
-									<a href="">上一页</a> <span class="current">1</span><a href="">2</a><a
-										href="">3</a><a href="">下一页</a><a href="">尾页</a>
-								</div>
-							</td>
-						</tr>
+					<table class="table table-hover text-center"  id="tab">
+						
+						
 					</table>
+					<div class="pagelist">
+						<a name="first" class="page" href="#">首页</a><a name="minus" class="page" href="#">上一页</a><a name="add" class="page" href="#">下一页</a><a name="last" class="page" href="#">尾页</a><input type="text" id="pageinp" value="1" size="5"/>
+						<a class="page" type="button">跳转</a>共<span id="spanpage"></span>页
+					</div>
 				</div>
 			</form>
 		</div>
@@ -150,95 +95,305 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="text-center margin-big padding-big-top">
 							<h1>桌位详细信息</h1>
 						</div>
-						 <form action="../SxmTable_appendTable.action"method="post" id="modalform"  onsubmit="return show()">
+						 <div id="modalform">
 					    	<div>
-					    		<span>桌位人数 </span><input type="text" name="st.personNum"/>
+					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="personNum"/>
 					    	</div>
 					    	<div>
-					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName"/>
+					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"/>
 					    	</div>
 					    	<div>
-					    		<span>桌子状态</span><input  name="st.deskState"/>
+					    		<span>桌子状态</span><input  name="st.deskState" id="deskState"class="dstate"/>
 					    	</div>
 					    	<div>
-								<button type="submit" class="btn btn-warning btn-group-lg">确认添加</button>
+								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
 							</div>
-					    </form>
+					 </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 
+			修改按钮模态框
+		 -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close"></button>
+						<div class="text-center margin-big padding-big-top">
+							<h1>桌位详细信息</h1>
+						</div>
+						<div id="modalform">
+					    	<div>
+					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="pname"/>
+					    	</div>
+					    	<div>
+					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName" class="tableName"/>
+					    	</div>
+					    	<div>
+					    		<span>桌子状态</span><input  name="st.deskState" id="dState"/>
+					    	</div>
+					    	
+					 </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >确定更改</button>
+
 					</div>
 				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
-			
-			function del(id){
-				if(confirm("您确定要删除吗?")){
-					
-				}
-			}
-			
-			$("#checkall").click(function(){ 
-			  $("input[name='id[]']").each(function(){
-				  if (this.checked) {
-					  this.checked = false;
-				  }
-				  else {
-					  this.checked = true;
-				  }
-			  });
+			/*
+				总页数
+			*/
+			$(function(){
+				$.ajax({
+						url:"SxmTable_pageTotal.action",
+						type:"post",
+						data:{},
+						success:function(data){
+							var pagetotal=parseInt(data/3);	
+							if(data%3==0){
+								$("#spanpage").html(pagetotal);
+							}
+							if(data%3!=0){
+								$("#spanpage").html(parseInt(pagetotal)+1);
+							}
+						},
+					});
 			})
+		
 			
-			function DelSelect(){
-				var Checkbox=false;
-				 $("input[name='id[]']").each(function(){
-				  if (this.checked==true) {		
-					Checkbox=true;	
-				  }
+			/*
+				分页
+			*/
+			$(function(){
+				$(".page").click(function(){
+					var name=$(this).attr("name");
+					
+					var inpval=parseInt($("#pageinp").val());
+					
+					
+					if(name=="first"){
+						inpval=1;
+					}
+					if(name=="minus"){
+						inpval=inpval-1;
+						if(inpval<=1){
+							inpval=1;
+							
+						}
+					}
+					if(name=="add"){
+						inpval=inpval+1;
+						if(inpval>=$("#spanpage").html()){
+							inpval=$("#spanpage").html()
+							
+						}
+					}
+					if(name=="last"){
+						inpval=$("#spanpage").html();
+					}
+					$("#pageinp").val(inpval);
+					var curr=inpval-1;
+					tabonload(curr);
 				});
-				if (Checkbox){
-					var t=confirm("您确认要删除选中的内容吗？");
-					if (t==false) return false; 		
+			})
+			/*
+				快速搜索
+			*/
+			$(".fastsearch").click(function(){
+				var allput=$(".input").val();
+				$.ajax({
+					url : "../SxmTable_searchTable.action",
+					type : "post",
+					data : {"search" :allput},
+					success:function(data){
+						var json = JSON.parse(data);
+						refresh(json);
+					}
+				});
+			});
+			/*
+				点击删除按钮删除一行数据;
+			*/
+			$("#tab").on('click',".deskbtn",function(){
+				var deskbtn=$(this).attr("id");
+				var deskid=$("#desk"+deskbtn).html();
+				if(confirm("您确定要删除吗?")){
+					$.ajax({
+						url:"SxmTable_delLineTable.action",
+						type:"post",
+						data:{"st.deskId":deskid},
+						success:function(data){
+							var json=JSON.parse(data);
+							if(json!=-1){
+								tabonload();
+							}else{
+								alert("删除失败！");
+							}
+						}
+					});
 				}
-				else{
+			});
+		/*
+			点击修改按钮修改一行数据表单里自动获取这一行的值
+		*/
+		$("#tab").on('click',".alterbtn",function(){
+			var deskalter=$(this).attr("id");
+			var deskid=$(".desk"+deskalter).html();
+			var deskname=$("#name"+deskalter).html();
+			var deskperson=$("#person"+deskalter).html();
+			var deskstate=$("#state"+deskalter).html();
+			$("#pname").val(deskperson);
+			$(".tableName").val(deskname);
+			$("#dState").val(deskstate);
+			updata(deskid);
+		});
+		//点击确定修改按钮时执行；
+			
+		function updata(desk) {
+			//bind/unbind点击事件只执行一次
+			$(".modal-alterbtn").bind('click', function() {//绑定事件处理函数
+				$(this).unbind('click');//移除当前事件处理函数
+				var pn = $("#pname").val();
+				var dn = $("#tableName").val();
+				var ds = $("#dState").val();
+				$.ajax({
+					url : "SxmTable_upLineTable.action",
+					type : "post",
+					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn,"st.deskState" : ds},
+					success : function(data) {
+						var json = JSON.parse(data);
+						if (json != -1) {
+							tabonload();//调用页面加载时自动查询数据库，显示桌台信息
+						} else {
+							alert("更新失败！");
+						}
+					},
+				});
+
+			});
+		};
+
+			$("#checkall").click(function() {
+				$("input[name='id[]']").each(function() {
+					if (this.checked) {
+						this.checked = false;
+					} else {
+						this.checked = true;
+					}
+				});
+			});
+
+			function DelSelect() {
+				var Checkbox = false;
+				$("input[name='id[]']").each(function() {
+					if (this.checked == true) {
+						Checkbox = true;
+					}
+				});
+				if (Checkbox) {
+					var t = confirm("您确认要删除选中的内容吗？");
+					if (t == false)
+						return false;
+				} else {
 					alert("请选择您要删除的内容!");
 					return false;
 				}
-			}
-			
+			};
+
 			/*
 				添加桌子名字失焦时检测是否已存在改桌名的函数
-			*/
-			$("#tableName").blur(function(){
-				alert(1);
+			 */
+			$(".tableName").blur(function() {
 				$.ajax({
-					url:"../SxmTable_equalTable.action",
-					type:"post",
-					data:{stname:$(this).val()},
-					success:function(data){
-						var json=JSON.parse(data);
-						if(json==1){
+					url : "../SxmTable_equalTable.action",
+					type : "post",
+					data : {"st.deskName" : $(this).val()},
+					success : function(data) {
+						var json = JSON.parse(data);
+						if (json != -1) {
 							alert("该桌名已存在！");
 						}
 					},
 				});
 			});
-		$(function(){
-			$.ajax({
-				url:"SxmTable_TableAdmin.action",
-				type:"post",
-				data:{map:null},
-				success:function(data){
-					 var json=JSON.parse(data);
-						$.each(json,function(index,value){
-								
-								var dd="<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td></tr>";
-								$("#modall-table").prepend(dd);
-								
-							});
-					},
+			/*
+				页面加载时自动查询数据库，显示桌台信息
+			 */
+			$(function() {
+				var currpage=0;
+				tabonload(currpage);
+			});
+			function tabonload(curr) {
+				$.ajax({
+					url : "SxmTable_tabPage.action",
+					type : "post",
+					data : {"currPage":curr},
+					success : function flash(data) {
+						var json = JSON.parse(data);
+						refresh(json);
+					}
 				});
+
+			};
+			function refresh(json) {
+				var th = "<tr><td></td><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
+					$("#tab").html("");
+					$("#tab").append(th);
+					$.each(json,function(index, value) {
+						var dd = "<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td class=\"deskalter"+
+						value[0]+"\" id=\"desknumId"+value[0]+"\">"+ value[0]+ "</td><td id=\"namealter"+value[0]+"\">"+ 
+						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td>"+ value[3]+
+						"</td><td id=\"statealter"+value[0]+"\">"+ value[4]+ "</td>"+
+						"<td><a class=\"button border-red deskbtn\"  id=\"numId"+value[0]+"\">"+ 
+						"<span class=\"icon-trash-o\"></span>删除 </a>"+ 
+						"<a class=\"button border-main alterbtn\" id=\"alter"+value[0]+
+					   	"\"data-toggle=\"modal\" data-target=\"#myModal\">"+ 
+					   	"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+						$("#tab").append(dd);
+					});
+					
+					
+				
+			}
 			
-		})
-		
+			/*
+				添加桌子信息
+			 */
+			$(function() {
+				$(".confirm-btn").click(function() {
+					var pn = $("#personNum").val();
+					var dn = $(".tableName").val();
+					var ds = $("#deskState").val();
+					$(".dstate").val("6");
+					$.ajax({
+						url : "../SxmTable_appendTable.action",
+						type : "post",
+						data : {
+							"st.personNum" : pn,
+							"st.deskName" : dn,
+							"st.deskState" : ds
+						},
+						success : function(data) {
+							var json = JSON.parse(data);
+							if (json != -1) {
+								tabonload();//调用页面加载时自动查询数据库，显示桌台信息
+							} else {
+								alert("添加失败！");
+							}
+						},
+
+					});
+
+				});
+
+			});
 		</script>
 	</div>
 </body>

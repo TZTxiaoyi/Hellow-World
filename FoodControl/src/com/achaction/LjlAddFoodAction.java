@@ -172,6 +172,7 @@ public class LjlAddFoodAction {
 	public void lookFood(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
+		
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		String[] sname=session.getValueNames();
 		int price=0;

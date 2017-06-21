@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<package name="addfood" extends="struts-default">
+	<package name="default" extends="struts-default">
 		<action name="addfood_*" class="com.achaction.LjlAddFoodAction" method="{1}">
+
 			<result name="addfood" type="dispatcher">/new.jsp</result>
 			<result name="newFood" type="dispatcher">/new.jsp</result>
 		</action>
@@ -12,8 +13,14 @@
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok">/home.jsp</result>
 		</action>
-		
+		<action name ="Home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
+			<result name="register">/Home1.jsp</result>
+			<result name ="list">/new.jsp</result>
+		</action>
 	</package>
+	<!-- 
+		有关员工的package
+	 -->
 	<package name="inser" extends="struts-default">
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="ok">/a123.jsp</result>

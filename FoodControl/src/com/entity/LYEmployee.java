@@ -1,10 +1,16 @@
 package com.entity;
+
 /**
- * 
- * @author Administrator
- *
+ * @类功能说明：  员工信息实体类
+ * @类修改者：  
+ * @修改日期：  
+ * @修改说明：   
+ * @作者：TZT
+ * @创建时间：2017-6-19 下午1:44:00  
+ * @版本：V1.0
  */
 public class LYEmployee {	
+	
 	private int emid;
 	private String emname;
 	private int emsex;
@@ -12,7 +18,22 @@ public class LYEmployee {
 	private String emphone;			
 	private String emadress;
 	private String emjointime;
-	private int empartid;
+	private int empart;
+	private int ementer;
+
+	public int getEmenter() {
+		return ementer;
+	}
+	public void setEmenter(int ementer) {
+		this.ementer = ementer;
+	}
+	public int getEmpart() {
+		return empart;
+	}
+	public void setEmpart(int empart) {
+		this.empart = empart;
+	}
+	
 	public int getEmid() {
 		return emid;
 	}
@@ -55,10 +76,5 @@ public class LYEmployee {
 	public void setEmjointime(String emjointime) {
 		this.emjointime = emjointime;
 	}
-	public int getEmpartid() {
-		return empartid;
-	}
-	public void setEmpartid(int empartid) {
-		this.empartid = empartid;
-	}	
+	
 }

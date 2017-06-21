@@ -60,6 +60,9 @@
 		.p {
 			display: none;
 		}
+		span{
+			color:red;
+		}
 	</style>
 </head>
 
@@ -74,7 +77,9 @@
 						<h1 class="glyphicon glyphicon-cutlery" aria-hidden="true"></h1>
 						<p>自助点餐</p>
 					</button>
-					<button type="button" class="btn btn-default btn-lg btn-Info">
+					
+					<button type="button" class="btn btn-default btn-lg btn-Info"
+						data-toggle="modal" data-target="#myModal2">
 						<h1 class="glyphicon glyphicon-heart" aria-hidden="true"></h1>
 						<p>开始点餐</p>
 					</button>
@@ -95,7 +100,27 @@
 			</div>
 		</div>
 	</div>
-	<!-- 用户登录模态框 -->
+<!-- 开始点餐模态框 -->
+
+	<div class="media media-y margin-big-bottom"></div>
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss=modal><h1>×</h1></button>
+						<div class="text-center margin-big padding-big-top">
+							<h1>餐饮管理系统</h1>
+						</div>
+					</div>
+					<form>
+						
+						
+					</form>
+				</div>
+			</div>
+		</div>
+<!-- 用户登录模态框 -->
 
 	<div class="media media-y margin-big-bottom"></div>
 	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
@@ -103,24 +128,28 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss=modal></button>
+					<button type="button" class="close" data-dismiss=modal>×</button>
 					<div class="text-center margin-big padding-big-top">
 						<h1>餐饮管理系统</h1>
 					</div>
 				</div>
-				<form action="Home.jsp" method="get" onsubmit="return show()">
+<<<<<<< HEAD:FoodControl/WebRoot/Home1.jsp
+				<form action="Home_login.action" method="post" onsubmit="return show1()">
+=======
+				<form action="home.jsp" method="get" onsubmit="return show()">
+>>>>>>> be9c1be41d9a92bae9ddeeaf2d9159644c53137d:FoodControl/WebRoot/Home.jsp
 					<div>
-						<input placeholder="手机号/用户名/邮箱" type="text" id="a1"
-							onfocus="return userFocus()" onblur="return userBlur()" /> <span
+						<input placeholder="手机号/用户名/邮箱" type="text" id="usageuser"
+							 name ="zbud.account"/> <span
 							id="aa1"></span>
 					</div>
 					<div>
-						<input placeholder="输入密码" type="password" id="a2"
-							onfocus="return passFocus()" onblur="return passBlur()" /> <span
-							id="aa2"></span>
+						<input placeholder="输入密码" type="password" id="usagepwd"
+							 name ="zbud.pwd"/> <span
+							id="aaa2"></span>
 					</div>
 					<div class="field">
-						<input type="text" class="input input-big" name="code" width="100"
+						<input type="text" class="input input-big" name="code" width="100" onblur="paBlur1()"
 							placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码" /> <img
 							src="image/passcode.jpg" alt="" width="100" height="32"
 							class="passcode" style="height:43px;cursor:pointer;"
@@ -129,7 +158,7 @@
 					</div>
 					<div>
 						<input type="submit"
-							class="button button-block bg-main text-big input-big" value="登录">
+							class="button button-block bg-main text-big input-big" id="login" value="登录">
 					</div>
 				</form>
 			</div>
@@ -137,7 +166,7 @@
 	</div>
 
 
-	<!-- 用户注册模态框 -->
+<!-- 用户注册模态框 -->
 
 	<div class="media media-y margin-big-bottom"></div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -148,63 +177,93 @@
 					<button type="button" class="close" data-dismiss=modal>×</button>
 					<h4 class="modal-title margin-big padding-big-top"
 						id="myModalLabel">
-						如有账号， <a href="Home.jsp">请登录</a>
+<<<<<<< HEAD:FoodControl/WebRoot/Home1.jsp
+						如有账号， <a href="Home1.jsp">请登录</a>
 					</h4>
 				</div>
-				<form action="Home.jsp" method="get" onsubmit="return show()">
+				<form action="Home_register.action" method="post" onsubmit="return show()">
+=======
+						如有账号， <a href="home.jsp">请登录</a>
+					</h4>
+				</div>
+				<form action="home.jsp" method="get" onsubmit="return show()">
+>>>>>>> be9c1be41d9a92bae9ddeeaf2d9159644c53137d:FoodControl/WebRoot/Home.jsp
 					<div>
-						<input placeholder="手机号/用户名/邮箱" type="text" id="a1"
-							onfocus="return userFocus()" onblur="return userBlur()" /> <span
-							id="aa1"></span>
+						<input placeholder="手机号/用户名/邮箱" type="text" id="adduser"
+							onfocus="userFocus()" onblur="userBlur()" name ="userdata.account"/> <span
+							id="aaa1"></span>
 					</div>
 					<div>
-						<input placeholder="输入密码" type="password" id="a2"
-							onfocus="return passFocus()" onblur="return passBlur()" /> <span
+						<input placeholder="输入密码" type="password" id="addpwd"
+							onfocus="passFocus()" onblur="passBlur()" name ="userdata.pwd"/> <span
 							id="aa2"></span>
 					</div>
 					<div>
-						<input placeholder="再次输入密码" type="password" id="a3"
-							onfocus="return repassFocus()" onblur="return repassBlur()" /> <span
+						<input placeholder="再次输入密码" type="password" id="addpwds"
+							onfocus="repassFocus()" onblur="repassBlur()" /> <span
 							id="aa3"></span>
 					</div>
 					<div>
-						<button type="submit" class="btn btn-warning btn-group-lg">注册</button>
+						<button type="submit" class="btn btn-warning btn-group-lg" >注册</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 
-	<script>
+	<script type ="text/javascript">
 		function userFocus(){
 			var user1=document.getElementById("aa1");
 			//user1.style.display="none";
 			user1.innerHTML="";
 		}
 		function userBlur(){
-			var user2=document.getElementById("a1").value;
+		
+			var user2=document.getElementById("adduser").value;
 			var user1=document.getElementById("aa1");
 			var reg=new RegExp("[^A-Za-z0-9]+","gi");
 			if (reg.test(user2)){
+				
 				user1.innerHTML="用户名格式有误";
 				//user1.style.display="block";
 				return false;
 				
 			}else{
+			
+				$.ajax({
+					type:"post",
+					url:"Home_seluser.action",
+					data:{"userdata.account":user2},
+					success:function(data){
+						
+						if(data!=0){
+							$("#aaa1").html("*用户名已占用");
+							
+							
+						}else{
+							
+							$("#aaa1").html("");
+						}
+					}
+				});
 				return true;
 			}
 		}
+		
 		function passFocus(){
 			var user1=document.getElementById("aa2");
 			//user1.style.display="none";
 			user1.innerHTML="";
 		}
 		function passBlur(){
-			var user2=document.getElementById("a2").value;
+		
+			var user2=document.getElementById("addpwd").value;
 			var user1=document.getElementById("aa2");
 			if (user2.length>=6){
+				
 				return true;
 			}else{
+				
 				user1.innerHTML="密码不正确";
 				return false;
 			}
@@ -215,10 +274,12 @@
 			user1.innerHTML="";
 		}
 		function repassBlur(){
-			var user2=document.getElementById("a3").value;
+			var user2=document.getElementById("addpwd").value;
 			var user1=document.getElementById("aa3");
-			var user3=document.getElementById("a2").value;
-			if (user2==user3){
+			var user3=document.getElementById("addpwds").value;
+			
+			if (user2 == user3){
+				
 				return true;
 			}else{
 				user1.innerHTML="密码不一致";
@@ -239,6 +300,42 @@
 				
 			}
 		}
+		/* $(function(){
+			$("#login").click(function(){
+			
+				var val = $("#usageuser").val();
+				var valpa= $("#usagepwd").val();
+				$.ajax({
+					type:"post",
+					url:"Home_login.action",
+					data:{"zbud.account":val,"zbud.pwd":valpa},
+					success:function(data){
+					alert(1);
+						var json = JSON.parse(data);
+						
+						if(data == -1){
+							alert("用户名或密码不对");
+						}
+						
+					},
+				});
+			});
+		}); */
+		$(function(){
+		 
+		 
+			if('${na}' == "k"){
+				alert("用户名或密码不一致");
+				
+			}
+		});
+		$(function(){
+			if('${zb}' == 1){
+				alert("注册成功");
+			}
+		});
 		</script>
+		
+		
 </body>
 </html>
