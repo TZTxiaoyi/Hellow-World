@@ -11,6 +11,11 @@
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok">/home.jsp</result>
 		</action>
+<!-- 注册 -->
+		<action name ="Home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
+			<result name="register">/Home1.jsp</result>
+			<result name ="list">/new.jsp</result>
+		</action>
 	</package>
 	<!-- 
 		有关员工的package
