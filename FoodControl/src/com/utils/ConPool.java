@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.apache.commons.dbcp.BasicDataSource;
-
 /**
  * 
  * @类功能说明：  连接池
@@ -23,6 +22,7 @@ public class ConPool {
 	/**
 	 * 静态创建连接池变量
 	 */
+	
 	private static BasicDataSource dataScource= null;
 
 	/**
