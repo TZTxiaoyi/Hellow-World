@@ -6,6 +6,7 @@ Code名称	codeName	数字代表的含义名称
 Code		code	数字
 */
 
+
 create table codetable
 (
 	id int identity(1,1)primary key,

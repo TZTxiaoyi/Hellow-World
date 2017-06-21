@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="default" extends="struts-default">
 		<action name="addfood_*" class="com.achaction.LjlAddFoodAction" method="{1}">
-			<result name="addfood">/new.jsp</result>
+			<result name="addfood" type="dispatcher">/new.jsp</result>
+			<result name="newFood" type="dispatcher">/new.jsp</result>
 		</action>
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
 			<result name="tztquerok">/order_vegetable.jsp</result>
@@ -11,9 +12,11 @@
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok">/home.jsp</result>
 		</action>
+
 <!-- 注册 -->
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
 			<result name="register">/home.jsp</result>
+
 			<result name ="list">/new.jsp</result>
 		</action>
 	</package>
@@ -23,6 +26,8 @@
 	<package name="inser" extends="struts-default">
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
+			<result name="success">/background/index.jsp</result>
+			<result name="false">/background/login.jsp</result>
 		</action>
 	</package>
 </struts>    

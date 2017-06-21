@@ -11,6 +11,14 @@ public class SxmTable {
 	int personNum;
 	String deskName;
 	int deskState;
+	int deskdelState;
+	public int getDeskdelState() {
+		deskdelState=19;
+		return deskdelState;
+	}
+	public void setDeskdelState(int deskdelState) {
+		this.deskdelState = deskdelState;
+	}
 	public int getDeskId() {
 		return deskId;
 	}
@@ -30,6 +38,7 @@ public class SxmTable {
 		this.deskName = deskName;
 	}
 	public int getDeskState() {
+		deskState=6;
 		return deskState;
 	}
 	public void setDeskState(int deskState) {

@@ -39,7 +39,7 @@
   <ul style="display:block">
   <li><a href="employee.jsp" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
     <li><a href="employeeId.jsp" target="right"><span class="icon-caret-right"></span>员工账号</a></li>
-    <li><a href="employeePower.jsp" target="right"><span class="icon-caret-right"></span>员工权限</a></li>                     
+    <li><a href="employeePower.jsp" target="right"><span class="icon-caret-right"></span>角色权限</a></li>                     
 
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>餐厅管理</h2>
