@@ -26,6 +26,8 @@
 	<package name="inser" extends="struts-default">
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
+			<result name="success">/background/index.jsp</result>
+			<result name="false">/background/login.jsp</result>
 		</action>
 	</package>
 </struts>    
