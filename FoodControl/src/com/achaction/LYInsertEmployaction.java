@@ -5,7 +5,6 @@ package com.achaction;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSON;
@@ -14,7 +13,6 @@ import org.apache.struts2.ServletActionContext;
 
 import com.entity.LYEmployId;
 import com.entity.LYEmployee;
-import com.logic.LYInsertEmployDao;
 import com.utils.toJson;
 
 public class LYInsertEmployaction {
@@ -81,8 +79,8 @@ public class LYInsertEmployaction {
 	 */
 	public void selem(){
 		HttpServletResponse response=ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=GBK");
-		response.setCharacterEncoding("GBK");
+		response.setContentType("text/html;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
 		List<String> list=ied.selemploy(employee);		
 		toJson json=new toJson();
 		//System.out.println(list.size());
@@ -123,8 +121,8 @@ public class LYInsertEmployaction {
 	public void searchEM(){
 		System.out.println(putvalue);
 		HttpServletResponse response=ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=GBK");
-		response.setCharacterEncoding("GBK");
+		response.setContentType("text/html;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
 		System.out.println("hoihoh");
 		List<String> list=ied.searchsome(putvalue);
 		System.out.println(list);

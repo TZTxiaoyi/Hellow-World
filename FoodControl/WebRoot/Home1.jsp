@@ -133,7 +133,11 @@
 						<h1>餐饮管理系统</h1>
 					</div>
 				</div>
+<<<<<<< HEAD:FoodControl/WebRoot/Home1.jsp
 				<form action="Home_login.action" method="post" onsubmit="return show1()">
+=======
+				<form action="home.jsp" method="get" onsubmit="return show()">
+>>>>>>> be9c1be41d9a92bae9ddeeaf2d9159644c53137d:FoodControl/WebRoot/Home.jsp
 					<div>
 						<input placeholder="手机号/用户名/邮箱" type="text" id="usageuser"
 							 name ="zbud.account"/> <span
@@ -173,10 +177,17 @@
 					<button type="button" class="close" data-dismiss=modal>×</button>
 					<h4 class="modal-title margin-big padding-big-top"
 						id="myModalLabel">
+<<<<<<< HEAD:FoodControl/WebRoot/Home1.jsp
 						如有账号， <a href="Home1.jsp">请登录</a>
 					</h4>
 				</div>
 				<form action="Home_register.action" method="post" onsubmit="return show()">
+=======
+						如有账号， <a href="home.jsp">请登录</a>
+					</h4>
+				</div>
+				<form action="home.jsp" method="get" onsubmit="return show()">
+>>>>>>> be9c1be41d9a92bae9ddeeaf2d9159644c53137d:FoodControl/WebRoot/Home.jsp
 					<div>
 						<input placeholder="手机号/用户名/邮箱" type="text" id="adduser"
 							onfocus="userFocus()" onblur="userBlur()" name ="userdata.account"/> <span

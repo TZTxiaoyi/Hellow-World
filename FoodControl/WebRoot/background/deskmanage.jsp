@@ -76,9 +76,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						
 					</table>
 					<div class="pagelist">
-									<a href="">上一页</a> <span class="current">1</span><a href="">2</a><a
-										href="">3</a><a href="">下一页</a><a href="">尾页</a>
-								</div>
+						<a name="first" class="page" href="#">首页</a><a name="minus" class="page" href="#">上一页</a><a name="add" class="page" href="#">下一页</a><a name="last" class="page" href="#">尾页</a><input type="text" id="pageinp" value="1" size="5"/>
+						<a class="page" type="button">跳转</a>共<span id="spanpage"></span>页
+					</div>
 				</div>
 			</form>
 		</div>
@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"/>
 					    	</div>
 					    	<div>
-					    		<span>桌子状态</span><input  name="st.deskState" id="deskState"/>
+					    		<span>桌子状态</span><input  name="st.deskState" id="deskState"class="dstate"/>
 					    	</div>
 					    	<div>
 								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
@@ -147,6 +147,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		<script type="text/javascript">
+			/*
+				总页数
+			*/
+			$(function(){
+				$.ajax({
+						url:"SxmTable_pageTotal.action",
+						type:"post",
+						data:{},
+						success:function(data){
+							var pagetotal=parseInt(data/3);	
+							if(data%3==0){
+								$("#spanpage").html(pagetotal);
+							}
+							if(data%3!=0){
+								$("#spanpage").html(parseInt(pagetotal)+1);
+							}
+						},
+					});
+			})
+		
+			
+			/*
+				分页
+			*/
+			$(function(){
+				$(".page").click(function(){
+					var name=$(this).attr("name");
+					
+					var inpval=parseInt($("#pageinp").val());
+					
+					
+					if(name=="first"){
+						inpval=1;
+					}
+					if(name=="minus"){
+						inpval=inpval-1;
+						if(inpval<=1){
+							inpval=1;
+							
+						}
+					}
+					if(name=="add"){
+						inpval=inpval+1;
+						if(inpval>=$("#spanpage").html()){
+							inpval=$("#spanpage").html()
+							
+						}
+					}
+					if(name=="last"){
+						inpval=$("#spanpage").html();
+					}
+					$("#pageinp").val(inpval);
+					var curr=inpval-1;
+					tabonload(curr);
+				});
+			})
 			/*
 				快速搜索
 			*/
@@ -214,10 +270,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					success : function(data) {
 						var json = JSON.parse(data);
 						if (json != -1) {
-							alert(json);
 							tabonload();//调用页面加载时自动查询数据库，显示桌台信息
-							} else {
-								alert("更新失败！");
+						} else {
+							alert("更新失败！");
 						}
 					},
 				});
@@ -272,13 +327,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				页面加载时自动查询数据库，显示桌台信息
 			 */
 			$(function() {
-				tabonload();
+				var currpage=0;
+				tabonload(currpage);
 			});
-			function tabonload() {
+			function tabonload(curr) {
 				$.ajax({
-					url : "SxmTable_tableAdmin.action",
+					url : "SxmTable_tabPage.action",
 					type : "post",
-					data : {map : null},
+					data : {"currPage":curr},
 					success : function flash(data) {
 						var json = JSON.parse(data);
 						refresh(json);
@@ -302,6 +358,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					   	"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
 						$("#tab").append(dd);
 					});
+					
+					
 				
 			}
 			
@@ -313,6 +371,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var pn = $("#personNum").val();
 					var dn = $(".tableName").val();
 					var ds = $("#deskState").val();
+					$(".dstate").val("6");
 					$.ajax({
 						url : "../SxmTable_appendTable.action",
 						type : "post",

@@ -64,13 +64,26 @@ public class SxmTableSql implements DaoInterface {
 		
 		return flag;
 	}
+	/**
+	 * 后台桌子快速查询
+	 * @param ser
+	 * @return
+	 */
 	public List selTable(String ser) {
 		String sql = "select * from desk_refresh where deskId like'%"+ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
 		List list = DaoFactory.Query(sql);
-		
 		return list;
 	}
-
+	/**
+	 * 前台桌子快速查询
+	 * @param ser
+	 * @return
+	 */
+	public List serviceTable(String ser) {
+		String sql = "select * from desk_refresh where deskName like'%"+ser+"%'";
+		List list = DaoFactory.Query(sql);
+		return list;
+	}
 	/**
 	 * @return
 	 * 
@@ -80,16 +93,11 @@ public class SxmTableSql implements DaoInterface {
 	 * @return void
 	 * @throws
 	 */
-	public Map selTableAdmin(Object obj) {
+	public List selTableAdmin(Object obj) {
 		String sql = "select * from desk_refresh";
 		List list = DaoFactory.Query(sql);
-		JSONObject json = new JSONObject();
-		for (int i = 0; i < list.size(); i++) {
-			Map map = new HashMap();
-			map.put("df" + i, list.get(i));
-			json.accumulateAll(map);
-		}
-		return json;
+		
+		return list;
 	}
 
 	/**
@@ -128,20 +136,38 @@ public class SxmTableSql implements DaoInterface {
 		return DaoFactory.Updata(sql, params);
 
 	}
-
 	/**
+	 * @return 
 	 * 
-	 * 方法功能说明： 查询桌子所有信息 创建：2017-6-14 by Administrator 修改：日期 by 修改者 修改内容：
+	 * 方法功能说明：分页功能；
 	 * 
 	 * @参数： @param tab 桌子传参
 	 * @return void
 	 * @throws
 	 */
-	public List sel(Object obj) {
-		String sql = "select * from desk";
+	public List page(int currPage) {
+		String sql="select top ("+3+") * from desk_refresh where deskId not in(select top "+(currPage)*3+" deskId from desk_refresh)";
 		List list = DaoFactory.Query(sql);
-		// if(tab.getDeskName().equals(sql));
 		return list;
 	}
+	/**
+	 * 分页中的得到总条数
+	 * @return
+	 */
+	public int getCount(){
+		String sql="select count(*) from desk_refresh";
+		List list = DaoFactory.Query(sql);
+		int total=0;
+		List li=(List) list.get(0);
+		total=(Integer) li.get(0);
+		return total;
+	}
+
+	public List sel(Object obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }
