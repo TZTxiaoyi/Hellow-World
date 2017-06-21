@@ -49,7 +49,6 @@ public class TztQuerDishAction {
 		rep.setContentType("text/html;charset=utf-8");
 		TztDishOrderImp dao =new TztDishOrderImp();
 		List result = dao.queryMade();
-		System.out.println(result);
 		try {
 			rep.getWriter().print(toJson.toJson("tztjs", result).toString());
 		} catch (IOException e) {
@@ -101,7 +100,6 @@ public class TztQuerDishAction {
 		List madedish =dao.sel(dish);
 		TztDishImp dishImp = new TztDishImp();
 		dishImp.changeDish(13,(List)madedish.get(0),12);
-		System.out.println("change");
 		try {
 			rep.getWriter().print("sucess");
 		} catch (IOException e) {

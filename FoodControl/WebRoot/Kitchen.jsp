@@ -23,7 +23,7 @@
 	border: 1px solid #cacaca;
 }
 td{
-	width:100px;
+	width:150px;
 }
 
 #top {
@@ -69,7 +69,10 @@ td{
 			<div class="column" id="col1">
 		
 				<!-- 左边窗口 -->
-				<input class="btn btn-info" id="querymading" type="button" value="刷新" />
+				<table>
+					<tr><td>菜名</td><td>数量</td><td>操作</td><td><input class="btn btn-info" id="querymading" type="button" value="刷新" /></td></tr>
+				</table>
+				
 				<div >
 				<table id="titlemading">
 						
@@ -79,7 +82,10 @@ td{
 
 			<div class="row" id="col2">
 				<!------------右边窗口-------------->
-				<input  class="btn btn-info" "id="querymade" type="button" value="刷新" />
+				<table>
+					<tr><td>菜名</td><td>数量</td><td>操作</td><td><input  class="btn btn-info" "id="querymade" type="button" value="刷新" /></td></tr>
+				</table>
+				
 				<div >
 					<table id="titlemade">
 			
@@ -134,7 +140,7 @@ td{
  					data:{},
  					dataType:"json",
  					success:function(data){
- 					$("#titlemading").html("<tr><td>菜名</td><td>数量</td><td>操作</td></tr>");
+ 					$("#titlemading").html("");
 					$.each(data,function(index,value){				
 					var dd="<tr>"+"<td >"+value[1]+"</td>"+"<td>"+value[2] +"</td>"+"<td><button class=\"btn btn-danger\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button></td>"+"</tr>";
 					$("#titlemading").prepend(dd);		
@@ -145,7 +151,6 @@ td{
  		$(function(){
  			$("#titlemading").on('click',"#madingbutton",function(){
  				var aa=$(this).attr("name");
- 				alert(aa);
  				$.ajax({
  					url:"TztQueryDish_makding.action",
  					type:"post",
@@ -175,7 +180,7 @@ td{
  					data:{},
  					dataType:"json",
  					success:function(data){
- 					$("#titlemade").html("<tr><td>菜名</td><td>数量</td><td>操作</td></tr>");
+ 					$("#titlemade").html("");
 					$.each(data,function(index,value){				
 					var dd="<tr>"+"<td >"+value[1]+"</td>"+"<td>"+value[2] +"</td>"+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
 					$("#titlemade").prepend(dd);
@@ -195,7 +200,7 @@ td{
  						queryMading();
 						queryMade();
  						
- 					}
+ 					},
  				});
  			});
  		});
