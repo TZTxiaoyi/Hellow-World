@@ -1,4 +1,4 @@
-package com.logic;
+package com.insertemploydao;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class TztDishOrderImp implements DaoInterface{
 	 * @throws
 	 */
 	public List queryMade(){
-		String sql="select  d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 12 and od.dishId=d.dishId group by d.dishName";
+		String sql="select  d.dishId,d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 12 and od.dishId=d.dishId group by d.dishName,d.dishId";
 		return DaoFactory.Query(sql);
 	}
 	/**
@@ -77,8 +77,7 @@ public class TztDishOrderImp implements DaoInterface{
 	 * @throws
 	 */
 	public List queryMading()	{
-		String sql ="select  d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 13 and od.dishId=d.dishId group by d.dishName";
-		
+		String sql ="select  d.dishId,d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 13 and od.dishId=d.dishId group by d.dishName,d.dishId";
 		return DaoFactory.Query(sql);
 	}
 }

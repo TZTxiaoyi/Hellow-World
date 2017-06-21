@@ -6,6 +6,7 @@ Code名称	codeName	数字代表的含义名称
 Code		code	数字
 */
 
+
 create table codetable
 (
 	id int identity(1,1)primary key,
@@ -76,7 +77,7 @@ create table staffInfo
 	adress varchar(100),
 	accession date,
 	partId int foreign key references part(partId ),
-	enterId		int foreign key references staffEnter(enterId )	
+	endetId		int foreign key references staffEnter(enterId )	
 )
 select s1.Name,s1.staffId,s1.phone,s1.sex,s1.age,s1.adress,s1.accession,p1.partId,d1.deskId
 				from staffInfo s1,part p1, desk_staff d1
