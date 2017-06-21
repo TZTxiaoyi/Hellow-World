@@ -19,6 +19,19 @@
     <link rel="stylesheet" href="css/admin.css">
     
 	<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
+	
+	<script type="text/javascript">
+		$(function(){
+			$.ajax({
+				url:
+				data:{}
+				type:"post"
+				success:function(data){
+					
+				}
+			})
+		})
+	</script>
   </head>
 														  <!-- 
 														  	后台主页面
@@ -35,7 +48,7 @@
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
-  <h2><span class="icon-user"></span>员工管理</h2>
+  <h2><span class="icon-user"></span>人事管理</h2>
   <ul style="display:block">
   <li><a href="employee.jsp" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
     <li><a href="employeeId.jsp" target="right"><span class="icon-caret-right"></span>员工账号</a></li>

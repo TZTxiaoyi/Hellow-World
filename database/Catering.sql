@@ -180,6 +180,7 @@ create table authority
 	authorityLevel int	,
 	authorityUrl	varchar(50)
 )
+select * from authority
 /*
 10角色权限表：
 编号		id		int，自增 主键
@@ -187,12 +188,14 @@ create table authority
 权限编号 	authorityId	外键 权限表（权限编号）
 
 */
+
 create table part_authority
 (
 	id int identity(1,1)primary key,
 	partId int foreign key references part(partId),
 	authorityId int foreign key references authority(authorityId)
 )
+create view
 
 /*
 11订单表：

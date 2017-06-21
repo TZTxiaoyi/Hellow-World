@@ -16,6 +16,14 @@
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"></link>
+
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url:"achieve_"
+		});
+	});
+</script>
 </head>
   
  <body>
@@ -73,7 +81,7 @@ function del(id,mid){
 				<h4 class="modal-title" id="myModalLabel">角色权限更改</h4>
 			</div>
 			<div class="modal-body1">
-				是大三大所大所大所多
+				<span class="input-group-addon">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

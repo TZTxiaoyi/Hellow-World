@@ -18,8 +18,7 @@ public class LYInsertEmployDao {
 	 */
 	public  List selemploy(LYEmployee em){
 		String sql="select ss.Name,ss.staffId,ss.phone,ss.sex,ss.age,ss.adress,ss.accession,ss.partName" +
-				" from staffinfo_sf ss";
-		
+				" from staffinfo_sf ss";		
 		return DaoFactory.Query(sql);
 				
 	}
@@ -117,6 +116,14 @@ public class LYInsertEmployDao {
 				" from staffinfo_sf ss" +
 				" where staffId not in(select top "+startIndex*2+" staffId from staffinfo_sf)";
 		//System.out.println("ddddddddddd");
+		return DaoFactory.Query(sql);
+	}
+	
+	/**
+	 * 
+	 */
+	public List aperson(){
+		String sql="select * from pa_auth";
 		return DaoFactory.Query(sql);
 	}
 }
