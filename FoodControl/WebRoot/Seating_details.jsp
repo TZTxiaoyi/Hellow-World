@@ -30,7 +30,7 @@
 		#left-subject{
 			height:85%;
 			position:relative;
-			background:white;
+		
 		}
 		#right-subject{
 			position:relative;
@@ -45,6 +45,9 @@
 			height:100px;
 			width:150px;
 			
+		}
+		#list{
+			background:white;
 		}
 		#classify{
 			height:100px;

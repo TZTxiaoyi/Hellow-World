@@ -9,7 +9,7 @@ import com.utils.DaoFactory;
 
 public class ZbRegister implements DaoInterface{
 
-	@Override
+	
 	public int add(Object user) {
 		ZbUserdata userdata=(ZbUserdata)user;
 		// TODO Auto-generated method stub
@@ -19,7 +19,7 @@ public class ZbRegister implements DaoInterface{
 		return flag;
 	}
 
-	@Override
+	
 	public int del(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -51,7 +51,7 @@ public class ZbRegister implements DaoInterface{
 	}
 	
 
-	@Override
+	
 	public int update(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
