@@ -25,7 +25,7 @@ public class LYInsertEmployaction {
 	 * 
 	 * putvalue(当前类变量)：接收传来为string类型的值，
 	 * 
-	 * countpage(当前类变量)：接收传来为int类型的值
+	 * countp  age(当前类变量)：接收传来为int类型的值
 	 */	
 	private LYEmployee employee;
 	private LYEmployId employId;

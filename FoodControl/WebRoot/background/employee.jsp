@@ -293,10 +293,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var emadress=$("#emadress").val();
 				var emjointime=$("#emjointime").val();
 				var empart=$("#empart").val();
-				var ementer=$("#ementer").val();	
+				//var ementer=$("#ementer"). val();	
 				
 											
-				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empart && ementer){					
+				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empart ){					
 					$.ajax({
 						type:"post",
 						url:"achieve_save.action",
