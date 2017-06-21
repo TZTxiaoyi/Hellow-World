@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -133,7 +133,9 @@
 						<h1>餐饮管理系统</h1>
 					</div>
 				</div>
+
 				<form action="home_login.action" method="post" onsubmit="return show1()">
+
 
 					<div>
 						<input placeholder="手机号/用户名/邮箱" type="text" id="usageuser"
