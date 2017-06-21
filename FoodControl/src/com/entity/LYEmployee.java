@@ -13,13 +13,15 @@ public class LYEmployee {
 	private String emadress;
 	private String emjointime;
 	private int empart;
-	private int ementer;
+	private String account;
 	
-	public int getEmenter() {
-		return ementer;
+	
+	
+	public String getAccount() {
+		return account;
 	}
-	public void setEmenter(int ementer) {
-		this.ementer = ementer;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 	public int getEmpart() {
 		return empart;
