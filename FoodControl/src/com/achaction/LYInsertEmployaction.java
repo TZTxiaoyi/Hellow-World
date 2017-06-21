@@ -13,6 +13,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.entity.LYEmployId;
 import com.entity.LYEmployee;
+import com.logic.LYInsertEmployDao;
 import com.utils.toJson;
 
 public class LYInsertEmployaction {
@@ -83,12 +84,11 @@ public class LYInsertEmployaction {
 		response.setCharacterEncoding("utf-8");
 		List<String> list=ied.selemploy(employee);		
 		toJson json=new toJson();
-		//System.out.println(list.size());
+	
 		json.toJson("vlaue", list);	
-		//System.out.println(json.toJson("vlaue", list).toString());
+	
 		try {
 			response.getWriter().print(json.toJson("vlaue", list).toString());
-			//System.out.println(json.toJson("vlaue", list).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
