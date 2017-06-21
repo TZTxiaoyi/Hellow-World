@@ -12,14 +12,8 @@
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok">/home.jsp</result>
 		</action>
-<<<<<<< HEAD
 		<action name ="Home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
 			<result name="register">/Home1.jsp</result>
-=======
-<!-- 注册 -->
-		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
-			<result name="register">/home.jsp</result>
->>>>>>> 1b1a45c2460cd882a4e860a05df314d3da4fb763
 			<result name ="list">/new.jsp</result>
 		</action>
 	</package>

@@ -8,13 +8,13 @@ import com.utils.DaoFactory;
 
 public class LjlOrders implements DaoInterface{
 
-	public int add(Object order) {
-		System.out.println("----------------------------------");
+	public int rsadd(Object order) {
+		System.out.println("----------------------rsadd------------");
 		LjlAddOrder orders=(LjlAddOrder)order;
 		// TODO Auto-generated method stub
-		String sql="insert orders values(?,?,?,?,?,?)";
+		String sql="insert into orders values(?,?,?,?,?,?)";
 		Object[] params=new Object[]{orders.getOrderStatus(),orders.getOrderPrice(),orders.getFoodNum(),orders.getCost(),orders.getOrdersTime(),orders.getDeskid()};
-		return DaoFactory.Updata(sql, params);
+		return DaoFactory.rsUpdata(sql,params);
 	}
 
 	public int del(Object obj) {
@@ -28,6 +28,11 @@ public class LjlOrders implements DaoInterface{
 	}
 
 	public int update(Object obj) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int add(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

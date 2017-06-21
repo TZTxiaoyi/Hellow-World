@@ -16,10 +16,13 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
+
 import com.entity.LjlAddFood;
 import com.entity.LjlAddOrder;
+import com.entity.TztDishOrder;
 import com.insertemploydao.LjlDish;
 import com.insertemploydao.LjlOrders;
+import com.insertemploydao.TztDishOrderImp;
 
 
 public class LjlAddFoodAction {
@@ -27,6 +30,8 @@ public class LjlAddFoodAction {
 	private LjlAddOrder addorder;
 	//private String datatime1;
 	LjlOrders orders=new LjlOrders();
+	LjlDish dish=new LjlDish();
+	TztDishOrderImp DishOrderImp=new TztDishOrderImp();
 	public LjlAddOrder getAddorder() {
 		return addorder;
 	}
@@ -39,12 +44,33 @@ public class LjlAddFoodAction {
 	public void setAddfood(LjlAddFood addfood) {
 		this.addfood = addfood;
 	}
+	/**
+	 * 
+	 * 方法功能说明：  下单功能
+	 * 创建：2017-6-21 by li   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：  addorder 订单实体类     
+	 * @return void     
+	 * @throws
+	 */
 	public void addOrder(){
-		System.out.println(addorder.getFoodNum()+","+addorder.getOrderPrice()+","+addorder.getOrderStatus()+","+addorder.getCost()+","+addorder.getOrdersTime()+","+addorder.getDeskid());
-		int flag=orders.add(addorder);
+		int rsid=orders.rsadd(addorder);
+		int dishStatus=12;
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpSession session=request.getSession();
+		String[] foodnames=session.getValueNames();
+		System.out.println("ger:"+foodnames.length);
+		for (int i = 0; i < foodnames.length; i++) {
+			List list=dish.seldishName(foodnames[i]);
+			List listdish=(List) list.get(0);
+			int dishid=(Integer) listdish.get(0);
+			TztDishOrder dishorder=new TztDishOrder(rsid,dishid,dishStatus,addorder.getDeskid());
+			DishOrderImp.add(dishorder);
+		}
 		HttpServletResponse response=ServletActionContext.getResponse();
 		try {
-			response.getWriter().println(flag);
+			response.getWriter().println(rsid);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,7 +88,7 @@ public class LjlAddFoodAction {
 	 */
 	public String newFood(){
 		HttpServletRequest request=ServletActionContext.getRequest();
-		LjlDish dish=new LjlDish();
+		
 		List list=dish.sel();
 		System.out.println("newFood:"+list);
 		request.setAttribute("dishList", list); 
@@ -110,7 +136,6 @@ public class LjlAddFoodAction {
 		int num=0;
 		for (int i = 0; i <sname.length; i++) {
 			LjlAddFood addf= (LjlAddFood)session.getAttribute(sname[i]);
-			System.out.println(addf.getFoodname()+","+addf.getNumber()+","+addf.getPrice()+","+addf.getUprice());
 			price=Integer.parseInt(addf.getPrice())+price;
 			num=Integer.parseInt(addf.getNumber())+num;
 		}
@@ -172,7 +197,6 @@ public class LjlAddFoodAction {
 	public void lookFood(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
-		
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		String[] sname=session.getValueNames();
 		int price=0;
