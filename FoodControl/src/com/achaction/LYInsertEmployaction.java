@@ -147,6 +147,7 @@ public class LYInsertEmployaction {
 	 */
 	public void searchEM(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
+
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
 		List<String> list=ied.searchsome(putvalue);
@@ -172,7 +173,7 @@ public class LYInsertEmployaction {
 		//request.getSession().setAttribute("username", employId.getEmenter());		
 		List list = ied.selectemid(employId);
 		if (list.size()==1) {
-			request.setAttribute("username", employId.getEmenter());			
+			request.setAttribute("username", employId.getEmenter());
 			return "success";
 		}else {
 			request.setAttribute("cuo", "haha");

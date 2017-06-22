@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		#all-home1 {
 			position:absolute;
 			bottom:0px;
-			padding-right: 25px;
+			margin-right:25px;
 			right:300px;
 		}
 		#times{
@@ -195,13 +195,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="all-home1">
 							
 							<div class="pull-right">
-								<h3 class="text-success">已结单:<span>8</span></h4>
+								<h3 class="text-success">已结单:<span id="ordok"></span></h4>
 							</div>
 							<div class="pull-right">
-								<h3 class="text-danger">未结单:<span>12</span></h4>
+								<h3 class="text-danger">未结单:<span id="orderr"></span></h4>
 							</div>
 							<div class="pull-right">
-								<h3 class="text-primary">总单数:<span>20</span></h4>
+								<h3 class="text-primary">总单数:<span id="ordall"></span></h4>
 							</div>
 							<span id="times">
 								
@@ -240,6 +240,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$(function() {
 			
 				tabonload();
+				orderonload();
 				setInterval("getTime()",1000);
 				$("#user").html("asd");
 			});
@@ -302,9 +303,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$(function(){
 				$("#all-home").on('click',".tclick",function(){
 					var tblock=$(this).attr("id");
-					$("#tblock").click(function(){
-						
-					});
 					
 					$.ajax({
 						url:"Seating_details.jsp",
@@ -356,8 +354,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#tflash").click(function(){
 				refresh(json);
 			})
-		
-		
+			/*
+				登陆成功后带值显示到本页面；
+			*/
+			$(function(){
+    			//var dd='${username}';
+    			var dd="admin";
+    			$("#user").html(dd);	
+    			dd=null;
+    		})
+			/*
+				动态获取订单信息;
+			*/
+			/*
+				页面加载时自动查询数据库，显示桌台信息
+			 */
+			
+			function orderonload(){
+				$.ajax({
+					url : "addfood_searchOrder.action",
+					type : "post",
+					data : {},
+					success : function flash(data) {
+						var json = JSON.parse(data);
+						var i=0;//订单进行中的状态
+						var j=0;//订单结束状态
+						var k=0;
+						$.each(json,function(index,value){				
+							if(value[0]==15){
+								i++;
+							}
+							if(value[0]==16){
+								j++;
+							}
+							k=i+j;
+						});						
+						$("#ordok").html(j);
+						$("#orderr").html(i);
+						$("#ordall").html(k);
+					},
+				});
+
+			};
+			
 	</script>
 </body>
 </html>

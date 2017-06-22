@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
@@ -22,8 +22,12 @@ import com.entity.LjlAddOrder;
 import com.entity.TztDishOrder;
 import com.insertemploydao.LjlDish;
 import com.insertemploydao.LjlOrders;
+
+import com.utils.toJson;
+
 import com.insertemploydao.TztDishOrderImp;
 import com.logic.SxmTableSql;
+
 
 
 public class LjlAddFoodAction {
@@ -66,6 +70,7 @@ public class LjlAddFoodAction {
 	 * @throws
 	 */
 	public void addOrder(){
+		int rsid=orders.rsadd(addorder);
 		int dishStatus=12;
 		int flag=-1;
 		HttpServletRequest request=ServletActionContext.getRequest();
@@ -93,6 +98,7 @@ public class LjlAddFoodAction {
 			}
 			
 		}
+
 		HttpServletResponse response=ServletActionContext.getResponse();
 		try {
 			response.getWriter().println(flag);
@@ -121,6 +127,7 @@ public class LjlAddFoodAction {
 		if (dname!=null) {
 			session.setAttribute("dname", dname);
 		}
+		request.setAttribute("dishList", list); 
 		return "newFood";	
 	}
 	/**
@@ -254,10 +261,40 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
+
 	public String backhome(){
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		session.invalidate();
 		return "backhome";
 	}
 	
+	/**
+	 * 
+	 * 方法功能说明：  
+	 * 创建：2017-6-21 by sxm  
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：       
+	 * @return void     
+	 * @throws
+	 */
+	public void searchOrder(){
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd 00:00:00");//设置日期格式
+		String time=df.format(new Date());
+		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String time1=df1.format(new Date());
+		System.out.println("time"+time);
+		System.out.println("time1"+time1);
+		List list=orders.selOrder(time,time1);
+		System.out.println("list"+list);
+		JSON json=toJson.toJson("val", list);
+		
+		try {
+			hsr.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
