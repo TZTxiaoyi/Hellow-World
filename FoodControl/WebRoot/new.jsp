@@ -73,11 +73,11 @@
 	<div class="row">
 <!-- 头部 -->
 		<div id="zbtop">
-			<a type="button" class="btn btn-default"id="zbbutton1" href = "home.jsp"><h1 class="glyphicon glyphicon-home"></h1></a><!-- 主页 -->
+			<a type="button" class="btn btn-default"id="zbbutton1" href = "addfood_backhome.action"><h1 class="glyphicon glyphicon-home"></h1></a><!-- 主页 -->
 			<button type="button" class="btn btn-default" id="zbbutton1"><h1 class="glyphicon glyphicon-map-marker"><input type ="text" size="10px"/></h1></button><!-- 模糊查询菜名 -->
 			<button type="button" class="btn btn-default"id="zbbutton1"><h1 class="glyphicon glyphicon-bell">呼叫员工</h1></button><!-- 呼叫员工按钮 -->
 			
-			<span id="desk1"></span>
+			<span id="deskname">${sessionScope.dname}</span>
 			<span id ="desk2"></span>
 		</div>
 <!-- 左侧 -->		
@@ -118,12 +118,12 @@
 			<c:forEach var="next"  items="${dishList}" varStatus="statu">
 				<div>
 					<img  onclick = "show()" src="image/2.png" alt="..." class="img-circle" width="200" height="200"><br/>
-					<span name="name${statu.index}">${next[1]}</span>:  <span name="name${statu.index}">${next[2]}</span>元 / 份<br/>
+					<span name="${next[1]}">${next[1]}</span>:  <span name="${next[1]}">${next[2]}</span>元 / 份<br/>
 					<div class="row" >
 						<div class=" center-block"  id="food-btn">
-							<input type="button" name="name${statu.index}" value="-1" class="remove btn btn-default">
-							<input type="text" value="0" class="number-cl btn btn-default" size="3" name="name${statu.index}">
-							<input type="button" name="name${statu.index}" value="+1" class="add btn btn-default">
+							<input type="button" name="${next[1]}" value="-1" class="remove btn btn-default">
+							<input type="text" value="0" class="number-cl btn btn-default" size="3" name="${next[1]}">
+							<input type="button" name="${next[1]}" value="+1" class="add btn btn-default">
 						</div>
 					</div>
 				</div>
@@ -203,7 +203,6 @@
 				//减少点菜的数量更新总价
 				$("#zbright").on('click',".remove",function(){
 					var btnid=$(this).attr("name");//当前点击的按钮的name
-					alert(btnid);
 					var foodname=$($("span[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
 					var uprice=parseInt($($("span[name=\""+btnid+"\"]")[1]).html());//单价
 					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())-1;
@@ -243,14 +242,33 @@
 							var json=JSON.parse(data);
 							$("#modall-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
-								var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
-								$("#modall-table").append(dd);
+									var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
+									$("#modall-table").append(dd);
+									$("#deskname").html(value);
 							});	
 							OrderTotal();
 						}
 					});
 				}
-				
+				$(function(){
+					newfoodnum();
+				});
+				function newfoodnum(){				
+					$.ajax({
+						type:"post",
+						url:"addfood_lookFood.action",
+						data:{"df":"df"},
+						success:function(data){
+							var json=JSON.parse(data);
+							$.each(json,function(index,value){
+								
+									$($("input[name=\""+value.foodname+"\"]")[1]).val(value.number);
+
+							});	
+							OrderTotal();
+						}
+					});
+				}
 				//清除所有我的菜单
 				$("#clear").click(function(){
 					//alert("dff");
@@ -279,6 +297,7 @@
 					
 				});
 				//下单获得订单信息和菜单信息，桌号
+				var orderStatus=0;
 				$("#order").click(function(){
 					alert("dff");
 					var orderStatus=15;
@@ -291,7 +310,7 @@
 						url:"addfood_addOrder.action",
 						data:{"addorder.orderStatus":orderStatus,"addorder.orderPrice":orderPrice,"addorder.foodNum":foodNum,"addorder.cost":cost},
 						success:function(data){
-								if(data!=-1){
+								if(data!=-1){	
 									alert("下单成功");
 								}
 						}
@@ -302,7 +321,7 @@
 				
 				function getTime(){
     				var time = new Date();
-   				 	$("#date_1").html(time.toLocaleString());
+   				 	$("#desk2").html(time.toLocaleString());
 				}
 				$(function(){
     				setInterval("getTime()",1000);
