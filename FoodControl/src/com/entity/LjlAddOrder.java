@@ -13,7 +13,7 @@ public class LjlAddOrder {
 	private String deskname;
 	private int deskid;
 	public int getDeskid() {
-		deskid=1;
+		
 		return deskid;
 	}
 	public String getDeskname() {
