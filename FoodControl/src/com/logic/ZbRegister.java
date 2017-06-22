@@ -64,4 +64,24 @@ public class ZbRegister implements DaoInterface{
 		
 		return DaoFactory.Query(sql);
 	}
+	/**
+	 * 
+	 * 方法功能说明：  查询桌子
+	 * 创建：2017-6-21 by zhubin   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List quertDesk(){
+		
+		String sql = "select * from desk where deskState='6' and deskdelState='19'";
+		List list = DaoFactory.Query(sql);
+		
+		return list;
+	}
+
+
+	
 }

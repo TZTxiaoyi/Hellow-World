@@ -20,7 +20,23 @@
 <script type="text/javascript">
 	$(function(){
 		$.ajax({
-			url:"achieve_"
+			url:"achieve_modul.action",
+			type:"post",
+			data:{},
+			success:function(data){
+			var json=JSON.parse(data);
+			var th="<tr><td>角色</td><td>权限名称</td><td>权限等级</td><td>操作</td></tr>";
+			$("#tableid").append(th);
+				$.each(json,function(index,value){												 									 			
+				var emtable=
+				"<tr><td id=\"anum"+value[1]+"\">"+value[0]+
+				"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td>"+								
+				"<td id=\"fnum"+value[1]+"\">"+
+				"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal1\" data-toggle=\"modal\">"+
+				"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+				$("#tableid").append(emtable);																												
+				});			
+			}
 		});
 	});
 </script>
@@ -36,24 +52,7 @@
     	<span class="icon-plus-square-o"></span> 添加分类
     </button>
   </div>
-  <table class="table table-hover text-center">
-    <tr>
-      <th width="5%">角色名称</th>
-     <th width="15%">权限等级</th>
-      <th width="10%">权限备注</th>
-      <th width="10%">修改权限</th>
-    </tr>
-    <tr>
-      <td>管理员</td>
-      <td>最高等级</td>
-      <td>管理所有业务</td>
-      <td>
-      	<div class="button-group"> 
-      		<a type="button" class="button border-main" data-target="#myModal1" data-toggle="modal" aria-labelledby="myModalLabel">
-      		<span class="icon-edit"></span> 修改</a>
-      	</div>
-      </td>
-    </tr>
+  <table class="table table-hover text-center" id="tableid">
     
   </table>
 </div>
@@ -81,7 +80,19 @@ function del(id,mid){
 				<h4 class="modal-title" id="myModalLabel">角色权限更改</h4>
 			</div>
 			<div class="modal-body1">
-				<span class="input-group-addon">
+				人事管理<input type="checkbox" aria-label="..."><br>  				
+        		员工管理<input type="checkbox" aria-label="...">
+        		账号管理<input type="checkbox" aria-label="..."><br>
+        		<hr>
+        		餐厅管理<input type="checkbox" aria-label="..."><br>
+        		桌台管理<input type="checkbox" aria-label="...">  
+        		菜品管理<input type="checkbox" aria-label="...">
+        		分类管理<input type="checkbox" aria-label="..."><br>
+        		<hr>
+        		财务管理<input type="checkbox" aria-label="..."><br>
+        		订单详情<input type="checkbox" aria-label="...">  
+        		退单详情<input type="checkbox" aria-label="...">  
+        		收入详情<input type="checkbox" aria-label="...">                  		      			
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -31,7 +31,7 @@
 	
 
 
-	<style>
+	<style type="text/css">
 		body {
 			background: url("image/timg.jpg");
 		}
@@ -63,7 +63,13 @@
 		span{
 			color:red;
 		}
+		.form-control{
+			width:210px;
+			height:40px;
+		}
 	</style>
+	
+
 </head>
 
 <body>
@@ -73,13 +79,13 @@
 				<div style="height:450px;"></div>
 				<div class="media media-y margin-big-bottom"></div>
 				<div id="btn">
-					<button type="button" class="btn btn-default btn-lg btn-danger">
+					<a href="new.jsp"><button type="button" class="btn btn-default btn-lg btn-danger">
 						<h1 class="glyphicon glyphicon-cutlery" aria-hidden="true"></h1>
 						<p>自助点餐</p>
-					</button>
+					</button></a>
 					
 					<button type="button" class="btn btn-default btn-lg btn-Info"
-						data-toggle="modal" data-target="#myModal2">
+						data-toggle="modal" data-target="#myModal2"  id="orderfood">
 						<h1 class="glyphicon glyphicon-heart" aria-hidden="true"></h1>
 						<p>开始点餐</p>
 					</button>
@@ -113,8 +119,22 @@
 							<h1>餐饮管理系统</h1>
 						</div>
 					</div>
-					<form>
-						
+					<form action ="home_orders.action" method ="post" >
+						<div>
+						<!-- <input placeholder="请输入桌号" type="text" id="desknub"
+							 name ="desknub"/> -->
+							 <select class="form-control" id ="desknub">
+							 	  
+							</select>
+					</div>
+					<div>
+						<input placeholder="请输入人数" type="text" id="personnub"
+							 name ="personnub"/>
+					</div>
+					<div>
+						<a class="btn btn-lg btn-info bg-main text-big input-big"  href="addfood_newFood.action" id="orderfood2">
+						开始点餐</a>
+					</div>
 						
 					</form>
 				</div>
@@ -294,27 +314,46 @@
 				
 			}
 		}
-		/* $(function(){
-			$("#login").click(function(){
-			
-				var val = $("#usageuser").val();
-				var valpa= $("#usagepwd").val();
-				$.ajax({
-					type:"post",
-					url:"Home_login.action",
-					data:{"zbud.account":val,"zbud.pwd":valpa},
-					success:function(data){
-					alert(1);
-						var json = JSON.parse(data);
-						
-						if(data == -1){
-							alert("用户名或密码不对");
-						}
-						
-					},
-				});
+	//开始点餐================================
+		$(function(){
+			$("#orderfood").click(function(){
+				
+				//$("option").val();
+				//alert($("#personnub").val());
 			});
-		}); */
+			$.ajax({
+				url:"home_orders.action",
+				type:"type",
+				data:{},
+				success:function(data){
+					var json = JSON.parse(data);
+					var op="<option>选取桌号</option>";
+					$("#desknub").append(op);
+					$.each(json,function(index,value){
+						var opt="<option>"+value[2]+"</option>"
+						$("#desknub").append(opt);
+					});
+				},
+			});
+		});
+		
+//======================================
+	//开始点餐里的触发按钮事件orderfood2   body第110 行
+		$(function(){
+			$("#orderfood2").click(function(){
+			var va1 = $("option").val();
+			var va2 = $("#personnub").val();
+				 if(va1 == "选取桌号" && va2 == ""){
+					alert ("请填写完成");
+					$("#orderfood2").attr("href","#");// attr() 方法设置或返回被选元素的属性值
+					
+				} else{
+					
+				}
+				
+			});
+		});
+//=================================================	
 		$(function(){
 		 
 		 

@@ -138,9 +138,17 @@ public class LYInsertEmployaction {
 	 * 再将值给前台可判断是否修改成功与否；
 	 * @return
 	 */
-	public int updatestaff(){
+	public void updatestaff(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		int flag=9;
-		return flag=ied.update(employee);	
+		flag=ied.update(employee);		
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 	
 	}
 	/**
 	 * searchEM:模糊查询action
@@ -149,7 +157,6 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
-
 		List<String> list=ied.searchsome(putvalue);
 		//System.out.println(list);
 		toJson json=new toJson();
@@ -159,38 +166,20 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
-	/**
-	 * getusername:后台登录验证action
-	 * 得到实现类返回给的list值，判断list的长度，如果能找到相匹配的的值，
-	 * list的长度一定为1，如果找不到，list的长度就为1
-	 * 如果为1，将用户名存起来，返回success，struts接收，跳到后台主页面接收存入值
-	 * 如果不为1，将cuo信息保存，返回false,struts接收，由后台登录界面接收存入信息，然后做出判断，弹出错误信息
-	 * @return
-	 */
-	public String getusername(){
-		HttpServletRequest request=ServletActionContext.getRequest();
-		HttpServletResponse response=ServletActionContext.getResponse();
-		//request.getSession().setAttribute("username", employId.getEmenter());		
-		List list = ied.selectemid(employId);
-		if (list.size()==1) {
-			request.setAttribute("username", employId.getEmenter());			
-			return "success";
-		}else {
-			request.setAttribute("cuo", "haha");
-			return "false" ;
-		}	
-	}
+	
 	/**
 	 * getcount:获得员工表数据条数action
 	 */
 	public void getcount(){
+		
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int a=ied.getallpage();
+		int a=ied.getallpage();		
 		try {
 			response.getWriter().print(a);
 		} catch (Exception e) {
 			// TODO: handle exception
-		} 		
+		} 
+		
 	} 
 	/**
 	 * getpage:由前台data传来的值，countpage接收，调用pagepage(实现类方法)
@@ -210,7 +199,19 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
-	public void modul(){
-		ied.aperson();
+	/**
+	 * modul:权限表action
+	 */
+	public void modul(){		
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");	
+		List list = ied.aperson();	
+		JSON json=toJson.toJson("value", list);		
+		try {
+			response.getWriter().print(json);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

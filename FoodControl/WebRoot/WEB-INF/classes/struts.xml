@@ -24,10 +24,45 @@
 		有关员工的package
 	 -->
 	<package name="inser" extends="struts-default">
+		
+	
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
-			<result name="success">/background/index.jsp</result>
-			<result name="false">/background/login.jsp</result>
+			
 		</action>
 	</package>
+	<!-- 有关权限的package -->
+	<package name="lanjieqi" extends="struts-default">
+		<interceptors>
+			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
+				<param name="includeMethods">staffinfo,staffid,powers,deskmanage,dishmanage,kindmanage,orderdetail,returnorder,incomedetail</param><!-- 不拦截的方法 -->
+			</interceptor>
+			<!-- 构建一个拦截器栈 -->
+			<interceptor-stack name="aaabbb">
+				<interceptor-ref name="sessInter"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 配置默认的拦截器 --><!-- 被拦截后跳转的jsp -->
+		<default-interceptor-ref name="aaabbb"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">/beautiful.jsp</result>
+		</global-results>
+		<action name="fresh_*" class="com.achaction.LyQuanXianAction" method="{1}">
+			<result name="success">/background/index.jsp</result>
+			<result name="part">/Service.jsp</result>
+			<result name="cook">/Kitchen.jsp</result>
+			<result name="false">/background/login.jsp</result>
+			<result name="sa">/background/employee.jsp</result>
+			<result name="se">/background/employeeId.jsp</result>
+			<result name="ss">/background/employeePower.jsp</result>
+			<result name="sc">/background/deskmanage.jsp</result>
+			<result name="sd">/background/dishemanage.jsp</result>
+			<result name="sf">/background/cate.jsp</result>
+			<result name="sg">/background/chargeback.jsp</result>
+			<result name="sh">/background/finance.jsp</result>
+			<result name="si">/background/income.jsp</result>
+		</action>
+	</package>
+	
 </struts>    

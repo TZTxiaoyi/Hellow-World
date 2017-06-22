@@ -24,12 +24,12 @@ import com.utils.toJson;
  * @°æ±¾£ºV1.0
  */
 public class TztQuerDishAction {
-	String dishId;
+	int dishId;
 	
-	public String getDishid() {
+	public int getDishid() {
 		return dishId;
 	}
-	public void setDishid(String dishid) {
+	public void setDishid(int dishid) {
 		this.dishId = dishId;
 	}
 	/**

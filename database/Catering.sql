@@ -195,7 +195,16 @@ create table part_authority
 	partId int foreign key references part(partId),
 	authorityId int foreign key references authority(authorityId)
 )
-create view
+create view staffinfo_sf
+as
+select s1.Name,s1.staffId,s1.phone,s1.sex,s1.age,s1.adress,s1.accession,p1.partName,st.account
+from staffInfo s1 left join part p1 on s1.partId=p1.partId 
+left join staffEnter st on st.enterId=s1.enterId
+create view p_auth_pa
+as
+select p1.partName,a1.authorityName
+from part p1 left join authority a1 on p1.partId=a1.authorityId
+
 
 /*
 11¶©µ¥±í£º

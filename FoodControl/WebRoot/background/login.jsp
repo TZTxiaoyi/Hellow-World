@@ -1,7 +1,8 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="s" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,9 +20,8 @@
     		if(dd=="haha"){ 
     			alert("密码错误或用户名输入有误");
     			dd=null;
-    		}
-    		
-    	})
+    		}  		
+    	});
     </script>
 </head>
 						  <!-- 
@@ -35,7 +35,7 @@
             <div style="height:150px;"></div>
             <div class="media media-y margin-big-bottom">           
             </div>         
-            <form action="achieve_getusername.action" method="post">
+            <form action="fresh_getusername.action" method="post">
             <div class="panel loginbox">
                 <div class="text-center margin-big padding-big-top"><h1>后台管理中心</h1></div>
                 <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
@@ -69,4 +69,5 @@
 </div>
 
 </body>
+
 </html>

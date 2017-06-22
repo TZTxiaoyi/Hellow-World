@@ -29,6 +29,7 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int eminsert(LYEmployee em){
+
 		String sql="insert into staffInfo values(?,?,?,?,?,?,?,?,?)";
 		Object[] params=new Object[]{em.getEmid(),em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),em.getEmpart(),em.getAccount()};		
 		
@@ -53,7 +54,7 @@ public class LYInsertEmployDao {
 	 */
 	
 	public int delone(LYEmployee lye){
-		String sql="truncate table staffInfo where staffId=?";
+		String sql="update staffInfo set staffinfoState=20 where staffId=?";
 		Object[] params = new Object[]{lye.getEmid()};
 		return DaoFactory.Updata(sql, params);
 	}
@@ -64,8 +65,11 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int update(LYEmployee em){
-		String sql="Update staffInfo set Name=?,sex=?,age=?,phone=?,adress=?,accession=? where staffId=?";		
-		Object[] params=new Object[]{em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),em.getEmid()};
+
+		String sql="Update staffInfo set Name=?,sex=?,age=?,phone=?,adress=?,accession=?,staffinfoState=? where staffId=?";
+		
+		Object[] params=new Object[]{em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),em.getStaffinfoState(),em.getEmid()};
+
 		//System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+em.getEmid());
 		return DaoFactory.Updata(sql, params);
 	}
@@ -91,7 +95,17 @@ public class LYInsertEmployDao {
 				" from staffEnter s1 " +
 				" where account='"+ld.getEmenter()+"' and pwd='"+ld.getEmword()+"'";
 		//Object[] params=new Object[]{ld.getEmenter(),ld.getEmword()};
-		return DaoFactory.Query(sql);
+		return DaoFactory.Query(sql); 
+	}
+	public String selectpart(LYEmployId ld){
+		String sql="select p1.partName"+
+				" from part p1,staffEnter s1,staffInfo st"+
+				" where p1.partId=st.partId and st.enterId=s1.enterId and account='"+ld.getEmenter()+"'";
+		List list = DaoFactory.Query(sql);
+		List list2 =(List) list.get(0);
+		String pname =(String) list2.get(0);
+		//System.out.println(pname);
+		return pname;
 	}
 	/**
 	 * getallpage：查询员工表count实现类，
@@ -120,10 +134,12 @@ public class LYInsertEmployDao {
 	}
 	
 	/**
-	 * 
+	 * 角色权限表实现类
 	 */
-	public List aperson(){
-		String sql="select * from pa_auth";
+	public List aperson(String partname){
+		//System.out.println("00000");
+		String sql="select pa.partName,pa.powersUul" +
+				" from pa_auth pa where partName='"+partname+"'";
 		return DaoFactory.Query(sql);
 	}
 }

@@ -23,9 +23,16 @@ public class LYEmployee {
 	
 	public String getAccount() {
 		return account;
-
+	}
 	private int ementer;
-
+	private int staffinfoState;
+	public int getStaffinfoState() {
+		staffinfoState=19;
+		return staffinfoState;
+	}
+	public void setStaffinfoState(int staffinfoState) {
+		this.staffinfoState = staffinfoState;
+	}
 	public int getEmenter() {
 		return ementer;
 

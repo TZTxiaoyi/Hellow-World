@@ -23,9 +23,9 @@
 	<script type="text/javascript">
 		$(function(){
 			$.ajax({
-				url:
-				data:{}
-				type:"post"
+				url:"",
+				data:{},
+				type:"post",
 				success:function(data){
 					
 				}
@@ -50,22 +50,22 @@
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
   <h2><span class="icon-user"></span>人事管理</h2>
   <ul style="display:block">
-  <li><a href="employee.jsp" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
-    <li><a href="employeeId.jsp" target="right"><span class="icon-caret-right"></span>员工账号</a></li>
-    <li><a href="employeePower.jsp" target="right"><span class="icon-caret-right"></span>角色权限</a></li>                     
-
+  <li><a href="fresh_staffinfo.action" target="right"><span class="icon-caret-right"></span>员工管理</a></li>
+    <li><a href="fresh_staffid.action" target="right"><span class="icon-caret-right"></span>员工账号</a></li>
+    <li><a href="fresh_powers.action" target="right"><span class="icon-caret-right"></span>角色权限</a></li>                     
+	
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>餐厅管理</h2>
   <ul>
-  	<li><a href="deskmanage.jsp" target="right"><span class="icon-caret-right"></span>桌台管理</a></li>
-  	<li><a href="dishemanage.jsp" target="right"><span class="icon-caret-right"></span>菜品管理</a></li>    
-    <li><a href="cate.jsp" target="right"><span class="icon-caret-right"></span>分类管理</a></li>        
+  	<li><a href="fresh_deskmanage.action" target="right"><span class="icon-caret-right"></span>桌台管理</a></li>
+  	<li><a href="fresh_dishmanage.action" target="right"><span class="icon-caret-right"></span>菜品管理</a></li>    
+    <li><a href="fresh_kindmanage.action" target="right"><span class="icon-caret-right"></span>分类管理</a></li>        
   </ul>
   <h2><span class="icon-pencil-square-o"></span>财务管理</h2>
-  <ul>
-    <li><a href="chargeback.jsp" target="right"><span class="icon-caret-right"></span>退单详情</a></li>
-    <li><a href="finance.jsp" target="right"><span class="icon-caret-right"></span>财务管理</a></li>   
-    <li><a href="cate.jsp" target="right"><span class="icon-caret-right"></span>分类管理</a></li>        
+  <ul> 
+    <li><a href="fresh_orderdetail.action" target="right"><span class="icon-caret-right"></span>订单详情</a></li>
+    <li><a href="fresh_returnorder.action" target="right"><span class="icon-caret-right"></span>退单详情</a></li>   
+    <li><a href="fresh_incomedetail.action" target="right"><span class="icon-caret-right"></span>收入详情</a></li>        
   </ul>
   <h2><span class="icon-pencil-square-o"></span>其他</h2>
   <ul>
@@ -94,7 +94,7 @@ $(function(){
   
 </ul>
 <div class="admin">
-  <iframe scrolling="auto" rameborder="0" src="employee.jsp" name="right" width="100%" height="100%"></iframe>
+  <iframe scrolling="auto" rameborder="0" name="right" width="100%" height="100%"></iframe>
 </div>
 <div style="text-align:center;">
 

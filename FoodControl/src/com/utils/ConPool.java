@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.apache.commons.dbcp.BasicDataSource;
-
 /**
  * 
  * @类功能说明：  连接池
@@ -23,6 +22,7 @@ public class ConPool {
 	/**
 	 * 静态创建连接池变量
 	 */
+	
 	private static BasicDataSource dataScource= null;
 
 	/**
@@ -36,8 +36,8 @@ public class ConPool {
 	private void setcon(){
 		dataScource = new BasicDataSource();
 		dataScource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		//默认为172.16.22.62李阳专属为192.168.23.1
 		dataScource.setUrl("jdbc:sqlserver://172.16.22.62:1433; DatabaseName= FoodControl");
+
 		dataScource.setUsername("sa");
 		dataScource.setPassword("123456");
 	}
