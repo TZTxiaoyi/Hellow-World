@@ -12,8 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<script type="text/javascript"
-	src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript"src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
 
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
@@ -345,8 +344,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				登陆成功后带值显示到本页面；
 			*/
 			$(function(){
-    			//var dd='${username}';
-    			var dd="admin";
+    			var dd='${username}';
     			$("#user").html(dd);	
     			dd=null;
     		})

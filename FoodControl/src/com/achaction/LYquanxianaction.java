@@ -2,14 +2,14 @@ package com.achaction;
 
 import java.util.List;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.LYEmployId;
-import com.logic.LYInsertEmployDao;
+import com.insertemploydao.LYInsertEmployDao;
+
 
 public class LyQuanXianAction {
 	
@@ -75,6 +75,7 @@ public class LyQuanXianAction {
 			}else{
 				List list4 = ied.aperson(partname);
 				//System.out.println("999:"+list4);
+				request.setAttribute("username", employId.getEmenter());
 				request.getSession().setAttribute("listvalue", list4);
 				return "success";
 			}				
