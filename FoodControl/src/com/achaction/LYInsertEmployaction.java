@@ -138,9 +138,17 @@ public class LYInsertEmployaction {
 	 * 再将值给前台可判断是否修改成功与否；
 	 * @return
 	 */
-	public int updatestaff(){
+	public void updatestaff(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		int flag=9;
-		return flag=ied.update(employee);	
+		flag=ied.update(employee);		
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 	
 	}
 	/**
 	 * searchEM:模糊查询action
@@ -159,6 +167,9 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
+<<<<<<< HEAD
+	
+=======
 	/**
 	 * getusername:后台登录验证action
 	 * 得到实现类返回给的list值，判断list的长度，如果能找到相匹配的的值，
@@ -180,17 +191,20 @@ public class LYInsertEmployaction {
 			return "false" ;
 		}	
 	}
+>>>>>>> 1e91209ac6cd4c43d80cc7d3c90fb56ed49d713d
 	/**
 	 * getcount:获得员工表数据条数action
 	 */
 	public void getcount(){
+		
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int a=ied.getallpage();
+		int a=ied.getallpage();		
 		try {
 			response.getWriter().print(a);
 		} catch (Exception e) {
 			// TODO: handle exception
-		} 		
+		} 
+		
 	} 
 	/**
 	 * getpage:由前台data传来的值，countpage接收，调用pagepage(实现类方法)
@@ -210,5 +224,19 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
-	
+	/**
+	 * modul:权限表action
+	 */
+	public void modul(){		
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");	
+		List list = ied.aperson();	
+		JSON json=toJson.toJson("value", list);		
+		try {
+			response.getWriter().print(json);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

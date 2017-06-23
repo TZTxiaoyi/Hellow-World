@@ -83,6 +83,11 @@ public class SxmTableSql implements DaoInterface {
 		List list = DaoFactory.Query(sql);
 		return list;
 	}
+	public List idTablename(String ser) {
+		String sql = "select * from desk_restaff where deskName ='"+ser+"'";
+		List list = DaoFactory.Query(sql);
+		return list;
+	}
 	/**
 	 * @return
 	 * 
@@ -128,6 +133,12 @@ public class SxmTableSql implements DaoInterface {
 		SxmTable tab = (SxmTable) tabp;
 		String sql = "update desk set personNum=?,deskName=? where deskId=?";
 		Object[] params = new Object[] { tab.getPersonNum(), tab.getDeskName(), tab.getDeskId() };
+		return DaoFactory.Updata(sql, params);
+
+	}
+	public int uptabstate(String tablest) {
+		String sql = "update desk set deskState=7 where deskName=?";
+		Object[] params = new Object[] {tablest};
 		return DaoFactory.Updata(sql, params);
 
 	}

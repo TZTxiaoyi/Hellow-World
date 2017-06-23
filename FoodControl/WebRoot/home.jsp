@@ -51,7 +51,12 @@
 			height: 40px;
 			margin-top: 30;
 		}
-		
+		#mod-div div{
+			margin-left: 20%;
+			width: 350px;
+			height: 40px;
+			margin-top: 30;
+		}
 		input {
 			width: 210px;
 			height: 40px;
@@ -119,11 +124,11 @@
 							<h1>餐饮管理系统</h1>
 						</div>
 					</div>
-					<form action ="home_orders.action" method ="post" >
+					<form action="addfood_newFood.action" method="post">
 						<div>
-						<!-- <input placeholder="请输入桌号" type="text" id="desknub"
-							 name ="desknub"/> -->
-							 <select class="form-control" id ="desknub">
+						<!--  <input placeholder="请输入桌号" type="text" id="desknub"
+							 name ="desknub"/>-->
+							 <select class="form-control" id ="desknub" name="selectvalue">
 							 	  
 							</select>
 					</div>
@@ -132,8 +137,7 @@
 							 name ="personnub"/>
 					</div>
 					<div>
-						<a class="btn btn-lg btn-info bg-main text-big input-big"  href="addfood_newFood.action" id="orderfood2">
-						开始点餐</a>
+						<input type="submit" value="开始点餐" class="btn btn-lg btn-info bg-main text-big input-big"  id="orderfood2">
 					</div>
 						
 					</form>
@@ -323,7 +327,7 @@
 			});
 			$.ajax({
 				url:"home_orders.action",
-				type:"type",
+				type:"post",
 				data:{},
 				success:function(data){
 					var json = JSON.parse(data);
@@ -340,16 +344,26 @@
 //======================================
 	//开始点餐里的触发按钮事件orderfood2   body第110 行
 		$(function(){
-			$("#orderfood2").click(function(){
+			$("#orderfo").click(function(){
 			var va1 = $("option").val();
 			var va11 = $("option").val();
+			 var vae=$("select").val();//获得当前选中的桌台名
+
 			var va2 = $("#personnub").val();
-				 if(va1 == "选取桌号" && va2 == ""){
+				 if(vae == "选取桌号" || va2 == ""){
 					alert ("请填写完成");
-					$("#orderfood2").attr("href","#");// attr() 方法设置或返回被选元素的属性值
+					//$("#orderfood2").attr("href","#");// attr() 方法设置或返回被选元素的属性值
 					
 				} else{
-					
+				alert("er");
+					$.ajax({
+						type:"post",
+						url:"addfood_newFood.action",
+						data:{"desknub":vae},
+						success:function(data){
+						
+						}
+					});
 				}
 				
 			});

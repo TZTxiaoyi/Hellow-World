@@ -19,9 +19,8 @@
     		if(dd=="haha"){ 
     			alert("密码错误或用户名输入有误");
     			dd=null;
-    		}
-    		
-    	})
+    		}  		
+    	});
     </script>
 </head>
 						  <!-- 
@@ -35,7 +34,7 @@
             <div style="height:150px;"></div>
             <div class="media media-y margin-big-bottom">           
             </div>         
-            <form action="achieve_getusername.action" method="post">
+            <form action="fresh_getusername.action" method="post">
             <div class="panel loginbox">
                 <div class="text-center margin-big padding-big-top"><h1>后台管理中心</h1></div>
                 <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">

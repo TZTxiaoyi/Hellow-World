@@ -20,7 +20,7 @@ public class LjlAddOrder {
 		this.ordersId = ordersId;
 	}
 	public int getDeskid() {
-		deskid=1;
+		
 		return deskid;
 	}
 	public String getDeskname() {

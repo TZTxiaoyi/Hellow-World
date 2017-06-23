@@ -18,8 +18,7 @@ public class LYInsertEmployDao {
 	 */
 	public  List selemploy(LYEmployee em){
 		String sql="select ss.Name,ss.staffId,ss.phone,ss.sex,ss.age,ss.adress,ss.accession,ss.partName" +
-				" from staffinfo_sf ss";
-		
+				" from staffinfo_sf ss";		
 		return DaoFactory.Query(sql);
 				
 	}
@@ -96,7 +95,17 @@ public class LYInsertEmployDao {
 				" from staffEnter s1 " +
 				" where account='"+ld.getEmenter()+"' and pwd='"+ld.getEmword()+"'";
 		//Object[] params=new Object[]{ld.getEmenter(),ld.getEmword()};
-		return DaoFactory.Query(sql);
+		return DaoFactory.Query(sql); 
+	}
+	public String selectpart(LYEmployId ld){
+		String sql="select p1.partName"+
+				" from part p1,staffEnter s1,staffInfo st"+
+				" where p1.partId=st.partId and st.enterId=s1.enterId and account='"+ld.getEmenter()+"'";
+		List list = DaoFactory.Query(sql);
+		List list2 =(List) list.get(0);
+		String pname =(String) list2.get(0);
+		//System.out.println(pname);
+		return pname;
 	}
 	/**
 	 * getallpage：查询员工表count实现类，
@@ -121,6 +130,16 @@ public class LYInsertEmployDao {
 				" from staffinfo_sf ss" +
 				" where staffId not in(select top "+startIndex*2+" staffId from staffinfo_sf)";
 		//System.out.println("ddddddddddd");
+		return DaoFactory.Query(sql);
+	}
+	
+	/**
+	 * 角色权限表实现类
+	 */
+	public List aperson(String partname){
+		//System.out.println("00000");
+		String sql="select pa.partName,pa.powersUul" +
+				" from pa_auth pa where partName='"+partname+"'";
 		return DaoFactory.Query(sql);
 	}
 }

@@ -180,6 +180,7 @@ create table authority
 	authorityLevel int	,
 	authorityUrl	varchar(50)
 )
+select * from authority
 /*
 10角色权限表：
 编号		id		int，自增 主键
@@ -187,12 +188,23 @@ create table authority
 权限编号 	authorityId	外键 权限表（权限编号）
 
 */
+
 create table part_authority
 (
 	id int identity(1,1)primary key,
 	partId int foreign key references part(partId),
 	authorityId int foreign key references authority(authorityId)
 )
+create view staffinfo_sf
+as
+select s1.Name,s1.staffId,s1.phone,s1.sex,s1.age,s1.adress,s1.accession,p1.partName,st.account
+from staffInfo s1 left join part p1 on s1.partId=p1.partId 
+left join staffEnter st on st.enterId=s1.enterId
+create view p_auth_pa
+as
+select p1.partName,a1.authorityName
+from part p1 left join authority a1 on p1.partId=a1.authorityId
+
 
 /*
 11订单表：
@@ -292,14 +304,10 @@ codetable 码表
 */
 create view desk_refresh
 as
-select d.deskId,d.deskName,d.personNum,s.Name,co.codeName,d.deskdelState from
-desk d left join desk_staff ds on d.deskId=ds.deskId and d.deskdelState=19
+select d.deskId,d.deskName,d.personNum,s.Name,co.codeName from
+desk d left join desk_staff ds on d.deskId=ds.deskId
 left join staffInfo s on s.staffId=ds.staffId
-left join codetable co on d.deskState=co.id 
-left join codetable co1 on d.deskdelState=co1.id and co.id=19 
-create view desk_restaff
-as
-select *from desk_refresh where deskdelState=19
+left join codetable co on d.deskState=co.id
 
 /*
 桌子名字添加约束--唯一
