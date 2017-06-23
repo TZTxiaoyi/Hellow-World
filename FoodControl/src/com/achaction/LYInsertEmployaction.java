@@ -163,6 +163,7 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
+
 	/**
 	 * getusername:后台登录验证action
 	 * 得到实现类返回给的list值，判断list的长度，如果能找到相匹配的的值，
@@ -184,6 +185,7 @@ public class LYInsertEmployaction {
 			return "false" ;
 		}	
 	}
+
 	/**
 	 * getcount:获得员工表数据条数action
 	 */
@@ -218,7 +220,7 @@ public class LYInsertEmployaction {
 	}
 	/**
 	 * modul:权限表action
-	 */
+	 
 	public void modul(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
@@ -230,5 +232,5 @@ public class LYInsertEmployaction {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-	}
+	}*/
 }

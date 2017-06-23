@@ -3,31 +3,28 @@
 <struts>
 	<package name="default" extends="struts-default">
 		<action name="addfood_*" class="com.achaction.LjlAddFoodAction" method="{1}">
-			<result name="addfood" type="dispatcher">/new.jsp</result>
-			<result name="newFood" type="dispatcher">/new.jsp</result>
-			<result name="backhome">/home.jsp</result>
-
+			<result name="addfood" type="redirect">/new.jsp</result>
+			<result name="newFood" type="redirect">/new.jsp</result>
+			<result name="backhome" type="redirect">/home.jsp</result>
 		</action>
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
-			<result name="tztquerok">/order_vegetable.jsp</result>
+			<result name="tztquerok" type="redirect">/order_vegetable.jsp</result>
 		</action>
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
-			<result name="ok">/home.jsp</result>
+			<result name="ok" type="redirect">/home.jsp</result>
 		</action>
 
 <!-- 注册 -->
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
-			<result name="register">/home.jsp</result>
+			<result name="register" type="redirect">/home.jsp</result>
 
-			<result name ="list">/new.jsp</result>
+			<result name ="list" type="redirect">/new.jsp</result>
 		</action>
 	</package>
 	<!-- 
 		有关员工的package
 	 -->
 	<package name="inser" extends="struts-default">
-		
-	
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
 			
@@ -50,21 +47,21 @@
 		<global-results>
 			<result name="login" type="redirect">/beautiful.jsp</result>
 		</global-results>
-		<action name="fresh_*" class="com.achaction.LYquanxianaction" method="{1}">
-			<result name="success">/background/index.jsp</result>
-			<result name="part">/Service.jsp</result>
-			<result name="cook">/kitchen.jsp</result>
-			<result name="false">/background/login.jsp</result>
-			<result name="sa">/background/employee.jsp</result>
-			<result name="se">/background/employeeId.jsp</result>
-			<result name="ss">/background/employeePower.jsp</result>
-			<result name="sc">/background/deskmanage.jsp</result>
-			<result name="sd">/background/dishemanage.jsp</result>
-			<result name="sf">/background/cate.jsp</result>
-			<result name="sg">/background/chargeback.jsp</result>
-			<result name="sh">/background/finance.jsp</result>
-			<result name="si">/background/income.jsp</result>
+		<action name="fresh_*" class="com.achaction.LyQuanXianAction" method="{1}">
+			<result name="success" type="redirect">/background/index.jsp</result>
+			<result name="part" type="redirect">/service.jsp</result>
+			<result name="cook" type="redirect">/Kitchen.jsp</result>
+			<result name="false" type="redirect">/background/login.jsp</result>
+			<result name="sa" type="redirect">/background/employee.jsp</result>
+			<result name="se" type="redirect">/background/employeeId.jsp</result>
+			<result name="ss" type="redirect">/background/employeePower.jsp</result>
+			<result name="sc" type="redirect">/background/deskmanage.jsp</result>
+			<result name="sd" type="redirect">/background/dishemanage.jsp</result>
+			<result name="sf" type="redirect">/background/cate.jsp</result>
+			<result name="sg" type="redirect">/background/chargeback.jsp</result>
+			<result name="sh" type="redirect">/background/finance.jsp</result>
+			<result name="si" type="redirect">/background/income.jsp</result>
+
 		</action>
-	</package>
-	
+	</package>	
 </struts>    

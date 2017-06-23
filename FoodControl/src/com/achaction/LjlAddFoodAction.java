@@ -71,7 +71,7 @@ public class LjlAddFoodAction {
 	 * @throws
 	 */
 	public void addOrder(){
-		int rsid=orders.rsadd(addorder);
+	
 		int dishStatus=12;
 		int flag=-1;
 		HttpServletRequest request=ServletActionContext.getRequest();
@@ -308,6 +308,9 @@ public class LjlAddFoodAction {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
+		LjlDish dish=new LjlDish();
+		List listdish=dish.sel();	
+		request.getSession().setAttribute("dish",listdish );
 		String retime=null;
 		List list=orders.orderDish(addorder.getOrdersId());
 		JSON json=toJson.toJson("val", list);
@@ -317,11 +320,8 @@ public class LjlAddFoodAction {
 				String time=df.format(new Date()); 
 				String time1=df.format(li.get(2));
 				Date d1 = df.parse(time);
-				System.out.println(3);
 				Date d2 = df.parse(time1); 
-				System.out.println(2);
 			    long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别  
-			    System.out.println("diff"+diff);
 			    long days = diff / (1000 * 60 * 60 * 24);  
 			   	long hours = (diff-days*(1000 * 60 * 60 * 24))/(1000* 60 * 60);  
 			    long minutes = (diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60))/(1000* 60);  

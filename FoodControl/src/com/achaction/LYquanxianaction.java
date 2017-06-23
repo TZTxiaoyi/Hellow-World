@@ -74,6 +74,7 @@ public class LYquanxianaction {
 			}else{
 				List list4 = ied.aperson(partname);
 				//System.out.println("999:"+list4);
+				request.setAttribute("username", employId.getEmenter());
 				request.getSession().setAttribute("listvalue", list4);
 				return "success";
 			}				

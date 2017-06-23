@@ -51,7 +51,7 @@
 		}
 		#menu-within-height{
 			height:100px;
-			width:150px;
+			width:300px;
 			
 		}
 		
@@ -162,7 +162,7 @@
 			<div class="col-md-3">
 					开台时间：
 					<span id="retime">
-					${retime}
+					
 					</span>
 			</div>
 		</div>
@@ -190,11 +190,14 @@
 				</div>
 				<div id="money">
 					
-						<a class="btn btn-info btn-lg" href="#"
+						<a class="btn btn-info btn-lg" href=""
 						role="button">总计：<span class="tred"></span></a>
 						<br/>
-						<a class="btn btn-danger btn-lg" href="#"
+						<a class="btn btn-danger btn-lg" href=""
 						role="button">结账：<span class="tred"></span></a>
+						<br/>
+						<a class="btn btn-success btn-lg" href=""
+						role="button">清扫结束</a> 
 				
 				</div>
 			</div>
@@ -226,9 +229,8 @@
 		
 					<div class="container-fluid" ><!-- 菜单-->
 						<div class="row " id="menu-height" >
-							<c:forEach var="next"  items="${dishList}" varStatus="statu">
-								<div>
-									<img  onclick = "show()" src="image/2.png" alt="..." class="img-circle" width="200" height="200"><br/>
+							<c:forEach var="next"  items="${dish}" varStatus="statu">
+								<div class="col-md-4" id="menu-within-height">
 									<span name="name${statu.index}">${next[1]}</span>:  <span name="name${statu.index}">${next[2]}</span>元 / 份<br/>
 									<div class="row" >
 										<div class=" center-block"  id="food-btn">
@@ -306,7 +308,6 @@
 			var time = new Date();
    			$("#times").html(time.toLocaleString());
    			outtime();
-   			
 		}
 		
 		function add() {
@@ -351,7 +352,7 @@
 					var onenum=0;//菜品单价
 					var dnum=0;//菜品数量
 					var num=0;
-					var th="<tr><td>菜品</td><td>数量</td><td>单价</td><td>金额</td></tr>";
+					var th="<tr><td>菜品</td><td>数量</td><td>单价</td><td>金额</td><td></td></tr>";
 					$("#subject-style").append(th);
 					var foodnum=1;
 					$.each(json,function(index,value){
@@ -360,9 +361,11 @@
 						fnum=value[4];
 						onenum=value[5];
 						allnum=fnum*onenum;
-						var odertext="<tr><td>"+value[3]+"</td><td></td><td>"+value[5]+"</td><td>"+allnum+"</td></tr>";
+						var odertext="<tr><td>"+value[3]+"</td><td></td><td>"+value[5]+"</td><td>"+allnum+
+						"</td><td><a class=\"btn btn-success\" href=\"\"role=\"button\">清扫结束</a></td></tr>";
 						$("#torder").append(odertext);
 						num=num+allnum;
+						
 						
 					});
 					
@@ -386,6 +389,7 @@
 			});
 			$("#retime").html('${retime}');
 		};
+		
 	</script>
   </body>
 </html>
