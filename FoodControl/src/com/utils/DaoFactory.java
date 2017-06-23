@@ -1,10 +1,10 @@
 package com.utils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +71,37 @@ public class DaoFactory {
 			System.out.println(e.getMessage()+"com.utils.Daofactory.Updata()错误");
 		}
 		return flag;
+	}
+	/**
+	 * 更新后返回结果集
+	 * 方法功能说明：  
+	 * 创建：2017-6-21 by li   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param sql
+	 * @参数： @param params
+	 * @参数： @return      
+	 * @return int     
+	 * @throws
+	 */
+	public static int rsUpdata(String sql,Object[]params){
+		ResultSet rs =null;
+		int key=-1;
+		try{
+			ConPool conpool=new ConPool();
+			Connection con= conpool.getConnection();
+			PreparedStatement ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			Setparams(ps, params);
+			ps.executeUpdate();
+	        rs = ps.getGeneratedKeys();  
+	        if(rs.next()){  
+	            key = rs.getInt(1);  
+	        } 
+	        CloseAll(con, ps, null);
+		}catch(Exception e){
+			System.out.println(e.getMessage()+"com.utils.Daofactory.rsUpdata()错误");
+		}
+		return key;
 	}
 	/**
 	 * 

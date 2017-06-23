@@ -13,6 +13,7 @@ import com.insertemploydao.TztDishImp;
 import com.insertemploydao.TztDishOrderImp;
 import com.logic.TztDefaultSortImp;
 import com.logic.TztTimeSortImp;
+import com.entity.TztDishOrder;
 import com.utils.toJson;
 
 
@@ -46,10 +47,6 @@ public class TztQuerDishAction {
 	public int getDishId() {
 		return dishId;
 	}	
-	public void setDishId(int dishId) {
-		this.dishId = dishId;
-	}
-	
 	
 	/**
 	 * 

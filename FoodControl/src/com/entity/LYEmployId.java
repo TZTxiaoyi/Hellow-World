@@ -1,12 +1,13 @@
 package com.entity;
 
 public class LYEmployId {
-	private int ementer;
+	private String ementer;
 	private String emword;
-	public int getEmenter() {
+	
+	public String getEmenter() {
 		return ementer;
 	}
-	public void setEmenter(int ementer) {
+	public void setEmenter(String ementer) {
 		this.ementer = ementer;
 	}
 	public String getEmword() {

@@ -2,18 +2,21 @@ package com.achaction;
 
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSON;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.entity.LjlAddOrder;
 import com.entity.SxmTable;
-import com.logic.SxmTableSql;
+import com.insertemploydao.SxmTableSql;
 import com.utils.toJson;
 
 public class SxmTableAction {
@@ -36,8 +39,6 @@ public class SxmTableAction {
 	SxmTable st;
 	String search;
 	int currPage;
-
-	
 	public int getCurrPage() {
 		return currPage;
 	}
@@ -106,6 +107,7 @@ public class SxmTableAction {
 		
 	}
 	/**
+	 * @throws ParseException 
 	 
 	     * 方法功能说明：  后台进入桌位管理页面自动加载
 	     * 创建：2017-6-16 by Administrator   
@@ -118,17 +120,14 @@ public class SxmTableAction {
 	public void tableAdmin(){
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
-		//Map map=sts.selTableAdmin(null);
 		List list=sts.selTableAdmin(null);
-		JSON json=toJson.toJson("aa", list);
+		JSON json=toJson.toJson("ss", list);
 		try {
 			hsr.getWriter().print(json);
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage()+3333);
 		}
-		
 	}
 	/**
 	 * 
@@ -172,7 +171,7 @@ public class SxmTableAction {
 	}
 	/**
 	 * 
-	     * 方法功能说明：  快速查找
+	     * 方法功能说明： 后台 快速查找
 	     * 创建：2017-6-17 by Administrator   
 	     * 修改：日期 by songxianmeng
 	     * 修改内容：  
@@ -194,7 +193,29 @@ public class SxmTableAction {
 	}
 	/**
 	 * 
-	     * 方法功能说明：  分页
+	     * 方法功能说明： 前台 快速查找
+	     * 创建：2017-6-17 by Administrator   
+	     * 修改：日期 by songxianmeng
+	     * 修改内容：  
+	     * @参数：       
+	     * @return void     
+	     * @throws
+	 */
+	public void indexTable(){
+		List it=sts.serviceTable(search);
+		JSON json=toJson.toJson("ss", it);
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		hsr.setContentType("text/html;charset=UTF-8");
+		try {
+			hsr.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage()+3333);
+		}
+	}
+	/**
+	 * 
+	     * 方法功能说明：  分页 自动刷新
 	     * 创建：2017-6-19 by Administrator   
 	     * 修改：日期 by songxianmeng
 	     * 修改内容：  
@@ -203,18 +224,15 @@ public class SxmTableAction {
 	     * @throws
 	 */
 	public void tabPage(){
-		System.out.println("---------");
-		System.out.println(currPage);
 		List list=sts.page(currPage);
 		JSON json=toJson.toJson("ss", list);
-		System.out.println(json);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
 		try {
 			hsr.getWriter().print(json);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage()+3333);
+			System.out.println(e.getMessage());
 		}
 	}
 	/**
@@ -234,8 +252,9 @@ public class SxmTableAction {
 			hsr.getWriter().print(total);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage()+3333);
+			System.out.println(e.getMessage());
 		}
 	}
+	
 	
 }

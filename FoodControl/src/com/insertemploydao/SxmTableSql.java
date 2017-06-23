@@ -1,4 +1,4 @@
-package com.logic;
+package com.insertemploydao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,9 +35,8 @@ public class SxmTableSql implements DaoInterface {
 	 */
 	public int add(Object tabp) {
 		SxmTable tab = (SxmTable) tabp;
-		String sql = "insert into desk values (?,?,?)";
-		Object[] params = new Object[] { tab.getPersonNum(), tab.getDeskName(),
-				tab.getDeskState() };
+		String sql = "insert into desk values (?,?,?,?)";
+		Object[] params = new Object[] { tab.getPersonNum(), tab.getDeskName(),tab.getDeskState(),tab.getDeskdelState()};
 		return DaoFactory.Updata(sql, params);
 	}
 
@@ -64,12 +63,31 @@ public class SxmTableSql implements DaoInterface {
 		
 		return flag;
 	}
+	/**
+	 * 后台桌子快速查询
+	 * @param ser
+	 * @return
+	 */
 	public List selTable(String ser) {
-		String sql = "select * from desk_refresh where deskId like'%"+ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
+		String sql = "select * from desk_restaff where deskId like'%"+ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
 		List list = DaoFactory.Query(sql);
 		return list;
 	}
-
+	/**
+	 * 前台桌子快速查询
+	 * @param ser
+	 * @return
+	 */
+	public List serviceTable(String ser) {
+		String sql = "select * from desk_restaff where deskName like'%"+ser+"%'";
+		List list = DaoFactory.Query(sql);
+		return list;
+	}
+	public List idTablename(String ser) {
+		String sql = "select * from desk_restaff where deskName ='"+ser+"'";
+		List list = DaoFactory.Query(sql);
+		return list;
+	}
 	/**
 	 * @return
 	 * 
@@ -80,7 +98,8 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public List selTableAdmin(Object obj) {
-		String sql = "select top ("+3+") * from desk_refresh where deskId not in(select top "+0+" deskId from desk_refresh)";
+		String sql = "select d.deskState,d.deskName,o.ordersTime,o.ordersId,o.FoodNum "+
+				"from desk_restaff d left join orders o on ordersStatus=15 and d.deskId=o.deskId";
 		List list = DaoFactory.Query(sql);
 		
 		return list;
@@ -96,11 +115,7 @@ public class SxmTableSql implements DaoInterface {
 	 */
 	public int del(Object tabp) {
 		SxmTable tab = (SxmTable) tabp;
-		String sqlds="delete from desk_staff where deskId=?";
-		Object [] paramsds=new Object[] {tab.getDeskId()};
-		DaoFactory.Updata(sqlds, paramsds);
-		
-		String sql = "delete from desk where deskId=?";
+		String sql = "update desk set deskState=null,deskdelState=20 where deskId=?";
 		Object[] params = new Object[] { tab.getDeskId() };
 		return DaoFactory.Updata(sql, params);
 		
@@ -116,13 +131,17 @@ public class SxmTableSql implements DaoInterface {
 	 */
 	public int update(Object tabp) {
 		SxmTable tab = (SxmTable) tabp;
-		String sql = "update desk set personNum=?,deskName=?,deskState=? where deskId=?  order by deskId desc";
-		Object[] params = new Object[] { tab.getPersonNum(), tab.getDeskName(),
-				tab.getDeskState(), tab.getDeskId() };
+		String sql = "update desk set personNum=?,deskName=? where deskId=?";
+		Object[] params = new Object[] { tab.getPersonNum(), tab.getDeskName(), tab.getDeskId() };
 		return DaoFactory.Updata(sql, params);
 
 	}
+	public int uptabstate(String tablest) {
+		String sql = "update desk set deskState=7 where deskName=?";
+		Object[] params = new Object[] {tablest};
+		return DaoFactory.Updata(sql, params);
 
+	}
 	/**
 	 * @return 
 	 * 
@@ -133,7 +152,7 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public List page(int currPage) {
-		String sql="select top ("+3+") * from desk_refresh where deskId not in(select top "+(currPage)*3+" deskId from desk_refresh)";
+		String sql="select top ("+3+") * from desk_restaff where deskId not in(select top "+(currPage)*3+" deskId from desk_restaff)";
 		List list = DaoFactory.Query(sql);
 		return list;
 	}
@@ -142,7 +161,7 @@ public class SxmTableSql implements DaoInterface {
 	 * @return
 	 */
 	public int getCount(){
-		String sql="select count(*) from desk_refresh";
+		String sql="select count(*) from desk_restaff";
 		List list = DaoFactory.Query(sql);
 		int total=0;
 		List li=(List) list.get(0);

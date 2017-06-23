@@ -15,6 +15,16 @@ public class TztDishOrder {
 	int dishStatus;
 	int id;
 	int deskId;
+	public TztDishOrder(int rsid, int dishid2, int dishStatus2, int deskid2) {
+		// TODO Auto-generated constructor stub
+		this.OrderId= rsid;
+		this.dishId=dishid2;
+		this.dishStatus=dishStatus2;
+		this.deskId=deskid2;
+	}
+	public TztDishOrder() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getOrderId() {
 		return OrderId;
 	}

@@ -24,20 +24,101 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		当有一个输入框中的值为空时，将不执行Ajax语句
 	 -->
 	<script type="text/javascript">
-		
 		$(function(){
-			$("#searchem").click(function(){
-				var putvalue=$("#condition").val();	
-				alert(putvalue);			
+			
+			$.ajax({
+				url:"achieve_getcount.action",
+				type:"post",
+				data:{},
+				success:function(data){						
+					if(data%2==0){
+						var pagesize=parseInt(data/2);
+						$("#pagenum").html(pagesize);					
+					}else{
+						var pagesize=parseInt(data/2)+1;
+						$("#pagenum").html(pagesize);
+					}				
+				},
+			});	
+			liyang(0);								
+		});
+		$(function(){
+			$(".minuspage").click(function(){			
+				var somename=$(this).attr("name");
+						//alert(somename);				 
+				var onepage=parseInt($("#someone").val());	
+							
+				var pagesize=$("#pagenum").html();
+				if(somename=="firstname"){
+					onepage=1;					
+				}else if(somename=="minusname"){
+					
+					if(onepage<=1){
+						onepage=1;
+					}else{
+						onepage=onepage-1;
+					}
+				}else if(somename=="addname"){
+					if(onepage>=pagesize){
+						onepage = pagesize;
+					}else{
+						onepage = onepage +1;
+					}
+				}else{
+					onepage = pagesize;
+				}				
+				$("#someone").val(onepage);
+				a=onepage-1;
+				//alert(inputnum);	
+				liyang(a);				
+			});			
+		});
+		function liyang(a){
+			$.ajax({				
+					url:"achieve_getpage.action",
+					type:"post",
+					data:{"countpage":a},
+					success:function(data){					
+					var json=JSON.parse(data);				
+						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>操作</td></tr>";
+					 	$("#tableid").html("");	
+					 	$("#tableid").append(th);
+					 
+						$.each(json,function(index,value){
+						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
+							var emtable=
+								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
+								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td>"+
+								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
+								"<span class=\"icon-trash-o\"></span>删除 </button>"+
+								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
+								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+							$("#tableid").append(emtable);																												
+						});
+													
+					}
+				});
+		}
+		/*
+		* 点击搜索按钮，触发点击事件
+		* 先获得输入框中的值
+		* ajax将值传给action
+		* 从action得到json，遍历json,将值打印到表格中
+		*
+		*/
+		$(function(){
+			$("#searchem").click(function(){  //button
+				var putvalue=$("#condition").val();	 //shurukuang
 				$.ajax({
 					url:"achieve_searchEM.action",
 					type:"post",
-					data:{"putvalue":putvalue},		
-					datatype:"json"	,	
+					data:{"putvalue":putvalue},	//action穿件一个属性类型	
+					datatype:"json",	
 					success:function(data){
 					var json=JSON.parse(data);
 					$("#tableid").html("");
-						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>负责桌台</td><td>操作</td></tr>";
+						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>操作</td></tr>";
 					 	$("#tableid").append(th);
 						$.each(json,function(index,value){
 						
@@ -45,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var emtable=
 								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
-								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td>"+
 								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
 								"<span class=\"icon-trash-o\"></span>删除 </button>"+
 								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
@@ -57,9 +138,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        				"<td colspan=\"10\">"+
 	        				"<div class=\"pagelist\"> <a href=\"\">上一页</a> <span class=\"current\">1</span><a href=\"\">2</a><a href=\"\">3</a><a href=\"\">下一页</a><a href=\"\">尾页</a> </div></td></tr>"
 						
-						$("#tableid").append(emtable);
+						$("#trtab").append(emtable);
 						
-				
+						
 					}
 				});
 			});
@@ -75,7 +156,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#tableid").on('click',".alterbtn",function(){
 				var alterbtn = $(this).attr("id");
 				
-				var namehtml =$("#a"+alterbtn).html();				
+				var namehtml =$("#a"+alterbtn).html();	
+				//alert(namehtml);			
 				var idhtml =$("#b"+alterbtn).html();
 				var phonehtml =$("#c"+alterbtn).html();
 				var sexhtml =$("#d"+alterbtn).html();
@@ -116,7 +198,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						type:"post",
 						data:{"employee.emid":sid,"employee.emname":sname,"employee.emsex":ssex,"employee.emage":sage,"employee.emphone":sphone,"employee.emadress":sadress,"employee.emjointime":stime},
 						success:function(data){
-									alert("ssss");			
+							alert("修改成功");			
 						}
 					});
 				});
@@ -156,7 +238,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			* 点击删除按钮触发点击事件
 			* 		
 			*/
-	$(function(){			
+	/*$(function(){			
 			$.ajax({
 				url:"achieve_selem.action",
 				type:"post",
@@ -164,7 +246,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				datatype:"text",
 				success:function(data){
 				var json=JSON.parse(data);				 
-				var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>负责桌台</td><td>操作</td></tr>";
+				var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>操作</td></tr>";
 					 $("#trtab").before(th);
 						$.each(json,function(index,value){
 						
@@ -172,7 +254,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var emtable=
 								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
-								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td>"+
 								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
 								"<span class=\"icon-trash-o\"></span>删除 </button>"+
 								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
@@ -201,10 +283,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var emadress=$("#emadress").val();
 				var emjointime=$("#emjointime").val();
 				var empart=$("#empart").val();
-				var ementer=$("#ementer").val();	
+				//var ementer=$("#ementer"). val();	
 				
 											
-				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empart && ementer){					
+				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empart ){					
 					$.ajax({
 						type:"post",
 						url:"achieve_save.action",
@@ -263,8 +345,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									电	话：<input type="text" id="emphone" name="employee.emphone"><br/> 									
 									地	址：<input type="text" id="emadress" name="employee.emadress"><br/>
 									就职时间：<input type="text" id="emjointime" name="employee.emjointime"><br/>
-									员工角色：<input type="text" id="empart" name="empart"><br>
-									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>
+									<!--  员工角色：<input type="text" id="empart" name="empart"><br>
+									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>-->
 										     
 								
 								</div>
@@ -302,13 +384,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	查询出来的员工信息生成的table
 	     -->
 	    <table class="table table-hover text-center" id="tableid">
-	     
-	       
-	      <tr id="trtab">
-	        <td colspan="10">
-	        <div class="pagelist"> <a href="">上一页</a> <span class="current">1</span><a href="">2</a><a href="">3</a><a href="">下一页</a><a href="">尾页</a> </div></td>
-	      </tr>
 	    </table>
+	   
+		<div class="pagelist">
+				<a  class="minuspage" name="firstname">首页</a>
+				<a  class="minuspage" name="minusname">上一页</a> 
+				<a  class="minuspage" name="addname">下一页</a>
+				<a  class="minuspage" name="lastname">尾页</a>
+				共<span id="pagenum"></span>页
+				<input type="text" id="someone" value="1">
+				<input type="button" value="跳转" id="commitone">
+		</div>					   
 	  </div>
 	
 </div>

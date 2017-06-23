@@ -102,9 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    	<div>
 					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"/>
 					    	</div>
-					    	<div>
-					    		<span>桌子状态</span><input  name="st.deskState" id="deskState"class="dstate"/>
-					    	</div>
+					    	
 					    	<div>
 								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
 							</div>
@@ -133,9 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    	<div>
 					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName" class="tableName"/>
 					    	</div>
-					    	<div>
-					    		<span>桌子状态</span><input  name="st.deskState" id="dState"/>
-					    	</div>
+					    	
 					    	
 					 </div>
 					</div>
@@ -179,7 +175,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					
 					if(name=="first"){
-						inpval=1;alert(inpval);
+						inpval=1;
 					}
 					if(name=="minus"){
 						inpval=inpval-1;
@@ -200,15 +196,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 					$("#pageinp").val(inpval);
 					var curr=inpval-1;
-					$.ajax({
-						url:"SxmTable_tabPage.action",
-						type:"post",
-						data:{"currPage":curr},
-						success:function(data){
-							var json = JSON.parse(data);
-						refresh(json);
-						},
-					});
+					tabonload(curr);
 				});
 			})
 			/*
@@ -232,6 +220,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#tab").on('click',".deskbtn",function(){
 				var deskbtn=$(this).attr("id");
 				var deskid=$("#desk"+deskbtn).html();
+				var inpval=parseInt($("#pageinp").val());
 				if(confirm("您确定要删除吗?")){
 					$.ajax({
 						url:"SxmTable_delLineTable.action",
@@ -240,7 +229,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						success:function(data){
 							var json=JSON.parse(data);
 							if(json!=-1){
-								tabonload();
+								tabonload(inpval-1);
 							}else{
 								alert("删除失败！");
 							}
@@ -256,10 +245,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var deskid=$(".desk"+deskalter).html();
 			var deskname=$("#name"+deskalter).html();
 			var deskperson=$("#person"+deskalter).html();
-			var deskstate=$("#state"+deskalter).html();
+			alert(deskid);
 			$("#pname").val(deskperson);
 			$(".tableName").val(deskname);
-			$("#dState").val(deskstate);
 			updata(deskid);
 		});
 		//点击确定修改按钮时执行；
@@ -267,21 +255,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function updata(desk) {
 			//bind/unbind点击事件只执行一次
 			$(".modal-alterbtn").bind('click', function() {//绑定事件处理函数
-				$(this).unbind('click');//移除当前事件处理函数
+				var inpval=parseInt($("#pageinp").val());
 				var pn = $("#pname").val();
 				var dn = $("#tableName").val();
-				var ds = $("#dState").val();
 				$.ajax({
 					url : "SxmTable_upLineTable.action",
 					type : "post",
-					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn,"st.deskState" : ds},
+					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn},
 					success : function(data) {
 						var json = JSON.parse(data);
 						if (json != -1) {
-							alert(json);
-							tabonload();//调用页面加载时自动查询数据库，显示桌台信息
-							} else {
-								alert("更新失败！");
+							tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
+							$(this).unbind('click');//移除当前事件处理函数
+						} else {
+							alert("更新失败！");
 						}
 					},
 				});
@@ -336,13 +323,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				页面加载时自动查询数据库，显示桌台信息
 			 */
 			$(function() {
-				tabonload();
+				var currpage=0;
+				tabonload(currpage);
 			});
-			function tabonload() {
+			function tabonload(curr) {
 				$.ajax({
-					url : "SxmTable_tableAdmin.action",
+					url : "SxmTable_tabPage.action",
 					type : "post",
-					data : {map : null},
+					data : {"currPage":curr},
 					success : function flash(data) {
 						var json = JSON.parse(data);
 						refresh(json);
@@ -378,15 +366,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$(".confirm-btn").click(function() {
 					var pn = $("#personNum").val();
 					var dn = $(".tableName").val();
-					var ds = $("#deskState").val();
-					$(".dstate").val("6");
+					
 					$.ajax({
 						url : "../SxmTable_appendTable.action",
 						type : "post",
 						data : {
 							"st.personNum" : pn,
 							"st.deskName" : dn,
-							"st.deskState" : ds
 						},
 						success : function(data) {
 							var json = JSON.parse(data);

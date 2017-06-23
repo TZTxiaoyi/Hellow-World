@@ -1,6 +1,8 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
-
+﻿<%@page import="com.sun.java.swing.plaf.windows.resources.windows"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%> 
+<%@ page import="java.text.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -16,22 +18,32 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"></link>
-    
+   
+	<link rel="stylesheet" href="css/admin.css">
    	
 	<style>
 		#head{
 			height:50px;
 			line-height:50px;
 			font-size:20px;
-			background-color: #FFFFCC;
+			border-bottom:1px solid #666699;
 		}
 		#left-subject{
-			max-height:700px;
+			height:85%;
+			position:relative;
 			
 		}
+		#lefttop-subject{
+			background:#ffffcc;
+			height:80%;
+		}
+		#righttop-subject{
+			background:#ffffcc;
+			height:80%;
+		}
 		#right-subject{
-			height:700px;
-			background-color: #FFFFCC;
+			position:relative;
+			height:85%;
 		}
 		#menu-height{
 			height:500px;
@@ -42,10 +54,11 @@
 			width:150px;
 			
 		}
+		
 		#classify{
 			height:100px;
 			font-size:15px;
-			background-color: #FFCC00;
+			background-color:#ff9999;
 		}
 		#classify-css{
 			border:2px;
@@ -53,23 +66,53 @@
 			line-height:50px;
 			font-size:20px;
 		}
-		#left-scrollable{
-			max-height:530px;
-		}
+		
 		#subject-style{
-			padding-left:20px;
+			padding-left:10px;
 			height:50px;
-			background-color: #66ccff;
+			background-color: #ff9999;
 			font-size:20px;
 			line-height:50px;
 		}
-		#money{
-			height:150px;
-			background-color: #FFFFCC;
+		#torder td{
+			
+			font-size:20px;
+			width:100px;
+			text-align:center;
+			border-bottom:1px solid #ff9999;
+					
 		}
-		#money span{
-			float:right;
-			background-color: #66ccff;
+		#subject-style td{
+			width:100px;
+			text-align:center;
+		}
+		#money{
+			height:100px;
+			position:absolute;
+			bottom:0px;
+		}
+		#money a{
+			
+			margin-bottom:5%;
+		}
+		#times{
+			position:absolute;
+			bottom:20px;
+			right:50px;
+			font-size:20px;
+			white-space:nowrap;
+		}
+		#div {
+			background: url("image/Service-background.png") no-repeat;
+			background-size: 100% 100%;
+			height: 100%;
+		}
+		
+		.pagelist a{
+			background: #ffcc99;
+		}
+		#btm{
+			margin-top:5%;
 		}
 	</style>
   
@@ -89,133 +132,117 @@
    				}
    			);
    		});
-  </script>
-  <script>
-		$(function(){
+   		$(function(){
 			$("#add").click(function(){
 				var price=$("#UPrice").html()*$("#Number").val();//价格*数量获得总价
 				var total=parseInt($("#Total").html())+price;//先转为int类型再做加法运算
 				$("#Total").html(total);//把当前菜的总价格加上当前订单的金额
 			});
 		});
-	</script>
+  </script>
+
   
   </head>
   
-  <body><button id="eeed">anniu1</button>
-    <div class="container-fluid"><!--最外层 -->
+  <body>
+    <div class="container-fluid" id="div"><!--最外层 -->
 		<div class="row" id="head"><!-- 头部-->
 			<div class="col-md-3">
-					菜品数量：
+					菜品数量：<span id="pnum"></span>
 			</div>
 			<div class="col-md-3">
-					桌位：
+					桌位名字：<span id="dname"></span>
 			</div>
 			<div class="col-md-3">
-					单号：
+					单号：<span id="order"><%
+					String oid=request.getParameter("ord");
+					out.print(oid);
+			 		%></span>
+			</div>
+			<div class="col-md-3">
+					开台时间：
+					<span id="retime">
+					${retime}
+					</span>
 			</div>
 		</div>
 
 	
 		<div class="row"> <!--主体 -->
-			<div class="col-md-6" id="left-subject"><!--左部主体内容-->
-				已订菜
-				<div class="pre-scrollable" id="left-scrollable">
-					<div id="subject-style"></div>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-					<p>dfdf</p>
-	
-				</div>
-				<div id="money">
-					<div>
-						小计：<span class="col-md-offset-2">0</span><br/>
-						已付金额：<span class="col-md-offset-2">0</span><br/>
-						应付：<span class="col-md-offset-2">0</span><br/>
-					</div>
-					
-					
-				</div>
-			</div>
-	
-			<div class="col-md-6" id="right-subject"><!--右部主体内容-->
-				菜品类别
-				
-				<div class="container-fluid" id="classify"><!--菜品分类-->
-					<div class="row">
-						<div class="col-md-3" id="classify-css">
-							热菜
+			<div class="col-md-4" id="left-subject"><!--左部主体内容-->
+				<div id="lefttop-subject">
+					<h3>已订菜</h3>
+					<div >
+						<div id="subject-style">
+							
 						</div>
-						<div class="col-md-3" id="classify-css">
-							凉菜
-						</div>
-						<div class="col-md-3" id="classify-css">
-							主食
-						</div>
-						<div class="col-md-3" id="classify-css">
-							饮品
-						</div>
-						<div class="col-md-3" id="classify-css">
-							汤类
+						<div id="torder">
+							
 						</div>
 						
 					</div>
-				</div>	
 				
-	
-				<div class="container-fluid" ><!-- 菜单-->
-					<div class="row " id="menu-height" >
-						<div class="col-md-3" id="menu-within-height">
-							 
+				</div>
+				<div class="pagelist">
+						<a name="minus" class="page btn-lg glyphicon glyphicon-triangle-left" href="#"></a>
+						<a name="add" class="page btn-lg glyphicon glyphicon-triangle-right" href="#"></a>
+							
+				</div>
+				<div id="money">
+					
+						<a class="btn btn-info btn-lg" href="#"
+						role="button">总计：<span class="tred"></span></a>
+						<br/>
+						<a class="btn btn-danger btn-lg" href="#"
+						role="button">结账：<span class="tred"></span></a>
+				
+				</div>
+			</div>
+			
+			<div class="col-md-8" id="right-subject"><!--右部主体内容-->
+				<div id="righttop-subject">
+					<h3>菜品类别</h3>
+					<div class="container-fluid" id="classify"><!--菜品分类-->
+						<div class="row">
+							<div class="col-md-4" id="classify-css">
+								热菜
+							</div>
+							<div class="col-md-4" id="classify-css">
+								凉菜
+							</div>
+							<div class="col-md-4" id="classify-css">
+								主食
+							</div>
+							<div class="col-md-4" id="classify-css">
+								饮品
+							</div>
+							<div class="col-md-4" id="classify-css">
+								汤类
+							</div>
+							
 						</div>
-						<div class="col-md-3" id="menu-within-height">
-							<span id="cm">红烧狮子头：</span><span id="UPrice">20</span>
-        					<input type=button value="-1" id="remove" onclick="remove()">
-  							<input type=text value="0" id="number" size="3">
-  							<input type=button value="+1" id="add" onclick="add()">
-        					<button id="addcc">添加</button>
-						</div>
-						<div class="col-md-3" id="menu-within-height">
-									菜名
-						</div>
-						<div class="col-md-3" id="menu-within-height">
-								菜名
-						</div>
-						<div class="col-md-3" id="menu-within-height">
-									菜名
-						</div>
-						<div class="col-md-3" id="menu-within-height">
-								菜名
-						</div>
-						<div class="col-md-3"id="menu-within-height">
-								菜名
-						</div>
-						<div class="col-md-3" id="menu-within-height">
-								菜名
+					</div>	
+					
+		
+					<div class="container-fluid" ><!-- 菜单-->
+						<div class="row " id="menu-height" >
+							<c:forEach var="next"  items="${dishList}" varStatus="statu">
+								<div>
+									<img  onclick = "show()" src="image/2.png" alt="..." class="img-circle" width="200" height="200"><br/>
+									<span name="name${statu.index}">${next[1]}</span>:  <span name="name${statu.index}">${next[2]}</span>元 / 份<br/>
+									<div class="row" >
+										<div class=" center-block"  id="food-btn">
+											<input type="button" name="name${statu.index}" value="-1" class="remove btn btn-default">
+											<input type="text" value="0" class="number-cl btn btn-default" size="3" name="name${statu.index}">
+											<input type="button" name="name${statu.index}" value="+1" class="add btn btn-default">
+										</div>
+									</div>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
-				<div><!--底部功能模块-->
+				<div id="btm"><!--底部功能模块-->
 					<button type="button" class="btn btn-danger " >整单取消</button>
 	
 					<button type="button" class="btn btn-primary col-md-offset-1" data-toggle="modal" data-target="#myMenu">取消菜品</button>
@@ -228,10 +255,11 @@
 	
 					<button type="button" class="btn btn-success col-md-offset-1">查看</button>
 				</div>
-	
+				
 			</div>
-	
+		<div id="times"></div>
 		</div>
+		
   </div>
 			<div class="modal fade" id="myMenu"> <!-- modal把div的内容识别为模态框 fade模态框切换时内容淡入淡-->
 				<div class="modal-dialog">
@@ -262,7 +290,25 @@
 					</div>
 				</div>
 			</div>
+			
 	<script>
+		
+		/*
+			系统加载自动运行;
+		*/
+		$(function() {
+			setInterval("getTime()",1000);
+		});
+		/*
+			获取系统时间;
+		*/
+		function getTime(){
+			var time = new Date();
+   			$("#times").html(time.toLocaleString());
+   			outtime();
+   			
+		}
+		
 		function add() {
             var obj = document.getElementById("number");
  
@@ -278,11 +324,7 @@
  
             obj.value = parseInt(obj.value) - 1;
         }
-	</script>
-	
-	<script>
 		$(function(){
-			
 			$("#addcc").click(function(){
 				var price=$("#UPrice").html()*$("#number").val();//价格*数量获得总价
 				var total=parseInt($("#Total").html())+price;//先转为int类型再做加法运算
@@ -292,6 +334,58 @@
 			});
 			
 		});
+		$(function(){
+			outfood();
+		})
+		function outfood(){
+			var ord=$("#order").html();
+			$.ajax({
+				url:"addfood_orderDish.action",
+				type:"post",
+				data:{"addorder.ordersId":ord},
+				success:function(data){
+					var json=JSON.parse(data);
+					var dname=null;//桌子名字
+					var fnum=null;//菜品数量
+					var allnum=0;//单个菜的总价格
+					var onenum=0;//菜品单价
+					var dnum=0;//菜品数量
+					var num=0;
+					var th="<tr><td>菜品</td><td>数量</td><td>单价</td><td>金额</td></tr>";
+					$("#subject-style").append(th);
+					var foodnum=1;
+					$.each(json,function(index,value){
+					//alert(json2TimeStamp(value[2].time));
+						dname=value[0];
+						fnum=value[4];
+						onenum=value[5];
+						allnum=fnum*onenum;
+						var odertext="<tr><td>"+value[3]+"</td><td></td><td>"+value[5]+"</td><td>"+allnum+"</td></tr>";
+						$("#torder").append(odertext);
+						num=num+allnum;
+						
+					});
+					
+					$("#dname").html(dname);
+					$("#pnum").html(fnum);
+					$(".tred").html(num);	
+				 
+					
+						
+				}
+			});
+		};
+		function outtime(){
+			var ord=$("#order").html();
+			$.ajax({
+				url:"addfood_orderDish.action",
+				type:"post",
+				data:{"addorder.ordersId":ord},
+				success:function(data){	
+				}
+			});
+			$("#retime").html('${retime}');
+		};
 	</script>
   </body>
 </html>

@@ -23,6 +23,7 @@ public class TztDishOrderImp implements DaoInterface{
 	 */
 	public int add(Object obj) {
 		TztDishOrder dishOrder=(TztDishOrder)obj;
+		System.out.println(dishOrder.getOrderId()+","+dishOrder.getDishId()+","+dishOrder.getDishStatus()+","+dishOrder.getDeskId());
 		String sql ="insert into orders_dish values(?,?,?,?)";
 		Object[] ob =new Object[]{dishOrder.getOrderId(),dishOrder.getDishId(),dishOrder.getDishStatus(),dishOrder.getDeskId()};
 		return DaoFactory.Updata(sql, ob);

@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="default" extends="struts-default">
 		<action name="addfood_*" class="com.achaction.LjlAddFoodAction" method="{1}">
-			<result name="addfood">/new.jsp</result>
+			<result name="addfood" type="dispatcher">/new.jsp</result>
+			<result name="newFood" type="dispatcher">/new.jsp</result>
+			<result name="backhome">/home.jsp</result>
+
 		</action>
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
 			<result name="tztquerok">/order_vegetable.jsp</result>
@@ -11,13 +14,57 @@
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok">/home.jsp</result>
 		</action>
+
+<!-- 注册 -->
+		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
+			<result name="register">/home.jsp</result>
+
+			<result name ="list">/new.jsp</result>
+		</action>
 	</package>
 	<!-- 
 		有关员工的package
 	 -->
 	<package name="inser" extends="struts-default">
+		
+	
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
+			
 		</action>
 	</package>
+	<!-- 有关权限的package -->
+	<package name="lanjieqi" extends="struts-default">
+		<interceptors>
+			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
+				<param name="includeMethods">staffinfo,staffid,powers,deskmanage,dishmanage,kindmanage,orderdetail,returnorder,incomedetail</param><!-- 不拦截的方法 -->
+			</interceptor>
+			<!-- 构建一个拦截器栈 -->
+			<interceptor-stack name="aaabbb">
+				<interceptor-ref name="sessInter"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 配置默认的拦截器 --><!-- 被拦截后跳转的jsp -->
+		<default-interceptor-ref name="aaabbb"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">/beautiful.jsp</result>
+		</global-results>
+		<action name="fresh_*" class="com.achaction.LyQuanXianAction" method="{1}">
+			<result name="success">/background/index.jsp</result>
+			<result name="part">/Service.jsp</result>
+			<result name="cook">/Kitchen.jsp</result>
+			<result name="false">/background/login.jsp</result>
+			<result name="sa">/background/employee.jsp</result>
+			<result name="se">/background/employeeId.jsp</result>
+			<result name="ss">/background/employeePower.jsp</result>
+			<result name="sc">/background/deskmanage.jsp</result>
+			<result name="sd">/background/dishemanage.jsp</result>
+			<result name="sf">/background/cate.jsp</result>
+			<result name="sg">/background/chargeback.jsp</result>
+			<result name="sh">/background/finance.jsp</result>
+			<result name="si">/background/income.jsp</result>
+		</action>
+	</package>
+	
 </struts>    
