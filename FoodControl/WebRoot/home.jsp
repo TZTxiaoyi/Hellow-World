@@ -342,6 +342,7 @@
 		$(function(){
 			$("#orderfood2").click(function(){
 			var va1 = $("option").val();
+			var va11 = $("option").val();
 			var va2 = $("#personnub").val();
 				 if(va1 == "选取桌号" && va2 == ""){
 					alert ("请填写完成");

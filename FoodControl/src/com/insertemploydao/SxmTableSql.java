@@ -1,4 +1,4 @@
-package com.logic;
+package com.insertemploydao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +93,8 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public List selTableAdmin(Object obj) {
-		String sql = "select * from desk_restaff";
+		String sql = "select d.deskState,d.deskName,o.ordersTime,o.ordersId,o.FoodNum "+
+				"from desk_restaff d left join orders o on ordersStatus=15 and d.deskId=o.deskId";
 		List list = DaoFactory.Query(sql);
 		
 		return list;

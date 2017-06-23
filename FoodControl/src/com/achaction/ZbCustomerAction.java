@@ -13,7 +13,7 @@ import org.apache.struts2.ServletActionContext;
 import com.entity.ZbDesk;
 import com.entity.ZbUsagedata;
 import com.entity.ZbUserdata;
-import com.logic.ZbRegister;
+import com.insertemploydao.ZbRegister;
 import com.utils.toJson;
 	/**
 	 * 

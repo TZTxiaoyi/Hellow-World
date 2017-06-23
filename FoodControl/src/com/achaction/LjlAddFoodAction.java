@@ -1,6 +1,8 @@
 package com.achaction;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,16 +18,13 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
-
 import com.entity.LjlAddFood;
 import com.entity.LjlAddOrder;
 import com.entity.TztDishOrder;
 import com.insertemploydao.LjlDish;
 import com.insertemploydao.LjlOrders;
-
-import com.utils.toJson;
-
 import com.insertemploydao.TztDishOrderImp;
+import com.utils.toJson;
 
 
 
@@ -224,7 +223,7 @@ public class LjlAddFoodAction {
 	}
 	/**
 	 * 
-	 * 方法功能说明：  
+	 * 方法功能说明：  查询当天订单
 	 * 创建：2017-6-21 by sxm  
 	 * 修改：日期 by 修改者  
 	 * 修改内容：  
@@ -238,11 +237,53 @@ public class LjlAddFoodAction {
 		String time=df.format(new Date());
 		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String time1=df1.format(new Date());
-		System.out.println("time"+time);
-		System.out.println("time1"+time1);
 		List list=orders.selOrder(time,time1);
-		System.out.println("list"+list);
 		JSON json=toJson.toJson("val", list);
+		try {
+			hsr.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 
+	 * 方法功能说明：  桌子详情
+	 * 创建：2017-6-21 by sxm  
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：       
+	 * @return void     
+	 * @throws
+	 */
+	public void orderDish(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		hsr.setContentType("text/html;charset=UTF-8");
+		String retime=null;
+		List list=orders.orderDish(addorder.getOrdersId());
+		JSON json=toJson.toJson("val", list);
+			List li=(List) list.get(0);			
+			try {
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String time=df.format(new Date()); 
+				String time1=df.format(li.get(2));
+				Date d1 = df.parse(time);
+				System.out.println(3);
+				Date d2 = df.parse(time1); 
+				System.out.println(2);
+			    long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别  
+			    System.out.println("diff"+diff);
+			    long days = diff / (1000 * 60 * 60 * 24);  
+			   	long hours = (diff-days*(1000 * 60 * 60 * 24))/(1000* 60 * 60);  
+			    long minutes = (diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60))/(1000* 60);  
+			   retime=hours+"小时"+minutes+"分";  	
+			   request.getSession().setAttribute("retime", retime);	
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 		
 		try {
 			hsr.getWriter().print(json);
@@ -251,4 +292,5 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
+	
 }

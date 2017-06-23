@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		#all-home {
 			position: relative;
-			max-height:800px;
+			max-height:730px;
 			background: white;
 		}
 		
@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		#all-home1 {
 			position:absolute;
-			bottom:0px;
+			bottom:10px;
 			margin-right:25px;
 			right:300px;
 		}
@@ -82,6 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			bottom:10px;
 			left:100%;
 			font-size:20px;
+			margin-left:40px;
 			white-space:nowrap;
 		}
 		
@@ -185,13 +186,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div id="all-home" class="pre-scrollable">
 							
 						</div>
-						<!--结单情况-->
-						
 						
 					</div>
 					
 				</div>
 			</div>
+			<!--结单情况-->
 			<div id="all-home1">
 							
 							<div class="pull-right">
@@ -275,19 +275,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						var i=0;
 						var j=0;
 						var k=0;
-					$.each(json,function(index, value) {
 						
-						if(value[4]=="可用"){
+					$.each(json,function(index, value) {
+						var orderid=value[3];
+						if(value[3]==null){
+							orderid="";
+						}
+						if(value[0]=="6"){
 							var	tdiv="tdiv1";
 							i++;
-						}else if(value[4]=="占用"){
+						}else if(value[0]=="7"){
 							var tdiv="tdiv2";	
 							j++;
-						}else if(value[4]=="脏台"){
+						}else if(value[0]=="8"){      
 							var tdiv="tdiv3";	
 							k++;
 						}
-						var dd = "<div class=\"pull-left col-sm-2 tclick "+tdiv+"\" id=\"deskname"+value[0]+"\">"+ value[1]+"</div>";
+						var dd = "<a href=\"Seating_details.jsp?ord="+orderid+"\"><div class=\"pull-left col-sm-2 tclick "+tdiv+"\" id=\"deskname"+value[0]+"\">"+ value[1]+
+						orderid+"</div></a>";
 						$("#all-home").append(dd);
 					});
 					$(".tdiv1").css("background-color","#33ff33");
@@ -297,25 +302,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$("#tred").html(j);
 					$("#torange").html(k);
 			}
-			/*
-				点击桌子事件
-			*/
-			$(function(){
-				$("#all-home").on('click',".tclick",function(){
-					var tblock=$(this).attr("id");
-					
-					$.ajax({
-						url:"Seating_details.jsp",
-						type:"post",
-						data:{},
-						success:function(data){
-							var json = JSON.parse(data);
-							refresh(json);
-							
-						},
-					});
-				});
-			});
+			
 			/*
 				快速搜索,搜索到的内容动态到第一个；
 			*/
