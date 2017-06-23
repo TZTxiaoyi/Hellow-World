@@ -14,9 +14,9 @@
 
 <!--自定义CSS样式-->
 <style>
-* {
-	padding: 0px;
-	margin: 0px;
+body{
+	margin:0;
+	padding:0;
 }
 
 * div{
@@ -51,7 +51,14 @@ td{
 #time{
 	font-size:150%;
 }
-
+.top1{
+	float:left;
+	width:50%;
+	
+}
+.bottom{
+	height:15%;
+}
 </style>
 </head>
 
@@ -59,10 +66,12 @@ td{
 
 	<!--主体内容-->
 	<!----------------------------------------------------------------------------------------------------->
-	<div class="container-fluid" >
+	<div class="container-fluid"  >
 		<!-------------------------------页面头部------------------------------------------->
-		<div class="row" id="top">
-			
+		<div class="row" >
+			<div class= "top1"id="top"></div>
+			<div class="top1">	<button id="default">默认</button><button id="ttme">时间</button> </div>
+		
 		</div>
 		<!-------------------------------------------------------------------------->
 		<div class="row" id="cbody">
@@ -92,15 +101,18 @@ td{
 					</table>
 				</div>
 			</div>
+			
 	
 		</div>
-
-
+			<!-- 最下面窗口 -->
+			<div class="bottom" id="bottom">
+			</div>
 		<!--白色，浅蓝色，深蓝色，绿色，黄色，红色，黑色，对应的class为btn,btn btn-primary,btn btn-info,btn btn-success,btn btn-warning,btn btn-danger,btn btn-inverse-->
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
+			var method=0;
 		/*自动运行函数*/
  		$(function(){	
  		
@@ -113,6 +125,11 @@ td{
 			
  		});
  		function startTime(){
+ 			
+ 			var ti=getTime();
+ 			$("#top").html("<span id=time>"+ti +"</span>");
+ 		}
+ 		function getTime(){
  			var today=new Date();
  			var h = today.getHours();		
  			var m = today.getMinutes();
@@ -120,15 +137,23 @@ td{
  			m =checkTime(m);
  			s=checkTime(s);
  			var ti=h+":"+m+":"+s;
- 			$("#top").html("<span id=time>"+ti +"</span>");
+ 			return ti;
  		}
- 		
  		function checkTime(i){
  			if(i<10){
  				i="0"+i;
  				}
  			return i;
  		}
+ 		$("#default").click(function(){
+ 			method=0;
+ 			alert(method);
+ 		});
+ 	
+ 		$("#ttme").click(function(){
+ 			 method=1;
+ 			alert(method);
+ 		});
  			
  			$("#querymading").click(function(){
  				queryMading();
@@ -137,29 +162,39 @@ td{
  				$.ajax({
  					url:"TztQueryDish_queryMading.action",
  					type:"post",
- 					data:{},
+ 					data:{"method":method},
  					dataType:"json",
  					success:function(data){
  					$("#titlemading").html("");
 					$.each(data,function(index,value){				
-					var dd="<tr>"+"<td >"+value[1]+"</td>"+"<td>"+value[2] +"</td>"+"<td><button class=\"btn btn-danger\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button></td>"+"</tr>";
+					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td><button class=\"btn btn-danger\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button></td>"+"</tr>";
 					$("#titlemading").prepend(dd);		
 					});
 					}
  					});
  				}
+ 				
  		$(function(){
  			$("#titlemading").on('click',"#madingbutton",function(){
  				var aa=$(this).attr("name");
+ 				var foodname=$($("td[name=\""+aa+"\"]")[0]).html();
+ 				var foodnum=$($("td[name=\""+aa+"\"]")[1]).html();
+ 				var table="";
+ 				var time=getTime();
  				$.ajax({
  					url:"TztQueryDish_makding.action",
  					type:"post",
- 					data:{"dishId":aa},
- 					dataType:"text",
- 					complete:function(data){
- 						alert(2);
+ 					data:{"method":method,"dishId":aa},
+ 					dataType:"json",
+ 					success:function(data){
+ 					$.each(data,function(index,value){				
+						table=table+value[0]+",";
+					});
+ 					var dd="<div>"+time+"已完成菜品："+foodname+"共"+foodnum+"份 桌名为："+table+"</div>";
+					$("#bottom"). prepend(dd);		
  						queryMading();
 						queryMade();
+						
  						
  					}
  				});
@@ -177,7 +212,7 @@ td{
  				$.ajax({
  					url:"TztQueryDish_queryMade.action",
  					type:"post",
- 					data:{},
+ 					data:{"method":method},
  					dataType:"json",
  					success:function(data){
  					$("#titlemade").html("");
@@ -189,12 +224,13 @@ td{
  				});
  			}
  		$(function(){
- 			$("#titlemade").on('click',"#makebutton",function(){
+ 			$("#titlemade").on('click',"#makebutton",function( ){
  				var aa=$(this).attr("name");
+ 				
  				$.ajax({
  					url:"TztQueryDish_make.action",
  					type:"post",
- 					data:{"dishId":aa},
+ 					data:{"method":method,"dishId":aa},
  					dataType:"text",
  					complete:function(data){
  						queryMading();

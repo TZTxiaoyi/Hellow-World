@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.daointerface.TztSort;
 import com.entity.TztDish;
-import com.entity.TztDishOrder;
 import com.insertemploydao.TztDishImp;
 import com.insertemploydao.TztDishOrderImp;
-import com.jspsmart.upload.Request;
+import com.logic.TztDefaultSortImp;
+import com.logic.TztTimeSortImp;
 import com.utils.toJson;
 
 
@@ -28,12 +29,49 @@ import com.utils.toJson;
  */
 public class TztQuerDishAction {
 	int dishId;
+	int method;
+	private TztSort sort;
+	public TztSort getSort() {
+		return sort;
+	}
+	public void setSort(TztSort sort) {
+		this.sort = sort;
+	}
+	public int getMethod() {
+		return method;
+	}
+	public void setMethod(int method) {
+		this.method = method;
+	}
 	public int getDishId() {
 		return dishId;
-	}
+	}	
 	public void setDishId(int dishId) {
 		this.dishId = dishId;
 	}
+	
+	
+	/**
+	 * 
+	 * 方法功能说明： 不同的按钮更换不同的接口 
+	 * 创建：2017-6-22 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param method      
+	 * @return void     
+	 * @throws
+	 */
+	public void createImp(int method){
+			if(method==1){
+				 TztSort sort = new TztTimeSortImp();
+				 setSort(sort);
+			}else {
+				TztSort sort = new TztDefaultSortImp();
+				setSort(sort);
+			}
+		} 
+		
+	
 	/**
 	 * 
 	 * 方法功能说明：  查询需要制作的菜
@@ -47,15 +85,15 @@ public class TztQuerDishAction {
 	public void queryMade() {
 		HttpServletResponse rep= ServletActionContext.getResponse();
 		rep.setContentType("text/html;charset=utf-8");
-		TztDishOrderImp dao =new TztDishOrderImp();
-		List result = dao.queryMade();
+		createImp(method);
+		List result= sort.queryMade();
 		try {
 			rep.getWriter().print(toJson.toJson("tztjs", result).toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			e.getMessage();
 		}
+		
 		
 	}
 	/**
@@ -71,8 +109,8 @@ public class TztQuerDishAction {
 	public void queryMading() {
 		HttpServletResponse rep =ServletActionContext.getResponse();
 		rep.setContentType("html/text;charset =utf-8");
-		TztDishOrderImp  dao =new TztDishOrderImp();
-		List result = dao.queryMading();
+		createImp(method);
+		List result= sort.queryMading();
 		try {
 			rep.getWriter().print(toJson.toJson("tztjs", result).toString());
 		} catch (IOException e) {
@@ -94,12 +132,8 @@ public class TztQuerDishAction {
 	public void make(){
 		HttpServletResponse rep = ServletActionContext.getResponse();
 		rep.setContentType("html/text;charset=utf-8");
-		TztDishImp dao=new TztDishImp();
-		TztDish dish = new TztDish();
-		dish.setDishId(dishId);
-		List madedish =dao.sel(dish);
-		TztDishImp dishImp = new TztDishImp();
-		dishImp.changeDish(13,(List)madedish.get(0),12);
+		createImp(method);
+		sort.made(dishId);
 		try {
 			rep.getWriter().print("sucess");
 		} catch (IOException e) {
@@ -120,15 +154,13 @@ public class TztQuerDishAction {
 	public void makding(){
 		HttpServletResponse rep = ServletActionContext.getResponse();
 		rep.setContentType("html/text;charset=utf-8");
-		TztDishImp dao=new TztDishImp();
-		TztDish dish = new TztDish();
-		dish.setDishId(dishId);
-		List madedish =dao.sel(dish);
-		TztDishImp dishImp = new TztDishImp();
-		dishImp.changeDish(14,(List)madedish.get(0),13);
-		System.out.println("change");
+		createImp(method);
+		List result =sort.mading(dishId);
+		System.out.println(result+"madeing++++++++++++==");
 		try {
-			rep.getWriter().print("sucess");
+			System.out.println("ffff"+toJson.toJson("js", result).toString());
+			rep.getWriter().print(toJson.toJson("js", result).toString());
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -54,8 +54,6 @@ public class TztDishImp implements DaoInterface {
 	public List sel(Object obj) {
 		TztDish dish = (TztDish) obj;
 		String sql ="select * from dish where dishId= "+dish.getDishId()+"" ;
-		System.out.println(dish.getDishId());
-		System.out.println("sel");
 		return DaoFactory.Query(sql);
 	}
 
@@ -70,14 +68,7 @@ public class TztDishImp implements DaoInterface {
 	}
 
 
-	public int changeDish( int vv ,List madedish,int cc){
-		System.out.println("changing");
-		int  top= (Integer) madedish.get(7);
-		int id =	(Integer) madedish.get(0);
-		System.out.println(vv+"::"+top+"::"+id );
-		String sql="update orders_dish set dishStatus=? where id  in( select  top "+top+" id from orders_dish where dishId ="+id+"and dishStatus= "+cc+ ") ";
-		Object[] obj = new Object[]{vv};
-		return DaoFactory.Updata(sql, obj);
-	}
+
+	
 }
 

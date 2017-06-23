@@ -98,7 +98,7 @@ public class DaoFactory {
 			}
 			CloseAll(con, ps, rs);
 		}catch(Exception e){
-			System.out.println(e.getMessage()+"com.utils.Daofactory.Quert()´íÎó");
+			System.out.println(e.getMessage()+"com.utils.Daofactory.Query()´íÎó");
 		}
 		return dataTable;
 	}
