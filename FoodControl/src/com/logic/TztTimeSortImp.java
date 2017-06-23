@@ -14,7 +14,7 @@ import java.util.List;
 import com.daointerface.TztSort;
 
 /**  
- * @类功能说明：  
+ * @类功能说明：  按照先入先出排序
  * @类修改者：  
  * @修改日期：  
  * @修改说明：   
@@ -24,36 +24,21 @@ import com.daointerface.TztSort;
  */
 public class TztTimeSortImp implements TztSort {
 
-	/* (non-Javadoc)
-	 * @see com.daointerface.TztSort#queryMade()
-	 */
 	public List queryMade() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.daointerface.TztSort#queryMading()
-	 */
 	public List queryMading() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.daointerface.TztSort#made()
-	 */
-	public List made() {
-		// TODO Auto-generated method stub
+	public List made(int dishId) {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.daointerface.TztSort#mading()
-	 */
-	public List mading() {
-		// TODO Auto-generated method stub
+	public List mading(int dishId) {
 		return null;
 	}
+
 
 }

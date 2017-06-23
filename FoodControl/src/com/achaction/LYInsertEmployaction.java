@@ -4,20 +4,13 @@ package com.achaction;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sf.json.JSON;
-
 import org.apache.struts2.ServletActionContext;
-
 import com.entity.LYEmployId;
 import com.entity.LYEmployee;
-
-import com.logic.LYInsertEmployDao;
-
-
+import com.insertemploydao.LYInsertEmployDao;
 import com.utils.toJson;
 
 public class LYInsertEmployaction {
@@ -170,9 +163,6 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
-<<<<<<< HEAD
-	
-=======
 	/**
 	 * getusername:后台登录验证action
 	 * 得到实现类返回给的list值，判断list的长度，如果能找到相匹配的的值，
@@ -194,7 +184,6 @@ public class LYInsertEmployaction {
 			return "false" ;
 		}	
 	}
->>>>>>> 1e91209ac6cd4c43d80cc7d3c90fb56ed49d713d
 	/**
 	 * getcount:获得员工表数据条数action
 	 */
