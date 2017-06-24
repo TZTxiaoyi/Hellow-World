@@ -56,4 +56,14 @@ public class TztTimeSortImp implements TztSort {
 		return null;
 	}
 
+	public List made(int dishId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List mading(int dishId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

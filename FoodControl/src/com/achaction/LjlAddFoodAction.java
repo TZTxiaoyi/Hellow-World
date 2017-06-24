@@ -20,6 +20,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.entity.LjlAddFood;
 import com.entity.LjlAddOrder;
+import com.entity.SxmTable;
 import com.entity.TztDishOrder;
 import com.insertemploydao.LjlDish;
 import com.insertemploydao.LjlOrders;
@@ -35,7 +36,21 @@ public class LjlAddFoodAction {
 	private LjlAddFood addfood;
 	private LjlAddOrder addorder;
 	private String desknub;
+	private SxmTable st;
+	private String ddname;
 	
+	public String getDdname() {
+		return ddname;
+	}
+	public void setDdname(String ddname) {
+		this.ddname = ddname;
+	}
+	public SxmTable getSt() {
+		return st;
+	}
+	public void setSt(SxmTable st) {
+		this.st = st;
+	}
 	LjlOrders orders=new LjlOrders();
 	LjlDish dish=new LjlDish();
 	TztDishOrderImp DishOrderImp=new TztDishOrderImp();
@@ -308,11 +323,14 @@ public class LjlAddFoodAction {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
+		String ddname=(String) request.getAttribute("ddname");
+		String ddna=(String) request.getAttribute("ord");
 		LjlDish dish=new LjlDish();
 		List listdish=dish.sel();	
 		request.getSession().setAttribute("dish",listdish );
 		String retime=null;
 		List list=orders.orderDish(addorder.getOrdersId());
+		
 		JSON json=toJson.toJson("val", list);
 			List li=(List) list.get(0);			
 			try {
@@ -324,8 +342,9 @@ public class LjlAddFoodAction {
 			    long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别  
 			    long days = diff / (1000 * 60 * 60 * 24);  
 			   	long hours = (diff-days*(1000 * 60 * 60 * 24))/(1000* 60 * 60);  
-			    long minutes = (diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60))/(1000* 60);  
-			   retime=hours+"小时"+minutes+"分";  	
+			    long minutes = (diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60))/(1000* 60);
+			    long ss=(diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60)-minutes*(1000* 60))/(1000);
+			   retime=hours+":"+minutes+":"+ss;  	
 			   request.getSession().setAttribute("retime", retime);	
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
@@ -335,6 +354,43 @@ public class LjlAddFoodAction {
 		
 		try {
 			hsr.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 结账
+	 */
+	public void updateOrder(){
+		
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int ud=orders.updesk(st);
+		int od=orders.upOrders(addorder);
+		int flag=-1;
+		if(od!=-1&&ud!=-1){
+			flag=1;
+		}
+		try {
+			response.getWriter().print(flag);
+			//response.getWriter().print(ud);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	/**
+	 * 清理桌子
+	 */
+	public void clearDesk(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int cd=orders.clearDesk(st);
+		System.out.println("cd"+cd);
+		try {
+			response.getWriter().print(cd);
+			//response.getWriter().print(ud);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

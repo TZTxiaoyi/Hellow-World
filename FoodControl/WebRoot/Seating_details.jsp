@@ -86,14 +86,22 @@
 			width:100px;
 			text-align:center;
 		}
+		#torder a{
+			width:70px;
+			text-align:left;
+			font-size:20px;
+		}
 		#money{
 			height:100px;
 			position:absolute;
 			bottom:0px;
 		}
+		
 		#money a{
 			
 			margin-bottom:5%;
+			margin-right:5%;
+			white-space:nowrap;
 		}
 		#times{
 			position:absolute;
@@ -113,6 +121,10 @@
 		}
 		#btm{
 			margin-top:5%;
+		}
+		#vagenum{
+			position:relative;
+			left:60%;
 		}
 	</style>
   
@@ -151,11 +163,15 @@
 					菜品数量：<span id="pnum"></span>
 			</div>
 			<div class="col-md-3">
-					桌位名字：<span id="dname"></span>
+					桌位名字：<span id="dname">
+					<%String dna=request.getParameter("dname");
+					dna=new String(dna.getBytes("iso8859-1"),"utf-8");
+					out.print(dna);
+			 		%>
+					</span>
 			</div>
 			<div class="col-md-3">
-					单号：<span id="order"><%
-					String oid=request.getParameter("ord");
+					单号：<span id="order"><%String oid=request.getParameter("ord");
 					out.print(oid);
 			 		%></span>
 			</div>
@@ -171,7 +187,8 @@
 		<div class="row"> <!--主体 -->
 			<div class="col-md-4" id="left-subject"><!--左部主体内容-->
 				<div id="lefttop-subject">
-					<h3>已订菜</h3>
+					<h3>已订菜<a id="vagenum" href=""
+						role="button">总计：<span class="tred"></span></a></h3>
 					<div >
 						<div id="subject-style">
 							
@@ -190,14 +207,16 @@
 				</div>
 				<div id="money">
 					
-						<a class="btn btn-info btn-lg" href=""
-						role="button">总计：<span class="tred"></span></a>
+						
 						<br/>
 						<a class="btn btn-danger btn-lg" href=""
-						role="button">结账：<span class="tred"></span></a>
+						role="button" id="paymoney">结账：<span class="tred"></span></a>
+						<button type="button" class="btn btn-danger btn-lg" >整单取消</button> 
 						<br/>
 						<a class="btn btn-success btn-lg" href=""
-						role="button">清扫结束</a> 
+						role="button" id="clear">清扫结束</a>
+						<button type="button" class="btn btn-primary btn-lg">催菜</button>
+						 
 				
 				</div>
 			</div>
@@ -245,17 +264,15 @@
 					</div>
 				</div>
 				<div id="btm"><!--底部功能模块-->
-					<button type="button" class="btn btn-danger " >整单取消</button>
+					<button type="button" class="btn btn-danger btn-lg" >整单取消</button>
 	
-					<button type="button" class="btn btn-primary col-md-offset-1" data-toggle="modal" data-target="#myMenu">取消菜品</button>
+					<button type="button" class="btn btn-primary btn-lg col-md-offset-1" data-toggle="modal" data-target="#myMenu">催菜</button>
 	
-					<button type="button" class="btn btn-info col-md-offset-1" >备注</button>
-	
-					<button type="button" class="btn btn-success col-md-offset-1" >传菜</button>
-	
-					<button type="button" class="btn btn-warning col-md-offset-1"  >查询</button>
-	
-					<button type="button" class="btn btn-success col-md-offset-1">查看</button>
+					<button type="button" class="btn btn-warning btn-lg col-md-offset-1"  >查询</button>
+					
+					<button type="button" class="btn btn-success btn-lg col-md-offset-1" >传菜</button>
+
+					<button type="button" class="btn btn-info btn-lg col-md-offset-1" >备注</button>
 				</div>
 				
 			</div>
@@ -307,7 +324,7 @@
 		function getTime(){
 			var time = new Date();
    			$("#times").html(time.toLocaleString());
-   			outtime();
+   			//outtime();
 		}
 		
 		function add() {
@@ -338,6 +355,9 @@
 		$(function(){
 			outfood();
 		})
+		/*
+			动态添加菜单；页面顶部；
+		*/
 		function outfood(){
 			var ord=$("#order").html();
 			$.ajax({
@@ -352,6 +372,7 @@
 					var onenum=0;//菜品单价
 					var dnum=0;//菜品数量
 					var num=0;
+				
 					var th="<tr><td>菜品</td><td>数量</td><td>单价</td><td>金额</td><td></td></tr>";
 					$("#subject-style").append(th);
 					var foodnum=1;
@@ -360,16 +381,17 @@
 						dname=value[0];
 						fnum=value[4];
 						onenum=value[5];
-						allnum=fnum*onenum;
-						var odertext="<tr><td>"+value[3]+"</td><td></td><td>"+value[5]+"</td><td>"+allnum+
-						"</td><td><a class=\"btn btn-success\" href=\"\"role=\"button\">清扫结束</a></td></tr>";
+						dnum=value[6];
+						allnum=dnum*onenum;
+						var odertext="<tr><td>"+value[3]+"</td><td>"+value[6]+"</td><td>"+value[5]+"</td><td>"+allnum+
+						"</td><td><a class=\"btn btn-danger\" href=\"\"role=\"button\">取消</a></td></tr>";
 						$("#torder").append(odertext);
 						num=num+allnum;
 						
 						
 					});
 					
-					$("#dname").html(dname);
+					//$("#dname").html(dname);
 					$("#pnum").html(fnum);
 					$(".tred").html(num);	
 				 
@@ -378,6 +400,9 @@
 				}
 			});
 		};
+		/*
+			开台时间；
+		*/
 		function outtime(){
 			var ord=$("#order").html();
 			$.ajax({
@@ -389,6 +414,38 @@
 			});
 			$("#retime").html('${retime}');
 		};
+		/*
+			结账
+		*/
+		$("#paymoney").click(function(){
+			var ord=$("#order").html();
+			var dname=$("#dname").html();
+			
+			$.ajax({
+				url:"addfood_updateOrder.action",
+				type:"post",
+				data:{"st.deskName":dname,"addorder.ordersId":ord},
+				success:function(data){	
+					window.localhost.href("service.jsp");
+				}
+			});
+			
+		})
+		//清台
+	$("#clear").click(function(){
+			var dname=$("#dname").html();
+			
+			$.ajax({
+				url:"addfood_clearDesk.action",
+				type:"post",
+				data:{"st.deskName":dname},
+				success:function(data){
+				
+				}
+			});
+		})
+		
+		
 		
 	</script>
   </body>

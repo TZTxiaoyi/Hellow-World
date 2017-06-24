@@ -14,8 +14,9 @@ import org.apache.struts2.ServletActionContext;
 
 import com.entity.LYEmployId;
 import com.entity.LYEmployee;
+import com.insertemploydao.LYInsertEmployDao;
 
-import com.logic.LYInsertEmployDao;
+
 
 
 import com.utils.toJson;

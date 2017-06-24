@@ -98,7 +98,7 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public List selTableAdmin(Object obj) {
-		String sql = "select d.deskState,d.deskName,o.ordersTime,o.ordersId,o.FoodNum "+
+		String sql = "select d.deskState,d.deskName,o.ordersTime,o.ordersId,o.FoodNum,d.deskId "+
 				"from desk_restaff d left join orders o on ordersStatus=15 and d.deskId=o.deskId";
 		List list = DaoFactory.Query(sql);
 		
