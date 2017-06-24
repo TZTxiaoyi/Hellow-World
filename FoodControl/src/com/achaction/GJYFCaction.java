@@ -1,6 +1,6 @@
 package com.achaction;
 
-import com.logic.GJYInsertFoodcategory;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -12,6 +12,11 @@ import net.sf.json.JSON;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.GJYFoodCategory;
+
+
+import com.logic.GJYInsertFoodcategory;
+
+
 
 import com.utils.toJson;
 

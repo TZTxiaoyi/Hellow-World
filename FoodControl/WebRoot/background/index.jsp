@@ -20,18 +20,21 @@
     
 	<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 	
-	<script type="text/javascript">
-		$(function(){
-			$.ajax({
-				url:"",
-				data:{},
-				type:"post",
-				success:function(data){
-					
-				}
-			})
-		})
-	</script>
+<style>
+		#datatime span{
+			font-size:20px;
+			position:absolute;
+			right:20px;
+			
+		}
+		.admin{
+			border:1px solid;
+		}
+		#user{
+			margin-left:120px;
+			font-size:20px;
+		}
+	</style>
   </head>
 														  <!-- 
 														  	后台主页面
@@ -39,10 +42,10 @@
  <body style="background-color:#f2f9fd;">
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
-    <h1><img src="images/index.jpg" class="radius-circle rotate-hover" height="50" alt="" />后台管理中心</h1>
+    <h1><img src="images/index.jpg" class="radius-circle rotate-hover" height="50" alt="" />后台管理中心<span id="user"></span></h1>
   </div>
   <div class="head-l">
-	  <a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> 
+	 
 	   &nbsp;&nbsp;<a class="button button-little bg-red" href="login.jsp"><span class="icon-power-off"></span> 退出登录</a> 
   </div>
 </div>
@@ -72,6 +75,23 @@
   	<li><a href="leaveword.jsp" target="right"><span class="icon-caret-right"></span>留言管理</a></li>      
   </ul>    
 </div>
+<ul class="bread">
+  <li><a href="{:U('Index/employee')}" target="right" class="icon-home"> 首页</a></li>
+  <li><a href="##" id="a_leader_txt">网站信息</a></li>
+  
+  
+</ul>
+<div class="admin">
+		<iframe scrolling="auto" rameborder="0" 
+			name="right" width="100%" height="95%"></iframe>
+		<div id="datatime">
+		<span id="times"></span>
+
+		</div>
+	</div>
+	<div style="text-align:center;"></div>
+
+</div>
 <script type="text/javascript">
 $(function(){
   $(".leftnav h2").click(function(){
@@ -84,20 +104,29 @@ $(function(){
 		$(this).addClass("on");
   })
 });
-
+/*
+			系统加载自动运行;
+		*/
+		$(function() {
+			setInterval("getTime()",1000);
+		});
+		/*
+			获取系统时间;
+		*/
+		function getTime(){
+    		var time = new Date();
+   			 $("#times").html(time.toLocaleString());
+		}
+		/*
+			登陆成功后带值显示到本页面；
+		*/
+		$(function(){
+    		var dd='${username}';
+    		$("#user").html("操作员："+dd);	
+    		dd=null;
+    	});
 		
 </script>
-<ul class="bread">
-  <li><a href="{:U('Index/employee')}" target="right" class="icon-home"> 首页</a></li>
-  <li><a href="##" id="a_leader_txt">网站信息</a></li>
-  
-  
-</ul>
-<div class="admin">
-  <iframe scrolling="auto" rameborder="0" name="right" width="100%" height="100%"></iframe>
-</div>
-<div style="text-align:center;">
-
-</div>
+>>>>>>> 84d757c67e524c72e1684cdfc5ca17b4f4c5a97b
 </body>
 </html>

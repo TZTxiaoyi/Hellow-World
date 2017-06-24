@@ -34,7 +34,7 @@ public class TztDishImp implements DaoInterface {
 		String sql=" insert into dish values(?,?,?,?,?,?,?)";
 		Object[] objects = new Object[]{dish.getDishName(),dish.getPrice(),
 				dish.getKindId(),dish.getMakeTime(),dish.getPriority(),dish.getPicture(),dish.getMaxCopise()};
-		
+
 		return DaoFactory.Updata(sql, objects);
 	}
 
@@ -43,7 +43,7 @@ public class TztDishImp implements DaoInterface {
 	 */
 	public int del(Object obj) {
 		TztDish dish = (TztDish) obj;
-		String sql ="delete from dish where dishId=?";
+		String sql ="updata dish set dishStatus=20 from dish where dishId=?";
 		Object[] objects = new Object[]{dish.getDishId()};
 		return DaoFactory.Updata(sql, objects);
 	}
@@ -53,8 +53,7 @@ public class TztDishImp implements DaoInterface {
 	 */
 	public List sel(Object obj) {
 		TztDish dish = (TztDish) obj;
-		String sql ="select * from dish where dishId=?";
-		Object[] objects = new Object[]{dish.getDishId()};
+		String sql ="select * from dish where dishId= "+dish.getDishId()+"" ;
 		return DaoFactory.Query(sql);
 	}
 
@@ -68,4 +67,8 @@ public class TztDishImp implements DaoInterface {
 		return DaoFactory.Updata(sql, object);
 	}
 
+
+
+	
 }
+

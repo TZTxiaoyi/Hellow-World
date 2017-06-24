@@ -1,4 +1,4 @@
-package com.logic;
+package com.insertemploydao;
 
 
 import java.util.List;
@@ -44,6 +44,7 @@ public class LYInsertEmployDao {
 	public int emidinsert(LYEmployId eld){		
 		String sql="insert into staffEnter values(?,?,?)";
 		Object[] params = new Object[]{eld.getEmenter(),eld.getEmword(),1};
+
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
