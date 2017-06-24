@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSON;
 
@@ -97,6 +98,7 @@ public class ZbCustomerAction {
 		System.out.println(userdata.getAccount()+","+userdata.getPwd());
 		int li = re.add(userdata);
 		if(li == 1){
+			System.out.println("--------------------");
 			HttpServletRequest htsr = ServletActionContext.getRequest();
 			htsr.setAttribute("zb", 1);
 			return "register";
@@ -121,7 +123,7 @@ public class ZbCustomerAction {
 		int list = re.loginsel(zbud);
 		//JSON json = toJson.toJson("account",list );//转型
 		HttpServletResponse hsr = ServletActionContext.getResponse();//获取请求
-		System.out.println(list);
+		
 		hsr.setContentType("text/html,charset=utf-8");
 		hsr.setCharacterEncoding("utf-8");
 		
@@ -137,7 +139,7 @@ public class ZbCustomerAction {
 			
 		}else{
 			HttpServletRequest ht = ServletActionContext.getRequest();
-			ht.setAttribute("na", "k");
+			ht.setAttribute("na", "k");//添加指定的属性，并为其赋指定的值
 			return "register";
 			
 		}
@@ -165,4 +167,6 @@ public class ZbCustomerAction {
 		}
 		
 	}
+	//+++++++++++++++++++++++++++++++++++
+		
 }

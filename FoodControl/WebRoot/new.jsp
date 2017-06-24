@@ -75,13 +75,21 @@
 			<button type="button" class="btn btn-default" id="zbbutton1"><h1 class="glyphicon glyphicon-map-marker"><input type ="text" size="10px"/></h1></button><!-- 模糊查询菜名 -->
 			<button type="button" class="btn btn-default"id="zbbutton1"><h1 class="glyphicon glyphicon-bell">呼叫员工</h1></button><!-- 呼叫员工按钮 -->
 			
-<<<<<<< HEAD
-			<span id="desk1"></span>
-			<span id ="desk2"></span>
-=======
+
 			<span>当前系统时间：</span><span id="date_1"></span>
-			<span id="dishname">牡丹阁</span><span>桌</span>
->>>>>>> f9cdd24cdbf2ad3365f7948f5bd3758532a89bff
+			
+			<%	String desknub = request.getParameter("desknub");
+				String personnub = request.getParameter("personnub");
+				String zbphone = request.getParameter("zbphone");
+				String zbaddress = request.getParameter("zbaddress");
+				
+				out.println("桌号:"+desknub);
+				out.println("人数:"+personnub);
+				out.println("电话:"+zbphone);
+				out.println("地址："+zbaddress);
+				
+			 %>			
+
 		</div>
 <!-- 左侧 -->		
 		<div class=" col-md-2" id="zbleft">

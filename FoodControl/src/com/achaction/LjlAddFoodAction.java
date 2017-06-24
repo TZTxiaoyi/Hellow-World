@@ -18,8 +18,11 @@ import org.apache.struts2.ServletActionContext;
 
 import com.entity.LjlAddFood;
 import com.entity.LjlAddOrder;
+import com.entity.ZbDesk;
+import com.entity.ZbUsagedata;
 import com.insertemploydao.LjlDish;
 import com.insertemploydao.LjlOrders;
+import com.logic.ZbRegister;
 
 
 public class LjlAddFoodAction {
@@ -69,6 +72,57 @@ public class LjlAddFoodAction {
 		return "newFood";
 		
 	}
+	
+	//++++++++++++++++++++++++++++++++++++++++++++++
+	public String zbfood(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		LjlDish dish=new LjlDish();
+		List list=dish.sel();
+		
+		return "zbfood";
+	}
+	ZbUsagedata zbud;
+	ZbRegister re=new ZbRegister();
+	/**
+	 * 
+	 * 方法功能说明：  点餐
+	 * 创建：2017-6-23 by zhubin   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @return      
+	 * @return String     
+	 * @throws
+	 */
+	public String login(){
+			
+			
+			int list = re.loginsel(zbud);
+			//JSON json = toJson.toJson("account",list );//转型
+			HttpServletResponse hsr = ServletActionContext.getResponse();//获取请求
+			System.out.println(list);
+			hsr.setContentType("text/html,charset=utf-8");
+			hsr.setCharacterEncoding("utf-8");
+			
+			try {
+				
+				hsr.getWriter().print(list);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(list==1){
+				return "list";
+				
+			}else{
+				HttpServletRequest ht = ServletActionContext.getRequest();
+				ht.setAttribute("na", "k");
+				return "login";
+				
+			}
+		}
+	
+	
+	//++++++++++++++++++++++++++++++++++++++++++++++
 	/**
 	 * 
 	 * 方法功能说明：  添加菜品到购物车

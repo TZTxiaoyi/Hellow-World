@@ -79,10 +79,11 @@
 				<div style="height:450px;"></div>
 				<div class="media media-y margin-big-bottom"></div>
 				<div id="btn">
-					<a href="new.jsp"><button type="button" class="btn btn-default btn-lg btn-danger">
+					<button type="button" class="btn btn-default btn-lg btn-danger" 
+					data-toggle="modal" data-target="#myModal4">
 						<h1 class="glyphicon glyphicon-cutlery" aria-hidden="true"></h1>
 						<p>自助点餐</p>
-					</button></a>
+					</button>
 					
 					<button type="button" class="btn btn-default btn-lg btn-Info"
 						data-toggle="modal" data-target="#myModal2"  id="orderfood">
@@ -106,6 +107,42 @@
 			</div>
 		</div>
 	</div>
+<!-- 自助点餐模态框 -->	
+		<div class="media media-y margin-big-bottom"></div>
+	<div class="modal fade" id="myModal4" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss=modal>×</button>
+					<div class="text-center margin-big padding-big-top">
+						<h1>餐饮管理系统</h1>
+					</div>
+				</div>
+
+				<form action="addfood_newFood.action" method="post"  onsubmit="return show3()">
+
+
+					<div>
+						<input placeholder="手机号" type="text" id="zbphone"
+							 name ="zbphone"/><span id ="zbtext1"></span>
+					</div>
+					<div>
+						<input placeholder="地址" type="text" id="zbaddress"
+							 name ="zbaddress"/><span id = "zbtext2"></span>
+					</div>
+					
+					<div>
+						<input type="submit"
+							class="button button-block bg-main text-big input-big" id="zbclick" value="点击进入">
+							
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
 <!-- 开始点餐模态框 -->
 
 	<div class="media media-y margin-big-bottom"></div>
@@ -119,11 +156,11 @@
 							<h1>餐饮管理系统</h1>
 						</div>
 					</div>
-					<form action ="home_orders.action" method ="post" >
+					<form action ="addfood_newFood.action" method ="post" onsubmit="return show2()">
 						<div>
 						<!-- <input placeholder="请输入桌号" type="text" id="desknub"
 							 name ="desknub"/> -->
-							 <select class="form-control" id ="desknub">
+							 <select class="form-control" id ="desknub" name ="desknub">
 							 	  
 							</select>
 					</div>
@@ -132,8 +169,10 @@
 							 name ="personnub"/>
 					</div>
 					<div>
-						<a class="btn btn-lg btn-info bg-main text-big input-big"  href="addfood_newFood.action" id="orderfood2">
-						开始点餐</a>
+						<!-- <a class="btn btn-lg btn-info bg-main text-big input-big"  href="addfood_newFood.action" id="orderfood2">
+						开始点餐</a> -->
+						<input type="submit"
+							class="button button-block bg-main text-big input-big" id="orderfood2" value="开始点餐">
 					</div>
 						
 					</form>
@@ -243,7 +282,7 @@
 				return false;
 				
 			}else{
-			
+			 
 				$.ajax({
 					type:"post",
 					url:"home_seluser.action",
@@ -313,7 +352,10 @@
 				return false;
 				
 			}
+			
 		}
+		
+		
 	//开始点餐================================
 		$(function(){
 			$("#orderfood").click(function(){
@@ -336,21 +378,56 @@
 				},
 			});
 		});
-		
-//======================================
-	//开始点餐里的触发按钮事件orderfood2   body第110 行
-		$(function(){
-			$("#orderfood2").click(function(){
-			var va1 = $("option").val();
+		function show2(){
+			var va1 = $("select").val();
 			var va2 = $("#personnub").val();
-				 if(va1 == "选取桌号" && va2 == ""){
-					alert ("请填写完成");
-					$("#orderfood2").attr("href","#");// attr() 方法设置或返回被选元素的属性值
-					
-				} else{
-					
-				}
-				
+			if(va1=="选取桌号" || va2==""){
+				alert("信息须填写完整");
+				return false;
+			}else{
+				return true;
+			}
+		}
+		function show3(){
+			var zbphone = $("#zbphone").val();
+			var zbaddress = $("#zbaddress").val();
+			if(zbphone == "" || zbaddress == ""){
+				alert("信息须填写完整");
+				return false;
+			}else{
+				return true;
+			}
+		}
+//======================================
+	//开始点餐里的触发按钮事件orderfood2   body第145行
+		
+//---------------------------------------------------------------------------------------------
+	//外卖点餐   body  第110 行
+		/* $(function(){
+			$("#zbclick").click(function(){
+				//alert($("#zbphone").val());
+				//alert($("#zbaddress").val());
+				var zbphone = $("#zbphone").val();
+				var zbaddress = $("#zbaddress").val();
+					if(zbphone == "" || zbaddress == ""){
+						alert("以上信息须填写完整");
+						$("#zbclick").attr("href","");
+					}
+			});
+		}); */
+//聚焦事件
+		$(function(){
+			$("#zbphone").focus(function(){
+				$("#zbtext1").html("*为保证服务质量，请填写真实号码");
+			});
+			$("#zbphone").blur(function(){
+				$("#zbtext1").html("");
+			});
+			$("#zbaddress").focus(function(){
+				$("#zbtext2").html("*请填写详细地址");
+			});
+			$("#zbaddress").blur(function(){
+				$("#zbtext2").html("");
 			});
 		});
 //=================================================	
@@ -361,6 +438,7 @@
 				alert("用户名或密码不一致");
 				
 			}
+			
 		});
 		$(function(){
 			if('${zb}' == 1){
