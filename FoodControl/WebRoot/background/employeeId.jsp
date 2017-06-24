@@ -22,14 +22,20 @@
 					if(ementer && emword){					
 						$.ajax({
 							type:"post",
-							url:"achieve_enterid.action",
+							url:"fresh_enterid.action",
 							data:{"employId.ementer":ementer,"employId.emword":emword},
 							success:function(data){
-								alert("success");
+								if(data==-1){
+									alert("添加失败");
+								}else if(data==1){
+									alert("添加成功");
+								}else{
+									alert("没有权限");
+								}								
 							}
 						});
 					}else{
-						alert("æ·»å åå·¥è´¦å·å¤±è´¥");
+						alert("添加员工账号失败");
 					}
 				});
 			});
@@ -38,12 +44,12 @@
 	<body>
 	
 		  <div class="panel admin-panel">
-		    <div class="panel-head"><strong class="icon-reorder"> åå®¹åè¡¨</strong> <a href="" style="float:right; display:none;">æ·»å å­æ®µ</a></div>
+		    <div class="panel-head"><strong class="icon-reorder">内容列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
 		    <div class="padding border-bottom">
 		      <ul class="search" style="padding-left:10px;">       
 		        
 		        <li>
-		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span> æ·»å åå·¥è´¦å·</a>
+		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span>添加员工账号</a>
 		         		<!-- 
 		         			æ·»å åå·¥è´¦å·æ¨¡ææ¡
 		         		 -->
@@ -53,7 +59,7 @@
 								<div class="modal-content">
 								<div class="modal-header">
 									
-								<h4 class="modal-title" id="myModalLabel">æ·»å åå·¥è´¦å·</h4>
+								<h4 class="modal-title" id="myModalLabel">添加员工账号</h4>
 								</div>
 									<!-- 
 										æ·»å åå·¥ä¿¡æ¯çè¾å¥æ¡ ----
@@ -61,8 +67,8 @@
 									 
 								<div class="modal-body1">
 															
-									è´¦	å·ï¼<input type="text" id="ementer" name="ementer"><br/>
-									å¯	ç ï¼<input type="text" id="emword" name="emword"><br/>
+									账	号<input type="text" id="ementer" name="ementer"><br/>
+									密	码<input type="text" id="emword" name="emword"><br/>
 											
 												     
 										
@@ -71,11 +77,11 @@
 										<!-- 
 											å³é­æ¨¡ææ¡æé®
 										 -->
-									<button type="submit" class="btn btn-default" data-dismiss="modal">å³é­</button>
+									<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
 										<!-- 
 											ç¹å»æ·»å æé®ï¼è§¦åç¹å»äºä»¶ï¼å½ä¿¡æ¯å¨é¨å½å¥åæ§è¡Ajaxè¯­å¥ï¼
 										 -->
-									<input type="submit" class="btn btn-primary"  value="æ·»å " id="addent"/>	
+									<input type="submit" class="btn btn-primary"  value="添加" id="addent"/>	
 								</div>
 							 </div>
 						</div>

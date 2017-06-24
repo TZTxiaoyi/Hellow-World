@@ -73,6 +73,7 @@ public class LyQuanXianAction {
 				request.setAttribute("username", employId.getEmenter());
 				return "cook";
 			}else{
+				request.setAttribute("username", employId.getEmenter());
 				List list4 = ied.aperson(partname);
 				//System.out.println("999:"+list4);
 				request.getSession().setAttribute("listvalue", list4);
@@ -83,6 +84,20 @@ public class LyQuanXianAction {
 			return "false";
 		}
 		
+	}
+	/**
+	 * emterid：得到前端响应，调用enterid方法，
+	 * 调用Dao实现类方法
+	 * 将员工账号的实体类对象传给插入员工账号的实现类方法
+	 */
+	public void enterid(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int flag=ied.emidinsert(employId);
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
 

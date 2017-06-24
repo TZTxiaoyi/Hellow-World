@@ -82,14 +82,7 @@ public class LYInsertEmployaction {
 		ied.eminsert(employee);	
 		
 	}
-	/**
-	 * emterid：得到前端响应，调用enterid方法，
-	 * 调用Dao实现类方法
-	 * 将员工账号的实体类对象传给插入员工账号的实现类方法
-	 */
-	public void enterid(){
-		ied.emidinsert(employId);
-	}
+	
 	   /**
 		 * 
 	     * 方法功能说明：  将员工信息放到list中，
@@ -167,31 +160,7 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
-<<<<<<< HEAD
-	
-=======
-	/**
-	 * getusername:后台登录验证action
-	 * 得到实现类返回给的list值，判断list的长度，如果能找到相匹配的的值，
-	 * list的长度一定为1，如果找不到，list的长度就为1
-	 * 如果为1，将用户名存起来，返回success，struts接收，跳到后台主页面接收存入值
-	 * 如果不为1，将cuo信息保存，返回false,struts接收，由后台登录界面接收存入信息，然后做出判断，弹出错误信息
-	 * @return
-	 */
-	public String getusername(){
-		HttpServletRequest request=ServletActionContext.getRequest();
-		HttpServletResponse response=ServletActionContext.getResponse();
-		//request.getSession().setAttribute("username", employId.getEmenter());		
-		List list = ied.selectemid(employId);
-		if (list.size()==1) {
-			request.setAttribute("username", employId.getEmenter());
-			return "success";
-		}else {
-			request.setAttribute("cuo", "haha");
-			return "false" ;
-		}	
-	}
->>>>>>> 1e91209ac6cd4c43d80cc7d3c90fb56ed49d713d
+
 	/**
 	 * getcount:获得员工表数据条数action
 	 */
@@ -226,7 +195,7 @@ public class LYInsertEmployaction {
 	}
 	/**
 	 * modul:权限表action
-	 */
+	 
 	public void modul(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
@@ -238,5 +207,5 @@ public class LYInsertEmployaction {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-	}
+	}*/
 }
