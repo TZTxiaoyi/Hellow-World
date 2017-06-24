@@ -298,8 +298,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var tdiv="tdiv3";	
 							k++;
 						}
-						var dd = "<a href=\"Seating_details.jsp?ord="+orderid+"&&dname="+value[1]+"\"><div class=\"pull-left col-sm-2 tclick "+tdiv+"\" id=\"deskname"+value[0]+"\">"+ value[1]+
-						orderid+"</div></a> ";
+
+						var dd = "<a href=\"Seating_details.jsp?ord="+orderid+"&&dname="+value[1]+"\"><div class=\"pull-left col-sm-2 tclick "+tdiv+"\" id=\"deskname"+value[5]+"\">"+ value[1]+
+						orderid+"</div></a>";
 						$("#all-home").append(dd);
 					});
 					$(".tdiv1").css("background-color","#33ff33");
@@ -338,9 +339,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						});
 						$(".tdiv1").css("background-color","#33ff33");
 						$(".tdiv2").css("background-color","#FF3333");
-						$(".tdiv3").css("background-color","#ff9900");
-						
-					},
+						$(".tdiv3").css("background-color","#ff9900");	
+					}
 				});
 			});
 			/*

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSON;
 
@@ -13,6 +14,7 @@ import org.apache.struts2.ServletActionContext;
 import com.entity.ZbDesk;
 import com.entity.ZbUsagedata;
 import com.entity.ZbUserdata;
+import com.insertemploydao.LjlDish;
 import com.insertemploydao.ZbRegister;
 import com.utils.toJson;
 	/**
@@ -30,7 +32,7 @@ public class ZbCustomerAction {
 	private ZbUserdata userdata;//注册
 	ZbUsagedata zbud;
 	ZbDesk zbde;
-	
+	LjlDish dish=new LjlDish();
 	
 	public ZbDesk getZbde() {
 		return zbde;
@@ -120,11 +122,13 @@ public class ZbCustomerAction {
 		
 		int list = re.loginsel(zbud);
 		//JSON json = toJson.toJson("account",list );//转型
-		HttpServletResponse hsr = ServletActionContext.getResponse();//获取请求
+		HttpServletResponse hsr = ServletActionContext.getResponse();
+		HttpServletRequest request=ServletActionContext.getRequest();//获取请求
 		System.out.println(list);
 		hsr.setContentType("text/html,charset=utf-8");
 		hsr.setCharacterEncoding("utf-8");
-		
+		List list1=dish.sel();
+		request.setAttribute("dishList", list1);
 		try {
 			
 			hsr.getWriter().print(list);

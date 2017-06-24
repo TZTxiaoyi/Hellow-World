@@ -180,8 +180,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					if(name=="minus"){
 						inpval=inpval-1;
 						if(inpval<=1){
-							inpval=1;
-							
+							inpval=1;							
 						}
 					}
 					if(name=="add"){

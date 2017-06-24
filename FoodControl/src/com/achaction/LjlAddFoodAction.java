@@ -103,10 +103,11 @@ public class LjlAddFoodAction {
 				List list=dish.seldishName(foodnames[i]);
 				session.getAttribute(foodnames[i]);
 				LjlAddFood addf= (LjlAddFood)session.getAttribute(foodnames[i]);
-				int number=Integer.parseInt(addf.getNumber());
+				String dishnum=addf.getNumber();
+				int number=Integer.parseInt(addf.getNumber());//每个菜的数量
 				List listdish=(List) list.get(0);
 				int dishid=(Integer) listdish.get(0);
-				TztDishOrder dishorder=new TztDishOrder(rsid,dishid,dishStatus,tableid);
+				TztDishOrder dishorder=new TztDishOrder(rsid,dishid,dishStatus,tableid,number);
 				for (int j = 0; j < number; j++) {
 					DishOrderImp.add(dishorder);
 				}
@@ -140,6 +141,7 @@ public class LjlAddFoodAction {
 		List list=dish.sel();
 		request.setAttribute("dishList",list); 
 		tableSql.uptabstate(dname);//根据桌子name改变桌子状态
+		System.out.println(tableSql.uptabstate(dname));
 		if (dname!=null) {
 			session.setAttribute("dname", dname);
 		}
@@ -161,7 +163,6 @@ public class LjlAddFoodAction {
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		session.setAttribute(addfood.getFoodname(), addfood);
 		LjlAddFood addf=(LjlAddFood) session.getAttribute(addfood.getFoodname());
-		System.out.println("addfood:"+addf.getNumber()+","+addf.getFoodname());
 		try {
 			
 			response.getWriter().print("1");
@@ -351,7 +352,6 @@ public class LjlAddFoodAction {
 				e1.printStackTrace();
 			}
 			
-		
 		try {
 			hsr.getWriter().print(json);
 		} catch (IOException e) {
@@ -359,10 +359,6 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * 结账
-	 */
 	public void updateOrder(){
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
@@ -373,28 +369,32 @@ public class LjlAddFoodAction {
 			flag=1;
 		}
 		try {
-			response.getWriter().print(flag);
-			//response.getWriter().print(ud);
+			response.getWriter().println(flag);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	
 	/**
 	 * 清理桌子
 	 */
 	public void clearDesk(){
+		System.out.println("cler");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int cd=orders.clearDesk(st);
 		System.out.println("cd"+cd);
 		try {
-			response.getWriter().print(cd);
-			//response.getWriter().print(ud);
+			response.getWriter().println("dd");
+			System.out.println("dddd");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	
+	
 	
 }

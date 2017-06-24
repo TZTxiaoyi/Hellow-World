@@ -192,13 +192,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var stime=$("#pertime").val();
 					//var spart=$("#per").val();
 					//var stable=$("#per").val();
-					alert(stime);
+					//alert(stime);
 					$.ajax({
 						url:"achieve_updatestaff.action",
 						type:"post",
 						data:{"employee.emid":sid,"employee.emname":sname,"employee.emsex":ssex,"employee.emage":sage,"employee.emphone":sphone,"employee.emadress":sadress,"employee.emjointime":stime},
 						success:function(data){
-							alert("修改成功");			
+							alert("修改成功");	
+								liyang();	
 						}
 					});
 				});
@@ -431,12 +432,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    <div>
 					    	<span>就职时间</span><input type="text" name="st.deskState" id="pertime"/>
 					    </div>
-					    <div>
+				<!--    <div>
 					    	<span>角色</span><input type="text" name="st.deskState" id="perpart"/>
 					    </div>
 					    <div>
 					    	<span>负责桌台</span><input type="text" name="st.deskState" id="pertable"/>
-					    </div>	
+					    </div>	-->
 					 </div>
 					</div>
 					<div class="modal-footer">

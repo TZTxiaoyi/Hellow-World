@@ -42,13 +42,13 @@ public class TztQuerDishAction {
 	public int getMethod() {
 		return method;
 	}
-	public void setMethod(int method) {
-		this.method = method;
-	}
+	
 	public int getDishId() {
 		return dishId;
-	}	
-	
+	}
+	public void setDishId(int dishId) {
+		this.dishId = dishId;
+	}
 	/**
 	 * 
 	 * 方法功能说明： 不同的按钮更换不同的接口 

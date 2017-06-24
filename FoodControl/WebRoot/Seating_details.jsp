@@ -163,17 +163,10 @@
 					菜品数量：<span id="pnum"></span>
 			</div>
 			<div class="col-md-3">
-					桌位名字：<span id="dname">
-					<%String dna=request.getParameter("dname");
-					dna=new String(dna.getBytes("iso8859-1"),"utf-8");
-					out.print(dna);
-			 		%>
-					</span>
+					桌位名字：<span id="dname"><%String dna=request.getParameter("dname");dna=new String(dna.getBytes("iso8859-1"),"utf-8");out.print(dna);%></span>
 			</div>
 			<div class="col-md-3">
-					单号：<span id="order"><%String oid=request.getParameter("ord");
-					out.print(oid);
-			 		%></span>
+					单号：<span id="order"><%String oid=request.getParameter("ord");out.print(oid);%></span>
 			</div>
 			<div class="col-md-3">
 					开台时间：
@@ -217,6 +210,7 @@
 						role="button" id="clear">清扫结束</a>
 						<button type="button" class="btn btn-primary btn-lg">催菜</button>
 						 
+
 				
 				</div>
 			</div>
@@ -268,11 +262,16 @@
 	
 					<button type="button" class="btn btn-primary btn-lg col-md-offset-1" data-toggle="modal" data-target="#myMenu">催菜</button>
 	
+
 					<button type="button" class="btn btn-warning btn-lg col-md-offset-1"  >查询</button>
 					
 					<button type="button" class="btn btn-success btn-lg col-md-offset-1" >传菜</button>
 
 					<button type="button" class="btn btn-info btn-lg col-md-offset-1" >备注</button>
+
+					<a class="btn close btn-lg" data-dismiss="modal"aria-label="Close" style="color:#ff00ff" href="service.jsp">退出系统</a>
+			
+
 				</div>
 				
 			</div>
@@ -353,7 +352,10 @@
 			
 		});
 		$(function(){
-			outfood();
+			if($("#order").html()!=""){
+				outfood();
+				outtime();
+			}
 		})
 		/*
 			动态添加菜单；页面顶部；
@@ -420,21 +422,21 @@
 		$("#paymoney").click(function(){
 			var ord=$("#order").html();
 			var dname=$("#dname").html();
-			
 			$.ajax({
 				url:"addfood_updateOrder.action",
 				type:"post",
 				data:{"st.deskName":dname,"addorder.ordersId":ord},
 				success:function(data){	
 					window.localhost.href("service.jsp");
+
 				}
 			});
 			
 		})
 		//清台
+
 	$("#clear").click(function(){
 			var dname=$("#dname").html();
-			
 			$.ajax({
 				url:"addfood_clearDesk.action",
 				type:"post",
@@ -444,6 +446,7 @@
 				}
 			});
 		})
+
 		
 		
 		
