@@ -13,8 +13,8 @@ public class ZbRegister implements DaoInterface{
 	public int add(Object user) {
 		ZbUserdata userdata=(ZbUserdata)user;
 		// TODO Auto-generated method stub
-		String sql="insert customerEnter values (?,?)";
-		Object[] params=new Object[]{userdata.getAccount(),userdata.getPwd()};
+		String sql="insert customerEnter values (?,?,?)";
+		Object[] params=new Object[]{userdata.getAccount(),userdata.getPwd(),19};
 		int flag=DaoFactory.Updata(sql, params);
 		return flag;
 	}

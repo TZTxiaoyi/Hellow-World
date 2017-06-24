@@ -30,6 +30,6 @@ public class LyLanJieQi extends MethodFilterInterceptor{
 				return result;
 			}
 		}
-		return "";
+		return "login";
 	}		
 }

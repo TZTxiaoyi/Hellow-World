@@ -261,9 +261,7 @@
 						success:function(data){
 							var json=JSON.parse(data);
 							$.each(json,function(index,value){
-								
 									$($("input[name=\""+value.foodname+"\"]")[1]).val(value.number);
-
 							});	
 							OrderTotal();
 						}
@@ -299,7 +297,6 @@
 				//下单获得订单信息和菜单信息，桌号
 				var orderStatus=0;
 				$("#order").click(function(){
-					alert("dff");
 					var orderStatus=15;
 					var orderPrice=parseInt($("#mtTotal").html());
 					var foodNum=parseInt($("#foodnum").html());
@@ -317,7 +314,6 @@
 					});
 							
 				});
-				
 				
 				function getTime(){
     				var time = new Date();
