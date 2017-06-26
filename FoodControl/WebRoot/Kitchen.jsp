@@ -19,17 +19,12 @@ body{
 	padding:0;
 }
 
-* div{
-	border: 1px solid #cacaca;
-}
 td{
 	width:150px;
 }
-
 #top {
 	height: 9%;
 }
-
 #cbody {
 	height: 75%;
 }
@@ -70,8 +65,9 @@ td{
 		<!-------------------------------页面头部------------------------------------------->
 		<div class="row" >
 			<div class= "top1"id="top"></div>
-			<div class="top1">	<button id="default">默认</button><button id="ttme">时间</button>
-				<button id = "priority">优先级</button>
+			<div class="top1">	
+			<button id="default">默认</button>
+			<button id = "priority">优先级</button>
 			 </div>
 		
 		</div>
@@ -149,15 +145,14 @@ td{
  		}
  		$("#default").click(function(){
  			method=0;
- 			alert(method);
- 		});
- 	
- 		$("#ttme").click(function(){
- 			 method=1;
+ 			queryMading();
+			queryMade();
  			alert(method);
  		});
  		$("#priority").click(function(){
  			method=2;
+ 			queryMading();
+			queryMade();
  			alert(method);
  		});
  		

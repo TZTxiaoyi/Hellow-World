@@ -50,6 +50,7 @@ public class TztPrioritySortImp implements TztSort {
 				}
 			}			
 		}
+		//并菜
 		List madeList=new ArrayList();
 		for(int i=0;i<dishpriority.size();i++){
 			List dishList=new ArrayList();
@@ -129,7 +130,6 @@ public class TztPrioritySortImp implements TztSort {
 				for (int j = i+1; j <list.size(); j++) {
 				int b=(Integer) ((List)list.get(j)).get(2);
 				if(a==b){
-					//可能多运行一次
 					list.remove(j);
 					sum++;
 					j--;

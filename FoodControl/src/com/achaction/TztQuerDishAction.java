@@ -16,7 +16,6 @@ import com.insertemploydao.TztDishImp;
 import com.insertemploydao.TztDishOrderImp;
 import com.logic.TztDefaultSortImp;
 import com.logic.TztPrioritySortImp;
-import com.logic.TztTimeSortImp;
 import com.entity.TztDishOrder;
 
 import com.utils.toJson;
@@ -67,8 +66,6 @@ public class TztQuerDishAction {
 	 */
 	public void createImp(int method){
 			if(method==1){
-				 TztSort sort = new TztTimeSortImp();
-				 setSort(sort);
 			}else if(method ==2){
 				TztSort sort =new TztPrioritySortImp();
 				setSort(sort);

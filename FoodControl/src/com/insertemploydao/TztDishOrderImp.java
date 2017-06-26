@@ -19,9 +19,6 @@ import com.utils.DaoFactory;
  * @版本：V1.0
  */
 public class TztDishOrderImp implements DaoInterface{
-	/**
-	 * 
-	 */
 	public int add(Object obj) {
 		TztDishOrder dishOrder=(TztDishOrder)obj;
 		System.out.println(dishOrder.getOrderId()+","+dishOrder.getDishId()+","+dishOrder.getDishStatus()+","+dishOrder.getDeskId());
@@ -58,7 +55,7 @@ public class TztDishOrderImp implements DaoInterface{
 	}
 	/**
 	 * 
-	 * 方法功能说明：查找菜肴最大并菜数量前提下的制作中或者待制作的比较早下单的菜  
+	 * 方法功能说明：查找order_dish表中的对应状态的菜肴
 	 * 创建：2017-6-22 by TZT   
 	 * 修改：日期 by 修改者  
 	 * 修改内容：  
@@ -69,67 +66,17 @@ public class TztDishOrderImp implements DaoInterface{
 	 * @return List     
 	 * @throws
 	 */
-	public List selectMax(int cc,List madedish){
-		int  top= (Integer) madedish.get(7);
-		int id =	(Integer) madedish.get(0);
-		String sql =" select  top "+top+" id from orders_dish where dishId ="+id+"and dishStatus= "+cc;
+	public List selectMax(int status){
+		String sql =" select * from orders_dish where dishStatus ="+status;
 		return DaoFactory.Query(sql);
 	}
-	/**
-	 * 
-	 * 方法功能说明：  
-	 * 创建：2017-6-22 by TZT   
-	 * 修改：日期 by 修改者  
-	 * 修改内容：  
-	 * @参数： @param vv
-	 * @参数： @param madedish
-	 * @参数： @param cc
-	 * @参数： @return      
-	 * @return int     
-	 * @throws
-	 */
-	public int changeDish( int vv ,List madedish,int cc){
-		int  top= (Integer) madedish.get(7);
-		int id =	(Integer) madedish.get(0);
-		String sql="update orders_dish set dishStatus=? where id  in" +
-				"( select  top "+top+" id from orders_dish where dishId ="+id+"and dishStatus= "+cc+ ") ";
-		Object[] obj = new Object[]{vv};
-		return DaoFactory.Updata(sql, obj);
-	}
+	
 	public int update(Object obj) {
 		TztDishOrder dishOrder=(TztDishOrder)obj;
 		String sql="update orders_dish set	ordersId=?,dishId=?, dishSttaus=?  where id=?";
 		Object[] ob = new Object[]{dishOrder.getOrderId(),dishOrder.getDeskId(),dishOrder.getDishStatus(),dishOrder.getId()};
 		return DaoFactory.Updata(sql, ob);
 
-	}
-	/**
-	 * 
-	 * 方法功能说明：  查询需要制作的菜品
-	 * 创建：2017-6-17 by TZT   
-	 * 修改：日期 by 修改者  
-	 * 修改内容：  
-	 * @参数： @return      
-	 * @return List     
-	 * @throws
-	 */
-	public List queryMade(){
-		String sql="select  d.dishId,d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 12 and od.dishId=d.dishId group by d.dishName,d.dishId ";
-		return DaoFactory.Query(sql);
-	}
-	/**
-	 * 
-	 * 方法功能说明： 查询正在制作的菜品 
-	 * 创建：2017-6-17 by TZT   
-	 * 修改：日期 by 修改者  
-	 * 修改内容：  
-	 * @参数： @return      
-	 * @return List     
-	 * @throws
-	 */
-	public List queryMading()	{
-		String sql ="select  d.dishId,d.dishName ,count (*)  from orders_dish od,dish d where dishStatus = 13 and od.dishId=d.dishId group by d.dishName,d.dishId";
-		return DaoFactory.Query(sql);
 	}
 	/**
 	 * 
@@ -151,6 +98,7 @@ public class TztDishOrderImp implements DaoInterface{
 		String sql="select deskName from desk  where deskId in (select deskId from orders_dish where id in("+ str +"))" ;
 		return DaoFactory.Query(sql);
 	}
+	
 	/**
 	 * 
 	 * 方法功能说明：  查询需求状态下的菜品优先级在内的一些信息
