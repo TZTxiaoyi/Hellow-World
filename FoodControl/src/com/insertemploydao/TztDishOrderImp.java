@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.daointerface.DaoInterface;
 import com.entity.TztDishOrder;
+import com.sun.org.apache.xerces.internal.util.Status;
 import com.utils.DaoFactory;
 
 /**
@@ -148,6 +149,71 @@ public class TztDishOrderImp implements DaoInterface{
 		}
 		str=str.substring(0,str.length()-1);
 		String sql="select deskName from desk  where deskId in (select deskId from orders_dish where id in("+ str +"))" ;
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 
+	 * 方法功能说明：  查询需求状态下的菜品优先级在内的一些信息
+	 * 创建：2017-6-24 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param status 状态编号
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List queryDishpriority( int status){
+		String sql="select od.id,od.ordersId,od.dishId,od.dishStatus,od.deskId ,"+
+				"o.orderpriority ,d.priority ,d.makeTime,d.dishName from orders_dish od ,orders o ,dish d "+
+				"where od.ordersId =o.ordersId and d.dishId= od.dishId and od.dishStatus=" +status;
+		return DaoFactory.Query(sql);
+	}
+	
+	/**
+	 * 
+	 * 方法功能说明：  修改对应ID下的菜品状态
+	 * 创建：2017-6-26 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param status
+	 * @参数： @param id      
+	 * @return void     
+	 * @throws
+	 */
+	public void updataDishStatus(int status,String id){
+	String	sql="update orders_dish set dishStatus=? where id in ("+ id +")";
+	Object[] obj=new Object[]{ status };
+	DaoFactory.Updata(sql, obj);
+	}
+	
+	/**
+	 * 
+	 * 方法功能说明：   通过多个odID查询DIsh的相关信息
+	 * 创建：2017-6-26 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param dishID
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List queryDishMax(String dishID){
+		String sql="select * from dish d,orders_dish od where od.id in("+ dishID+") and d.dishId=od.dishId ";
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 
+	 * 方法功能说明：  通过多个orders_dish ID 查询基本信息
+	 * 创建：2017-6-26 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param dishId
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List queryDesk(String dishId){
+		String sql= "select * from orders_dish od,desk d where od.id in("+ dishId+") and od.deskId= d.deskId";
 		return DaoFactory.Query(sql);
 	}
 }

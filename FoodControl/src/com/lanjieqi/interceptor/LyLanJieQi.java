@@ -18,10 +18,9 @@ public class LyLanJieQi extends MethodFilterInterceptor{
 		HttpServletRequest request=ServletActionContext.getRequest();
 		//request.getSession().getAttribute("name");
 		String uri = request.getRequestURI();
-		
+		//System.out.println("0000000000");
 		List list = (List) request.getSession().getAttribute("listvalue");
-		for (int i = 0; i < list.size(); i++) {
-			
+		for (int i = 0; i < list.size(); i++) {			
 			List list6=(List) list.get(i);
 			String parturi = (String) list6.get(1);
 			System.out.println("8888"+uri+parturi);

@@ -47,8 +47,8 @@
 		<global-results>
 			<result name="login" type="redirect">/beautiful.jsp</result>
 		</global-results>
-		<action name="fresh_*" class="com.achaction.LyQuanXianAction" method="{1}">
-			<result name="success" type="redirect">/background/index.jsp</result>
+		<action name="fresh_*" class="com.achaction.LYquanxianaction" method="{1}">
+			<result name="success" >/background/index.jsp</result>
 			<result name="part" type="redirect">/service.jsp</result>
 			<result name="cook" type="redirect">/Kitchen.jsp</result>
 			<result name="false" type="redirect">/background/login.jsp</result>
@@ -61,7 +61,6 @@
 			<result name="sg" type="redirect">/background/chargeback.jsp</result>
 			<result name="sh" type="redirect">/background/finance.jsp</result>
 			<result name="si" type="redirect">/background/income.jsp</result>
-
 		</action>
 	</package>	
 </struts>    

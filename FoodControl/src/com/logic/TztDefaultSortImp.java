@@ -11,6 +11,7 @@ package com.logic;
 
 import java.util.List;
 
+import com.alibaba.fastjson.parser.ParseContext;
 import com.daointerface.TztSort;
 import com.entity.TztDish;
 import com.insertemploydao.TztDishImp;
@@ -26,10 +27,10 @@ import com.insertemploydao.TztDishOrderImp;
  * @°æ±¾£ºV1.0  
  */
 public class TztDefaultSortImp implements TztSort {
-
 	public List queryMade() {
 		TztDishOrderImp dao =new TztDishOrderImp();
 		List result = dao.queryMade();
+		System.out.println(result);
 		return result;
 	}
 
@@ -39,24 +40,24 @@ public class TztDefaultSortImp implements TztSort {
 		return result;
 	}
 
-	public List made(int dishId) {
+	public List made(String dishId) {
 		TztDishImp dao=new TztDishImp();
 		TztDish dish = new TztDish();
-		dish.setDishId(dishId);
+		int dishid = Integer.parseInt(dishId);
+		dish.setDishId(dishid);
 		List madedish =dao.sel(dish);
 		TztDishOrderImp  dishImp= new TztDishOrderImp();
 		dishImp.changeDish(13,(List)madedish.get(0),12);
 		return null;
 	}
 
-	public List mading(int dishId) {
+	public List mading(String dishId) {
 		TztDishImp dao=new TztDishImp();
 		TztDish dish = new TztDish();
-		dish.setDishId(dishId);
+		int dishid = Integer.parseInt(dishId);
+		dish.setDishId(dishid);
 		List madedish =dao.sel(dish);
-		System.out.println(madedish);
 		TztDishOrderImp dishOrder =new TztDishOrderImp();
-		
 		List list = dishOrder.selectMax(13, (List)madedish.get(0));
 		dishOrder.changeDish(14,(List)madedish.get(0),13);
 		List tableList=dishOrder.queryDishTable(list);

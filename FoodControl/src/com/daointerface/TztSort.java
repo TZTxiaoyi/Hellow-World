@@ -23,6 +23,6 @@ import java.util.List;
 public interface TztSort {
 	public List queryMade();
 	public List queryMading();
-	public List made(int dishId);
-	public List mading(int dishId);
+	public List made(String dishId);
+	public List mading(String dishId);
 }

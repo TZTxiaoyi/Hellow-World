@@ -70,7 +70,9 @@ td{
 		<!-------------------------------页面头部------------------------------------------->
 		<div class="row" >
 			<div class= "top1"id="top"></div>
-			<div class="top1">	<button id="default">默认</button><button id="ttme">时间</button> </div>
+			<div class="top1">	<button id="default">默认</button><button id="ttme">时间</button>
+				<button id = "priority">优先级</button>
+			 </div>
 		
 		</div>
 		<!-------------------------------------------------------------------------->
@@ -154,7 +156,11 @@ td{
  			 method=1;
  			alert(method);
  		});
- 			
+ 		$("#priority").click(function(){
+ 			method=2;
+ 			alert(method);
+ 		});
+ 		
  			$("#querymading").click(function(){
  				queryMading();
  			});
@@ -176,6 +182,7 @@ td{
  				
  		$(function(){
  			$("#titlemading").on('click',"#madingbutton",function(){
+ 			
  				var aa=$(this).attr("name");
  				var foodname=$($("td[name=\""+aa+"\"]")[0]).html();
  				var foodnum=$($("td[name=\""+aa+"\"]")[1]).html();
@@ -188,14 +195,12 @@ td{
  					dataType:"json",
  					success:function(data){
  					$.each(data,function(index,value){				
-						table=table+value[0]+",";
+						table=table+value[0]+value[1]+"份"
 					});
- 					var dd="<div>"+time+"已完成菜品："+foodname+"共"+foodnum+"份 桌名为："+table+"</div>";
-					$("#bottom"). prepend(dd);		
+ 					var dd="<div>"+time+"已完成菜品："+foodname+"共"+foodnum+"份  ，"+table+"</div>";
+					$("#bottom"). append(dd);		
  						queryMading();
 						queryMade();
-						
- 						
  					}
  				});
  			});
@@ -206,7 +211,6 @@ td{
  			$("#querymade").click( function(){
  				queryMade();
  			});
-
  		
  		function queryMade(){
  				$.ajax({
@@ -216,26 +220,25 @@ td{
  					dataType:"json",
  					success:function(data){
  					$("#titlemade").html("");
-					$.each(data,function(index,value){				
-					var dd="<tr>"+"<td >"+value[1]+"</td>"+"<td>"+value[2] +"</td>"+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
-					$("#titlemade").prepend(dd);
+					$.each(data,function(index,value){
+					var dd="<tr>"+"<td   name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td  name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
+					$("#titlemade").append(dd);
 					});
  					}
  				});
  			}
+ 			
  		$(function(){
  			$("#titlemade").on('click',"#makebutton",function( ){
  				var aa=$(this).attr("name");
- 				
  				$.ajax({
  					url:"TztQueryDish_make.action",
  					type:"post",
  					data:{"method":method,"dishId":aa},
- 					dataType:"text",
+ 					dataType:"json",
  					complete:function(data){
  						queryMading();
 						queryMade();
- 						
  					},
  				});
  			});
