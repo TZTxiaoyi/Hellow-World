@@ -68,6 +68,7 @@ td{
 			<div class="top1">	
 			<button id="default">默认</button>
 			<button id = "priority">优先级</button>
+			<button id ="desksort">桌位轮转</button>
 			 </div>
 		
 		</div>
@@ -151,6 +152,12 @@ td{
  		});
  		$("#priority").click(function(){
  			method=2;
+ 			queryMading();
+			queryMade();
+ 			alert(method);
+ 		});
+ 		$("#desksort").click(function(){
+ 			method=1;
  			queryMading();
 			queryMade();
  			alert(method);
