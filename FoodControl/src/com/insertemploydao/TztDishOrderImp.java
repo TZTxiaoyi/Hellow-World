@@ -21,9 +21,9 @@ import com.utils.DaoFactory;
 public class TztDishOrderImp implements DaoInterface{
 	public int add(Object obj) {
 		TztDishOrder dishOrder=(TztDishOrder)obj;
-		System.out.println(dishOrder.getOrderId()+","+dishOrder.getDishId()+","+dishOrder.getDishStatus()+","+dishOrder.getDeskId());
-		String sql ="insert into orders_dish values(?,?,?,?)";
-		Object[] ob =new Object[]{dishOrder.getOrderId(),dishOrder.getDishId(),dishOrder.getDishStatus(),dishOrder.getDeskId()};
+		System.out.println(dishOrder.getOrderId()+","+dishOrder.getDishId()+","+dishOrder.getDishStatus()+","+dishOrder.getDeskId()+","+dishOrder.getDishNum());
+		String sql ="insert into orders_dish values(?,?,?,?,?)";
+		Object[] ob =new Object[]{dishOrder.getOrderId(),dishOrder.getDishId(),dishOrder.getDishStatus(),dishOrder.getDeskId(),dishOrder.getDishNum()};
 		return DaoFactory.Updata(sql, ob);
 	}
 	public int del(Object obj) {

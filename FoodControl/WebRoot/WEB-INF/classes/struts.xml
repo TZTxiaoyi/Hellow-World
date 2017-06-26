@@ -3,22 +3,29 @@
 <struts>
 	<package name="default" extends="struts-default">
 		<action name="addfood_*" class="com.achaction.LjlAddFoodAction" method="{1}">
-			<result name="addfood" type="redirect">/new.jsp</result>
-			<result name="newFood" type="redirect">/new.jsp</result>
+			<result name="addfood" type="dispatcher">/new.jsp</result>
+			<result name="newFood" type="dispatcher">/new.jsp</result>
+
 			<result name="backhome" type="redirect">/home.jsp</result>
 		</action>
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
 			<result name="tztquerok" type="redirect">/order_vegetable.jsp</result>
 		</action>
+
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok" type="redirect">/home.jsp</result>
 		</action>
+<!-- 菜品 -->
+		<action name="GJYFC_*" class="com.achaction.GJYFCaction" method="{1}">
+			<result name="ok">/a123.jsp</result>
+		</action>
 
 <!-- 注册 -->
-		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
-			<result name="register" type="redirect">/home.jsp</result>
 
-			<result name ="list" type="redirect">/new.jsp</result>
+		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
+			<result name="register" type="dispatcher">/home.jsp</result>
+
+			<result name ="list" type="dispatcher">/new.jsp</result>
 		</action>
 	</package>
 	<!-- 
@@ -26,15 +33,14 @@
 	 -->
 	<package name="inser" extends="struts-default">
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
-			<result name="ok">/a123.jsp</result>
-			
-		</action>
+			<result name="okjj">/a123.jsp</result>			
+		</action>	
 	</package>
 	<!-- 有关权限的package -->
 	<package name="lanjieqi" extends="struts-default">
 		<interceptors>
 			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
-				<param name="includeMethods">staffinfo,staffid,powers,deskmanage,dishmanage,kindmanage,orderdetail,returnorder,incomedetail</param><!-- 不拦截的方法 -->
+				<param name="includeMethods">staffinfo,staffid,powers,deskmanage,dishmanage,kindmanage,orderdetail,returnorder,incomedetail,enterid</param><!-- 不拦截的方法 -->
 			</interceptor>
 			<!-- 构建一个拦截器栈 -->
 			<interceptor-stack name="aaabbb">
@@ -45,12 +51,12 @@
 		<!-- 配置默认的拦截器 --><!-- 被拦截后跳转的jsp -->
 		<default-interceptor-ref name="aaabbb"></default-interceptor-ref>
 		<global-results>
-			<result name="login" type="redirect">/beautiful.jsp</result>
+			<result name="login" type="redirect">/nopowers.jsp</result>
 		</global-results>
 		<action name="fresh_*" class="com.achaction.LYquanxianaction" method="{1}">
-			<result name="success" >/background/index.jsp</result>
+			<result name="success" type="redirect">/background/index.jsp</result>
 			<result name="part" type="redirect">/service.jsp</result>
-			<result name="cook" type="redirect">/Kitchen.jsp</result>
+			<result name="cook" type="redirect">/kitchen.jsp</result>
 			<result name="false" type="redirect">/background/login.jsp</result>
 			<result name="sa" type="redirect">/background/employee.jsp</result>
 			<result name="se" type="redirect">/background/employeeId.jsp</result>
