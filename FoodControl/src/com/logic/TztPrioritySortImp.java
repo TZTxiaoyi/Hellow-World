@@ -126,7 +126,7 @@ public class TztPrioritySortImp implements TztSort {
 			List deskList=new ArrayList();
 			int a=(Integer) ((List)list.get(i)).get(2);
 			int sum=1;
-			String desk = (String) ( (List)list.get(i)).get(9);
+			String desk = (String) ( (List)list.get(i)).get(10);
 				for (int j = i+1; j <list.size(); j++) {
 				int b=(Integer) ((List)list.get(j)).get(2);
 				if(a==b){
@@ -140,6 +140,15 @@ public class TztPrioritySortImp implements TztSort {
 			result.add(deskList);
 		}
 		return result;
+	}
+	public List remove(String dishId) {
+		HttpServletRequest req= ServletActionContext.getRequest();
+		HttpSession session =req.getSession();
+		TztDishOrderImp dao = new  TztDishOrderImp();
+		dao.updataDishStatus(12, dishId);
+		session.removeAttribute(dishId);
+		
+		return null;
 	}
 
 }

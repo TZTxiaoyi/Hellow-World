@@ -25,4 +25,5 @@ public interface TztSort {
 	public List queryMading();
 	public List made(String dishId);
 	public List mading(String dishId);
+	public List remove(String dishId);
 }

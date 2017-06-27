@@ -116,7 +116,7 @@ public class TztQuerDishAction {
 		rep.setContentType("html/text;charset =utf-8");
 		createImp(method);
 		List result= sort.queryMading();
-		System.out.println(result+"mading");
+		System.out.println("mading"+result);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {
@@ -167,7 +167,24 @@ public class TztQuerDishAction {
 		rep.setContentType("html/text;charset=utf-8");
 		createImp(method);
 		List result =sort.mading(dishId);
-		System.out.println(result+"madeing++++++++++++==");
+		System.out.println("madeing++++++++++++=="+result);
+		try {
+			rep.getWriter().print(toJson.toJsonArray("js", result).toString());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void remove(){
+		HttpServletRequest req=ServletActionContext.getRequest();
+		HttpSession session =req.getSession();
+		HttpServletResponse rep = ServletActionContext.getResponse();
+		rep.setContentType("html/text;charset=utf-8");
+		createImp(method);
+		List result =sort.remove(dishId);
+		System.out.println("remove++++++++++++=="+result);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("js", result).toString());
 			

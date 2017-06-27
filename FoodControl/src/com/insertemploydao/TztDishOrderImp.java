@@ -98,7 +98,22 @@ public class TztDishOrderImp implements DaoInterface{
 		String sql="select deskName from desk  where deskId in (select deskId from orders_dish where id in("+ str +"))" ;
 		return DaoFactory.Query(sql);
 	}
-	
+	/**
+	 * 
+	 * 方法功能说明：   查询桌号相对应状态下菜品所对应的桌号
+	 * 创建：2017-6-27 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param status
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List quertDesk(int status)	{
+		String sql="select deskId from orders_dish where dishStatus=" + status;
+		
+		return DaoFactory.Query(sql);
+	}
 	/**
 	 * 
 	 * 方法功能说明：  查询需求状态下的菜品优先级在内的一些信息
