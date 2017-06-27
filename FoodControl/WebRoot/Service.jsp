@@ -403,7 +403,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				type:"post",
 				data:{"st.deskName":dname},
 				success:function(data){
-				
+					
 				}
 			});
 		})

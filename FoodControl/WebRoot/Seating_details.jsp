@@ -208,7 +208,7 @@
 						<br/>
 						<a class="btn btn-success btn-lg" href=""
 						role="button" id="clear">清扫结束</a>
-						<button type="button" class="btn btn-primary btn-lg">催菜</button>
+						<button type="button" class="btn btn-primary btn-lg" id="anxious">催菜</button>
 						 
 
 				
@@ -447,7 +447,22 @@
 			});
 		})
 
-		
+	$("#anxious").click(function(){
+		var orderid=$("#order").html();
+		$.ajax({
+			url:"",
+			type:"post",
+			data:{"addorder.ordersId":orderid},
+			success:function(data){
+				json=JSON.parse(data);
+				
+				$.each(json,function(index,value){
+				var state=value[0];
+					state=state+1;
+				})
+			}
+		});
+	})
 		
 		
 	</script>

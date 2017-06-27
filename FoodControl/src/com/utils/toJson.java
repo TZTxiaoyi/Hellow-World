@@ -54,9 +54,10 @@ public class toJson {
 		JSONObject json=new JSONObject();
 		for(int i=0;i<list.size();i++){
 			Map map=new HashMap();
-			map.put(vlaue+""+i,	list.get(i) );
+			map.put(vlaue+i,	list.get(i) );
 			json.accumulateAll(map);
 		}
+		System.out.println(json);
 		return json;	
 	}
 }

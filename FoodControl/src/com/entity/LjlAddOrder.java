@@ -13,10 +13,19 @@ public class LjlAddOrder {
 	private String ordersTime;
 	private String deskname;
 	private int deskid;
+	private int orderpriority;
+	public int getOrderpriority() {
+		return orderpriority;
+	}
+	public void setOrderpriority(int orderpriority) {
+		this.orderpriority = orderpriority;
+	}
 	public int getOrdersId() {
 		return ordersId;
 	}
 	public void setOrdersId(int ordersId) {
+		System.out.println("dd");
+		System.out.println(ordersId);
 		this.ordersId = ordersId;
 	}
 	public int getDeskid() {
