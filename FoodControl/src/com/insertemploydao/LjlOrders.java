@@ -103,5 +103,35 @@ public class LjlOrders implements DaoInterface{
 		return 0;
 	}
 
-
+	/**
+	 * 
+	 * 方法功能说明： 根据订单编号查询查询特定状态的订单信息
+	 * 创建：2017-6-24 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param oId	订单号
+	 * @参数： @param status 状态编号
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List selOrder(int oId,int status) {
+		String sql ="select * from orders where ordersId = " + oId+" and ordersStatus = "+ status;
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 
+	 * 方法功能说明：查询所有订单特定状态的订单信息  
+	 * 创建：2017-6-24 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param status状态编号
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List selOrder(int status) {
+		String sql ="select * from orders where ordersStatus = "+ status;
+		return DaoFactory.Query(sql);
+	}
 }

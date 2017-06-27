@@ -19,6 +19,19 @@ public class TztDishOrder {
 	int dishStatus;
 	int id;
 	int deskId;
+	int dishNnum;
+	public int getDishNnum() {
+		return dishNnum;
+	}
+	public void setDishNnum(int dishNnum) {
+		this.dishNnum = dishNnum;
+	}
+	public TztDishOrder(int rsid, int dishid2, int dishStatus2, int deskid2) {
+		this.OrderId= rsid;
+		this.dishId=dishid2;
+		this.dishStatus=dishStatus2;
+		this.deskId=deskid2;
+	}
 	int dishNum;
 	String dishtime;
 	int addDish;

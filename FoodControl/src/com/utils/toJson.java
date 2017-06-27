@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONArray;
+
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 /**
@@ -54,10 +56,30 @@ public class toJson {
 		JSONObject json=new JSONObject();
 		for(int i=0;i<list.size();i++){
 			Map map=new HashMap();
-			map.put(vlaue+i,	list.get(i) );
-			json.accumulateAll(map);
+			map.put(vlaue+""+i,	list.get(i) );
+			json.putAll(map);
 		}
 		System.out.println(json);
 		return json;	
+	}
+	
+	/**
+	 * 
+	 * 方法功能说明：  JSON数组
+	 * 创建：2017-6-26 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param vlaue
+	 * @参数： @param list
+	 * @参数： @return      
+	 * @return JSONArray     
+	 * @throws
+	 */
+	public static  JSONArray toJsonArray(String vlaue,List list) {
+		JSONArray json = new JSONArray();
+		for(int i=0;i<list.size();i++){
+		json.add(list.get(i));
+		}
+		return json;
 	}
 }
