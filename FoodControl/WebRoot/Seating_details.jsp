@@ -29,13 +29,13 @@
 			border-bottom:1px solid #666699;
 		}
 		#left-subject{
-			height:85%;
+			height:80%;
 			position:relative;
 			
 		}
 		#lefttop-subject{
 			background:#ffffcc;
-			height:80%;
+			height:85%;
 		}
 		#righttop-subject{
 			background:#ffffcc;
@@ -46,8 +46,8 @@
 			height:85%;
 		}
 		#menu-height{
-			height:500px;
-			
+			height:700px;
+			margin-left:25px;
 		}
 		#menu-within-height{
 			height:100px;
@@ -74,31 +74,51 @@
 			font-size:20px;
 			line-height:50px;
 		}
-		#torder td{
+		.torder td{
 			
 			font-size:20px;
 			width:100px;
+			height:40px;
 			text-align:center;
+			margin-top:5px;
 			border-bottom:1px solid #ff9999;
 					
+		}
+		#vageorder{
+			height:500px;
+			margin-bottom:25px;
+		}
+		#vageadd{
+		
+			height:230px;
+			background-color:#ffff99;
+		}
+		#vageitem{
+			height:180px;
 		}
 		#subject-style td{
 			width:100px;
 			text-align:center;
 		}
 		#torder a{
-			width:70px;
+			width:80px;
 			text-align:left;
-			font-size:20px;
+			font-size:18px;
+		}
+		.pre-scrollable{
+			color:#ff6600;
+			overflow:auto;
 		}
 		#money{
-			height:100px;
+			height:80px;
 			position:absolute;
 			bottom:0px;
 		}
 		#money a{
 			
-			margin-bottom:5%;
+			margin-top:25px;
+			margin-right:10px;
+			margin-left:10px;
 		}
 		#times{
 			position:absolute;
@@ -122,6 +142,33 @@
 		#vagenum{
 			position:relative;
 			left:60%;
+		}
+		#area{
+			margin-left:15px;
+			font-size:15px;
+		}
+		#img{
+			width:120px;
+			height:120px;
+			position:absolute;
+			top:20px;
+			left:500px;
+		}
+		#imgdel{
+			font-size:30px;
+			color:red;
+			-webkit-transform: rotate(-45deg);  
+    		-moz-transform: rotate(-30deg);  
+			position:absolute;
+			top:60px;
+			left:520px;
+		}
+		#callimg{
+			display:none;
+		}
+		#lishi{
+			color:#3333ff;
+			
 		}
 	</style>
   
@@ -156,20 +203,24 @@
   <body>
     <div class="container-fluid" id="div"><!--最外层 -->
 		<div class="row" id="head"><!-- 头部-->
-			<div class="col-md-3">
+			<div class="col-md-2">
 					菜品数量：<span id="pnum"></span>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 					桌位名字：<span id="dname"><%String dna=request.getParameter("dname");dna=new String(dna.getBytes("iso8859-1"),"utf-8");out.print(dna);%></span>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 					单号：<span id="order"><%String oid=request.getParameter("ord");out.print(oid);%></span>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 					开台时间：
 					<span id="retime">
 					
 					</span>
+			</div>
+			<div class="col-md-3">
+				<a class="btn btn-lg" style="color:#66ccff" href="" id="shuxin">刷新</a>
+				<a class="btn close btn-lg" data-dismiss="modal"aria-label="Close" style="color:#ff00ff" href="service.jsp">返回</a>
 			</div>
 		</div>
 
@@ -183,34 +234,26 @@
 						<div id="subject-style">
 							
 						</div>
-						<div id="torder">
+						<div id="vageorder" class="pre-scrollable torder">
 							
 						</div>
-						
 					</div>
-				
-				</div>
-				<div class="pagelist">
-						<a name="minus" class="page btn-lg glyphicon glyphicon-triangle-left" href="#"></a>
-						<a name="add" class="page btn-lg glyphicon glyphicon-triangle-right" href="#"></a>
-							
-				</div>
-				<div id="money">
-					
+					<div id="vageadd">
+						<h3 id="lishi">临时加菜</h3>
+						<div  id="vageitem" class="pre-scrollable torder">
 						
-						<br/>
-						<a class="btn btn-danger btn-lg" href=""
-						role="button" id="paymoney">结账：<span class="tred"></span></a>
-						<br/>
-						<a class="btn btn-success btn-lg" href=""
-						role="button" id="clear">清扫结束</a> 
-				
+						</div>
+					</div>
+					
 				</div>
+				
+				
 			</div>
 			
 			<div class="col-md-8" id="right-subject"><!--右部主体内容-->
 				<div id="righttop-subject">
 					<h3>菜品类别</h3>
+					<div id="callimg"><img id="img" src="images/del.jpg" alt="已取消" class="img-circle"><span id="imgdel">已取消</span></div>
 					<div class="container-fluid" id="classify"><!--菜品分类-->
 						<div class="row">
 							<div class="col-md-4" id="classify-css">
@@ -233,7 +276,7 @@
 					</div>	
 					
 		
-					<div class="container-fluid" ><!-- 菜单-->
+					<div class="container-fluid pre-scrollable"><!-- 菜单-->
 						<div class="row " id="menu-height" >
 							<c:forEach var="next"  items="${dish}" varStatus="statu">
 								<div class="col-md-4" id="menu-within-height">
@@ -251,17 +294,17 @@
 					</div>
 				</div>
 				<div id="btm"><!--底部功能模块-->
-					<button type="button" class="btn btn-danger btn-lg" >整单取消</button>
-	
-					<button type="button" class="btn btn-primary btn-lg col-md-offset-1" data-toggle="modal" data-target="#myMenu">催菜</button>
-	
-					<button type="button" class="btn btn-warning btn-lg col-md-offset-1"  >查询</button>
+					<span id="money">
+						<a class="btn btn-danger btn-lg" href=""
+						role="button" id="paymoney">结账</a>
+						<a class="btn btn-success btn-lg " href=""
+						role="button" id="clear">清扫结束</a> 
+						<a role="button" class="btn btn-danger btn-lg" id="alldel">整单取消</a>
 					
-					<button type="button" class="btn btn-success btn-lg col-md-offset-1" >传菜</button>
-
-					<button type="button" class="btn btn-info btn-lg col-md-offset-1" >备注</button>
-					<a class="btn close btn-lg" data-dismiss="modal"aria-label="Close" style="color:#ff00ff" href="service.jsp">退出系统</a>
-			
+						<a role="button" class="btn btn-primary btn-lg" id="anxious">催菜</a>
+					</span>
+					
+				
 				</div>
 				
 			</div>
@@ -269,36 +312,29 @@
 		</div>
 		
   </div>
-			<div class="modal fade" id="myMenu"> <!-- modal把div的内容识别为模态框 fade模态框切换时内容淡入淡-->
-				<div class="modal-dialog">
-					<div class="modal-content"><!-- 模态框居中显示-->
-						<div class="modal-header"> <!-- 模态框标题-->
-							<button type="button" class="close"			data-dismiss=modal>×
+	<!-- 备注模态框 -->
+	、<!-- Modal -->
+			<div class="modal fade  bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog  modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
 							</button>
-							<h4 class="modal-title" id="MyMenuLabel">		选择取消菜品
-							</h4>
+							<h3 class="modal-title">取消原因</h3>
+
 						</div>
-						<div class="modal-body"> <!-- 模态框显示的主要内容-->
-							已點的菜<br/>
-							<div id="subject-style">糖醋里脊 <button class="btn btn-danger col-md-offset-6" id="btn-click">取消</button> </div>
-							红烧狮子头<input type="checkbox" name="cancel"><br/>
-							玉米汤<input type="checkbox" name="cancel"><br/>
-							
-						</div>
-						
-						<div class="modal-footer"> <!-- 模态框下的关闭和保存按钮--> 
-							<button type="button" class="btn btn-default" data-dismiss="modal">
-								关闭
+						<textarea cols="30" rows="5" placeholder="请输入取消原因..." id="area"></textarea>
+						<div class="modal-footer">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close" id="alldel">保存
 							</button>
-							<button type="button" class="btn btn-danger">
-								取消
-							</button>
-							
 						</div>
 					</div>
 				</div>
-			</div>
-			
+			</div>	
 	<script>
 		
 		/*
@@ -306,6 +342,10 @@
 		*/
 		$(function() {
 			setInterval("getTime()",1000);
+			
+			if($("#orders").html()!=""){
+				setInterval("outtime()",1000);
+			}
 		});
 		/*
 			获取系统时间;
@@ -313,8 +353,24 @@
 		function getTime(){
 			var time = new Date();
    			$("#times").html(time.toLocaleString());
-   			//outtime();
+   			//souttime();
 		}
+		/*
+			开台时间；
+		*/
+		function outtime(){
+		
+			var ord=$("#order").html();
+			$.ajax({
+				url:"addfood_ordertime.action",
+				type:"post",
+				data:{"addorder.ordersId":ord},
+				success:function(data){	
+				$("#retime").html(data);
+				}
+			});
+			
+		};
 		
 		function add() {
             var obj = document.getElementById("number");
@@ -342,69 +398,81 @@
 			
 		});
 		$(function(){
+			$("#vageadd").hide();
 			if($("#order").html()!=""){
 				outfood();
-				outtime();
 			}
-		})
+		});
 		/*
 			动态添加菜单；页面顶部；
 		*/
 		function outfood(){
+		
 			var ord=$("#order").html();
 			$.ajax({
 				url:"addfood_orderDish.action",
 				type:"post",
 				data:{"addorder.ordersId":ord},
 				success:function(data){
+					
 					var json=JSON.parse(data);
 					var dname=null;//桌子名字
 					var fnum=null;//菜品数量
 					var allnum=0;//单个菜的总价格
 					var onenum=0;//菜品单价
 					var dnum=0;//菜品数量
-					var num=0;
+					var num=0;//订单总金额
+					$("#subject-style").html("");
 					var th="<tr><td>菜品</td><td>数量</td><td>单价</td><td>金额</td><td></td></tr>";
 					$("#subject-style").append(th);
 					var foodnum=1;
+					$("#torder").html("");
+					$("#vageorder").html("");
+					$("#vageitem").html("");
 					$.each(json,function(index,value){
-					//alert(json2TimeStamp(value[2].time));
 						dname=value[0];
 						fnum=value[4];
 						onenum=value[5];
 						dnum=value[6];
+						ordersnum=value[11];
 						allnum=dnum*onenum;
-						var odertext="<tr><td>"+value[3]+"</td><td>"+value[6]+"</td><td>"+value[5]+"</td><td>"+allnum+
-						"</td><td><a class=\"btn btn-danger\" href=\"\"role=\"button\">取消</a></td></tr>";
-						$("#torder").append(odertext);
+						var aa="";
+						var timefood=format(value[10].time);
+						if(value[8]==12){
+							aa="<a class=\"btn btn-danger del\" foodprice=\""+allnum+"\" name=\""+timefood+"\" id=\"xiao"+value[7]+"\" href=\"\"role=\"button\">取消</a>";
+						}
+						if(value[8]==13){
+							aa="<a class=\"btn btn-info disabled del\" href=\"\"role=\"button\">在做</a>";
+						}
+						if(value[8]==14){
+							aa="<a class=\"btn btn-success disabled del\" href=\"\"role=\"button\">已完成</a>";
+						}
+						if(value[8]==17){
+							aa="<a class=\"btn btn-danger disabled del\" href=\"\"role=\"button\">已取消</a>";
+						}
+						var odertext="<tr><td id=\"quxiao"+value[7]+"\">"+value[3]+"</td><td>"+value[6]+"</td><td>"+value[5]+"</td><td  id=\"monxiao"+value[7]+"\">"+allnum+
+						"</td><td>"+aa+"</td></tr>";
+						if(value[9]==0){
+							$("#vageorder").append(odertext);
+						}
+						if(value[9]==1){
+							$("#vageadd").show();
+							$("#vageitem").append(odertext);
+						}
 						num=num+allnum;
-						
 						
 					});
 					
 					$("#dname").html(dname);
 					$("#pnum").html(fnum);
-					$(".tred").html(num);	
-				 
+					$(".tred").html(ordersnum);	
+				 	$("#clear").attr("disabled",true); 
 					
 						
 				}
 			});
 		};
-		/*
-			开台时间；
-		*/
-		function outtime(){
-			var ord=$("#order").html();
-			$.ajax({
-				url:"addfood_orderDish.action",
-				type:"post",
-				data:{"addorder.ordersId":ord},
-				success:function(data){	
-				}
-			});
-			$("#retime").html('${retime}');
-		};
+	
 		/*
 			结账
 		*/
@@ -412,31 +480,120 @@
 			var ord=$("#order").html();
 			var dname=$("#dname").html();
 			$.ajax({
+				async:false,
 				url:"addfood_updateOrder.action",
 				type:"post",
 				data:{"st.deskName":dname,"addorder.ordersId":ord},
-				success:function(data){		
-					alert("dsd");
-				}
+				success:function(data){	
+					if(data!=-1){
+					 	//$("#clear").removeAttr("disabled");
+					 	$("#clear").attr("disabled",false); 
+						window.open("http://localhost:8080/FoodControl/service.jsp");
+					}
+				},
 			});
 			
 		})
-		//清台
+		/*
+			清台
+		*/
 		$("#clear").click(function(){
 			var dname=$("#dname").html();
-			alert("dname:"+dname);
 			$.ajax({
+				async:false,
 				url:"addfood_clearDesk.action",
 				type:"post",
 				data:{"st.deskName":dname},
 				success:function(data){
-					alert("55");
+					if(data!=-1){
+						window.open("http://localhost:8080/FoodControl/service.jsp");
+					}
+					
+					
 				}
 			});
 		});
-		
-		
-		
+		/*
+			整单取消；
+		*/
+		$("#alldel").click(function(){
+			var dname=$("#dname").html();
+			var ord=$("#order").html();
+			
+			$.ajax({
+				url:"addfood_alldelect.action",
+				type:"post",
+				data:{"addorder.ordersId":ord,"st.deskName":dname},
+				success:function(data){
+				
+					if(data!=-1){
+					
+						$("#callimg").show();//切换元素为可见状态==$("#callimg").css("display","block");
+						outfood();
+					}
+					
+				}
+			});
+		});
+		/*
+			单个菜品取消；
+		*/
+		$("#lefttop-subject").on('click',".del", function(){
+			var delid=$(this).attr("id");
+			var vagename=$("#qu"+delid).html();
+			var num=$("#mon"+delid).html();//取消金额
+			var ord=$("#order").html();
+			var name=$(this).attr("name");
+			var foodprice=$(this).attr("foodprice");
+			$.ajax({
+				async:false,
+				url:"addfood_onedelect.action",
+				type:"post",
+				data:{"addfood.foodname":vagename,"addorder.ordersId":ord,"foodtime":name,"foodprice":foodprice},
+				success:function(data){
+					//$(".tred").html(pay);
+					if(data!=-1){
+						outfood();
+					}
+				}
+			});
+		});
+		function add0(m){return m<10?'0'+m:m }
+		function format(shijianchuo){
+		//shijianchuo是整数，否则要parseInt转换
+			var time = new Date(shijianchuo);
+			var y = time.getFullYear();
+			var m = time.getMonth()+1;
+			var d = time.getDate();
+			var h = time.getHours();
+			var mm = time.getMinutes();
+			var s = time.getSeconds();
+			return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+		} 
+		/*
+			催菜
+		*/
+		$("#anxious").click(function(){
+		var orderid=$("#order").html();
+		$.ajax({
+			url:"addfood_anxious.action",
+			type:"post",
+			data:{"addorder.ordersId":orderid},
+			success:function(data){
+				alert(data);
+				if(data!=-1){
+					alert("催菜成功！");
+				}
+				
+			}
+		});
+	})
+	/*
+		刷新
+	*/
+	$("#shuxin").click(function(){
+		outfood();
+	})
 	</script>
   </body>
 </html>

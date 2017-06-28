@@ -19,7 +19,10 @@
 		<action name="GJYFC_*" class="com.achaction.GJYFCaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
 		</action>
-
+<!-- 后台订单详情 -->
+		<action name="LjlOrderdetails_*" class="com.achaction.LjlorderdetailsAction" method="{1}">
+			<result name="ok">/a123.jsp</result>
+		</action>
 <!-- 注册 -->
 
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
@@ -64,7 +67,7 @@
 			<result name="sc" type="redirect">/background/deskmanage.jsp</result>
 			<result name="sd" type="redirect">/background/dishemanage.jsp</result>
 			<result name="sf" type="redirect">/background/cate.jsp</result>
-			<result name="sg" type="redirect">/background/chargeback.jsp</result>
+			<result name="sg" type="redirect">/background/order_details.jsp</result>
 			<result name="sh" type="redirect">/background/finance.jsp</result>
 			<result name="si" type="redirect">/background/income.jsp</result>
 		</action>

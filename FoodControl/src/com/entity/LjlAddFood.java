@@ -1,10 +1,17 @@
 package com.entity;
 
 public class LjlAddFood {
+	private int dishId;
 	private String foodname;
 	private String uprice;
 	private String number;
 	private String price;
+	public int getDishId() {
+		return dishId;
+	}
+	public void setDishId(int dishId) {
+		this.dishId = dishId;
+	}
 	public String getFoodname() {
 		return foodname;
 	}

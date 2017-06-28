@@ -29,14 +29,25 @@ import com.insertemploydao.TztDishOrderImp;
 import com.utils.toJson;
 
 
-
-
-
 public class LjlAddFoodAction {
 	private LjlAddFood addfood;
 	private LjlAddOrder addorder;
 	private String desknub;
 	private SxmTable st;
+	private String foodtime;
+	private int foodprice;
+	public int getFoodprice() {
+		return foodprice;
+	}
+	public void setFoodprice(int foodprice) {
+		this.foodprice = foodprice;
+	}
+	public String getFoodtime() {
+		return foodtime;
+	}
+	public void setFoodtime(String foodtime) {
+		this.foodtime = foodtime;
+	}
 	public SxmTable getSt() {
 		return st;
 	}
@@ -322,31 +333,57 @@ public class LjlAddFoodAction {
 		String retime=null;
 		List list=orders.orderDish(addorder.getOrdersId());
 		JSON json=toJson.toJson("val", list);
-			List li=(List) list.get(0);			
-			try {
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String time=df.format(new Date()); 
-				String time1=df.format(li.get(2));
-				Date d1 = df.parse(time);
-				Date d2 = df.parse(time1); 
-			    long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别  
-			    long days = diff / (1000 * 60 * 60 * 24);  
-			   	long hours = (diff-days*(1000 * 60 * 60 * 24))/(1000* 60 * 60);  
-			    long minutes = (diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60))/(1000* 60);  
-			   retime=hours+"小时"+minutes+"分";  	
-			   request.getSession().setAttribute("retime", retime);	
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
+		List li=(List) list.get(0);		
+		System.out.println(json);
 		try {
 			hsr.getWriter().print(json);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	public void ordertime(){
+		
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		hsr.setContentType("text/html;charset=UTF-8");
+		LjlDish dish=new LjlDish();
+		List listdish=dish.sel();	
+		request.getSession().setAttribute("dish",listdish );
+		String retime=null;
+		List list=orders.orderDish(addorder.getOrdersId());
+		JSON json=toJson.toJson("val", list);
+		List li=(List) list.get(0);		
+		
+		try {	
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String time=df.format(new Date()); 
+			String time1=df.format(li.get(2));
+			Date d1 = df.parse(time);
+			Date d2 = df.parse(time1); 
+		    long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别  
+		    long days = diff / (1000 * 60 * 60 * 24);  
+		   	long hours = (diff-days*(1000 * 60 * 60 * 24))/(1000* 60 * 60);  
+		    long minutes = (diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60))/(1000* 60); 
+		    long minu=(diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60)-minutes*((1000* 60)))/(1000);
+		    
+		   retime=hours+":"+minutes+":"+minu;  	
+		   
+		   try {
+			hsr.getWriter().println(retime);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	/**
+	 * 结账
+	 */
 	public void updateOrder(){
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
@@ -356,6 +393,8 @@ public class LjlAddFoodAction {
 		if(od!=-1&&ud!=-1){
 			flag=1;
 		}
+		System.out.println("uflag"+flag);
+		System.out.println(flag);
 		try {
 			response.getWriter().println(flag);
 		} catch (IOException e) {
@@ -369,18 +408,106 @@ public class LjlAddFoodAction {
 	 * 清理桌子
 	 */
 	public void clearDesk(){
-		System.out.println("cler");
-		HttpServletResponse response=ServletActionContext.getResponse();
+		HttpServletResponse response=ServletActionContext.getResponse();	
 		int cd=orders.clearDesk(st);
-		System.out.println("cd"+cd);
 		try {
-			response.getWriter().println("dd");
-			System.out.println("dddd");
+			response.getWriter().println(cd);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	
+	/**
+	 * service.jsp里的清除脏台按钮
+	 */
+	public void clearAllDesk(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int acd=orders.clearAllDesk();
+		System.out.println("acd"+acd);
+		try {
+			response.getWriter().println(acd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 整单取消；
+	 */
+	public void alldelect(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int delOrd=orders.allDelect(addorder);
+		int cd=orders.alterDeskstate(st);
+		int delst=orders.alldel(addorder);
+		int flag=-1;
+		if(delOrd!=-1 && cd!=-1 && delst!=-1){
+			flag=1;
+		}
+		try {
+			response.getWriter().print(flag);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 单个菜品取消
+	 */
+	public void onedelect(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		//根据菜品明字获取菜品id
+		System.out.println(addorder.getOrdersId()+","+addfood.getFoodname()+","+foodtime+","+foodprice);
+		int orderid=addorder.getOrdersId();
+		List list=dish.seldish(addfood);
+		List li=(List) list.get(0);
+		System.out.println(li);
+		int dishid=(Integer) li.get(0);//菜品id
+		//int uprice=(Integer) li.get(2);//菜品单价
+		List listOD=orders.idselOrder(addorder.getOrdersId());
+		List ODlist=(List) listOD.get(0);
+		int ODprice=(Integer) ODlist.get(2);//订单价格
+		//System.out.println("dishid:"+dishid+","+"uprice:"+uprice+","+"ODprice:"+ODprice);
+		int flag=orders.uporderdish(foodtime,dishid);
+		System.out.println(flag);//更新了几条菜品状态
+		int price=ODprice-foodprice;
+		System.out.println("foodp:"+price);
+		System.out.println("orderid"+orderid);
+		orders.upOP(price, orderid);
+		//System.out.println("tt:"+tt);
+		/*//根据菜品id获取菜品状态（未做，在做，已取消）
+		List sList=dish.seldishstatus(dishid);
+		List sli=(List) sList.get(0);
+		int dstatus=(Integer) sli.get(0);
+		//根据菜品状态（未做）取消该菜品；
+		int onedish=-1;*/
+		//if(dstatus==12){
+			//onedish=dish.onedel(dishid,addorder);
+		//}
+	//	System.out.println(dishid);
+		//System.out.println(addorder.getOrdersId());
+		
+		//System.out.println(onedish);
+		
+	}
+	/**
+	 * 催菜
+	 */
+	public void anxious(){
+		System.out.println("----");
+		HttpServletResponse response=ServletActionContext.getResponse();
+		List list=orders.anxiousOrder(addorder);
+		List li=(List) list.get(0);
+		int pri=(Integer) li.get(0);
+		int anx=pri+1;
+		int orderspro=orders.proty(anx, addorder);
+		System.out.println("aaa"+orderspro);
+		try {
+			response.getWriter().println(orderspro);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

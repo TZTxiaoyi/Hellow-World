@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <head>
 	<!-- 
-		后台桌位详情页面
+		后台订单详情页面
 	 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div class="panel admin-panel">
 		<div class="panel-head">
-			<strong><span class="icon-pencil-square-o"></span> 桌台信息</strong>
+			<strong><span class="icon-pencil-square-o"></span> 订单信息</strong>
 		</div>
 		<div>
 			<form method="post" action="">
@@ -57,16 +57,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="padding border-bottom">
 						<ul class="search">
 							<li>
-								<button type="button" class="button border-green" id="checkall">
-									<span class="icon-check"></span> 全选
-								</button> <a class="button border-yellow" href="" data-toggle="modal"
+								 <a class="button border-yellow" href="" data-toggle="modal"
 								data-target="#myModaltable"><span class="icon-plus-square-o"></span>
-									添加桌台</a></li>
-							<li><input type="text" placeholder="请输入搜索关键字"
-								name="keywords" class="input"style="width:250px; line-height:17px;display:inline-block" /> <a
-								href="javascript:void(0)" class="button border-main icon-search fastsearch"
-								onclick="changesearch()"> 搜索</a>
-							</li>
+									查询订单</a></li>
+							
 							</li>
 						</ul>
 
@@ -83,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</form>
 		</div>
 		<!-- 
-			添加桌台模态框
+			查询订单模态框
  		-->
 		<div class="media media-y margin-big-bottom"></div>
 		<div class="modal fade" id="myModaltable" tabindex="-1" role="dialog"
@@ -93,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss=modal></button>
 						<div class="text-center margin-big padding-big-top">
-							<h1>桌位详细信息</h1>
+							<h1>订单详细信息</h1>
 						</div>
 						 <div id="modalform">
 					    	<div>
@@ -112,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		<!-- 
-			修改按钮模态框
+			订单详情模态框
 		 -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel">
@@ -122,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close"></button>
 						<div class="text-center margin-big padding-big-top">
-							<h1>桌位详细信息</h1>
+							<h1>订单详细信息</h1>
 						</div>
 						<div id="modalform">
 					    	<div>
@@ -150,26 +144,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			*/
 			$(function(){
 				$.ajax({
-					url:"SxmTable_pageTotal.action",
-					type:"post",
-					data:{},
-					success:function(data){
-						var pagetotal=parseInt(data/3);	
-						if(data%3==0){
-							$("#spanpage").html(pagetotal);
-						}
-						if(data%3!=0){
-							$("#spanpage").html(parseInt(pagetotal)+1);
-						}
-					},
-				});
+						url:"LjlOrderdetails_pageTotal.action",
+						type:"post",
+						data:{},
+						success:function(data){
+							alert("ret");
+							var pagetotal=parseInt(data/5);	
+							if(data%5==0){
+								$("#spanpage").html(pagetotal);
+							}
+							if(data%5!=0){
+								$("#spanpage").html(parseInt(pagetotal)+1);
+							}
+						},
+					});
 			})
 		
 			
 			/*
 				分页
 			*/
-			$(function (){
+			$(function(){
 				$(".page").click(function(){
 					var name=$(this).attr("name");
 					
@@ -199,22 +194,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var curr=inpval-1;
 					tabonload(curr);
 				});
-			}),
-			/*
-				快速搜索
-			*/
-			$(".fastsearch").click(function(){
-				var allput=$(".input").val();
-				$.ajax({
-					url : "../SxmTable_searchTable.action",
-					type : "post",
-					data : {"search" :allput},
-					success:function(data){
-						var json = JSON.parse(data);
-						refresh(json);
-					}
-				});
-			});
+			})
+			
 			/*
 				点击删除按钮删除一行数据;
 			*/
@@ -331,7 +312,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 			function tabonload(curr) {
 				$.ajax({
-					url : "SxmTable_tabPage.action",
+					url : "LjlOrderdetails_selorder.action",
 					type : "post",
 					data : {"currPage":curr},
 					success : function flash(data) {
@@ -342,24 +323,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			};
 			function refresh(json) {
-				var th = "<tr><td></td><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
+				var th = "<tr><td>订单号</td><td>点菜数量</td><td>订单价格</td><td>订单状态</td><td>订单状态</td><td>订单时间</td></tr>";
 					$("#tab").html("");
 					$("#tab").append(th);
 					
 					$.each(json,function(index, value) {
-					var chargeper=value[3];
-						if(value[3]==null){
-							chargeper="未分配";
-						}
-						var dd = "<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td class=\"deskalter"+
+						var dd = "<tr></td><td class=\"deskalter"+
 						value[0]+"\" id=\"desknumId"+value[0]+"\">"+ value[0]+ "</td><td id=\"namealter"+value[0]+"\">"+ 
-						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td id=\"tperalter"+value[0]+"\">"+ chargeper+
+						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td id=\"tperalter"+value[0]+"\">"+ value[3]+
 						"</td><td id=\"statealter"+value[0]+"\">"+ value[4]+ "</td>"+
-						"<td><a class=\"button border-red deskbtn\"  id=\"numId"+value[0]+"\">"+ 
-						"<span class=\"icon-trash-o\"></span>删除 </a>"+ 
-						"<a class=\"button border-main alterbtn\" id=\"alter"+value[0]+
+						"<td><a class=\"button border-main alterbtn\" id=\"alter"+value[0]+
 					   	"\"data-toggle=\"modal\" data-target=\"#myModal\">"+ 
-					   	"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+					   	"<span class=\"icon-edit\"></span> 订单详情</a></td></tr>";
 						$("#tab").append(dd);
 					});
 					
