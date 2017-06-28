@@ -91,8 +91,7 @@
 <!-- 头部 -->
 		<div id="zbtop">
 			<a type="button" class="btn btn-default"id="zbbutton1" href = "addfood_backhome.action"><h1 class="glyphicon glyphicon-home"></h1></a><!-- 主页 -->
-			<button type="button" class="btn btn-default" id="zbbutton1"><h1 class="glyphicon glyphicon-map-marker"><input type ="text" size="10px"/></h1></button><!-- 模糊查询菜名 -->
-			<button type="button" class="btn btn-default"id="zbbutton1"><h1 class="glyphicon glyphicon-bell">呼叫员工</h1></button><!-- 呼叫员工按钮 -->
+			
 			
 			<span id="deskname">当前桌号：${sessionScope.dname}</span>
 			<span id ="desk2"></span>

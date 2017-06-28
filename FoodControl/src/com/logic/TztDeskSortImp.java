@@ -28,7 +28,7 @@ public class TztDeskSortImp implements TztSort {
 
 	public List queryMade() {
 		
-		TztDishOrderImp dao= new TztDishOrderImp();
+	/*	TztDishOrderImp dao= new TztDishOrderImp();
 		List dishpriority =dao.queryDishpriority(12);
 		List desk = dao.quertDesk(12);
 		//合并桌位合并后数组内剩下未重复的桌号
@@ -41,11 +41,7 @@ public class TztDeskSortImp implements TztSort {
 					desk.remove(j);
 					j--;
 				}
-		}
-		
-		
-		
-			
+		}*/	
 		return null;
 	}
 	public List queryMading() {
