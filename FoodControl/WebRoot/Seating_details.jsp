@@ -242,7 +242,7 @@
 		</div>
 
 	
-		<div class="row"> <!--主体 -->
+		<div class="row" id="rowsubject"> <!--主体 -->
 			<div class="col-md-4" id="left-subject"><!--左部主体内容-->
 				<div id="lefttop-subject">
 					<h3>临时加菜<a id="vagenum" href=""
@@ -516,7 +516,8 @@
 		/*
 			单个菜品取消；
 		*/
-		$("#lefttop-subject").on('click',".del", function(){
+		$("#rowsubject").on('click',".del", function(){
+		alert("dd");
 			var delid=$(this).attr("id");
 			var vagename=$("#qu"+delid).html();
 			var num=$("#mon"+delid).html();//取消金额
@@ -529,6 +530,7 @@
 				type:"post",
 				data:{"addfood.foodname":vagename,"addorder.ordersId":ord,"foodtime":name,"foodprice":foodprice},
 				success:function(data){
+				alert("er");
 					//$(".tred").html(pay);
 					if(data!=-1){
 						outfood();

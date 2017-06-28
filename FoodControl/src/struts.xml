@@ -6,15 +6,24 @@
 			<result name="addfood" type="dispatcher">/new.jsp</result>
 			<result name="newFood" type="dispatcher">/new.jsp</result>
 
+			<result name ="zbfood" type ="dispatcher">/new.jsp</result>
+			<result name ="list" type= "dispatcher">/new.jsp</result>
+			<result name="login" type ="dispatcher">/home.jsp</result>
+
+
 			<result name="backhome" type="redirect">/home.jsp</result>
+
 		</action>
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
 			<result name="tztquerok" type="redirect">/order_vegetable.jsp</result>
 		</action>
 <!-- 注册 -->
-		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
+		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">			
+			<result name = "zbfood">/new.jsp</result>
 			<result name="register" type="dispatcher">/home.jsp</result>
-			<result name ="list" type="dispatcher">/home.jsp</result>
+			<result name ="list" type="dispatcher">/new.jsp</result>
+			<result name ="nom" type = "dispatcher">/home.jsp</result>
+			<result name ="ordering" type = "dispatcher">/new.jsp</result>
 		</action>
 	</package>
 	
