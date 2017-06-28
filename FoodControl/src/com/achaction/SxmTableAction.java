@@ -193,7 +193,9 @@ public class SxmTableAction {
 		List list=(List) sts.updateper(em);
 		List li=(List) list.get(0);
 		int emp=(Integer) li.get(0);
+		System.out.println("---------"+chargename);
 		if(chargename.equals("Î´·ÖÅä")){
+			
 			cname=sts.insertcharge(emp, st);
 		}else{	
 			tname=sts.uppertab(st,emp);

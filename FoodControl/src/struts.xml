@@ -52,11 +52,13 @@
 			<result name="sh" type="redirect">/background/finance.jsp</result>
 			<result name="si" type="redirect">/background/income.jsp</result>
 		</action>
+		
+		
 	</package>
 	<package name="lanjieqi2" extends="struts-default">
 		<interceptors>
 			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
-				<param name="includeMethods">updatestaff,enterid,save,delem,appendTable,upLineTable,delLineTable,insertfood,updatestaffid</param><!-- 拦截的方法 -->
+				<param name="includeMethods">updatestaff,enterid,save,delem,insertfood,updatestaffid,appendTable,upLineTable,delLineTable</param><!-- 拦截的方法 -->
 			</interceptor>
 <!-- 构建一个拦截器栈 -->
 			<interceptor-stack name="aaabbb">
@@ -69,14 +71,15 @@
 		<global-results>
 			<result name="login" type="redirect">/nopowers.jsp</result>
 		</global-results>
+		
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="okjj">/a123.jsp</result>			
 		</action>
+		
 <!-- 桌台 -->		
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok" type="redirect">/home.jsp</result>
-		</action>		
-		
+		</action>
 <!-- 菜品 -->
 		<action name="GJYFC_*" class="com.achaction.GJYFCaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
