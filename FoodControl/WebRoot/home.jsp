@@ -79,6 +79,12 @@
 			right:10px;
 			font-size:20px;
 		}
+		#username{
+			position:absolute;
+			top:10px;
+			right:300px;
+			font-size:20px;
+		}
 	</style>
 	
 
@@ -119,6 +125,7 @@
 					</button>
 				</div>
 			</div>
+			<div id="username"></div>
 			<div id="times"></div>
 		</div>
 	</div>
@@ -286,6 +293,12 @@
 		}
 		$(function(){
     		setInterval("getTime()",1000);
+    		$("#username").html("");
+    		if('${user}'!=""){
+    			$("#username").html("欢迎用户："+'${user}');
+    			
+    		}
+    		
 		});
 		function userFocus(){
 			var user1=document.getElementById("aa1");

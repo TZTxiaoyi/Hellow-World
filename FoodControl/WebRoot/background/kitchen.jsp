@@ -89,8 +89,7 @@ td{
 				</div>
 			</div>
 
-			<div class="row" id="col2">
-				<!------------右边窗口-------------->
+ 				<!------------右边窗口--------------> 
 				<table>
 					<tr><td>菜名</td><td>数量</td><td>操作</td><td><input  class="btn btn-info" "id="querymade" type="button" value="刷新" /></td></tr>
 				</table>

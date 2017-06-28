@@ -1,4 +1,4 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*"%> 
 <%@ page import="java.text.*"%>
@@ -91,9 +91,6 @@
 <!-- 头部 -->
 		<div id="zbtop">
 			<a type="button" class="btn btn-default"id="zbbutton1" href = "addfood_backhome.action"><h1 class="glyphicon glyphicon-home"></h1></a><!-- 主页 -->
-			
-			
-			<span id="deskname">当前桌号：${sessionScope.dname}</span>
 			<span id ="desk2"></span>
 		</div>
 <!-- 左侧 -->		
@@ -327,8 +324,9 @@
 							var num=0;
 							$("#selOrder-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
+							
 								var tdclass="<td></td>";;
-								if(value[9]==1){
+								if(value[8]==1){
 									tdclass="<td>新增</td>";	
 								}
 								price=value[5]*value[6];

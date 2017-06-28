@@ -121,6 +121,7 @@ public class ZbCustomerAction {
 		
 		
 		int list = re.loginsel(zbud);
+		System.out.println("liost:"+list);
 		//JSON json = toJson.toJson("account",list );//转型
 		HttpServletResponse hsr = ServletActionContext.getResponse();
 		HttpServletRequest request=ServletActionContext.getRequest();//获取请求
@@ -130,13 +131,13 @@ public class ZbCustomerAction {
 		List list1=dish.sel();
 		request.setAttribute("dishList", list1);
 		try {
-			
 			hsr.getWriter().print(list);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(list==1){
+			request.setAttribute("user", zbud.getAccount());
 			return "list";
 			
 		}else{

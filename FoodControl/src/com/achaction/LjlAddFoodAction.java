@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Flags.Flag;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,9 +32,16 @@ import com.utils.toJson;
 
 
 public class LjlAddFoodAction {
+	/**
+	 * addfood 菜品实体类 名字 价格 id
+	 * addorder 订单实体类 id 总计 菜品数量 状态 下单时间 使用桌台
+	 * st 桌台信息 id 名字 状态
+	 * ddname 当前选用桌台名字；
+	 * kindname 分类名字
+	 * 
+	 */
 	private LjlAddFood addfood;
 	private LjlAddOrder addorder;
-	private String desknub;
 	private SxmTable st;
 	private String foodtime;
 	private int foodprice;
@@ -69,13 +77,6 @@ public class LjlAddFoodAction {
 	TztDishOrderImp DishOrderImp=new TztDishOrderImp();
 	SxmTableSql tableSql=new SxmTableSql();
 	LjlKind kind=new LjlKind();
-	
-	public String getDesknub() {
-		return desknub;
-	}
-	public void setDesknub(String desknub) {
-		this.desknub = desknub;
-	}
 	public LjlAddOrder getAddorder() {
 		return addorder;
 	}
@@ -88,8 +89,14 @@ public class LjlAddFoodAction {
 	public void setAddfood(LjlAddFood addfood) {
 		this.addfood = addfood;
 	}
+	public String getKindname() {
+		return kindname;
+	}
+	public void setKindname(String kindname) {
+		this.kindname = kindname;
+	}
 	/**
-	 * 
+	 * 查询所有菜品分类输出到new
 	 */
 	public void kindfood(){
 		HttpServletResponse response=ServletActionContext.getResponse();
@@ -103,6 +110,9 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 查询所有菜品输出到new
+	 */
 	public void newlfood(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
@@ -116,6 +126,9 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 根据菜品类别查询菜品输出到new分类里
+	 */
 	public void kindnewfood(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
@@ -128,19 +141,14 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}	
 	}
-	public String getKindname() {
-		return kindname;
-	}
-	public void setKindname(String kindname) {
-		this.kindname = kindname;
-	}
+	
 	/**
 	 * 
 	 * 方法功能说明：  下单功能
 	 * 创建：2017-6-21 by li   
 	 * 修改：日期 by 修改者  
 	 * 修改内容：  
-	 * @参数：  addorder 订单实体类     
+	 * @参数：  addorder 订单实体类     rsid 添加订单并获得id ,number 每个菜的数量,dishorder 菜品和订单关系表实体，flag 状态标记-1未成功1成功2不能下单
 	 * @return void     
 	 * @throws
 	 */
@@ -190,6 +198,10 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 下单后再添加菜品
+	 * 先判断是否下过订单返回状态，根据订单id,菜品id，添加菜品和订单关系表内数据
+	 */
 	public void addOrderfood(){
 		int dishStatus=12;
 		int flag=-1;
@@ -260,6 +272,10 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 获得订单的总价格
+	 * 根据订单id获得订单信息
+	 */
 	public void ordertotal(){
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
@@ -316,7 +332,6 @@ public class LjlAddFoodAction {
 			int foodprice=addf.getPrice();
 			addfood.setPrice(addfood.getPrice()+foodprice);	
 		}
-		System.out.println(addfood.getFoodname()+","+addfood.getNumber()+","+addfood.getUprice()+","+addfood.getPrice());
 		session.setAttribute(addfood.getFoodname(), addfood);
 		try {
 			
@@ -327,9 +342,12 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * 获得订单详细信息菜品数量价格
+	 * 输出到new我的订单模态框
+	 * 
+	 */
 	public void selOrder(){
-		//System.out.println("sel");
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
@@ -573,14 +591,15 @@ public class LjlAddFoodAction {
 	public void updateOrder(){
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int ud=orders.updesk(st);
+		int flag =-1;
 		int od=orders.upOrders(addorder);
-		int flag=-1;
-		if(od!=-1&&ud!=-1){
-			flag=1;
+		System.out.println("od:"+od);
+		if(od>0){
+			int ud=orders.updesk(st);
+			if(ud>0){
+				flag=1;	
+			}
 		}
-		//System.out.println("uflag"+flag);
-		//System.out.println(flag);
 		try {
 			response.getWriter().println(flag);
 		} catch (IOException e) {
@@ -610,7 +629,6 @@ public class LjlAddFoodAction {
 	public void clearAllDesk(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int acd=orders.clearAllDesk();
-		//System.out.println("acd"+acd);
 		try {
 			response.getWriter().println(acd);
 		} catch (IOException e) {
@@ -623,12 +641,15 @@ public class LjlAddFoodAction {
 	 */
 	public void alldelect(){
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int delOrd=orders.allDelect(addorder);
-		int cd=orders.alterDeskstate(st);
-		int delst=orders.alldel(addorder);
+		List list=orders.vagestate(addorder.getOrdersId());
 		int flag=-1;
-		if(delOrd!=-1 && cd!=-1 && delst!=-1){
-			flag=1;
+		if(list.size()==0){
+			int delOrd=orders.allDelect(addorder);
+			int cd=orders.alterDeskstate(st);
+			int delst=orders.alldel(addorder);
+			if(delOrd!=-1&&cd!=-1&&delst!=-1){
+				flag=1;	
+			}
 		}
 		try {
 			response.getWriter().print(flag);

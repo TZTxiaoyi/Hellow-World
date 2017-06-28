@@ -14,8 +14,7 @@
 <!-- 注册 -->
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
 			<result name="register" type="dispatcher">/home.jsp</result>
-
-			<result name ="list" type="dispatcher">/new.jsp</result>
+			<result name ="list" type="dispatcher">/home.jsp</result>
 		</action>
 	</package>
 	

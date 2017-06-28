@@ -10,7 +10,11 @@ import com.utils.DaoFactory;
 
 public class LjlOrders implements DaoInterface{
 
-
+/**
+ * 下单插入数据库订单数据
+ * @param order
+ * @return
+ */
 	public int rsadd(Object order) {
 		LjlAddOrder orders=(LjlAddOrder)order;
 		// TODO Auto-generated method stub
@@ -23,7 +27,6 @@ public class LjlOrders implements DaoInterface{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	public List sel(Object obj) {
 		// TODO Auto-generated method stub
 		String sql="select ordersStatus from orders";
@@ -42,21 +45,36 @@ public class LjlOrders implements DaoInterface{
 		List list=DaoFactory.Query(sql);
 		return list;
 	}
-	public List orderDish(int oId){
+	/**
+	 * 自动刷新显示当天订单已结未结状态
+	 * 根据订单查询菜品订单表
 
-		System.out.println("8989898");
-		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum,ds.price,od.dishNnum from  " +
+	 * @param oId
+	 * @return
+	 */
+	public List orderDish(int oId){
+		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum," +
+				"ds.price,od.dishNnum,ds.dishId,od.dishStatus,od.addDish,od.dishtime,o.ordersPrice from  " +
 				"desk_restaff d join orders o on d.deskId=o.deskId and o.ordersId="+oId+
 				"join orders_dish od on o.ordersId=od.ordersId " +
-				"join dish ds on ds.dishId=od.dishId";		
+				"join dish ds on ds.dishId=od.dishId";
 		List list=DaoFactory.Query(sql);
-		//System.out.println("88888888777:");
 		return list;
 	}
+	/**
+	 * 根据订单获得订单数据
+	 * @param orderid
+	 * @return
+	 */
 	public List idselOrder(int orderid){
 		String sql="select * from orders where ordersId="+orderid;
 		return DaoFactory.Query(sql);
 	}
+	/**
+	 * 根据订单改变订单菜品数量和总价
+	 * @param order
+	 * @return
+	 */
 	public int upOrdersPN(LjlAddOrder order){
 		//System.out.println(order.getOrderPrice()+","+order.getFoodNum()+","+order.getOrdersId());
 		String sql="update orders set ordersPrice=?,FoodNum=? where ordersId=?";
@@ -69,7 +87,7 @@ public class LjlOrders implements DaoInterface{
 	 */
 	public int upOrders(Object order){
 		LjlAddOrder ord=(LjlAddOrder)order;
-		String sql="update orders set ordersStatus=16 where ordersId=?";
+		String sql="update orders set ordersStatus=16 where ordersId=? and ordersStatus=15";
 		Object[] params = new Object[] {ord.getOrdersId()}; 
 		return DaoFactory.Updata(sql, params);
 		
@@ -125,7 +143,7 @@ public class LjlOrders implements DaoInterface{
 	public int clearDesk(Object dnam){
 		SxmTable dname = (SxmTable) dnam;
 		String sql="update desk set deskState=6 where deskName=? and deskState=8";
-		System.out.println(dname.getDeskName());
+	
 		Object[] params = new Object[] {dname.getDeskName()};
 		return DaoFactory.Updata(sql, params);
 	}
@@ -159,6 +177,13 @@ public class LjlOrders implements DaoInterface{
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
+	 * 点击整单取消查询订单菜品表里菜品的状态
+	 */
+	public List vagestate(int ords){
+		String sql="select dishStatus from orders_dish where ordersId="+ords+" and (dishStatus=13 or dishStatus=14)";
+		return DaoFactory.Query(sql);
+	}
+	/**
 	 * 根据订单id改变菜的状态为17
 	 * @param obj
 	 * @param obj1
@@ -170,6 +195,7 @@ public class LjlOrders implements DaoInterface{
 		Object[] params=new Object[]{addo.getOrdersId()};
 		return DaoFactory.Updata(sql, params);
 	}
+	
 	public int update(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
