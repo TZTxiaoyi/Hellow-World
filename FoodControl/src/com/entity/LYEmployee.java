@@ -18,13 +18,13 @@ public class LYEmployee {
 	private String emphone;			
 	private String emadress;
 	private String emjointime;
-	private int empart;
+	
 	private String account;
 	
 	public String getAccount() {
 		return account;
 	}
-	private int ementer;
+	
 	private int staffinfoState;
 	public int getStaffinfoState() {
 		staffinfoState=19;
@@ -33,19 +33,11 @@ public class LYEmployee {
 	public void setStaffinfoState(int staffinfoState) {
 		this.staffinfoState = staffinfoState;
 	}
-	public int getEmenter() {
-		return ementer;
-
-	}
+	
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	public int getEmpart() {
-		return empart;
-	}
-	public void setEmpart(int empart) {
-		this.empart = empart;
-	}
+	
 	
 	public int getEmid() {
 		return emid;

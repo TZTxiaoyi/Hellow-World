@@ -41,7 +41,7 @@ public class GJYFCaction {
 
 
 
-	public void save(){	
+	public void insertfood(){	
 		int a=inFc.FCinsert(fdCry);
 	}
 	

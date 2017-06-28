@@ -151,7 +151,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 			
     
-    
+    /* 
+    * 添加菜品
+    */
 	$(function(){
 		$("#togo").click(function(){
 			var dishName=$("#dishName").val();
@@ -172,10 +174,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(dishName && price && kindId && makeTime && priority && pictureName && maxCopies ){
 				$.ajax({
 					type:"post",
-					url:"GJYFC_save.action",
+					url:"GJYFC_insertfood.action",
 					data:{"fdCry.dishName":dishName,"fdCry.price":price,"fdCry.kindId":kindId,"fdCry.makeTime":makeTime,"fdCry.priority":priority,"fdCry.pictureName":pictureName,"fdCry.maxCopies":maxCopies,"fdCry.dishState":dishState},
 					success:function(data){
-						alert("员工添加成功");
+						if(data==-1){
+							alert("添加失败");
+						}else if(data==1){
+							alert("添加成功");
+						}else{
+							alert("没有权限");
+						}	
 					}
 				});
 			}else{

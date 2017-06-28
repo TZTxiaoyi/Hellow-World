@@ -42,11 +42,14 @@ public class LjlOrders implements DaoInterface{
 		return list;
 	}
 	public List orderDish(int oId){
+		System.out.println("8989898");
 		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum,ds.price,od.dishNnum from  " +
 				"desk_restaff d join orders o on d.deskId=o.deskId and o.ordersId="+oId+
 				"join orders_dish od on o.ordersId=od.ordersId " +
 				"join dish ds on ds.dishId=od.dishId";
+		
 		List list=DaoFactory.Query(sql);
+		System.out.println("88888888777:");
 		return list;
 	}
 	/**
