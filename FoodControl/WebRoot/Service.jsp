@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		#all-home {
 			position: relative;
-			max-height:730px;
+			max-height:500px;
 			background: white;
 		}
 		
@@ -65,18 +65,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			text-align:center;
 			font-size:25px;
 			color:white;
-			line-height:150px;
-			word-wrap: break-word;  
-    		word-break: normal;  
+			padding-top:60px;
+		}
+		#all-home p {
+			
+			
+			
+			font-size:15px;
+			color:white;
+			padding-top:30px;
 		}
 	
 		
 		
 		#all-home1 {
 			position:absolute;
-			bottom:10px;
 			margin-right:25px;
 			right:300px;
+			bottom:20px;
+		}
+		#all-home1 div{
+			margin-right:40px;
 		}
 		#times{
 			position:absolute;
@@ -93,7 +102,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			right:200px;
 			font-size:20px;
 		}
-		
+
+		#modelclear{
+			text-align:center;
+			color:red;
+		}
+		#modelclear button{
+			margin-right:30px;
+			color:blue;
+		}
+		#myModalLabel{
+			color:#ff6666;
+		}
+		.updatetable input{
+			width:50%;
+		}
+		.updatetable{
+			margin-top:20px;
+			margin-bottom:20px;
+			margin-left:5px;
+			margin-right:5px;
+		}
+		.tablefont{
+			color:#ff6600;
+
+		}
+
 	</style>
 
 </head>
@@ -111,38 +145,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<button type="button" class="btn btn-primary btn-lg"
 				data-toggle="modal" data-target="#myModal">转台</button>
 
-			<!-- Modal -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">请输入更改桌号：</h4>
-
-						</div>
-						<input type="text" class="form-control"
-							placeholder="Search for...">
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-primary">保存</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 			<a class="btn btn-info btn-lg col-sm-offset-1" href="" role="button" data-toggle="modal" data-target="#myModal1">交班</a>
 			<a class="btn btn-info btn-lg col-sm-offset-1" href="" role="button" id="tflash">刷新</a>
-			<a class="btn btn-success btn-lg col-sm-offset-1" href=""role="button"data-toggle="modal" data-target="#myModalc">清扫结束</a>
-			
-			
-			
-			
-			
-			
+
+			<a class="btn btn-success btn-lg col-sm-offset-1" href=""role="button"
+			data-toggle="modal" data-target="#myModalclear"  data-toggle="modal" data-target="#myModalclear">清扫结束</a> 
+
 			<span id="doper">操作员：<span id="user"></span></span>
 			
 				<a class="btn close btn-lg" data-dismiss="modal"aria-label="Close" style="color:#ff00ff" href="background/login.jsp">退出系统</a>
@@ -216,26 +225,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 	<!-- 转台模态框 -->
-	<!-- Modal -->
-			<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+	、<!-- Modal -->
+			<div class="modal fade  bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog  modal-sm" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
-							<h4 class="modal-title" id="myModalLabel">请输入：</h4>
+							<h3 class="modal-title">更改桌号：</h3>
 
 						</div>
-						<input type="text" class="form-control"
-							placeholder="Search for...">
+						<div class="updatetable">请输入<span class="tablefont">当前</span>桌号：<input type="text" id="changebefore"></div>
+						<div class="updatetable">请输入<span class="tablefont">更改</span>桌号：<input type="text" id="changeafter"></div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-primary">保存</button>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close" id="changesave">保存
+							</button>
 						</div>
+					</div>
+				</div>
+			</div>
+	<!-- 交班模态框 -->
+	<!-- Modal -->
+			<div class="modal fade bs-example-modal-sm" id="myModal1" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">努力开发中。。。</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+	<!-- 清扫结束模态框 -->
+	<!-- Modal -->
+			<div class="modal fade bs-example-modal-sm" id="myModalclear" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header" id="modelclear">
+							<h4 class="modal-title" id="myModalLabel">一键清除所有脏台？</h4>
+							<br/>
+							<button type="button" class="btn btn-default close"
+								data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-default close" data-dismiss="modal"
+								 id="allclears">保存
+							</button>
+						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -281,12 +321,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						var i=0;
 						var j=0;
 						var k=0;
-						
+					$("#all-home").html("");	
 					$.each(json,function(index, value) {
 				
 						var orderid=value[3];
+						ordertext="订单号："+orderid;
 						if(value[3]==null){
 							orderid="";
+							ordertext="";
 						}
 						if(value[0]=="6"){
 							var	tdiv="tdiv1";
@@ -298,9 +340,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var tdiv="tdiv3";	
 							k++;
 						}
-
 						var dd = "<a href=\"Seating_details.jsp?ord="+orderid+"&&dname="+value[1]+"\"><div class=\"pull-left col-sm-2 tclick "+tdiv+"\" id=\"deskname"+value[5]+"\">"+ value[1]+
-						orderid+"</div></a>";
+						"<p>"+ordertext+"</p></div></a>";
 						$("#all-home").append(dd);
 					});
 					$(".tdiv1").css("background-color","#33ff33");
@@ -347,7 +388,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				点击刷新按钮
 			*/
 			$("#tflash").click(function(){
-				refresh(json);
+				tabonload();
 			})
 			/*
 				登陆成功后带值显示到本页面；
@@ -358,10 +399,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			dd=null;
     		})
 			/*
-				动态获取订单信息;
-			*/
-			/*
-				页面加载时自动查询数据库，显示桌台信息
+				页面加载时自动查询数据库，显示桌台信息 动态获取订单信息;
 			 */
 			
 			function orderonload(){
@@ -390,20 +428,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});
 
 			};
-			/*
-				清台
-			*/
-			$("#savesearch").click(function(){
-		
-			var dname=$("#insearch").val();
-			
-			alert("dname"+dname);
+
+		/*
+			清台
+		*/	
+
+		$("#allclears").click(function(){
 			$.ajax({
-				url:"addfood_clearDesk.action",
+				url:"addfood_clearAllDesk.action",
 				type:"post",
-				data:{"st.deskName":dname},
+				data:{},
 				success:function(data){
-					
+					tabonload();
+				}
+			});
+		})
+		/*
+			转台
+		*/
+		$("#changesave").click(function(){
+			var cbefore=$("#changebefore").val();
+			var cafter=$("#changeafter").val();
+			$.ajax({
+				url:"SxmTable_changedesk.action",
+				type:"post",
+				data:{"st.deskName":cbefore,"tablename":cafter},
+				success:function(data){
+					tabonload();
+
 				}
 			});
 		})

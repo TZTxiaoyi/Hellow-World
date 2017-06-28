@@ -81,15 +81,11 @@
   
   
 </ul>
-<div class="admin">
-		<iframe scrolling="auto" rameborder="0" 
-			name="right" width="100%" height="95%"></iframe>
-		<div id="datatime">
-		<span id="times"></span>
 
-		</div>
-	</div>
-	<div style="text-align:center;"></div>
+<div class="admin">
+  <iframe scrolling="auto" rameborder="0" name="right" width="100%" height="100%"></iframe>
+</div>
+<div style="text-align:center;">
 
 </div>
 <script type="text/javascript">
@@ -127,6 +123,5 @@ $(function(){
     	});
 		
 </script>
->>>>>>> 84d757c67e524c72e1684cdfc5ca17b4f4c5a97b
 </body>
 </html>

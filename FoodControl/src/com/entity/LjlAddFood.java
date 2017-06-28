@@ -1,7 +1,15 @@
 package com.entity;
 
 public class LjlAddFood {
+	private int dishId;
 	private String foodname;
+
+	public int getDishId() {
+		return dishId;
+	}
+	public void setDishId(int dishId) {
+		this.dishId = dishId;
+	}
 	private int uprice;
 	private int number;
 	private int price;

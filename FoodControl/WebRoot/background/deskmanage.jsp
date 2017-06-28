@@ -131,7 +131,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    	<div>
 					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName" class="tableName"/>
 					    	</div>
-					    	
+					    	<div>
+					    		<span>负责人</span><input type="text" name="st.deskName" id="tableperson"/>
+					    	</div>
 					    	
 					 </div>
 					</div>
@@ -148,26 +150,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			*/
 			$(function(){
 				$.ajax({
-						url:"SxmTable_pageTotal.action",
-						type:"post",
-						data:{},
-						success:function(data){
-							var pagetotal=parseInt(data/3);	
-							if(data%3==0){
-								$("#spanpage").html(pagetotal);
-							}
-							if(data%3!=0){
-								$("#spanpage").html(parseInt(pagetotal)+1);
-							}
-						},
-					});
+					url:"SxmTable_pageTotal.action",
+					type:"post",
+					data:{},
+					success:function(data){
+						var pagetotal=parseInt(data/3);	
+						if(data%3==0){
+							$("#spanpage").html(pagetotal);
+						}
+						if(data%3!=0){
+							$("#spanpage").html(parseInt(pagetotal)+1);
+						}
+					},
+				});
 			})
 		
 			
 			/*
 				分页
 			*/
-			$(function(){
+			$(function (){
 				$(".page").click(function(){
 					var name=$(this).attr("name");
 					
@@ -197,7 +199,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var curr=inpval-1;
 					tabonload(curr);
 				});
-			})
+			}),
 			/*
 				快速搜索
 			*/
@@ -241,34 +243,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		*/
 		$("#tab").on('click',".alterbtn",function(){
 			var deskalter=$(this).attr("id");
-			var deskid=$(".desk"+deskalter).html();
-			var deskname=$("#name"+deskalter).html();
-			var deskperson=$("#person"+deskalter).html();
-			alert(deskid);
+			var deskid=$(".desk"+deskalter).html();//桌子Id
+			var deskname=$("#name"+deskalter).html();//桌子名字
+			var deskperson=$("#person"+deskalter).html();//桌子人数
+			var tperalter=$("#tper"+deskalter).html();//负责人
 			$("#pname").val(deskperson);
 			$(".tableName").val(deskname);
-			updata(deskid);
+			$("#tableperson").val(tperalter);
+			updata(deskid,tperalter);
 		});
 		//点击确定修改按钮时执行；
 			
-		function updata(desk) {
+		function updata(desk,talter) {
 			//bind/unbind点击事件只执行一次
 			$(".modal-alterbtn").bind('click', function() {//绑定事件处理函数
 				var inpval=parseInt($("#pageinp").val());
 				var pn = $("#pname").val();
 				var dn = $("#tableName").val();
+				var tp=$("#tableperson").val();
 				$.ajax({
 					url : "SxmTable_upLineTable.action",
 					type : "post",
 					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn},
-					success : function(data) {
-						var json = JSON.parse(data);
-						if (json != -1) {
+					success : function(data){					
+						if(data==-1){
+							alert("修改失败");
+						}else if(data==1){
+							alert("修改成功");
 							tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
 							$(this).unbind('click');//移除当前事件处理函数
-						} else {
-							alert("更新失败！");
-						}
+						}else{
+							alert("没有权限");
+						}						
 					},
 				});
 
@@ -341,10 +347,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var th = "<tr><td></td><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
 					$("#tab").html("");
 					$("#tab").append(th);
+					
 					$.each(json,function(index, value) {
+					var chargeper=value[3];
+						if(value[3]==null){
+							chargeper="未分配";
+						}
 						var dd = "<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td class=\"deskalter"+
 						value[0]+"\" id=\"desknumId"+value[0]+"\">"+ value[0]+ "</td><td id=\"namealter"+value[0]+"\">"+ 
-						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td>"+ value[3]+
+						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td id=\"tperalter"+value[0]+"\">"+ chargeper+
 						"</td><td id=\"statealter"+value[0]+"\">"+ value[4]+ "</td>"+
 						"<td><a class=\"button border-red deskbtn\"  id=\"numId"+value[0]+"\">"+ 
 						"<span class=\"icon-trash-o\"></span>删除 </a>"+ 
@@ -373,13 +384,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							"st.personNum" : pn,
 							"st.deskName" : dn,
 						},
-						success : function(data) {
-							var json = JSON.parse(data);
-							if (json != -1) {
-								tabonload();//调用页面加载时自动查询数据库，显示桌台信息
-							} else {
-								alert("添加失败！");
-							}
+						success : function(data) {							
+							if(data==-1){
+								alert("添加失败");
+							}else if(data==1){
+								alert("添加成功");
+								tabonload();//调用页面加载时自动查询数据库，显示桌台信息								
+							}else{
+								alert("没有权限");
+							}												
 						},
 
 					});
