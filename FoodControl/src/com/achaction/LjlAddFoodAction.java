@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Flags.Flag;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -316,7 +317,6 @@ public class LjlAddFoodAction {
 			int foodprice=addf.getPrice();
 			addfood.setPrice(addfood.getPrice()+foodprice);	
 		}
-		System.out.println(addfood.getFoodname()+","+addfood.getNumber()+","+addfood.getUprice()+","+addfood.getPrice());
 		session.setAttribute(addfood.getFoodname(), addfood);
 		try {
 			
@@ -329,7 +329,6 @@ public class LjlAddFoodAction {
 	}
 	
 	public void selOrder(){
-		System.out.println("sel");
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
@@ -573,14 +572,15 @@ public class LjlAddFoodAction {
 	public void updateOrder(){
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int ud=orders.updesk(st);
+		int flag =-1;
 		int od=orders.upOrders(addorder);
-		int flag=-1;
-		if(od!=-1&&ud!=-1){
-			flag=1;
+		System.out.println("od:"+od);
+		if(od>0){
+			int ud=orders.updesk(st);
+			if(ud>0){
+				flag=1;	
+			}
 		}
-		System.out.println("uflag"+flag);
-		System.out.println(flag);
 		try {
 			response.getWriter().println(flag);
 		} catch (IOException e) {
@@ -610,7 +610,6 @@ public class LjlAddFoodAction {
 	public void clearAllDesk(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int acd=orders.clearAllDesk();
-		System.out.println("acd"+acd);
 		try {
 			response.getWriter().println(acd);
 		} catch (IOException e) {
@@ -623,12 +622,15 @@ public class LjlAddFoodAction {
 	 */
 	public void alldelect(){
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int delOrd=orders.allDelect(addorder);
-		int cd=orders.alterDeskstate(st);
-		int delst=orders.alldel(addorder);
+		List list=orders.vagestate(addorder.getOrdersId());
 		int flag=-1;
-		if(delOrd!=-1 && cd!=-1 && delst!=-1){
-			flag=1;
+		if(list.size()==0){
+			int delOrd=orders.allDelect(addorder);
+			int cd=orders.alterDeskstate(st);
+			int delst=orders.alldel(addorder);
+			if(delOrd!=-1&&cd!=-1&&delst!=-1){
+				flag=1;	
+			}
 		}
 		try {
 			response.getWriter().print(flag);

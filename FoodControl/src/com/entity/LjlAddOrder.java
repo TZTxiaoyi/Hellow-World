@@ -24,8 +24,6 @@ public class LjlAddOrder {
 		return ordersId;
 	}
 	public void setOrdersId(int ordersId) {
-		System.out.println("dd");
-		System.out.println(ordersId);
 		this.ordersId = ordersId;
 	}
 	public int getDeskid() {

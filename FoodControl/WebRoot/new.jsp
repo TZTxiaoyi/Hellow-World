@@ -328,9 +328,8 @@
 							var num=0;
 							$("#selOrder-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
-							
 								var tdclass="<td></td>";;
-								if(value[8]==1){
+								if(value[9]==1){
 									tdclass="<td>新增</td>";	
 								}
 								price=value[5]*value[6];
