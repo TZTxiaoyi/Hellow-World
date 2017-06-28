@@ -51,6 +51,13 @@ public class LjlAddFoodAction {
 	private SxmTable st;
 	private String foodtime;
 	private int foodprice;
+	private int svalue;
+	public int getSvalue() {
+		return svalue;
+	}
+	public void setSvalue(int svalue) {
+		this.svalue = svalue;
+	}
 	public int getFoodprice() {
 		return foodprice;
 	}
@@ -259,7 +266,6 @@ public class LjlAddFoodAction {
 				orderfoodadd.setOrderPrice(orderprice);
 				flag=orders.upOrdersPN(orderfoodadd);
 			}
-			
 		}else{
 			flag=2;
 		}
@@ -593,7 +599,8 @@ public class LjlAddFoodAction {
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int flag =-1;
-		int od=orders.upOrders(addorder);
+		System.out.println("cost"+svalue);
+		int od=orders.upOrders(addorder,svalue);
 		System.out.println("od:"+od);
 		if(od>0){
 			int ud=orders.updesk(st);

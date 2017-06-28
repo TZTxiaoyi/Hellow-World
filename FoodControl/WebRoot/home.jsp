@@ -186,13 +186,8 @@
 						<div>
 						<!-- <input placeholder="请输入桌号" type="text" id="desknub"
 							 name ="desknub"/> -->
- 	
-							 <select class="form-control" id ="desknub" name ="desknub">
-
-							  <select class="form-control" id ="desknub" name="selectvalue">
-
-							 	  
-							</select>
+							  <select class="form-control" id ="desknub" name="selectvalue"> 
+							  </select>
 					</div>
 					<div>
 						<input placeholder="请输入人数" type="text" id="personnub"

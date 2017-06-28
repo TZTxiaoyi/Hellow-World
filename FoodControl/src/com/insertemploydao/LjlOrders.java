@@ -84,10 +84,10 @@ public class LjlOrders implements DaoInterface{
 	 * 根据订单号更新订单状态
 	 * @return
 	 */
-	public int upOrders(Object order){
+	public int upOrders(Object order,int svalue){
 		LjlAddOrder ord=(LjlAddOrder)order;
-		String sql="update orders set ordersStatus=16 where ordersId=? and ordersStatus=15";
-		Object[] params = new Object[] {ord.getOrdersId()}; 
+		String sql="update orders set ordersStatus=16,cost=? where ordersId=? and ordersStatus=15";
+		Object[] params = new Object[] {svalue,ord.getOrdersId()}; 
 		return DaoFactory.Updata(sql, params);
 		
 	}
