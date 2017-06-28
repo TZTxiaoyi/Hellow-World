@@ -161,7 +161,7 @@ public class LjlAddFoodAction {
 			addorder.setDeskid(tableid);//设置桌子id
 			int rsid=orders.rsadd(addorder);//添加订单并获得id
 			session.setAttribute("orderid", Integer.toString(rsid));
-			System.out.println("id："+session.getAttribute("orderid"));
+			//System.out.println("id："+session.getAttribute("orderid"));
 			for (int i = 0; i < foodnames.length; i++) {
 				if (foodnames[i]!="dname"&&foodnames[i]!="orderStatus"&&foodnames[i]!="orderid") {
 					List list=dish.seldishName(foodnames[i]);
@@ -198,17 +198,17 @@ public class LjlAddFoodAction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		HttpSession session=request.getSession();
 		String orderup=(String) session.getAttribute("orderStatus");
-		System.out.println("orderup:"+orderup);
+		//System.out.println("orderup:"+orderup);
 		if (orderup=="1") {
 			System.out.println("jin");
 			String[] foodnames=session.getValueNames();
 			String tablename=(String) session.getAttribute("dname");
-			System.out.println("tablename"+tablename);
+			//System.out.println("tablename"+tablename);
 			List listtable=tableSql.idTablename(tablename);
 			List listtId=(List) listtable.get(0);
 			int tableid=(Integer) listtId.get(0);
-			System.out.println("tableid"+tableid);
-			System.out.println("session:"+session.getAttribute("orderid"));
+			//System.out.println("tableid"+tableid);
+			//System.out.println("session:"+session.getAttribute("orderid"));
 			String rsid1= (String) session.getAttribute("orderid");
 			int rsid=Integer.parseInt(rsid1);
 			List orderlists=orders.idselOrder(rsid);
@@ -217,14 +217,14 @@ public class LjlAddFoodAction {
 			int ordersprice=(Integer)orderlist.get(2);
 			int foodnum=0;//新增菜品的数量
 			int price=0;//新增菜品总价格
-			System.out.println("ordersnum"+ordersnum);
-			System.out.println("ordersprice"+ordersprice);
+			//System.out.println("ordersnum"+ordersnum);
+			//System.out.println("ordersprice"+ordersprice);
 			for (int i = 0; i < foodnames.length; i++) {
 				if (foodnames[i]!="dname"&&foodnames[i]!="orderStatus"&&foodnames[i]!="orderid") {
 					List list=dish.seldishName(foodnames[i]);
 					session.getAttribute(foodnames[i]);
 					LjlAddFood addf= (LjlAddFood)session.getAttribute(foodnames[i]);
-					System.out.println("foodname"+addf.getFoodname());
+					//System.out.println("foodname"+addf.getFoodname());
 					int number=addf.getNumber();//每个菜的数量
 					int foodprice=addf.getPrice();
 					foodnum=foodnum+number;
@@ -245,7 +245,7 @@ public class LjlAddFoodAction {
 				orderfoodadd.setOrdersId(rsid);
 				orderfoodadd.setFoodNum(ordernum);
 				orderfoodadd.setOrderPrice(orderprice);
-				System.out.println("ddd"+orderfoodadd.getOrdersId()+","+orderfoodadd.getFoodNum()+","+orderfoodadd.getOrderPrice());
+				//System.out.println("ddd"+orderfoodadd.getOrdersId()+","+orderfoodadd.getFoodNum()+","+orderfoodadd.getOrderPrice());
 				flag=orders.upOrdersPN(orderfoodadd);
 			}
 			
@@ -253,7 +253,7 @@ public class LjlAddFoodAction {
 			flag=2;
 		}
 		try {
-			System.out.println("er"+flag);
+			//System.out.println("er"+flag);
 			response.getWriter().print(flag);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -329,7 +329,7 @@ public class LjlAddFoodAction {
 	}
 	
 	public void selOrder(){
-		System.out.println("sel");
+		//System.out.println("sel");
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
@@ -579,8 +579,8 @@ public class LjlAddFoodAction {
 		if(od!=-1&&ud!=-1){
 			flag=1;
 		}
-		System.out.println("uflag"+flag);
-		System.out.println(flag);
+		//System.out.println("uflag"+flag);
+		//System.out.println(flag);
 		try {
 			response.getWriter().println(flag);
 		} catch (IOException e) {
@@ -610,7 +610,7 @@ public class LjlAddFoodAction {
 	public void clearAllDesk(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int acd=orders.clearAllDesk();
-		System.out.println("acd"+acd);
+		//System.out.println("acd"+acd);
 		try {
 			response.getWriter().println(acd);
 		} catch (IOException e) {
@@ -643,11 +643,11 @@ public class LjlAddFoodAction {
 	public void onedelect(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		//根据菜品明字获取菜品id
-		System.out.println(addorder.getOrdersId()+","+addfood.getFoodname()+","+foodtime+","+foodprice);
+		//System.out.println(addorder.getOrdersId()+","+addfood.getFoodname()+","+foodtime+","+foodprice);
 		int orderid=addorder.getOrdersId();
 		List list=dish.seldish(addfood);
 		List li=(List) list.get(0);
-		System.out.println(li);
+		//System.out.println(li);
 		int dishid=(Integer) li.get(0);//菜品id
 		//int uprice=(Integer) li.get(2);//菜品单价
 		List listOD=orders.idselOrder(addorder.getOrdersId());
@@ -655,24 +655,24 @@ public class LjlAddFoodAction {
 		int ODprice=(Integer) ODlist.get(2);//订单价格
 		//System.out.println("dishid:"+dishid+","+"uprice:"+uprice+","+"ODprice:"+ODprice);
 		int flag=orders.uporderdish(foodtime,dishid);
-		System.out.println(flag);//更新了几条菜品状态
+		//System.out.println(flag);//更新了几条菜品状态
 		int price=ODprice-foodprice;
-		System.out.println("foodp:"+price);
-		System.out.println("orderid"+orderid);
+		//System.out.println("foodp:"+price);
+		//System.out.println("orderid"+orderid);
 		orders.upOP(price, orderid);
 	}
 	/**
 	 * 催菜
 	 */
 	public void anxious(){
-		System.out.println("----");
+		//System.out.println("----");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		List list=orders.anxiousOrder(addorder);
 		List li=(List) list.get(0);
 		int pri=(Integer) li.get(0);
 		int anx=pri+1;
 		int orderspro=orders.proty(anx, addorder);
-		System.out.println("aaa"+orderspro);
+		//System.out.println("aaa"+orderspro);
 		try {
 			response.getWriter().println(orderspro);
 		} catch (IOException e) {

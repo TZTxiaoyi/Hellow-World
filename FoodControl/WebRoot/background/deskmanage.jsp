@@ -227,13 +227,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						url:"SxmTable_delLineTable.action",
 						type:"post",
 						data:{"st.deskId":deskid},
-						success:function(data){
-							var json=JSON.parse(data);
-							if(json!=-1){
-								tabonload(inpval-1);
+						success:function(data){		
+							if(data==-1){
+							alert("修改失败");
+							}else if(data==1){
+								alert("修改成功");
+								tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
 							}else{
-								alert("删除失败！");
-							}
+								alert("没有权限");
+							}				
 						}
 					});
 				}
@@ -336,8 +338,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					url : "SxmTable_tabPage.action",
 					type : "post",
 					data : {"currPage":curr},
-					success : function flash(data) {
+					success : function flash(data){
 						var json = JSON.parse(data);
+						//alert("5555:"+json);
 						refresh(json);
 					}
 				});
@@ -363,10 +366,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					   	"\"data-toggle=\"modal\" data-target=\"#myModal\">"+ 
 					   	"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
 						$("#tab").append(dd);
-					});
-					
-					
-				
+					});			
 			}
 			
 			/*
@@ -376,27 +376,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$(".confirm-btn").click(function() {
 					var pn = $("#personNum").val();
 					var dn = $(".tableName").val();
-					
-					$.ajax({
-						url : "../SxmTable_appendTable.action",
-						type : "post",
-						data : {
-							"st.personNum" : pn,
-							"st.deskName" : dn,
-						},
-						success : function(data) {							
-							if(data==-1){
-								alert("添加失败");
-							}else if(data==1){
-								alert("添加成功");
-								tabonload();//调用页面加载时自动查询数据库，显示桌台信息								
-							}else{
-								alert("没有权限");
-							}												
-						},
-
-					});
-
+					if(pn && dn){
+						$.ajax({
+							url : "../SxmTable_appendTable.action",
+							type : "post",
+							data : {"st.personNum" : pn,"st.deskName" : dn,},
+							success : function(data) {							
+								if(data==-1){
+									alert("添加失败");
+								}else if(data==1){
+									alert("添加成功");
+									tabonload();//调用页面加载时自动查询数据库，显示桌台信息								
+								}else{
+									alert("没有权限");
+								}												
+							},
+	
+						});
+					}else{
+						alert("没有数据，添加失败");
+					}
 				});
 
 			});

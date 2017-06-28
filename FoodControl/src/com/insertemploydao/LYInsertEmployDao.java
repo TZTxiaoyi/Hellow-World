@@ -19,7 +19,7 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public  List selemploy(LYEmployee em){
-		String sql="select ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName" +
+		String sql="select ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName,ss.account" +
 				" from staffinfo_sf ss";		
 		return DaoFactory.Query(sql);
 				
@@ -42,7 +42,7 @@ public class LYInsertEmployDao {
 	 * 根据账号，找到账号对应的id 
 	 */
 	public int selectenterid(LYEmployId emword){
-		System.out.println("000000000");
+		//System.out.println("000000000");
 		System.out.println(emword.getEmword());
 		String sql="select enterId from staffEnter where account='"+emword.getEmenter()+"'";
 		List list = DaoFactory.Query(sql);
@@ -87,7 +87,7 @@ public class LYInsertEmployDao {
 		
 		Object[] params=new Object[]{em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),em.getStaffinfoState(),em.getEmid()};
 												
-		//System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+em.getEmid());
+		System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+em.getEmid());
 		return DaoFactory.Updata(sql, params);
 	}
 	/**e
@@ -97,7 +97,7 @@ public class LYInsertEmployDao {
 	 */
 	public List searchsome(String em){
 		//System.out.println(em.getEmid()+"ss");
-		String sql="select * from  staffinfo_sf where Name like'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or sex like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%'";		
+		String sql="select * from  staffinfo_sf where Name like'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or codeName like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%'";		
 		return DaoFactory.Query(sql);
 	}
 	/**
@@ -108,6 +108,7 @@ public class LYInsertEmployDao {
 	 */
 	
 	public List selectemid(LYEmployId ld){
+
 		String sql="select s1.account,s1.pwd " +
 				" from staffEnter s1 " +
 				" where account='"+ld.getEmenter()+"' and pwd='"+ld.getEmword()+"' and enterState=1";
@@ -143,7 +144,7 @@ public class LYInsertEmployDao {
 	 */
 	public List pagepage(int startIndex){
 		//System.out.println("aaaaaaaaaa");
-		String sql="select top "+2+" ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName" +
+		String sql="select top "+2+" ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName,ss.account" +
 				" from staffinfo_sf ss" +
 				" where staffId not in(select top "+startIndex*2+" staffId from staffinfo_sf)";
 		//System.out.println("ddddddddddd");         
@@ -203,9 +204,9 @@ public class LYInsertEmployDao {
 	 */
 	public List setpages(int startIndex){
 		//System.out.println("aaaaaaaaaa");
-		String sql="select top "+2+" ss.account,ss.pwd,ss.enterState" +
-				" from staffEnter ss" +
-				" where enterId not in(select top "+startIndex*2+" enterId from staffEnter)";
+		String sql="select top "+2+" ss.account,ss.pwd,ss.codeName" +
+				" from staffEnter_pic ss" +
+				" where enterId not in(select top "+startIndex*2+" enterId from staffEnter_pic) and codeName='分配人' or codeName='未分配人'";
 		//System.out.println("ddddddddddd");
 		return DaoFactory.Query(sql);
 	}
@@ -216,9 +217,9 @@ public class LYInsertEmployDao {
 	 */
 	public int updateid(LYEmployId em){
 
-		String sql="Update staffEnter set pwd=? where account=?";
+		String sql="Update staffEnter set pwd=?,enterState=? where account=?";
 		
-		Object[] params=new Object[]{em.getEmword(),em.getEmenter(),};
+		Object[] params=new Object[]{em.getEmword(),em.getEnterstate(),em.getEmenter(),};
 
 		//System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+em.getEmid());
 		return DaoFactory.Updata(sql, params);
@@ -267,7 +268,7 @@ public class LYInsertEmployDao {
 		for(int i=0; i<powersId.size();i++){
 			String sql="insert into part_powers values(?,?)";
 			Object[] params=new Object[]{partId,powersId.get(i)};
-			System.out.println("9999:"+partId+powersId.get(i));
+			//System.out.println("9999:"+partId+powersId.get(i));
 			DaoFactory.Updata(sql, params);
 		}
 		//return null;

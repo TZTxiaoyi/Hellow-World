@@ -76,7 +76,7 @@
 					data:{"partname.partname":namehtml},
 					success:function(data){
 						var json=JSON.parse(data);
-						for(var i=1;i<19;i++){
+						for(var i=1;i<22;i++){
 							$($("input[name=\"check"+i+"\"]")[0]).prop("checked",false);
 						}	
 						$.each(json,function(index,value){						
@@ -96,13 +96,13 @@
 		var j=0;
 		var powersname=$("#powersname").html();
 		//alert("000:"+powersname);
-			for(var i=1;i<19;i++){	
+			for(var i=1;i<22;i++){	
 			//$("#chk2").prop("checked") == true
 				
 				if($($("input[name=\"check"+i+"\"]")[0]).prop("checked")){
 					powersId.push(i);
 					//alert(powersId);
-					alert(powersId);
+					//alert(powersId);
 					j++;
 				}
 			}
@@ -118,11 +118,10 @@
 			});
 		});
 	});
-	
 </script>
 </head>
   
- <body>
+<body>
 <div class="panel admin-panel">
   <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>权限管理</strong>
   	<div class="panel admin-panel">
@@ -169,11 +168,14 @@
         		菜品管理<input type="checkbox" name="check5" aria-label="..."><br>
         		添加菜品<input type="checkbox" name="check17" aria-label="...">  
         		修改菜品<input type="checkbox" name="check" aria-label="...">  
-        		删除菜品<input type="checkbox" name="check" aria-label="...">                  		      			
+        		删除菜品<input type="checkbox" name="check" aria-label="..."><br>
+        		<hr>
+        		订单详情<input type="checkbox" name="check19" aria-label="...">
+        		退单详情<input type="checkbox" name="check20" aria-label="...">  
+        		收入详情<input type="checkbox" name="check21" aria-label="...">                    		      			
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="save_powers">Save changes</button>
+			<div class="modal-footer">			
+				<button type="button" class="btn btn-primary" id="save_powers" data-dismiss="modal">保存</button>
 			 </div>
 		</div>
 	 </div>

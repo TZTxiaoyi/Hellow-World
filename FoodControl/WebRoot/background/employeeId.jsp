@@ -135,13 +135,13 @@
 				//alert(namehtml);			
 				var idhtml =$("#b"+alterbtn).html();
 				//alert(idhtml); 
-				//var phonehtml =$("#c"+alterbtn).html();
+				var phonehtml =$("#c"+alterbtn).html();
 				
 			 
 				
 				//$("#per").val(namehtml);//将要修改某行的数据放入到模态框中
 				$("#perid").val(idhtml);
-				//$("#perphone").val(phonehtml);
+				$("#perphone").val(phonehtml);
 					
 				
 				update(namehtml);					
@@ -149,14 +149,22 @@
 			function update(namehtml){
 				$("#sureup").bind('click',function(){
 					$(this).unbind('click');
-					//var sname=$("#per").val();//修改后将值
+					//var sname=$("#per").val();//修改后将值传给action
 					var sid=$("#perid").val();
-					//var sphone=$("#perphone").val();
-					
+					var sphone=$("#perphone").val();
+					alert()
+					if(sphone=="未分配人"){
+						sphone=2;
+					}else if(sphone=="分配人"){
+						sphone=1;
+					}else{
+						sphone=3;
+					}
+					//alert(sphone);
 					$.ajax({
 						url:"achieve_updatestaffid.action",
 						type:"post",
-						data:{"employId.emword":sid,"employId.ementer":namehtml},
+						data:{"employId.emword":sid,"employId.enterstate":sphone,"employId.ementer":namehtml},
 						success:function(data){
 							if(data==-1){
 								alert("修改失败");
@@ -176,44 +184,17 @@
 	<body>
 	
 		  <div class="panel admin-panel">
-		    <div class="panel-head"><strong class="icon-reorder">内容列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+		    <div class="panel-head">
+			    <strong class="icon-reorder">内容列表</strong> 
+			    <a href="" style="float:right; display:none;">添加字段</a>
+		    </div>
 		    <div class="padding border-bottom">
 		      <ul class="search" style="padding-left:10px;">       
 		        
 		        <li>
-		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span>添加员工账号</a>
-		         		<!-- 
-		         			
-		         		 -->
-		         
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-								<div class="modal-header">
-									
-								<h4 class="modal-title" id="myModalLabel">添加员工账号</h4>
-								</div>
-									<!-- 
-										¡ ----
-									 -->
-									 
-								<div class="modal-body1">															
-									账	号：<input type="text" id="ementer" name="ementer"><br/>
-									密	码：<input type="text" id="emword" name="emword"><br/>
-								</div>
-								<div class="modal-footer">
-										<!-- 
-											
-										 -->
-									<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
-										<!-- 
-											
-										 -->
-									<input type="submit" class="btn btn-primary"  value="添加" id="addent"/>	
-								</div>
-							 </div>
-						</div>
-					</div>
+		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal">
+		         		<span class="icon-plus-square-o"></span>添加员工账号
+		         	</a>	         
 		        <li>
 		          <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
 		          <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" >搜索</a></li>
@@ -242,9 +223,9 @@
 							<h1>密码或状态修改</h1>
 				</div>
 				<div id="modalform">
-					<div>
+					<!--<div>
 					    <span>账号</span><input type="text" name="st.personNum" id="per"/>
-					</div>
+					</div>  -->
 					 <div>
 					   <span>密码</span><input type="text" name="st.deskName" id="perid"/>
 					 </div>

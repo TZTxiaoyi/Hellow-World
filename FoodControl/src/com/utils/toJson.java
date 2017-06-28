@@ -58,7 +58,7 @@ public class toJson {
 			map.put(vlaue+""+i,	list.get(i) );
 			json.putAll(map);
 		}
-		System.out.println(json);
+		//System.out.println(json);
 		return json;	
 	}
 	
