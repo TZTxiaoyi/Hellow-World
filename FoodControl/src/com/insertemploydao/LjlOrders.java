@@ -10,7 +10,11 @@ import com.utils.DaoFactory;
 
 public class LjlOrders implements DaoInterface{
 
-
+/**
+ * 下单插入数据库订单数据
+ * @param order
+ * @return
+ */
 	public int rsadd(Object order) {
 		LjlAddOrder orders=(LjlAddOrder)order;
 		// TODO Auto-generated method stub
@@ -23,7 +27,6 @@ public class LjlOrders implements DaoInterface{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	public List sel(Object obj) {
 		// TODO Auto-generated method stub
 		String sql="select ordersStatus from orders";
@@ -44,6 +47,8 @@ public class LjlOrders implements DaoInterface{
 	}
 	/**
 	 * 自动刷新显示当天订单已结未结状态
+	 * 根据订单查询菜品订单表
+
 	 * @param oId
 	 * @return
 	 */
@@ -56,10 +61,20 @@ public class LjlOrders implements DaoInterface{
 		List list=DaoFactory.Query(sql);
 		return list;
 	}
+	/**
+	 * 根据订单获得订单数据
+	 * @param orderid
+	 * @return
+	 */
 	public List idselOrder(int orderid){
 		String sql="select * from orders where ordersId="+orderid;
 		return DaoFactory.Query(sql);
 	}
+	/**
+	 * 根据订单改变订单菜品数量和总价
+	 * @param order
+	 * @return
+	 */
 	public int upOrdersPN(LjlAddOrder order){
 		//System.out.println(order.getOrderPrice()+","+order.getFoodNum()+","+order.getOrdersId());
 		String sql="update orders set ordersPrice=?,FoodNum=? where ordersId=?";
