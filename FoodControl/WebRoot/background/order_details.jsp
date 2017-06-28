@@ -27,6 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript"
 		src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+
 	<script type="text/javascript">
 			/*
 				总页数
@@ -144,6 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 		});
 		</script>
+
 	<style>
 		#modalform input {
 			
@@ -168,6 +170,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<strong><span class="icon-pencil-square-o"></span> 订单信息</strong>
 		</div>
 		<div>
+
 
 				<div class="panel admin-panel">
 					<div class="padding border-bottom">
@@ -198,6 +201,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>			
 				</div>
 		
+
 		</div>
 		<!-- 
 			查询订单模态框
@@ -213,9 +217,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<h1>订单详细信息</h1>
 						</div>
 						 <div id="modalform">
+
 					    	<table id="mdalform_tab">
 					    		
 					    	</table>
+
 					    	<div>
 								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
 							</div>
@@ -238,6 +244,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<h1>订单详细信息</h1>
 						</div>
 						<div id="modalform">
+
 					    	
 					 </div>
 					</div>
@@ -248,7 +255,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 		</div>
-		
+
+
 	</div>
 </body>
 </html>

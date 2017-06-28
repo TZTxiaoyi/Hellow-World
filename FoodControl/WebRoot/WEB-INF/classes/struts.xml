@@ -11,21 +11,14 @@
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
 			<result name="tztquerok" type="redirect">/order_vegetable.jsp</result>
 		</action>
-
-		
-
-
 <!-- 注册 -->
-
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
 			<result name="register" type="dispatcher">/home.jsp</result>
 
 			<result name ="list" type="dispatcher">/new.jsp</result>
 		</action>
 	</package>
-	<!-- 
-		有关员工的package
-	 -->
+	
 	
 	<!-- 有关权限的package -->
 	<package name="lanjieqi1" extends="struts-default">
@@ -89,6 +82,7 @@
 		<action name="GJYFC_*" class="com.achaction.GJYFCaction" method="{1}">
 			<result name="ok">/a123.jsp</result>
 		</action>
+<!-- 订单 -->
 		<action name="order_*" class="com.achaction.LyOrderAction" method="{1}">
 			<result name="ok">/a123.jsp</result>
 		</action>

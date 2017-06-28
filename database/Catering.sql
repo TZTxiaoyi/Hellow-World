@@ -215,6 +215,7 @@ from part p1 left join authority a1 on p1.partId=a1.authorityId
 结账方式 	varchar（现金，支付宝，微信）
 订单时间	OrderDate datetime not null,
 桌位		deskId 外键 桌位表（桌位id）
+订单优先级	orderpriority 默认为0
 */
 create table orders
 (
@@ -224,7 +225,8 @@ create table orders
 	FoodNum int not null,
 	cost int foreign key references codetable(id),
 	ordersTime datetime not null,
-	deskId int foreign key references desk(deskId)
+	deskId int foreign key references desk(deskId),
+	orderpriority int default 0
 )
 /*
 12订单点菜表：
@@ -320,3 +322,12 @@ add constraint desk_unique unique(deskName)
 */
 alter table desk
 alter column deskName varchar(20) not null
+
+
+
+create view orderdish_orders
+as
+
+select od.id,od.ordersId,od.dishId,od.dishStatus,od.deskId ,
+o.orderpriority ,d.priority ,d.makeTime,d.dishName
+from orders_dish od ,orders o ,dish d where od.ordersId =o.ordersId and d.dishId= od.dishId and od.dishStatus =12

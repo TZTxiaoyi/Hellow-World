@@ -13,7 +13,6 @@ import com.entity.LyPart;
 import com.insertemploydao.LYInsertEmployDao;
 import com.utils.toJson;
 
-
 public class LYquanxianaction {
 	
 	private LYEmployId employId;
@@ -81,12 +80,11 @@ public class LYquanxianaction {
 	 * @return
 	 */
 	public String getusername(){
+		System.out.println("1");
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		//request.getSession().setAttribute("username", employId.getEmenter());		
 		List list = ied.selectemid(employId);
-		//System.out.println(list);
-		//System.out.println("0000:"+list1);		
 		if (list.size()==1){
 			
 			request.getSession().invalidate();
@@ -99,12 +97,15 @@ public class LYquanxianaction {
 				request.getSession().setAttribute("username", employId.getEmenter());
 				return "cook";
 			}else{
+
 				request.setAttribute("username", employId.getEmenter());
+
 				List list4 = ied.aperson(partname);
 				//System.out.println("999:"+list4);
 				request.getSession().setAttribute("username", employId.getEmenter());
 				request.getSession().setAttribute("listvalue", list4);
 				return "success";
+				
 			}				
 		}else {
 			request.setAttribute("cuo", "haha");
@@ -144,9 +145,7 @@ public class LYquanxianaction {
 		//System.out.println("8888:"+partId);
 		
 		ied.deletpowers(partId);//将角色的Id传到实现类，根据id删除该id下的所有权限；
-		ied.insertpowers(partId,powersId);
-		
-		
+		ied.insertpowers(partId,powersId);		
 	}
 }
 
