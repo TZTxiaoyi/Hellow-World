@@ -1,6 +1,6 @@
 
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+ 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <!-- 
@@ -82,15 +82,11 @@
   
   
 </ul>
-<div class="admin">
-		<iframe scrolling="auto" rameborder="0" 
-			name="right" width="100%" height="95%"></iframe>
-		<div id="datatime">
-		<span id="times"></span>
 
-		</div>
-	</div>
-	<div style="text-align:center;"></div>
+<div class="admin">
+  <iframe scrolling="auto" rameborder="0" name="right" width="100%" height="100%"></iframe>
+</div>
+<div style="text-align:center;">
 
 </div>
 <script type="text/javascript">

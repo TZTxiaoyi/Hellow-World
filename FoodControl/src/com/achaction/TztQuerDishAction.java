@@ -3,7 +3,10 @@ package com.achaction;
 import java.io.IOException;
 import java.util.List;
 
+import javax.jms.Session;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -12,7 +15,7 @@ import com.entity.TztDish;
 import com.insertemploydao.TztDishImp;
 import com.insertemploydao.TztDishOrderImp;
 import com.logic.TztDefaultSortImp;
-import com.logic.TztTimeSortImp;
+import com.logic.TztPrioritySortImp;
 import com.entity.TztDishOrder;
 
 import com.utils.toJson;
@@ -30,9 +33,15 @@ import com.utils.toJson;
  * @°æ±¾£ºV1.0
  */
 public class TztQuerDishAction {
-	int dishId;
 	int method;
+	String dishId;
 	private TztSort sort;
+	public String getDishId() {
+		return dishId;
+	}
+	public void setDishId(String dishId) {
+		this.dishId = dishId;
+	}
 	public TztSort getSort() {
 		return sort;
 	}
@@ -42,12 +51,8 @@ public class TztQuerDishAction {
 	public int getMethod() {
 		return method;
 	}
-	
-	public int getDishId() {
-		return dishId;
-	}
-	public void setDishId(int dishId) {
-		this.dishId = dishId;
+	public void setMethod(int method) {
+		this.method = method;
 	}
 	/**
 	 * 
@@ -61,8 +66,9 @@ public class TztQuerDishAction {
 	 */
 	public void createImp(int method){
 			if(method==1){
-				 TztSort sort = new TztTimeSortImp();
-				 setSort(sort);
+			}else if(method ==2){
+				TztSort sort =new TztPrioritySortImp();
+				setSort(sort);
 			}else {
 				TztSort sort = new TztDefaultSortImp();
 				setSort(sort);
@@ -85,14 +91,13 @@ public class TztQuerDishAction {
 		rep.setContentType("text/html;charset=utf-8");
 		createImp(method);
 		List result= sort.queryMade();
+		System.out.println("made"+result);
 		try {
-			rep.getWriter().print(toJson.toJson("tztjs", result).toString());
+			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 			e.getMessage();
 		}
-		
-		
 	}
 	/**
 	 * 
@@ -105,12 +110,15 @@ public class TztQuerDishAction {
 	 * @throws
 	 */
 	public void queryMading() {
+		HttpServletRequest req	=ServletActionContext.getRequest();
+		HttpSession session=req.getSession();
 		HttpServletResponse rep =ServletActionContext.getResponse();
 		rep.setContentType("html/text;charset =utf-8");
 		createImp(method);
 		List result= sort.queryMading();
+		System.out.println("mading"+result);
 		try {
-			rep.getWriter().print(toJson.toJson("tztjs", result).toString());
+			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -128,12 +136,15 @@ public class TztQuerDishAction {
 	 * @throws
 	 */
 	public void make(){
+		HttpServletRequest req= ServletActionContext.getRequest();
+		HttpSession session=req.getSession();
 		HttpServletResponse rep = ServletActionContext.getResponse();
 		rep.setContentType("html/text;charset=utf-8");
 		createImp(method);
-		sort.made(dishId);
+		List result =sort.made(dishId);
+		session.setAttribute((String) result.get(0),result);
 		try {
-			rep.getWriter().print("sucess");
+			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,14 +161,32 @@ public class TztQuerDishAction {
 	 * @throws
 	 */
 	public void makding(){
+		HttpServletRequest req=ServletActionContext.getRequest();
+		HttpSession session =req.getSession();
 		HttpServletResponse rep = ServletActionContext.getResponse();
 		rep.setContentType("html/text;charset=utf-8");
 		createImp(method);
 		List result =sort.mading(dishId);
-		System.out.println(result+"madeing++++++++++++==");
+		System.out.println("madeing++++++++++++=="+result);
 		try {
-			System.out.println("ffff"+toJson.toJson("js", result).toString());
-			rep.getWriter().print(toJson.toJson("js", result).toString());
+			rep.getWriter().print(toJson.toJsonArray("js", result).toString());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void remove(){
+		HttpServletRequest req=ServletActionContext.getRequest();
+		HttpSession session =req.getSession();
+		HttpServletResponse rep = ServletActionContext.getResponse();
+		rep.setContentType("html/text;charset=utf-8");
+		createImp(method);
+		List result =sort.remove(dishId);
+		System.out.println("remove++++++++++++=="+result);
+		try {
+			rep.getWriter().print(toJson.toJsonArray("js", result).toString());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

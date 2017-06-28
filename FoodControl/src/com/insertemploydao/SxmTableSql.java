@@ -1,16 +1,11 @@
 package com.insertemploydao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import net.sf.json.JSON;
-import net.sf.json.JSONObject;
 
 import com.daointerface.DaoInterface;
+import com.entity.LYEmployee;
 import com.entity.SxmTable;
 import com.utils.DaoFactory;
-import com.utils.toJson;
 
 /**
  * 
@@ -69,7 +64,7 @@ public class SxmTableSql implements DaoInterface {
 	 * @return
 	 */
 	public List selTable(String ser) {
-		String sql = "select * from desk_restaff where deskId like'%"+ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
+		String sql = "select top ("+3+") * from desk_restaff where deskId like'%"+ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
 		List list = DaoFactory.Query(sql);
 		return list;
 	}
@@ -124,7 +119,7 @@ public class SxmTableSql implements DaoInterface {
 	/**
 	 * 
 	 * 方法功能说明： 修改桌子信息 创建：2017-6-14 by Administrator 修改：日期 by 修改者 修改内容：
-	 * 
+	 * 根据桌子id修改桌子人数，名字
 	 * @参数：
 	 * @return void
 	 * @throws
@@ -135,6 +130,43 @@ public class SxmTableSql implements DaoInterface {
 		Object[] params = new Object[] { tab.getPersonNum(), tab.getDeskName(), tab.getDeskId() };
 		return DaoFactory.Updata(sql, params);
 
+	}
+	/**
+	 * 方法功能说明： 修改桌子信息 创建：2017-6-24 by Administrator 修改：日期 by 修改者 修改内容：
+	 * 根据员工名字查询员工id
+	 * @param emp
+	 * @return
+	 */
+	public List updateper(Object emp){
+		LYEmployee em=(LYEmployee) emp;
+		String sql="select staffId from staffInfo where Name='"+em.getEmname()+"'";
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 方法功能说明： 修改桌子信息 创建：2017-6-24 by Administrator 修改：日期 by 修改者 修改内容：
+	 * 根据桌子id更改员工id---员工桌子表
+	 * @param tabp
+	 * @param emId
+	 * @return
+	 */
+	public int uppertab(Object tabp,int emId){
+		SxmTable tab = (SxmTable) tabp;
+		String sql="update desk_staff set staffId='"+emId+"' where deskId=?";
+		Object[] params = new Object[] {tab.getDeskId()};
+		return DaoFactory.Updata(sql, params);
+	}
+	/**
+	 * 方法功能说明： 修改桌子信息 创建：2017-6-24 by Administrator 修改：日期 by 修改者 修改内容：
+	 * 根据桌子id、员工id插入---员工桌子表
+	 * @param tabp
+	 * @param emId
+	 * @return
+	 */
+	public int insertcharge(int emp,Object tabp){
+		SxmTable tab = (SxmTable) tabp;
+		String sql="insert into desk_staff values(?,?)";
+		Object[] params=new Object[]{tab.getDeskId(),emp};
+		return DaoFactory.Updata(sql, params);
 	}
 	public int uptabstate(String tablest) {
 		String sql = "update desk set deskState=7 where deskName=?";
@@ -168,9 +200,56 @@ public class SxmTableSql implements DaoInterface {
 		total=(Integer) li.get(0);
 		return total;
 	}
-
+	/**
+	 * 根据更改前的桌名获取桌子id
+	 */
+	public List getbeforeid(Object tabp){
+		SxmTable tab = (SxmTable) tabp;
+		String sql="select deskId from desk where deskName='"+tab.getDeskName()+"'";
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 根据更改后的桌名获取桌子id
+	 */
+	public List gettableid(String tname){
+		String sql="select deskId from desk where deskName='"+tname+"'";
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 根据更改前的桌子id获取订单id
+	 */
+	public List getorderid(int beforeid){
+		String sql="select ordersId from orders where deskId="+beforeid;
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 根据订单id将桌子更改为更改后的
+	 */
+	public int changeid(int tableid,int ordersid){
+		String sql="update orders set deskId=? where ordersId=?";
+		Object[] params = new Object[] {tableid,ordersid};
+		return DaoFactory.Updata(sql, params);
+	}
+	/**
+	 * 根据更改前的桌名改变桌子状态为可用
+	 */
+	public int changedstate(Object tabp){
+		SxmTable tab = (SxmTable) tabp;
+		String sql="update desk set deskState=6 where deskName=?";
+		Object[] params = new Object[] {tab.getDeskName()};
+		return DaoFactory.Updata(sql, params);
+	}
+	/**
+	 * 根据更换前的桌名更改桌子状态为占用
+	 */
+	public int changeafterdstate(String tname){
+		String sql="update desk set deskState=7 where deskName=?";
+		Object[] params = new Object[] {tname};
+		return DaoFactory.Updata(sql, params);
+	}
 	public List sel(Object obj) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

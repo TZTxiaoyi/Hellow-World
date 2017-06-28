@@ -25,10 +25,6 @@ import com.utils.DaoFactory;
  * @°æ±¾£ºV1.0  
  */
 public class TztDishImp implements DaoInterface {
-
-	/* (non-Javadoc)
-	 * @see com.daointerface.DaoInterface#add(java.lang.Object)
-	 */
 	public int add(Object obj) {
 		TztDish dish = (TztDish) obj;
 		String sql=" insert into dish values(?,?,?,?,?,?,?)";
@@ -37,10 +33,6 @@ public class TztDishImp implements DaoInterface {
 
 		return DaoFactory.Updata(sql, objects);
 	}
-
-	/* (non-Javadoc)
-	 * @see com.daointerface.DaoInterface#del(java.lang.Object)
-	 */
 	public int del(Object obj) {
 		TztDish dish = (TztDish) obj;
 		String sql ="updata dish set dishStatus=20 from dish where dishId=?";
@@ -48,27 +40,17 @@ public class TztDishImp implements DaoInterface {
 		return DaoFactory.Updata(sql, objects);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.daointerface.DaoInterface#sel(java.lang.Object)
-	 */
 	public List sel(Object obj) {
 		TztDish dish = (TztDish) obj;
 		String sql ="select * from dish where dishId= "+dish.getDishId()+"" ;
 		return DaoFactory.Query(sql);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.daointerface.DaoInterface#update(java.lang.Object)
-	 */
 	public int update(Object obj) {
 		TztDish dish = (TztDish) obj;
 		String sql =" update dish set dishName=? ,price =? ,kindId=? ,makeTime=?,priority=?,picture=?,maxCopies= ? where dishId=?  ";
 		Object[] object =new Object[]{dish.getDishName(),dish.getPrice(),dish.getKindId(),dish.getMakeTime(),dish.getPriority(),dish.getPicture(),dish.getMaxCopise(),dish.getDishId()};		
 		return DaoFactory.Updata(sql, object);
 	}
-
-
-
-	
 }
 

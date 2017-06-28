@@ -46,7 +46,7 @@
 		}
 		
 		form div {
-			margin-left: 20%;
+			margin-left:20%;
 			width: 350px;
 			height: 40px;
 			margin-top: 30;
@@ -67,6 +67,24 @@
 			width:210px;
 			height:40px;
 		}
+		#hometext{
+			position:absolute;
+			top:0%;
+			left:30%;
+			color:white;
+		}
+		#times{
+			position:absolute;
+			top:10px;
+			right:10px;
+			font-size:20px;
+		}
+		#username{
+			position:absolute;
+			top:10px;
+			right:300px;
+			font-size:20px;
+		}
 	</style>
 	
 
@@ -78,6 +96,8 @@
 			<div class="xs6 xm4 xs3-move xm4-move">
 				<div style="height:450px;"></div>
 				<div class="media media-y margin-big-bottom"></div>
+				<h1 id="hometext">欢&nbsp;&nbsp;&nbsp;迎&nbsp;&nbsp;&nbsp;使&nbsp;&nbsp;&nbsp;用&nbsp;&nbsp;&nbsp;
+				网&nbsp;&nbsp;&nbsp;上&nbsp;&nbsp;&nbsp;点&nbsp;&nbsp;&nbsp;餐&nbsp;&nbsp;&nbsp;系&nbsp;&nbsp;&nbsp;统</h1>
 				<div id="btn">
 					<button type="button" class="btn btn-default btn-lg btn-danger" id = "myModal4"
 					data-toggle="modal" data-target="#myModal4">
@@ -105,6 +125,8 @@
 					</button>
 				</div>
 			</div>
+			<div id="username"></div>
+			<div id="times"></div>
 		</div>
 	</div>
 <!-- 自助点餐模态框 -->	
@@ -273,6 +295,19 @@
 	</div>
 
 	<script type ="text/javascript">
+		function getTime(){
+    		var time = new Date();
+   			$("#times").html(time.toLocaleString());
+		}
+		$(function(){
+    		setInterval("getTime()",1000);
+    		$("#username").html("");
+    		if('${user}'!=""){
+    			$("#username").html("欢迎用户："+'${user}');
+    			
+    		}
+    		
+		});
 		function userFocus(){
 			var user1=document.getElementById("aa1");
 			//user1.style.display="none";

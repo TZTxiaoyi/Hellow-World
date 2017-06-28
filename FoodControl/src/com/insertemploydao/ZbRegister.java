@@ -92,10 +92,8 @@ public class ZbRegister implements DaoInterface{
 			String acc= (String) a.get(1);
 			String pwd = (String) a.get(2);
 			if(zbsd.getAccount().equals(acc)&& zbsd.getPwd().equals(pwd)){
-				flag = 1;
-				
-			}
-			
+				flag = 1;		
+			}	
 		}
 		
 		return flag;

@@ -27,6 +27,7 @@ public class TztDish {
 	int priority;
 	String picture;
 	int maxCopise;
+	String dishStatus;
 	public int getDishId() {
 		return dishId;
 	}
@@ -81,7 +82,6 @@ public class TztDish {
 	public void setDishStatus(String dishStatus) {
 		this.dishStatus = dishStatus;
 	}
-	String dishStatus;
 	
 	
 	

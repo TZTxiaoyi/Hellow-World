@@ -8,24 +8,8 @@
 <head>
 
 <script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.js"></script>
-<script type="text/javascript"
-	src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
-	<style>
-		td{
-			width:100px;
-		}
-	
-	</style>
-</head>
-
-<body>
-	<input id="query" type="button" value="查询" />
-	<div >
-		<table id="title">
-			
-		</table>
-	</div>
-	<script type="text/javascript">
+<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
  		$(function(){
  			$("#query").click(function(){
  				$.ajax({
@@ -45,6 +29,17 @@
  			});
  		});
  	</script>
+	
+</head>
+
+<body>
+	<input id="query" type="button" value="查询" />
+	<div >
+		<table id="title">
+			
+		</table>
+	</div>
+	
 </body>
->>>>>>> 4b7d5278200bb3bb2f4b274570502d1e2f83cf99
+
 </html>

@@ -2,7 +2,13 @@ package com.achaction;
 
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,12 +18,7 @@ import net.sf.json.JSON;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.GJYFoodCategory;
-
-
 import com.logic.GJYInsertFoodcategory;
-
-
-
 import com.utils.toJson;
 
 
@@ -26,7 +27,30 @@ public class GJYFCaction {
 	private String search;
 	private GJYFoodCategory fdCry;
 	GJYInsertFoodcategory inFc=new GJYInsertFoodcategory();
-	
+	File phone;
+	String phoneFileName;
+	public File getPhone() {
+		return phone;
+	}
+
+
+
+	public void setPhone(File phone) {
+		this.phone = phone;
+	}
+
+
+
+	public String getPhoneFileName() {
+		return phoneFileName;
+	}
+
+
+
+	public void setPhoneFileName(String phoneFileName) {
+		this.phoneFileName = phoneFileName;
+	}
+
 	
 	
 	public GJYFoodCategory getFdCry() {
@@ -41,7 +65,7 @@ public class GJYFCaction {
 
 
 
-	public void save(){	
+	public void insertfood(){	
 		int a=inFc.FCinsert(fdCry);
 	}
 	
@@ -94,5 +118,30 @@ public class GJYFCaction {
 	public void setSearch(String search) {
 		this.search = search;
 	}
+	public void uploads(){
+		System.out.println("-----");
+		try {
+			
+			String name=new Date().getTime()+phoneFileName.substring(phoneFileName.lastIndexOf("."));
+			System.out.println(name);
+			File file=new File("e:/"+name);
+			InputStream is=new FileInputStream(phone);
+			OutputStream os=new FileOutputStream(file);
+			byte[] b=new byte[1024];
+			try {
+				while(is.read(b)!=-1){
+					os.write(b);
+				}
+				is.close();
+				os.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	
+
 }
