@@ -5,6 +5,7 @@ import java.util.Date;
 
 
 public class LjlAddOrder {
+	private int ordersId;
 	private int orderStatus;
 	private int orderPrice;
 	private int foodNum;
@@ -12,8 +13,14 @@ public class LjlAddOrder {
 	private String ordersTime;
 	private String deskname;
 	private int deskid;
+	public int getOrdersId() {
+		return ordersId;
+	}
+	public void setOrdersId(int ordersId) {
+		this.ordersId = ordersId;
+	}
 	public int getDeskid() {
-		deskid=1;
+		
 		return deskid;
 	}
 	public String getDeskname() {
@@ -51,7 +58,6 @@ public class LjlAddOrder {
 	}
 	public String getOrdersTime() {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-		System.out.println(df.format(new Date()));
 		return df.format(new Date());
 	}
 	public void setOrdersTime(String ordersTime) {

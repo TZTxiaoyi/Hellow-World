@@ -1,6 +1,8 @@
 package com.achaction;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,25 +13,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.LjlAddFood;
 import com.entity.LjlAddOrder;
+
 import com.entity.ZbDesk;
 import com.entity.ZbUsagedata;
 import com.insertemploydao.LjlDish;
 import com.insertemploydao.LjlOrders;
-import com.logic.ZbRegister;
+
+
+import com.entity.SxmTable;
+import com.entity.TztDishOrder;
+import com.insertemploydao.LjlDish;
+import com.insertemploydao.LjlOrders;
+import com.insertemploydao.SxmTableSql;
+import com.insertemploydao.TztDishOrderImp;
+import com.utils.toJson;
+
+
+
+
 
 
 public class LjlAddFoodAction {
 	private LjlAddFood addfood;
 	private LjlAddOrder addorder;
-	//private String datatime1;
+	private String desknub;
+	private SxmTable st;
+	public SxmTable getSt() {
+		return st;
+	}
+	public void setSt(SxmTable st) {
+		this.st = st;
+	}
 	LjlOrders orders=new LjlOrders();
+	LjlDish dish=new LjlDish();
+	TztDishOrderImp DishOrderImp=new TztDishOrderImp();
+	SxmTableSql tableSql=new SxmTableSql();
+	
+	
+	public String getDesknub() {
+		return desknub;
+	}
+	public void setDesknub(String desknub) {
+		this.desknub = desknub;
+	}
 	public LjlAddOrder getAddorder() {
 		return addorder;
 	}
@@ -42,9 +75,47 @@ public class LjlAddFoodAction {
 	public void setAddfood(LjlAddFood addfood) {
 		this.addfood = addfood;
 	}
+	/**
+	 * 
+	 * 方法功能说明：  下单功能
+	 * 创建：2017-6-21 by li   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：  addorder 订单实体类     
+	 * @return void     
+	 * @throws
+	 */
 	public void addOrder(){
-		System.out.println(addorder.getFoodNum()+","+addorder.getOrderPrice()+","+addorder.getOrderStatus()+","+addorder.getCost()+","+addorder.getOrdersTime()+","+addorder.getDeskid());
-		int flag=orders.add(addorder);
+	
+		int dishStatus=12;
+		int flag=-1;
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpSession session=request.getSession();
+		String[] foodnames=session.getValueNames();
+		String tablename=(String) session.getAttribute("dname");
+		List listtable=tableSql.idTablename(tablename);
+		List listtId=(List) listtable.get(0);
+		int tableid=(Integer) listtId.get(0);
+		addorder.setDeskid(tableid);//设置桌子id
+		int rsid=orders.rsadd(addorder);//添加订单并获得id
+		for (int i = 0; i < foodnames.length; i++) {
+			if (foodnames[i]!="dname") {
+				List list=dish.seldishName(foodnames[i]);
+				session.getAttribute(foodnames[i]);
+				LjlAddFood addf= (LjlAddFood)session.getAttribute(foodnames[i]);
+				String dishnum=addf.getNumber();
+				int number=Integer.parseInt(addf.getNumber());//每个菜的数量
+				List listdish=(List) list.get(0);
+				int dishid=(Integer) listdish.get(0);
+				TztDishOrder dishorder=new TztDishOrder(rsid,dishid,dishStatus,tableid,number);
+				for (int j = 0; j < number; j++) {
+					DishOrderImp.add(dishorder);
+				}
+				flag=1;
+			}
+			
+		}
+
 		HttpServletResponse response=ServletActionContext.getResponse();
 		try {
 			response.getWriter().println(flag);
@@ -65,64 +136,20 @@ public class LjlAddFoodAction {
 	 */
 	public String newFood(){
 		HttpServletRequest request=ServletActionContext.getRequest();
-		LjlDish dish=new LjlDish();
+		HttpSession session=request.getSession();
+		String dname=request.getParameter("selectvalue");
 		List list=dish.sel();
-		System.out.println("newFood:"+list);
-		request.setAttribute("dishList", list); 
-		return "newFood";
-		
-	}
-	
-	//++++++++++++++++++++++++++++++++++++++++++++++
-	public String zbfood(){
-		HttpServletRequest request=ServletActionContext.getRequest();
-		LjlDish dish=new LjlDish();
-		List list=dish.sel();
-		
-		return "zbfood";
-	}
-	ZbUsagedata zbud;
-	ZbRegister re=new ZbRegister();
-	/**
-	 * 
-	 * 方法功能说明：  点餐
-	 * 创建：2017-6-23 by zhubin   
-	 * 修改：日期 by 修改者  
-	 * 修改内容：  
-	 * @参数： @return      
-	 * @return String     
-	 * @throws
-	 */
-	public String login(){
-			
-			
-			int list = re.loginsel(zbud);
-			//JSON json = toJson.toJson("account",list );//转型
-			HttpServletResponse hsr = ServletActionContext.getResponse();//获取请求
-			System.out.println(list);
-			hsr.setContentType("text/html,charset=utf-8");
-			hsr.setCharacterEncoding("utf-8");
-			
-			try {
-				
-				hsr.getWriter().print(list);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if(list==1){
-				return "list";
-				
-			}else{
-				HttpServletRequest ht = ServletActionContext.getRequest();
-				ht.setAttribute("na", "k");
-				return "login";
-				
-			}
+		request.setAttribute("dishList",list); 
+		tableSql.uptabstate(dname);//根据桌子name改变桌子状态
+		System.out.println(tableSql.uptabstate(dname));
+		if (dname!=null) {
+			session.setAttribute("dname", dname);
 		}
+		request.setAttribute("dishList", list); 
+		return "newFood";	
+	}
 	
 	
-	//++++++++++++++++++++++++++++++++++++++++++++++
 	/**
 	 * 
 	 * 方法功能说明：  添加菜品到购物车
@@ -137,6 +164,7 @@ public class LjlAddFoodAction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		session.setAttribute(addfood.getFoodname(), addfood);
+		LjlAddFood addf=(LjlAddFood) session.getAttribute(addfood.getFoodname());
 		try {
 			
 			response.getWriter().print("1");
@@ -163,10 +191,11 @@ public class LjlAddFoodAction {
 		int price=0;
 		int num=0;
 		for (int i = 0; i <sname.length; i++) {
-			LjlAddFood addf= (LjlAddFood)session.getAttribute(sname[i]);
-			System.out.println(addf.getFoodname()+","+addf.getNumber()+","+addf.getPrice()+","+addf.getUprice());
-			price=Integer.parseInt(addf.getPrice())+price;
-			num=Integer.parseInt(addf.getNumber())+num;
+			if(sname[i]!="dname"){
+				LjlAddFood addf= (LjlAddFood)session.getAttribute(sname[i]);
+				price=Integer.parseInt(addf.getPrice())+price;
+				num=Integer.parseInt(addf.getNumber())+num;
+			}	
 		}
 		Map map=new HashMap();
 		map.put("price", price);
@@ -193,9 +222,11 @@ public class LjlAddFoodAction {
 	 * @throws
 	 */
 	public void clearfood(){
-		System.out.println("------------------");
 		HttpSession session=ServletActionContext.getRequest().getSession();
+		String tablename=(String) session.getAttribute("dname");
 		session.invalidate();
+		
+		session.setAttribute("dname", tablename);
 	}
 	/**
 	 * 
@@ -208,7 +239,6 @@ public class LjlAddFoodAction {
 	 * @throws
 	 */
 	public void delfood(){
-		System.out.println("del---------------");
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		session.removeAttribute(addfood.getFoodname());
 	}
@@ -226,20 +256,21 @@ public class LjlAddFoodAction {
 	public void lookFood(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
-		
 		HttpSession session=ServletActionContext.getRequest().getSession();
 		String[] sname=session.getValueNames();
 		int price=0;
 		JSONObject json=new JSONObject();
 		for (int i = 0; i <sname.length; i++) {
-			LjlAddFood addf= (LjlAddFood)session.getAttribute(sname[i]);
-			int number=Integer.parseInt(addf.getNumber());
-			if (number!=0) {
-				Map map=new HashMap();
-				map.put("ad"+i,addf);
-				json.accumulateAll(map);
+			if(sname[i]!="dname"){
+				LjlAddFood addf= (LjlAddFood)session.getAttribute(sname[i]);
+				int number=Integer.parseInt(addf.getNumber());
+				if (number!=0) {
+					Map map=new HashMap();
+					map.put("ad"+i,addf);
+					json.accumulateAll(map);
+				}
+				price=Integer.parseInt(addf.getPrice())+price;	
 			}
-			price=Integer.parseInt(addf.getPrice())+price;
 		}
 		try {
 			response.getWriter().print(json.toString());
@@ -249,5 +280,117 @@ public class LjlAddFoodAction {
 			e.printStackTrace();
 		}
 	}
+
+	public String backhome(){
+		HttpSession session=ServletActionContext.getRequest().getSession();
+		session.invalidate();
+		return "backhome";
+	}
+	
+	/**
+	 * 
+	 * 方法功能说明：  查询当天订单
+	 * 创建：2017-6-21 by sxm  
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：       
+	 * @return void     
+	 * @throws
+	 */
+	public void searchOrder(){
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd 00:00:00");//设置日期格式
+		String time=df.format(new Date());
+		SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String time1=df1.format(new Date());
+		List list=orders.selOrder(time,time1);
+		JSON json=toJson.toJson("val", list);
+		try {
+			hsr.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 
+	 * 方法功能说明：  桌子详情
+	 * 创建：2017-6-21 by sxm  
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：       
+	 * @return void     
+	 * @throws
+	 */
+	public void orderDish(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		hsr.setContentType("text/html;charset=UTF-8");
+		LjlDish dish=new LjlDish();
+		List listdish=dish.sel();	
+		request.getSession().setAttribute("dish",listdish );
+		String retime=null;
+		List list=orders.orderDish(addorder.getOrdersId());
+		JSON json=toJson.toJson("val", list);
+			List li=(List) list.get(0);			
+			try {
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String time=df.format(new Date()); 
+				String time1=df.format(li.get(2));
+				Date d1 = df.parse(time);
+				Date d2 = df.parse(time1); 
+			    long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别  
+			    long days = diff / (1000 * 60 * 60 * 24);  
+			   	long hours = (diff-days*(1000 * 60 * 60 * 24))/(1000* 60 * 60);  
+			    long minutes = (diff-days*(1000 * 60 * 60 * 24)-hours*(1000* 60 * 60))/(1000* 60);  
+			   retime=hours+"小时"+minutes+"分";  	
+			   request.getSession().setAttribute("retime", retime);	
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		try {
+			hsr.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void updateOrder(){
+		
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int ud=orders.updesk(st);
+		int od=orders.upOrders(addorder);
+		int flag=-1;
+		if(od!=-1&&ud!=-1){
+			flag=1;
+		}
+		try {
+			response.getWriter().println(flag);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 清理桌子
+	 */
+	public void clearDesk(){
+		System.out.println("cler");
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int cd=orders.clearDesk(st);
+		System.out.println("cd"+cd);
+		try {
+			response.getWriter().println("dd");
+			System.out.println("dddd");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	
 }

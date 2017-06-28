@@ -1,5 +1,7 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*"%> 
+<%@ page import="java.text.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -59,8 +61,18 @@
 			
 			display:none;
 		}
-		#food-btn{
+		div input {
+			margin-top:30px;
 			
+			
+		}
+		#aa2{
+			color:red;
+		}
+		#zbid{
+			float:left;
+			margin-left:300px;
+			margin-top:-330px;
 		}
    </style>
    </head>
@@ -71,12 +83,15 @@
 	<div class="row">
 <!-- 头部 -->
 		<div id="zbtop">
-			<a type="button" class="btn btn-default"id="zbbutton1" href = "home.jsp"><h1 class="glyphicon glyphicon-home"></h1></a><!-- 主页 -->
+			<a type="button" class="btn btn-default"id="zbbutton1" href = "addfood_backhome.action"><h1 class="glyphicon glyphicon-home"></h1></a><!-- 主页 -->
 			<button type="button" class="btn btn-default" id="zbbutton1"><h1 class="glyphicon glyphicon-map-marker"><input type ="text" size="10px"/></h1></button><!-- 模糊查询菜名 -->
 			<button type="button" class="btn btn-default"id="zbbutton1"><h1 class="glyphicon glyphicon-bell">呼叫员工</h1></button><!-- 呼叫员工按钮 -->
 			
 
+
 			<span>当前系统时间：</span><span id="date_1"></span>
+			<span id="deskname">${sessionScope.dname}</span>
+			<span id ="desk2"></span>
 			
 			<%	String desknub = request.getParameter("desknub");
 				String personnub = request.getParameter("personnub");
@@ -88,9 +103,77 @@
 				out.println("电话:"+zbphone);
 				out.println("地址："+zbaddress);
 				
-			 %>			
+			 %>	
+			 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1">
+		  我的资料
+		</button>
 
+<!-- Modal -->
+		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">个人基本信息</h4>
+		      </div>
+<!-- form表单 -->	
+				<form action ="home_nom.action" method ="post" onsubmit ="return show()">
+					<div>
+						<input placeholder="姓名" type="text" id="zb_name" name ="zb.name"/><br/>
+					</div>
+					<div>
+						<input placeholder="年龄" type="text" id="zb_age" name ="zb.age"/><br/>
+					</div>
+					
+					<div>
+						<input type ="radio" name ="zb.sex"  value ="4"/>男<input type ="radio" name ="zb.sex" value ="5"/>女<br>
+					</div>
+					<div>
+						<input placeholder="电话" type="text" id="zb_phone1" name ="zb.phone1"/><br/>
+					</div>
+					<div>
+						<input placeholder="地址" type="text" id="zb_adress" name ="zb.adress"/><br/>
+					</div>
+					
+					<button type="submit" class="btn btn-warning btn-group-lg" id ="zbsub">提交</button>
+				</form>
+				
+				<form action ="home_nom.action" method ="post" id = "zbid">
+					
+					<h4 class="modal-title" id="myModalLabel">修改密码</h4>
+					<div>
+						<input placeholder="输入旧密码" type="password" id="zb_pwd0" name ="zb.pwd0"/><br/>
+					</div>
+					<div>
+						<input placeholder="输入新密码" type="password" id="zb_pwd1" name ="zb.pwd1"/><br/>
+					</div>
+					<div>
+						<input placeholder="再次输入新密码" type="password" id="zb_pwd2"
+							onfocus="passFocus()" onblur="passBlur()" name ="zb.pwd2"/> <span
+							id="aa2"></span>
+					</div>
+					
+					<button type="submit" class="btn btn-warning btn-group-lg" id ="zbsub">确认修改</button>
+				</form>
+<!--form表单  -->		      
+		      <!-- <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">×</button>
+		        
+		        <button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >保存更改</button>
+		        $("#usagepwd").blur(function(){
+					alert($("#usagepwd").val());
+				});	
+		        
+		      </div> -->
+		    </div>
+		  </div>
 		</div>
+			 
+			 
+			 
+			 
+			 
+		</div>	
 <!-- 左侧 -->		
 		<div class=" col-md-2" id="zbleft">
 			<div id="navbarExample" class="navbar navbar-static">
@@ -129,12 +212,12 @@
 			<c:forEach var="next"  items="${dishList}" varStatus="statu">
 				<div>
 					<img  onclick = "show()" src="image/2.png" alt="..." class="img-circle" width="200" height="200"><br/>
-					<span name="name${statu.index}">${next[1]}</span>:  <span name="name${statu.index}">${next[2]}</span>元 / 份<br/>
+					<span name="${next[1]}">${next[1]}</span>:  <span name="${next[1]}">${next[2]}</span>元 / 份<br/>
 					<div class="row" >
 						<div class=" center-block"  id="food-btn">
-							<input type="button" name="name${statu.index}" value="-1" class="remove btn btn-default">
-							<input type="text" value="0" class="number-cl btn btn-default" size="3" name="name${statu.index}">
-							<input type="button" name="name${statu.index}" value="+1" class="add btn btn-default">
+							<input type="button" name="${next[1]}" value="-1" class="remove btn btn-default">
+							<input type="text" value="0" class="number-cl btn btn-default" size="3" name="${next[1]}">
+							<input type="button" name="${next[1]}" value="+1" class="add btn btn-default">
 						</div>
 					</div>
 				</div>
@@ -186,6 +269,44 @@
  
 		<script>
 			
+				
+			/* 
+			$sex=$_POST["sex"];
+			alert($_POST['sex']);
+			
+			
+			$("#zbsub").click(function(){
+			alert("++++++++++++++");
+				var sex = $($("input[name=\"sex\"]")[0]).val;
+				alert(sex);
+				var s = $(s).attr("sex").val();
+				
+				
+			}); */
+			//++++++++++++++++++++++++++修改密码++++++++++++++++++++++++++++++++++++++++++++++
+			$("#zb_pwd0").blur(function(){
+				var password = $("#usagepwd").val();a
+				$.ajax({
+					url : "",
+					data: {},
+					type "post",
+					success:function(data){
+						
+					},
+				});
+				alert(password);
+			});
+			$("#zb_pwd2").blur(function(){
+				var pwd1 = $("#zb_pwd1").val();
+				var pwd2 = $("#zb_pwd2").val();
+				alert(pwd1);
+				alert(pwd2);
+				if(pwd1 != pwd2){
+					$("#aa2").html("*两次密码不一致");
+				}else{
+					$("#aa2").html("");
+				}
+			});
 			
 				//添加菜品，更新菜单和总价
 				function upfood(btnid,foodname,uprice,number,price){	
@@ -214,7 +335,6 @@
 				//减少点菜的数量更新总价
 				$("#zbright").on('click',".remove",function(){
 					var btnid=$(this).attr("name");//当前点击的按钮的name
-					alert(btnid);
 					var foodname=$($("span[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
 					var uprice=parseInt($($("span[name=\""+btnid+"\"]")[1]).html());//单价
 					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())-1;
@@ -254,14 +374,31 @@
 							var json=JSON.parse(data);
 							$("#modall-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
-								var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
-								$("#modall-table").append(dd);
+									var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
+									$("#modall-table").append(dd);
+									$("#deskname").html(value);
 							});	
 							OrderTotal();
 						}
 					});
 				}
-				
+				$(function(){
+					newfoodnum();
+				});
+				function newfoodnum(){				
+					$.ajax({
+						type:"post",
+						url:"addfood_lookFood.action",
+						data:{"df":"df"},
+						success:function(data){
+							var json=JSON.parse(data);
+							$.each(json,function(index,value){
+									$($("input[name=\""+value.foodname+"\"]")[1]).val(value.number);
+							});	
+							OrderTotal();
+						}
+					});
+				}
 				//清除所有我的菜单
 				$("#clear").click(function(){
 					//alert("dff");
@@ -289,49 +426,35 @@
 					});
 					
 				});
+				//下单获得订单信息和菜单信息，桌号
+				var orderStatus=0;
 				$("#order").click(function(){
-					alert("dff");
 					var orderStatus=15;
 					var orderPrice=parseInt($("#mtTotal").html());
 					var foodNum=parseInt($("#foodnum").html());
 					var cost=9;
+					//获得菜单数据
 					$.ajax({
 						type:"post",
 						url:"addfood_addOrder.action",
 						data:{"addorder.orderStatus":orderStatus,"addorder.orderPrice":orderPrice,"addorder.foodNum":foodNum,"addorder.cost":cost},
 						success:function(data){
-								if(data==1){
+								if(data!=-1){	
 									alert("下单成功");
 								}
 						}
 					});
 							
 				});
-				function p(s) {
-   				 return s < 10 ? '0' + s: s;
-				}
-				function date_1(){
-					
-					var myDate = new Date();
-					//获取当前年
-					var year=myDate.getFullYear();
-					//获取当前月
-					var month=myDate.getMonth()+1;
-					//获取当前日
-					var date=myDate.getDate(); 
-					var h=myDate.getHours();       //获取当前小时数(0-23)
-					var m=myDate.getMinutes();     //获取当前分钟数(0-59)
-					var s=myDate.getSeconds();  
-					var now=year+'-'+p(month)+"-"+p(date)+" "+p(h)+':'+p(m)+":"+p(s);
-					return now;
-				}
-				function newdate_1(){
-					$("#date_1").html(date_1());
+				
+				function getTime(){
+    				var time = new Date();
+   				 	$("#desk2").html(time.toLocaleString());
 				}
 				$(function(){
-					newdate_1();
-					setInterval('newdate_1();', 1000);
+    				setInterval("getTime()",1000);
 				});
+				
 		</script>
 		<script type="text/javascript" language="javascript">
 			var z1=document.getElementById("z1");

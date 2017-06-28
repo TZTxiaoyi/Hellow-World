@@ -1,4 +1,6 @@
-   <!DOCTYPE html>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="zh-cn">
 	<head>
 	
@@ -17,18 +19,24 @@
 				$("#addent").click(function(){
 					var ementer = $("#ementer").val();
 					var emword	= $("#emword").val();					
-					if(ementer && emword){
-					alert("dadad")					
+					if(ementer && emword){					
 						$.ajax({
 							type:"post",
-							url:"achieve_enterid.action",
+							url:"fresh_enterid.action",
 							data:{"employId.ementer":ementer,"employId.emword":emword},
 							success:function(data){
-								alert("success");
+								if(data==-1){
+									alert("添加失败");
+								}else if(data==1){
+									alert("添加成功");
+								}else{
+									alert("没有权限");
+								}								
 							}
 						});
 					}else{
 						alert("添加员工账号失败");
+			
 					}
 				});
 			});
@@ -37,14 +45,14 @@
 	<body>
 	
 		  <div class="panel admin-panel">
-		    <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+		    <div class="panel-head"><strong class="icon-reorder">内容列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
 		    <div class="padding border-bottom">
 		      <ul class="search" style="padding-left:10px;">       
 		        
 		        <li>
-		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span> 添加员工账号</a>
+		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span>添加员工账号</a>
 		         		<!-- 
-		         			添加员工账号模态框
+		         			æ·»å åå·¥è´¦å·æ¨¡ææ¡
 		         		 -->
 		         
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -55,24 +63,26 @@
 								<h4 class="modal-title" id="myModalLabel">添加员工账号</h4>
 								</div>
 									<!-- 
-										添加员工信息的输入框 ----
+										æ·»å åå·¥ä¿¡æ¯çè¾å¥æ¡ ----
 									 -->
 									 
 								<div class="modal-body1">
 															
+
 									账	号：<input type="text" id="ementer" name="ementer"><br/>
 									密	码：<input type="text" id="emword" name="emword"><br/>
+
 											
 												     
 										
 								</div>
 								<div class="modal-footer">
 										<!-- 
-											关闭模态框按钮
+											å³é­æ¨¡ææ¡æé®
 										 -->
 									<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
 										<!-- 
-											点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
+											ç¹å»æ·»å æé®ï¼è§¦åç¹å»äºä»¶ï¼å½ä¿¡æ¯å¨é¨å½å¥åæ§è¡Ajaxè¯­å¥ï¼
 										 -->
 									<input type="submit" class="btn btn-primary"  value="添加" id="addent"/>	
 								</div>
@@ -81,7 +91,7 @@
 					</div>
 		        <li>
 		          <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-		          <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a></li>
+		          <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" >搜索</a></li>
 		      </ul>
 		    </div>
 		    <table class="table table-hover text-center">
@@ -89,7 +99,7 @@
 			      <tr>	              
 			        <th>账号</th>
 			        <th>密码</th>	
-			        <th>账号状态</th>        
+			        <th>账号状态</th>        
 			        <th>操作</th>       
 			      </tr>      
 			        <tr>
@@ -99,7 +109,7 @@
 			          <td>
 			          	<div class="button-group"> 
 			          		<a class="button border-red" href="javascript:void(0)" onclick="return del(1)">
-			          			<span class="icon-trash-o"></span> 删除
+			          			<span class="icon-trash-o"></span>删除
 			          		</a>     		
 			          	</div>
 			          </td>

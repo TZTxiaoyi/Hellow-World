@@ -10,39 +10,57 @@ package com.entity;
  * @°æ±¾£ºV1.0
  */
 public class TztDishOrder {
-	String OrderId;
-	String dishId;
-	String dishStatus;
-	String id;
-	String deskId;
-	public String getOrderId() {
+	int OrderId;
+	int dishId;
+	int dishStatus;
+	int id;
+	int deskId;
+	int dishNum;
+	public int getDishNum() {
+		return dishNum;
+	}
+	public void setDishNum(int dishNum) {
+		this.dishNum = dishNum;
+	}
+	public TztDishOrder(int rsid, int dishid2, int dishStatus2, int deskid2,int dishNum2) {
+		// TODO Auto-generated constructor stub
+		this.OrderId= rsid;
+		this.dishId=dishid2;
+		this.dishStatus=dishStatus2;
+		this.deskId=deskid2;
+		this.dishNum=dishNum2;
+	}
+	public TztDishOrder() {
+		// TODO Auto-generated constructor stub
+	}
+	public int getOrderId() {
 		return OrderId;
 	}
-	public void setOrderId(String orderId) {
+	public void setOrderId(int orderId) {
 		OrderId = orderId;
 	}
-	public String getDishId() {
+	public int getDishId() {
 		return dishId;
 	}
-	public void setDishId(String dishId) {
+	public void setDishId(int dishId) {
 		this.dishId = dishId;
 	}
-	public String getDishStatus() {
+	public int getDishStatus() {
 		return dishStatus;
 	}
-	public void setDishStatus(String dishStatus) {
+	public void setDishStatus(int dishStatus) {
 		this.dishStatus = dishStatus;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDeskId() {
+	public int getDeskId() {
 		return deskId;
 	}
-	public void setDeskId(String deskId) {
+	public void setDeskId(int deskId) {
 		this.deskId = deskId;
 	}
 	

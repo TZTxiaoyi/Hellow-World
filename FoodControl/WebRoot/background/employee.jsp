@@ -22,25 +22,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 
 		触发点击事件后，先判断是否得到输入框中的值，
 		当有一个输入框中的值为空时，将不执行Ajax语句
-		<td colspan="10">
-		        <div class="pagelist">
-		        	<a href="" class="minuspage" name="firstname">首页</a>
-		        	<a href="" class="minuspage" name="minusname">上一页</a> 
-		        	<a href="" class="minuspage" name="addname">下一页</a>
-		        	<a href="" class="minuspage" name="lastanme">尾页</a>
-		        	共<span id="pagenum"></span>页
-		        	<input type="text" id="someone" value="1">
-		        	<input type="button" value="跳转" id="commitone">
-		        </div>
-	        </td>
 	 -->
 	<script type="text/javascript">
 		$(function(){
+			
 			$.ajax({
 				url:"achieve_getcount.action",
 				type:"post",
 				data:{},
-				success:function(data){	
+				success:function(data){						
 					if(data%2==0){
 						var pagesize=parseInt(data/2);
 						$("#pagenum").html(pagesize);					
@@ -202,13 +192,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var stime=$("#pertime").val();
 					//var spart=$("#per").val();
 					//var stable=$("#per").val();
-					alert(stime);
+					//alert(stime);
 					$.ajax({
 						url:"achieve_updatestaff.action",
 						type:"post",
 						data:{"employee.emid":sid,"employee.emname":sname,"employee.emsex":ssex,"employee.emage":sage,"employee.emphone":sphone,"employee.emadress":sadress,"employee.emjointime":stime},
 						success:function(data){
-							alert("修改成功");			
+							alert("修改成功");	
+								liyang();	
 						}
 					});
 				});
@@ -355,8 +346,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									电	话：<input type="text" id="emphone" name="employee.emphone"><br/> 									
 									地	址：<input type="text" id="emadress" name="employee.emadress"><br/>
 									就职时间：<input type="text" id="emjointime" name="employee.emjointime"><br/>
-									员工角色：<input type="text" id="empart" name="empart"><br>
-									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>
+									<!--  员工角色：<input type="text" id="empart" name="empart"><br>
+									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>-->
 										     
 								
 								</div>
@@ -441,12 +432,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    <div>
 					    	<span>就职时间</span><input type="text" name="st.deskState" id="pertime"/>
 					    </div>
-					    <div>
+				<!--    <div>
 					    	<span>角色</span><input type="text" name="st.deskState" id="perpart"/>
 					    </div>
 					    <div>
 					    	<span>负责桌台</span><input type="text" name="st.deskState" id="pertable"/>
-					    </div>	
+					    </div>	-->
 					 </div>
 					</div>
 					<div class="modal-footer">

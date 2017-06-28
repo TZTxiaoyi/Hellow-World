@@ -2,18 +2,21 @@ package com.achaction;
 
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSON;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.entity.LjlAddOrder;
 import com.entity.SxmTable;
-import com.logic.SxmTableSql;
+import com.insertemploydao.SxmTableSql;
 import com.utils.toJson;
 
 public class SxmTableAction {
@@ -36,8 +39,6 @@ public class SxmTableAction {
 	SxmTable st;
 	String search;
 	int currPage;
-
-	
 	public int getCurrPage() {
 		return currPage;
 	}
@@ -106,6 +107,7 @@ public class SxmTableAction {
 		
 	}
 	/**
+	 * @throws ParseException 
 	 
 	     * 方法功能说明：  后台进入桌位管理页面自动加载
 	     * 创建：2017-6-16 by Administrator   
@@ -119,15 +121,13 @@ public class SxmTableAction {
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
 		List list=sts.selTableAdmin(null);
-		JSON json=toJson.toJson("aa", list);
+		JSON json=toJson.toJson("ss", list);
 		try {
 			hsr.getWriter().print(json);
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage()+3333);
 		}
-		
 	}
 	/**
 	 * 
@@ -162,7 +162,6 @@ public class SxmTableAction {
 	public void upLineTable(){
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		int table=sts.update(st);
-		System.out.println(table);
 		try {
 			hsr.getWriter().print(table);
 		} catch (IOException e) {
@@ -256,5 +255,6 @@ public class SxmTableAction {
 			System.out.println(e.getMessage());
 		}
 	}
+	
 	
 }

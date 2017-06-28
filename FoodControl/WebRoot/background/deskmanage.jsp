@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<li><input type="text" placeholder="请输入搜索关键字"
 								name="keywords" class="input"style="width:250px; line-height:17px;display:inline-block" /> <a
 								href="javascript:void(0)" class="button border-main icon-search fastsearch"
-								onclick="changesearch()"> 搜索</a>
+								onclick="changesearch()">搜索</a>
 							</li>
 							</li>
 						</ul>
@@ -180,8 +180,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					if(name=="minus"){
 						inpval=inpval-1;
 						if(inpval<=1){
-							inpval=1;
-							
+							inpval=1;							
 						}
 					}
 					if(name=="add"){
@@ -203,7 +202,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				快速搜索
 			*/
 			$(".fastsearch").click(function(){
-				var allput=$(".input").val();
+				var allput=$(".input").val();	
 				$.ajax({
 					url : "../SxmTable_searchTable.action",
 					type : "post",

@@ -79,7 +79,7 @@
 				<div style="height:450px;"></div>
 				<div class="media media-y margin-big-bottom"></div>
 				<div id="btn">
-					<button type="button" class="btn btn-default btn-lg btn-danger" 
+					<button type="button" class="btn btn-default btn-lg btn-danger" id = "myModal4"
 					data-toggle="modal" data-target="#myModal4">
 						<h1 class="glyphicon glyphicon-cutlery" aria-hidden="true"></h1>
 						<p>自助点餐</p>
@@ -108,39 +108,43 @@
 		</div>
 	</div>
 <!-- 自助点餐模态框 -->	
-		<div class="media media-y margin-big-bottom"></div>
-	<div class="modal fade" id="myModal4" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss=modal>×</button>
-					<div class="text-center margin-big padding-big-top">
-						<h1>餐饮管理系统</h1>
+
+		
+		
+		
+		<!-- <div class="media media-y margin-big-bottom"></div>
+			<div class="modal fade" id="myModal4" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss=modal>×</button>
+							<div class="text-center margin-big padding-big-top">
+								<h1>餐饮管理系统</h1>
+							</div>
+						</div>
+		
+						<form action="addfood_newFood.action" method="post"  onsubmit="return show3()">
+		
+		
+							<div>
+								<input placeholder="手机号" type="text" id="zbphone"
+									 name ="zbphone"/><span id ="zbtext1"></span>
+							</div>
+							<div>
+								<input placeholder="地址" type="text" id="zbaddress"
+									 name ="zbaddress"/><span id = "zbtext2"></span>
+							</div>
+							
+							<div>
+								<input type="submit"
+									class="button button-block bg-main text-big input-big" id="zbclick" value="点击进入">
+									
+							</div>
+						</form>
 					</div>
 				</div>
-
-				<form action="addfood_newFood.action" method="post"  onsubmit="return show3()">
-
-
-					<div>
-						<input placeholder="手机号" type="text" id="zbphone"
-							 name ="zbphone"/><span id ="zbtext1"></span>
-					</div>
-					<div>
-						<input placeholder="地址" type="text" id="zbaddress"
-							 name ="zbaddress"/><span id = "zbtext2"></span>
-					</div>
-					
-					<div>
-						<input type="submit"
-							class="button button-block bg-main text-big input-big" id="zbclick" value="点击进入">
-							
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+			</div> -->
 	
 	
 <!-- 开始点餐模态框 -->
@@ -160,7 +164,11 @@
 						<div>
 						<!-- <input placeholder="请输入桌号" type="text" id="desknub"
 							 name ="desknub"/> -->
+ 	
 							 <select class="form-control" id ="desknub" name ="desknub">
+
+							  <select class="form-control" id ="desknub" name="selectvalue">
+
 							 	  
 							</select>
 					</div>
@@ -374,6 +382,7 @@
 					$.each(json,function(index,value){
 						var opt="<option>"+value[2]+"</option>"
 						$("#desknub").append(opt);
+						
 					});
 				},
 			});
@@ -398,11 +407,11 @@
 				return true;
 			}
 		}
-//======================================
-	//开始点餐里的触发按钮事件orderfood2   body第145行
+//==============================================================================================
+	//开始点餐里的触发按钮事件orderfood2   body第82行
 		
-//---------------------------------------------------------------------------------------------
-	//外卖点餐   body  第110 行
+//---------------------------------------------------------------------------------------------6.24
+	//外卖点餐   body  第 82 行
 		/* $(function(){
 			$("#zbclick").click(function(){
 				//alert($("#zbphone").val());
@@ -415,6 +424,7 @@
 					}
 			});
 		}); */
+		
 //聚焦事件
 		$(function(){
 			$("#zbphone").focus(function(){
