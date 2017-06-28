@@ -41,13 +41,11 @@ public class TztDeskSortImp implements TztSort {
 					desk.remove(j);
 					j--;
 				}
+			}
 		}
-		
-		
-		
-			
 		return null;
 	}
+		
 	public List queryMading() {
 		return null;
 	}
