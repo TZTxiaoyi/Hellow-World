@@ -419,7 +419,7 @@
 						var orderStatus=15;
 						var orderPrice=parseInt($("#mtTotal").html());
 						var foodNum=parseInt($("#foodnum").html());
-						var cost=9;
+						var cost=21;
 						//获得菜单数据
 						$.ajax({
 							type:"post",

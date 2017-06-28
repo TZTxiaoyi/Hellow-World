@@ -210,17 +210,13 @@ public class LjlAddFoodAction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		HttpSession session=request.getSession();
 		String orderup=(String) session.getAttribute("orderStatus");
-		System.out.println("orderup:"+orderup);
 		if (orderup=="1") {
 			System.out.println("jin");
 			String[] foodnames=session.getValueNames();
 			String tablename=(String) session.getAttribute("dname");
-			System.out.println("tablename"+tablename);
 			List listtable=tableSql.idTablename(tablename);
 			List listtId=(List) listtable.get(0);
 			int tableid=(Integer) listtId.get(0);
-			System.out.println("tableid"+tableid);
-			System.out.println("session:"+session.getAttribute("orderid"));
 			String rsid1= (String) session.getAttribute("orderid");
 			int rsid=Integer.parseInt(rsid1);
 			List orderlists=orders.idselOrder(rsid);
@@ -229,14 +225,11 @@ public class LjlAddFoodAction {
 			int ordersprice=(Integer)orderlist.get(2);
 			int foodnum=0;//新增菜品的数量
 			int price=0;//新增菜品总价格
-			System.out.println("ordersnum"+ordersnum);
-			System.out.println("ordersprice"+ordersprice);
 			for (int i = 0; i < foodnames.length; i++) {
 				if (foodnames[i]!="dname"&&foodnames[i]!="orderStatus"&&foodnames[i]!="orderid") {
 					List list=dish.seldishName(foodnames[i]);
 					session.getAttribute(foodnames[i]);
 					LjlAddFood addf= (LjlAddFood)session.getAttribute(foodnames[i]);
-					System.out.println("foodname"+addf.getFoodname());
 					int number=addf.getNumber();//每个菜的数量
 					int foodprice=addf.getPrice();
 					foodnum=foodnum+number;
@@ -257,7 +250,6 @@ public class LjlAddFoodAction {
 				orderfoodadd.setOrdersId(rsid);
 				orderfoodadd.setFoodNum(ordernum);
 				orderfoodadd.setOrderPrice(orderprice);
-				System.out.println("ddd"+orderfoodadd.getOrdersId()+","+orderfoodadd.getFoodNum()+","+orderfoodadd.getOrderPrice());
 				flag=orders.upOrdersPN(orderfoodadd);
 			}
 			

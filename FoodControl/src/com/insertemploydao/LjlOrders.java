@@ -5,7 +5,6 @@ import java.util.List;
 import com.daointerface.DaoInterface;
 import com.entity.LjlAddOrder;
 import com.entity.SxmTable;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import com.utils.DaoFactory;
 
 public class LjlOrders implements DaoInterface{
