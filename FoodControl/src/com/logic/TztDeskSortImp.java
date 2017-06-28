@@ -26,23 +26,8 @@ import com.insertemploydao.TztDishOrderImp;
  */
 public class TztDeskSortImp implements TztSort {
 
-	public List queryMade() {
-		
-		TztDishOrderImp dao= new TztDishOrderImp();
-		List dishpriority =dao.queryDishpriority(12);
-		List desk = dao.quertDesk(12);
-		//合并桌位合并后数组内剩下未重复的桌号
-		List deskList= new ArrayList();
-		for(int i=0;i<desk.size();i++){
-			int a=(Integer) ((List) desk.get(i)).get(0);
-			for (int j = i+1; j <dishpriority.size(); j++) {
-				int b=(Integer) ((List) desk.get(j)).get(0);
-				if(a==b){
-					desk.remove(j);
-					j--;
-				}
-			}
-		}
+
+	public List queryMade() {		
 		return null;
 	}
 		

@@ -1,5 +1,6 @@
 package com.achaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,18 +9,40 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.LYEmployId;
+import com.entity.LyPart;
 import com.insertemploydao.LYInsertEmployDao;
+import com.utils.toJson;
 
 public class LYquanxianaction {
 	
 	private LYEmployId employId;
+	private LyPart partname;
+	String pname;
+	private ArrayList<Integer> powersId;
 	
+	public ArrayList<Integer> getPowersId() {
+		return powersId;
+	}
+	public void setPowersId(ArrayList<Integer> powersId) {
+		this.powersId = powersId;
+	}
 	public LYEmployId getEmployId() {
 		return employId;
 	}
 	public void setEmployId(LYEmployId employId) {
 		this.employId = employId;
 	}
+
+	
+	public LyPart getPartname() {
+		return partname;
+	}
+
+	public void setPartname(LyPart partname) {
+		this.partname = partname;
+	}
+	
+	
 	public String staffinfo(){
 		return "sa";
 	}
@@ -62,11 +85,10 @@ public class LYquanxianaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		//request.getSession().setAttribute("username", employId.getEmenter());		
 		List list = ied.selectemid(employId);
-		
-		System.out.println("0000:Z");		
 		if (list.size()==1){
+			
 			request.getSession().invalidate();
-			String partname =ied.selectpart(employId);
+			String partname =ied.selectpart(employId);			
 			if(partname.equals("服务员")){			
 				
 				request.getSession().setAttribute("username", employId.getEmenter());
@@ -92,18 +114,38 @@ public class LYquanxianaction {
 		
 	}
 	/**
-	 * emterid：得到前端响应，调用enterid方法，
-	 * 调用Dao实现类方法
-	 * 将员工账号的实体类对象传给插入员工账号的实现类方法
+	 * selpowers：查询角色所拥有的权限action
 	 */
-	public void enterid(){
+	public void selpowers(){
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int flag=ied.emidinsert(employId);
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");		
+		List list = ied.selectpowers(partname);
+		toJson json=new toJson();
+		//System.out.println(json.toJson("value", list).toString());
 		try {
-			response.getWriter().print(flag);
+			response.getWriter().print(json.toJson("value", list).toString());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	/**
+	 * 由角色Id找到该id下拥有的所有权限
+	 * 由前端得到的权限Id，然后将角色id和权限id一并传给selectpartId
+	 */
+	public void sertpow(){
+		//System.out.println("00000000");
+		//System.out.println("a:"+powersId);
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		int partId= ied.selectpartId(partname);
+		
+		//System.out.println("8888:"+partId);
+		
+		ied.deletpowers(partId);//将角色的Id传到实现类，根据id删除该id下的所有权限；
+		ied.insertpowers(partId,powersId);		
 	}
 }
 

@@ -264,15 +264,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					url : "SxmTable_upLineTable.action",
 					type : "post",
-					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn,"em.emname":tp,"chargename":talter},
-					success : function(data) {
-						
-						if (data != -1) {
+					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn},
+					success : function(data){					
+						if(data==-1){
+							alert("修改失败");
+						}else if(data==1){
+							alert("修改成功");
 							tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
 							$(this).unbind('click');//移除当前事件处理函数
-						} else {
-							alert("更新失败！");
-						}
+						}else{
+							alert("没有权限");
+						}						
 					},
 				});
 
@@ -382,13 +384,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							"st.personNum" : pn,
 							"st.deskName" : dn,
 						},
-						success : function(data) {
-							var json = JSON.parse(data);
-							if (json != -1) {
-								tabonload();//调用页面加载时自动查询数据库，显示桌台信息
-							} else {
-								alert("添加失败！");
-							}
+						success : function(data) {							
+							if(data==-1){
+								alert("添加失败");
+							}else if(data==1){
+								alert("添加成功");
+								tabonload();//调用页面加载时自动查询数据库，显示桌台信息								
+							}else{
+								alert("没有权限");
+							}												
 						},
 
 					});

@@ -11,39 +11,21 @@
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
 			<result name="tztquerok" type="redirect">/order_vegetable.jsp</result>
 		</action>
-
-		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
-			<result name="ok" type="redirect">/home.jsp</result>
-		</action>
-<!-- 菜品 -->
-		<action name="GJYFC_*" class="com.achaction.GJYFCaction" method="{1}">
-			<result name="ok">/a123.jsp</result>
-		</action>
-<!-- 后台订单详情 -->
-		<action name="LjlOrderdetails_*" class="com.achaction.LjlorderdetailsAction" method="{1}">
-			<result name="ok">/a123.jsp</result>
-		</action>
 <!-- 注册 -->
-
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">
 			<result name="register" type="dispatcher">/home.jsp</result>
 
 			<result name ="list" type="dispatcher">/new.jsp</result>
 		</action>
 	</package>
-	<!-- 
-		有关员工的package
-	 -->
-	<package name="inser" extends="struts-default">
-		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
-			<result name="okjj">/a123.jsp</result>			
-		</action>	
-	</package>
+	
+	
 	<!-- 有关权限的package -->
-	<package name="lanjieqi" extends="struts-default">
+	<package name="lanjieqi1" extends="struts-default">
 		<interceptors>
 			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
-				<param name="includeMethods">staffinfo,staffid,powers,deskmanage,dishmanage,kindmanage,orderdetail,returnorder,incomedetail,enterid</param><!-- 不拦截的方法 -->
+				<param name="includeMethods">staffinfo,staffid,powers,deskmanage,
+				dishmanage,kindmanage,orderdetail,returnorder,incomedetail</param><!-- 拦截的方法 -->
 			</interceptor>
 			<!-- 构建一个拦截器栈 -->
 			<interceptor-stack name="aaabbb">
@@ -71,5 +53,38 @@
 			<result name="sh" type="redirect">/background/finance.jsp</result>
 			<result name="si" type="redirect">/background/income.jsp</result>
 		</action>
-	</package>	
+	</package>
+	<package name="lanjieqi2" extends="struts-default">
+		<interceptors>
+			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
+				<param name="includeMethods">updatestaff,enterid,save,delem,appendTable,upLineTable,delLineTable,insertfood,updatestaffid</param><!-- 拦截的方法 -->
+			</interceptor>
+<!-- 构建一个拦截器栈 -->
+			<interceptor-stack name="aaabbb">
+				<interceptor-ref name="sessInter"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+<!-- 配置默认的拦截器 --><!-- 被拦截后跳转的jsp -->
+		<default-interceptor-ref name="aaabbb"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">/nopowers.jsp</result>
+		</global-results>
+		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
+			<result name="okjj">/a123.jsp</result>			
+		</action>
+<!-- 桌台 -->		
+		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
+			<result name="ok" type="redirect">/home.jsp</result>
+		</action>		
+		
+<!-- 菜品 -->
+		<action name="GJYFC_*" class="com.achaction.GJYFCaction" method="{1}">
+			<result name="ok">/a123.jsp</result>
+		</action>
+<!-- 订单 -->
+		<action name="order_*" class="com.achaction.LyOrderAction" method="{1}">
+			<result name="ok">/a123.jsp</result>
+		</action>
+	</package>		
 </struts>    

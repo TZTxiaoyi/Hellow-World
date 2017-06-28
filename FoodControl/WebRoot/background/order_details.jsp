@@ -27,7 +27,125 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript"
 		src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
-	
+
+	<script type="text/javascript">
+			/*
+				总页数
+			*/
+			function stamp(json){
+								
+						var th="<tr><td>订单号</td><td>订单状态</td><td>订单价格</td><td>点菜数量</td><td>支付方式</td><td>订单时间</td><td>桌台名称</td><td>操作</td></tr>";
+					 	$("#tableid").html("");	
+					 	$("#tableid").append(th);				 
+						$.each(json,function(index,value){
+						var oldTime = (new Date(value[5])).getTime()/1000;
+						//time=value[5].getfullyear+"-"+value[5].getfullmonth+"-"+value[5].getfullday
+							var emtable=
+								"<tr><td id=\"anum"+value[0]+"\">"+value[0]+
+								"</td><td id=\"bnum"+value[0]+"\">"+value[1]+"</td><td id=\"cnum"+value[0]+"\">"+value[2]+"</td><td id=\"dnum"+value[0]+"\">"+value[3]+"</td><td id=\"enum"+value[0]+"\">"+value[4]+
+								"</td><td id=\"fnum"+value[0]+"\">"+oldTime+"</td><td id=\"gnum"+value[0]+"\">"+value[6]+"</td>"+
+								"<td id=\"fnum"+value[0]+"\">"+
+								"<a class=\"button border-main alterbtn\" id=\"num"+value[0]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal\" data-toggle=\"modal\">"+
+								"<span class=\"icon-edit\"></span> 订单详情</a></td></tr>";
+							$("#tableid").append(emtable);																												
+						});
+								
+			}
+		$(function(){
+			
+				$.ajax({
+					url:"order_pageTotal.action",
+					type:"post",
+					data:{},
+					success:function(data){						
+						if(data%2==0){
+							var pagesize=parseInt(data/2);
+							$("#pagenum").html(pagesize);					
+						}else{
+							var pagesize=parseInt(data/2)+1;
+							$("#pagenum").html(pagesize);
+						}				
+					},
+				});	
+				liyang(0);								
+		});
+		$(function(){
+			$(".minuspage").click(function(){			
+				var somename=$(this).attr("name");
+						//alert(somename);				 
+				var onepage=parseInt($("#someone").val());	
+							
+				var pagesize=$("#pagenum").html();
+				if(somename=="firstname"){
+					onepage=1;					
+				}else if(somename=="minusname"){
+					
+					if(onepage<=1){
+						onepage=1;
+					}else{
+						onepage=onepage-1;
+					}
+				}else if(somename=="addname"){
+					if(onepage>=pagesize){
+						onepage = pagesize;
+					}else{
+						onepage = onepage +1;
+					}
+				}else{
+					onepage = pagesize;
+				}				
+				$("#someone").val(onepage);
+				a=onepage-1;
+				//alert(inputnum);	
+				liyang(a);				
+			});			
+		});
+		function liyang(a){
+		//alert(a);
+			$.ajax({				
+					url:"order_getpage.action",
+					type:"post",
+					data:{"countpage":a},
+					success:function(data){					
+					var json=JSON.parse(data);
+					stamp(json);					
+					}
+				});
+		}
+		/*
+		* 将每个订单传给action
+		*/
+		$(function(){
+			$("#tableid").on('click',".alterbtn",function(){
+				var alterbtn = $(this).attr("id");
+				//alert("sss:"+alterbtn);
+				var namehtml =$("#a"+alterbtn).html();	
+				//alert(namehtml);			
+				$.ajax({
+					url:"order_orderdish.action",
+					type:"post",
+					data:{"countpage":namehtml}
+				});							
+			});
+		});
+		$(function(){
+			$("#searchorder").click(function(){
+				var readyvalue=$("#readytime").val();
+				var lastvalue=$("#lasttime").val();
+				//alert(readyvalue);
+				$.ajax({
+					url:"order_selorder.action",
+					type:"post",
+					data:{"begintime":readyvalue,"endtime":lastvalue},
+					success:function(data){
+						var json=JSON.parse(data);
+						stamp(json);
+					}
+				});
+			});
+		});
+		</script>
+
 	<style>
 		#modalform input {
 			
@@ -52,29 +170,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<strong><span class="icon-pencil-square-o"></span> 订单信息</strong>
 		</div>
 		<div>
-			<form method="post" action="">
+
+
 				<div class="panel admin-panel">
 					<div class="padding border-bottom">
-						<ul class="search">
+						<ul>
 							<li>
-								 <a class="button border-yellow" href="" data-toggle="modal"
-								data-target="#myModaltable"><span class="icon-plus-square-o"></span>
-									查询订单</a></li>
-							
-							</li>
-						</ul>
+					  			<input type="text" placeholder="xxxx年xx月xx日" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" id="readytime"/>
+					  		</li>
+					  		<li>
+					  			<input type="text" placeholder="xxxx年xx月xx日" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" id="lasttime"/>
+					          <a type="button" href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchorder"> 搜索</a>
+					  		</li>
+					  		
+					  	</ul>  
 
 					</div>
-					<table class="table table-hover text-center"  id="tab">
-						
-						
-					</table>
+				
+				    <table class="table table-hover text-center" id="tableid">
+				    </table>
+	   
 					<div class="pagelist">
-						<a name="first" class="page" href="#">首页</a><a name="minus" class="page" href="#">上一页</a><a name="add" class="page" href="#">下一页</a><a name="last" class="page" href="#">尾页</a><input type="text" id="pageinp" value="1" size="5"/>
-						<a class="page" type="button">跳转</a>共<span id="spanpage"></span>页
-					</div>
+							<a  class="minuspage" name="firstname">首页</a>
+							<a  class="minuspage" name="minusname">上一页</a> 
+							<a  class="minuspage" name="addname">下一页</a>
+							<a  class="minuspage" name="lastname">尾页</a>
+							共<span id="pagenum"></span>页
+							<input type="text" id="someone" value="1">
+							<input type="button" value="跳转" id="commitone">
+					</div>			
 				</div>
-			</form>
+		
+
 		</div>
 		<!-- 
 			查询订单模态框
@@ -90,13 +217,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<h1>订单详细信息</h1>
 						</div>
 						 <div id="modalform">
-					    	<div>
-					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="personNum"/>
-					    	</div>
-					    	<div>
-					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"/>
-					    	</div>
-					    	
+
+					    	<table id="mdalform_tab">
+					    		
+					    	</table>
+
 					    	<div>
 								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
 							</div>
@@ -119,15 +244,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<h1>订单详细信息</h1>
 						</div>
 						<div id="modalform">
-					    	<div>
-					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="pname"/>
-					    	</div>
-					    	<div>
-					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName" class="tableName"/>
-					    	</div>
-					    	<div>
-					    		<span>负责人</span><input type="text" name="st.deskName" id="tableperson"/>
-					    	</div>
+
 					    	
 					 </div>
 					</div>
@@ -138,240 +255,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-			/*
-				总页数
-			*/
-			$(function(){
-				$.ajax({
-						url:"LjlOrderdetails_pageTotal.action",
-						type:"post",
-						data:{},
-						success:function(data){
-							alert("ret");
-							var pagetotal=parseInt(data/5);	
-							if(data%5==0){
-								$("#spanpage").html(pagetotal);
-							}
-							if(data%5!=0){
-								$("#spanpage").html(parseInt(pagetotal)+1);
-							}
-						},
-					});
-			})
-		
-			
-			/*
-				分页
-			*/
-			$(function(){
-				$(".page").click(function(){
-					var name=$(this).attr("name");
-					
-					var inpval=parseInt($("#pageinp").val());
-					
-					
-					if(name=="first"){
-						inpval=1;
-					}
-					if(name=="minus"){
-						inpval=inpval-1;
-						if(inpval<=1){
-							inpval=1;							
-						}
-					}
-					if(name=="add"){
-						inpval=inpval+1;
-						if(inpval>=$("#spanpage").html()){
-							inpval=$("#spanpage").html()
-							
-						}
-					}
-					if(name=="last"){
-						inpval=$("#spanpage").html();
-					}
-					$("#pageinp").val(inpval);
-					var curr=inpval-1;
-					tabonload(curr);
-				});
-			})
-			
-			/*
-				点击删除按钮删除一行数据;
-			*/
-			$("#tab").on('click',".deskbtn",function(){
-				var deskbtn=$(this).attr("id");
-				var deskid=$("#desk"+deskbtn).html();
-				var inpval=parseInt($("#pageinp").val());
-				if(confirm("您确定要删除吗?")){
-					$.ajax({
-						url:"SxmTable_delLineTable.action",
-						type:"post",
-						data:{"st.deskId":deskid},
-						success:function(data){
-							var json=JSON.parse(data);
-							if(json!=-1){
-								tabonload(inpval-1);
-							}else{
-								alert("删除失败！");
-							}
-						}
-					});
-				}
-			});
-		/*
-			点击修改按钮修改一行数据表单里自动获取这一行的值
-		*/
-		$("#tab").on('click',".alterbtn",function(){
-			var deskalter=$(this).attr("id");
-			var deskid=$(".desk"+deskalter).html();//桌子Id
-			var deskname=$("#name"+deskalter).html();//桌子名字
-			var deskperson=$("#person"+deskalter).html();//桌子人数
-			var tperalter=$("#tper"+deskalter).html();//负责人
-			$("#pname").val(deskperson);
-			$(".tableName").val(deskname);
-			$("#tableperson").val(tperalter);
-			updata(deskid,tperalter);
-		});
-		//点击确定修改按钮时执行；
-			
-		function updata(desk,talter) {
-			//bind/unbind点击事件只执行一次
-			$(".modal-alterbtn").bind('click', function() {//绑定事件处理函数
-				var inpval=parseInt($("#pageinp").val());
-				var pn = $("#pname").val();
-				var dn = $("#tableName").val();
-				var tp=$("#tableperson").val();
-				$.ajax({
-					url : "SxmTable_upLineTable.action",
-					type : "post",
-					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn,"em.emname":tp,"chargename":talter},
-					success : function(data) {
-						
-						if (data != -1) {
-							tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
-							$(this).unbind('click');//移除当前事件处理函数
-						} else {
-							alert("更新失败！");
-						}
-					},
-				});
 
-			});
-		};
 
-			$("#checkall").click(function() {
-				$("input[name='id[]']").each(function() {
-					if (this.checked) {
-						this.checked = false;
-					} else {
-						this.checked = true;
-					}
-				});
-			});
-
-			function DelSelect() {
-				var Checkbox = false;
-				$("input[name='id[]']").each(function() {
-					if (this.checked == true) {
-						Checkbox = true;
-					}
-				});
-				if (Checkbox) {
-					var t = confirm("您确认要删除选中的内容吗？");
-					if (t == false)
-						return false;
-				} else {
-					alert("请选择您要删除的内容!");
-					return false;
-				}
-			};
-
-			/*
-				添加桌子名字失焦时检测是否已存在改桌名的函数
-			 */
-			$(".tableName").blur(function() {
-				$.ajax({
-					url : "../SxmTable_equalTable.action",
-					type : "post",
-					data : {"st.deskName" : $(this).val()},
-					success : function(data) {
-						var json = JSON.parse(data);
-						if (json != -1) {
-							alert("该桌名已存在！");
-						}
-					},
-				});
-			});
-			/*
-				页面加载时自动查询数据库，显示桌台信息
-			 */
-			$(function() {
-				var currpage=0;
-				tabonload(currpage);
-			});
-			function tabonload(curr) {
-				$.ajax({
-					url : "LjlOrderdetails_selorder.action",
-					type : "post",
-					data : {"currPage":curr},
-					success : function flash(data) {
-						var json = JSON.parse(data);
-						refresh(json);
-					}
-				});
-
-			};
-			function refresh(json) {
-				var th = "<tr><td>订单号</td><td>点菜数量</td><td>订单价格</td><td>订单状态</td><td>订单状态</td><td>订单时间</td></tr>";
-					$("#tab").html("");
-					$("#tab").append(th);
-					
-					$.each(json,function(index, value) {
-						var dd = "<tr></td><td class=\"deskalter"+
-						value[0]+"\" id=\"desknumId"+value[0]+"\">"+ value[0]+ "</td><td id=\"namealter"+value[0]+"\">"+ 
-						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td id=\"tperalter"+value[0]+"\">"+ value[3]+
-						"</td><td id=\"statealter"+value[0]+"\">"+ value[4]+ "</td>"+
-						"<td><a class=\"button border-main alterbtn\" id=\"alter"+value[0]+
-					   	"\"data-toggle=\"modal\" data-target=\"#myModal\">"+ 
-					   	"<span class=\"icon-edit\"></span> 订单详情</a></td></tr>";
-						$("#tab").append(dd);
-					});
-					
-					
-				
-			}
-			
-			/*
-				添加桌子信息
-			 */
-			$(function() {
-				$(".confirm-btn").click(function() {
-					var pn = $("#personNum").val();
-					var dn = $(".tableName").val();
-					
-					$.ajax({
-						url : "../SxmTable_appendTable.action",
-						type : "post",
-						data : {
-							"st.personNum" : pn,
-							"st.deskName" : dn,
-						},
-						success : function(data) {
-							var json = JSON.parse(data);
-							if (json != -1) {
-								tabonload();//调用页面加载时自动查询数据库，显示桌台信息
-							} else {
-								alert("添加失败！");
-							}
-						},
-
-					});
-
-				});
-
-			});
-		</script>
 	</div>
 </body>
 </html>

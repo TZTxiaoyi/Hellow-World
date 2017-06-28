@@ -44,11 +44,13 @@ public class LjlOrders implements DaoInterface{
 	}
 	public List orderDish(int oId){
 
-		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum,ds.price,od.dishNnum,od.dishStatus,od.addDish from  " +
+		System.out.println("8989898");
+		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum,ds.price,od.dishNnum from  " +
 				"desk_restaff d join orders o on d.deskId=o.deskId and o.ordersId="+oId+
-				" join orders_dish od on o.ordersId=od.ordersId " +
-				" join dish ds on ds.dishId=od.dishId";
+				"join orders_dish od on o.ordersId=od.ordersId " +
+				"join dish ds on ds.dishId=od.dishId";		
 		List list=DaoFactory.Query(sql);
+		//System.out.println("88888888777:");
 		return list;
 	}
 	public List idselOrder(int orderid){
@@ -56,7 +58,7 @@ public class LjlOrders implements DaoInterface{
 		return DaoFactory.Query(sql);
 	}
 	public int upOrdersPN(LjlAddOrder order){
-		System.out.println(order.getOrderPrice()+","+order.getFoodNum()+","+order.getOrdersId());
+		//System.out.println(order.getOrderPrice()+","+order.getFoodNum()+","+order.getOrdersId());
 		String sql="update orders set ordersPrice=?,FoodNum=? where ordersId=?";
 		Object[] params =new Object[] {order.getOrderPrice(),order.getFoodNum(),order.getOrdersId()};
 		return DaoFactory.Updata(sql, params);
@@ -73,14 +75,14 @@ public class LjlOrders implements DaoInterface{
 		
 	}
 	public int upOP(int price,int orid){
-		System.out.println("price"+price+","+orid);
+		//System.out.println("price"+price+","+orid);
 		String sql="update orders set ordersPrice=? where ordersId=?";
 		Object[] params = new Object[] {price,orid}; 
 		return DaoFactory.Updata(sql, params);
 		
 	}
 	public int uporderdish(String foodtime,int dishid){
-		System.out.println("food:"+foodtime+"£¬"+dishid);
+		//System.out.println("food:"+foodtime+"£¬"+dishid);
 		String sql="update orders_dish set dishStatus=17 where dishtime=? and dishId=?";
 		Object[] params = new Object[] {foodtime,dishid}; 
 		return DaoFactory.Updata(sql, params);
