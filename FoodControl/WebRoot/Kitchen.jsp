@@ -19,24 +19,19 @@ body{
 	padding:0;
 }
 
-* div{
-	border: 1px solid #cacaca;
-}
 td{
 	width:150px;
 }
-
 #top {
 	height: 9%;
 }
-
 #cbody {
 	height: 75%;
 }
 
 #col1 {
 
-	width: 49%;
+	width: 48%;
 	margin-right: 1%;
 	float: left;
 }
@@ -44,19 +39,19 @@ td{
 
 #col2 {
 	
-	width: 49%;
+	width: 48%;
 	margin-left:1%;
 	float: left;
 }
 #time{
 	font-size:150%;
 }
-.top1{
+#top{
 	float:left;
 	width:50%;
 	
 }
-.bottom{
+#bottom{
 	height:15%;
 }
 </style>
@@ -69,34 +64,34 @@ td{
 	<div class="container-fluid"  >
 		<!-------------------------------页面头部------------------------------------------->
 		<div class="row" >
-			<div class= "top1"id="top"></div>
-			<div class="top1">	<button id="default">默认</button><button id="ttme">时间</button> </div>
+			<div class= "row"id="top"></div>
+			<div class="btn-group btn-group-lg" role="group">	
+				<button  class="btn btn-info btn-group-lg" id="default">默认</button>
+				<button class="btn btn-info btn-group-lg" id = "priority">优先级</button>
+				<button class="btn btn-info btn-group-lg" id ="desksort">桌位轮转</button>
+			 </div>
 		
 		</div>
 		<!-------------------------------------------------------------------------->
-		<div class="row" id="cbody">
+		<div class="column" id="cbody">
 			<div class="column" id="col1">
 		
 				<!-- 左边窗口 -->
-				<table>
-					<tr><td>菜名</td><td>数量</td><td>操作</td><td><input class="btn btn-info" id="querymading" type="button" value="刷新" /></td></tr>
+				<table class="row pre-scrollable" id="titlemading">
+					
+				
 				</table>
 				
-				<div >
-				<table id="titlemading">
-						
-					</table>
-				</div>
 			</div>
 
 			<div class="row" id="col2">
 				<!------------右边窗口-------------->
-				<table>
-					<tr><td>菜名</td><td>数量</td><td>操作</td><td><input  class="btn btn-info" "id="querymade" type="button" value="刷新" /></td></tr>
+				<table class=" pre-scrollable"id="titlemade">
+					
 				</table>
 				
 				<div >
-					<table id="titlemade">
+					<table >
 			
 					</table>
 				</div>
@@ -105,7 +100,7 @@ td{
 	
 		</div>
 			<!-- 最下面窗口 -->
-			<div class="bottom" id="bottom">
+			<div class="row pre-scrollable" id="bottom">
 			</div>
 		<!--白色，浅蓝色，深蓝色，绿色，黄色，红色，黑色，对应的class为btn,btn btn-primary,btn btn-info,btn btn-success,btn btn-warning,btn btn-danger,btn btn-inverse-->
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -125,7 +120,6 @@ td{
 			
  		});
  		function startTime(){
- 			
  			var ti=getTime();
  			$("#top").html("<span id=time>"+ti +"</span>");
  		}
@@ -147,14 +141,23 @@ td{
  		}
  		$("#default").click(function(){
  			method=0;
+ 			queryMading();
+			queryMade();
  			alert(method);
  		});
- 	
- 		$("#ttme").click(function(){
- 			 method=1;
+ 		$("#priority").click(function(){
+ 			method=2;
+ 			queryMading();
+			queryMade();
  			alert(method);
  		});
- 			
+ 		$("#desksort").click(function(){
+ 			method=1;
+ 			queryMading();
+			queryMade();
+ 			alert(method);
+ 		});
+ 		
  			$("#querymading").click(function(){
  				queryMading();
  			});
@@ -166,16 +169,20 @@ td{
  					dataType:"json",
  					success:function(data){
  					$("#titlemading").html("");
+ 					var tr="<tr><td>菜名</td><td>数量</td><td>操作</td><td><input class=\"btn btn-info\" id=\"querymading\" type=\"button\" value=\"刷新\" /></td></tr>";
+					$("#titlemading").append(tr);
 					$.each(data,function(index,value){				
-					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td><button class=\"btn btn-danger\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button></td>"+"</tr>";
-					$("#titlemading").prepend(dd);		
+					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button></td>"
+					+"<td><button class=\"btn btn-danger\" id=\"removebutton\" name =\""+value[0]+ "\">取消制作</button></td>"+"</tr>";
+					$("#titlemading").append(dd);		
 					});
 					}
  					});
  				}
  				
  		$(function(){
- 			$("#titlemading").on('click',"#madingbutton",function(){
+ 			$("#titlemading").on('click',"#madingbutton",function(){	
+ 			
  				var aa=$(this).attr("name");
  				var foodname=$($("td[name=\""+aa+"\"]")[0]).html();
  				var foodnum=$($("td[name=\""+aa+"\"]")[1]).html();
@@ -188,15 +195,29 @@ td{
  					dataType:"json",
  					success:function(data){
  					$.each(data,function(index,value){				
-						table=table+value[0]+",";
+						table=table+value[0]+value[1]+"份"
 					});
- 					var dd="<div>"+time+"已完成菜品："+foodname+"共"+foodnum+"份 桌名为："+table+"</div>";
-					$("#bottom"). prepend(dd);		
+ 					var dd="<div>"+time+"已完成菜品："+foodname+"共"+foodnum+"份  ，"+table+"</div>";
+					$("#bottom").prepend(dd);		
  						queryMading();
 						queryMade();
-						
- 						
  					}
+ 				});
+ 			});
+ 		});
+ 		
+ 		$(function(){
+ 			$("#titlemading").on('click',"#removebutton",function(){	
+ 				var aa=$(this).attr("name");
+ 				$.ajax({
+ 					url:"TztQueryDish_remove.action",
+ 					type:"post",
+ 					data:{"method":method,"dishId":aa},
+ 					dataType:"json",
+ 					complete:function(data){
+ 						queryMading();
+						queryMade();
+ 					},
  				});
  			});
  		});
@@ -206,7 +227,6 @@ td{
  			$("#querymade").click( function(){
  				queryMade();
  			});
-
  		
  		function queryMade(){
  				$.ajax({
@@ -216,26 +236,27 @@ td{
  					dataType:"json",
  					success:function(data){
  					$("#titlemade").html("");
-					$.each(data,function(index,value){				
-					var dd="<tr>"+"<td >"+value[1]+"</td>"+"<td>"+value[2] +"</td>"+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
-					$("#titlemade").prepend(dd);
+ 					var tr="<tr><td>菜名</td><td>数量</td><td>操作</td><td><input  class=\"btn btn-info\" \"id=\"querymade\" type=\"button\" value=\"刷新\" /></td></tr>";
+					$("#titlemade").append(tr);
+					$.each(data,function(index,value){
+					var dd="<tr>"+"<td   name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td  name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
+					$("#titlemade").append(dd);
 					});
  					}
  				});
  			}
+ 			
  		$(function(){
  			$("#titlemade").on('click',"#makebutton",function( ){
  				var aa=$(this).attr("name");
- 				
  				$.ajax({
  					url:"TztQueryDish_make.action",
  					type:"post",
  					data:{"method":method,"dishId":aa},
- 					dataType:"text",
+ 					dataType:"json",
  					complete:function(data){
  						queryMading();
 						queryMade();
- 						
  					},
  				});
  			});

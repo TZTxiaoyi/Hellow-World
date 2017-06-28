@@ -69,6 +69,7 @@ public class DaoFactory {
 			CloseAll(con, ps, null);
 		}catch(Exception e){
 			System.out.println(e.getMessage()+"com.utils.Daofactory.Updata()´íÎó");
+			e.printStackTrace();
 		}
 		return flag;
 	}

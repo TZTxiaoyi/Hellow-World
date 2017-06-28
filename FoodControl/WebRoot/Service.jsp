@@ -102,6 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			right:200px;
 			font-size:20px;
 		}
+
 		#modelclear{
 			text-align:center;
 			color:red;
@@ -126,6 +127,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			color:#ff6600;
 
 		}
+
 	</style>
 
 </head>
@@ -146,8 +148,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			<a class="btn btn-info btn-lg col-sm-offset-1" href="" role="button" data-toggle="modal" data-target="#myModal1">交班</a>
 			<a class="btn btn-info btn-lg col-sm-offset-1" href="" role="button" id="tflash">刷新</a>
+
 			<a class="btn btn-success btn-lg col-sm-offset-1" href=""role="button"
 			data-toggle="modal" data-target="#myModalclear"  data-toggle="modal" data-target="#myModalclear">清扫结束</a> 
+
 			<span id="doper">操作员：<span id="user"></span></span>
 			
 				<a class="btn close btn-lg" data-dismiss="modal"aria-label="Close" style="color:#ff00ff" href="background/login.jsp">退出系统</a>
@@ -319,6 +323,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						var k=0;
 					$("#all-home").html("");	
 					$.each(json,function(index, value) {
+				
 						var orderid=value[3];
 						ordertext="订单号："+orderid;
 						if(value[3]==null){
@@ -335,7 +340,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var tdiv="tdiv3";	
 							k++;
 						}
-						
 						var dd = "<a href=\"Seating_details.jsp?ord="+orderid+"&&dname="+value[1]+"\"><div class=\"pull-left col-sm-2 tclick "+tdiv+"\" id=\"deskname"+value[5]+"\">"+ value[1]+
 						"<p>"+ordertext+"</p></div></a>";
 						$("#all-home").append(dd);
@@ -368,9 +372,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								var tdiv="tdiv3";	
 							}
 							var dd1= "<div class=\"pull-left col-sm-2 "+tdiv+"\" id=\"deskname"+value[0]+"\">"+ value[1]+"</div>";
-							var tbid="deskname"+value[0];
+							var tbid="deskname"+value[5];
 							$("#"+tbid).remove();
 							$("#all-home").prepend(dd1);
+							
 							$("#"+tbid).css("border","10px solid #ff0099");
 						});
 						$(".tdiv1").css("background-color","#33ff33");
@@ -423,6 +428,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});
 
 			};
+
 		/*
 			清台
 		*/	
@@ -449,6 +455,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				data:{"st.deskName":cbefore,"tablename":cafter},
 				success:function(data){
 					tabonload();
+
 				}
 			});
 		})

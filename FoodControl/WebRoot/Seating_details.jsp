@@ -114,8 +114,8 @@
 			position:absolute;
 			bottom:0px;
 		}
+		
 		#money a{
-			
 			margin-top:25px;
 			margin-right:10px;
 			margin-left:10px;
@@ -244,7 +244,6 @@
 						
 						</div>
 					</div>
-					
 				</div>
 				
 				
@@ -304,7 +303,7 @@
 						<a role="button" class="btn btn-primary btn-lg" id="anxious">催菜</a>
 					</span>
 					
-				
+
 				</div>
 				
 			</div>
@@ -463,7 +462,7 @@
 						
 					});
 					
-					$("#dname").html(dname);
+					//$("#dname").html(dname);
 					$("#pnum").html(fnum);
 					$(".tred").html(ordersnum);	
 				 	$("#clear").attr("disabled",true); 
@@ -531,9 +530,24 @@
 						$("#callimg").show();//切换元素为可见状态==$("#callimg").css("display","block");
 						outfood();
 					}
-					
 				}
 			});
+		})
+
+	$("#anxious").click(function(){
+		var orderid=$("#order").html();
+		$.ajax({
+			url:"",
+			type:"post",
+			data:{"addorder.ordersId":orderid},
+			success:function(data){
+				json=JSON.parse(data);
+				
+				$.each(json,function(index,value){
+				var state=value[0];
+					state=state+1;
+				})
+			}
 		});
 		/*
 			单个菜品取消；
@@ -594,6 +608,7 @@
 	$("#shuxin").click(function(){
 		outfood();
 	})
+
 	</script>
   </body>
 </html>

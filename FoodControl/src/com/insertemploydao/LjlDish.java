@@ -23,11 +23,13 @@ public class LjlDish implements DaoInterface{
 	}
 
 	public List sel(Object obj) {
-		// TODO Auto-generated method stub
-		return null;
+		String kindname=(String) obj;
+		String sql="select d.dishId,d.dishName,d.price,d.picture,d.kindId,k.kindName from dish d,kind k where d.kindId=k.kindId and d.dishState=19 and k.kindState=19 and k .kindName='"+kindname+"'";
+		List list=DaoFactory.Query(sql);
+		return list;
 	}
 	public List sel() {
-		String sql="select * from dish";
+		String sql="select d.dishId,d.dishName,d.price,d.picture,d.kindId,k.kindName from dish d,kind k where d.kindId=k.kindId and d.dishState=19 and k.kindState=19";
 		List list=DaoFactory.Query(sql);
 		return list;
 	}

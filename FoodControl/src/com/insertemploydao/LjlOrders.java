@@ -5,6 +5,7 @@ import java.util.List;
 import com.daointerface.DaoInterface;
 import com.entity.LjlAddOrder;
 import com.entity.SxmTable;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import com.utils.DaoFactory;
 
 public class LjlOrders implements DaoInterface{
@@ -13,8 +14,8 @@ public class LjlOrders implements DaoInterface{
 	public int rsadd(Object order) {
 		LjlAddOrder orders=(LjlAddOrder)order;
 		// TODO Auto-generated method stub
-		String sql="insert into orders values(?,?,?,?,?,?)";
-		Object[] params=new Object[]{orders.getOrderStatus(),orders.getOrderPrice(),orders.getFoodNum(),orders.getCost(),orders.getOrdersTime(),orders.getDeskid()};
+		String sql="insert into orders values(?,?,?,?,?,?,?)";
+		Object[] params=new Object[]{orders.getOrderStatus(),orders.getOrderPrice(),orders.getFoodNum(),orders.getCost(),orders.getOrdersTime(),orders.getDeskid(),0};
 		return DaoFactory.rsUpdata(sql,params);
 	}
 
@@ -42,17 +43,23 @@ public class LjlOrders implements DaoInterface{
 		return list;
 	}
 	public List orderDish(int oId){
-		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum," +
-				"ds.price,od.dishNnum,ds.dishId,od.dishStatus,od.addDish,od.dishtime,o.ordersPrice from  " +
+
+		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum,ds.price,od.dishNnum,od.dishStatus,od.addDish from  " +
 				"desk_restaff d join orders o on d.deskId=o.deskId and o.ordersId="+oId+
-				"join orders_dish od on o.ordersId=od.ordersId " +
-				"join dish ds on ds.dishId=od.dishId";
+				" join orders_dish od on o.ordersId=od.ordersId " +
+				" join dish ds on ds.dishId=od.dishId";
 		List list=DaoFactory.Query(sql);
 		return list;
 	}
 	public List idselOrder(int orderid){
 		String sql="select * from orders where ordersId="+orderid;
 		return DaoFactory.Query(sql);
+	}
+	public int upOrdersPN(LjlAddOrder order){
+		System.out.println(order.getOrderPrice()+","+order.getFoodNum()+","+order.getOrdersId());
+		String sql="update orders set ordersPrice=?,FoodNum=? where ordersId=?";
+		Object[] params =new Object[] {order.getOrderPrice(),order.getFoodNum(),order.getOrdersId()};
+		return DaoFactory.Updata(sql, params);
 	}
 	/**
 	 * 根据订单号更新订单状态
@@ -170,5 +177,36 @@ public class LjlOrders implements DaoInterface{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
+	/**
+	 * 
+	 * 方法功能说明： 根据订单编号查询查询特定状态的订单信息
+	 * 创建：2017-6-24 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param oId	订单号
+	 * @参数： @param status 状态编号
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List selOrder(int oId,int status) {
+		String sql ="select * from orders where ordersId = " + oId+" and ordersStatus = "+ status;
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 
+	 * 方法功能说明：查询所有订单特定状态的订单信息  
+	 * 创建：2017-6-24 by TZT   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param status状态编号
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List selOrder(int status) {
+		String sql ="select * from orders where ordersStatus = "+ status;
+		return DaoFactory.Query(sql);
+	}
 }

@@ -10,7 +10,6 @@ import org.apache.struts2.ServletActionContext;
 import com.entity.LYEmployId;
 import com.insertemploydao.LYInsertEmployDao;
 
-
 public class LYquanxianaction {
 	
 	private LYEmployId employId;
@@ -58,12 +57,13 @@ public class LYquanxianaction {
 	 * @return
 	 */
 	public String getusername(){
+		System.out.println("1");
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		//request.getSession().setAttribute("username", employId.getEmenter());		
 		List list = ied.selectemid(employId);
 		
-		//System.out.println("0000:"+list1);		
+		System.out.println("0000:Z");		
 		if (list.size()==1){
 			request.getSession().invalidate();
 			String partname =ied.selectpart(employId);
@@ -75,12 +75,15 @@ public class LYquanxianaction {
 				request.getSession().setAttribute("username", employId.getEmenter());
 				return "cook";
 			}else{
+
 				request.setAttribute("username", employId.getEmenter());
+
 				List list4 = ied.aperson(partname);
 				//System.out.println("999:"+list4);
 				request.getSession().setAttribute("username", employId.getEmenter());
 				request.getSession().setAttribute("listvalue", list4);
 				return "success";
+				
 			}				
 		}else {
 			request.setAttribute("cuo", "haha");

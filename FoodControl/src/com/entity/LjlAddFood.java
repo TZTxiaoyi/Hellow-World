@@ -3,38 +3,40 @@ package com.entity;
 public class LjlAddFood {
 	private int dishId;
 	private String foodname;
-	private String uprice;
-	private String number;
-	private String price;
+
 	public int getDishId() {
 		return dishId;
 	}
 	public void setDishId(int dishId) {
 		this.dishId = dishId;
 	}
+	private int uprice;
+	private int number;
+	private int price;
 	public String getFoodname() {
 		return foodname;
 	}
 	public void setFoodname(String foodname) {
 		this.foodname = foodname;
 	}
-	public String getUprice() {
+	public int getUprice() {
 		return uprice;
 	}
-	public void setUprice(String uprice) {
+	public void setUprice(int uprice) {
 		this.uprice = uprice;
 	}
-	public String getNumber() {
+	public int getNumber() {
 		return number;
 	}
-	public void setNumber(String number) {
+	public void setNumber(int number) {
 		this.number = number;
 	}
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
+	
 	
 }

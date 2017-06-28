@@ -1,4 +1,8 @@
 package com.entity;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 
  * @类功能说明：  菜肴订单实体类
@@ -15,20 +19,50 @@ public class TztDishOrder {
 	int dishStatus;
 	int id;
 	int deskId;
+	int dishNnum;
+	public int getDishNnum() {
+		return dishNnum;
+	}
+	public void setDishNnum(int dishNnum) {
+		this.dishNnum = dishNnum;
+	}
+	public TztDishOrder(int rsid, int dishid2, int dishStatus2, int deskid2) {
+		this.OrderId= rsid;
+		this.dishId=dishid2;
+		this.dishStatus=dishStatus2;
+		this.deskId=deskid2;
+	}
 	int dishNum;
+	String dishtime;
+	int addDish;
+	public String getDishtime() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		return df.format(new Date());
+	}
+	public void setDishtime(String dishtime) {
+		this.dishtime = dishtime;
+	}
 	public int getDishNum() {
 		return dishNum;
 	}
 	public void setDishNum(int dishNum) {
 		this.dishNum = dishNum;
 	}
-	public TztDishOrder(int rsid, int dishid2, int dishStatus2, int deskid2,int dishNum2) {
+	public TztDishOrder(int rsid, int dishid2, int dishStatus2, int deskid2,int dishNum2,int addDish) {
 		// TODO Auto-generated constructor stub
+		
 		this.OrderId= rsid;
 		this.dishId=dishid2;
 		this.dishStatus=dishStatus2;
 		this.deskId=deskid2;
 		this.dishNum=dishNum2;
+		this.addDish=addDish;
+	}
+	public int getAddDish() {
+		return addDish;
+	}
+	public void setAddDish(int addDish) {
+		this.addDish = addDish;
 	}
 	public TztDishOrder() {
 		// TODO Auto-generated constructor stub

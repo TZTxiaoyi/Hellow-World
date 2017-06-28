@@ -1,10 +1,10 @@
 
 /**     
- * @文件名称: TztDefaultSoftImp.java  
+ * @文件名称: TztPrioritySortImp.java  
  * @类路径: com.logic  
  * @描述: TODO  
  * @作者：TZT  
- * @时间：2017-6-22 下午4:11:29  
+ * @时间：2017-6-24 上午10:54:49  
  * @版本：V1.0     
  */  
 package com.logic;
@@ -17,30 +17,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.views.xslt.ArrayAdapter;
 
-import com.alibaba.fastjson.parser.ParseContext;
 import com.daointerface.TztSort;
 import com.entity.TztDish;
-import com.insertemploydao.TztDishImp;
 import com.insertemploydao.TztDishOrderImp;
+import com.opensymphony.xwork2.ActionContext;
+import com.sun.crypto.provider.DESKeyFactory;
+import com.utils.ListSort;
 
 /**  
- * @类功能说明：  默认排序算法
+ * @类功能说明：  优先级排序
  * @类修改者：  
  * @修改日期：  
  * @修改说明：   
  * @作者：TZT
- * @创建时间：2017-6-22 下午4:11:29  
+ * @创建时间：2017-6-24 上午10:54:49  
  * @版本：V1.0  
  */
-public class TztDefaultSortImp implements TztSort {
+public class TztPrioritySortImp implements TztSort {
+
 	public List queryMade() {
-		TztDishOrderImp dao =new TztDishOrderImp();
-		List dishpriority = new ArrayList();
-		dishpriority = dao.queryDishpriority(12);
+		TztDishOrderImp dishOrder = new TztDishOrderImp();
+		List  dishpriority=dishOrder.queryDishpriority(12);
+
+		//按优先级将菜品排序完成
+		for (int i = dishpriority.size()-1;i>0; i--) {
+			for(int k=0;k<i;k++){
+				int pri1=((Integer) ((List)dishpriority.get(k)).get(5))  + ((Integer)((List)dishpriority.get(k)).get(6));
+				int pri2=((Integer) ((List)dishpriority.get(k+1)).get(5))  + ((Integer)((List)dishpriority.get(k+1)).get(6));
+				if (pri1<pri2) {
+					ListSort.ListSort(dishpriority, k, k+1);
+				}
+			}			
+		}
+		//并菜
 		List madeList=new ArrayList();
-		
 		for(int i=0;i<dishpriority.size();i++){
 			List dishList=new ArrayList();
 			int a=(Integer) ((List)dishpriority.get(i)).get(2);
@@ -64,7 +75,6 @@ public class TztDefaultSortImp implements TztSort {
 		}
 		return madeList;
 	}
-
 	public List queryMading() {
 		HttpServletRequest req=ServletActionContext.getRequest();
 		HttpSession Session = req.getSession();
@@ -103,7 +113,6 @@ public class TztDefaultSortImp implements TztSort {
 		list.add(count);
 		return list;
 	}
-
 	public List mading(String dishId) {
 		HttpServletRequest req= ServletActionContext.getRequest();
 		HttpSession session =req.getSession();
@@ -132,7 +141,6 @@ public class TztDefaultSortImp implements TztSort {
 		}
 		return result;
 	}
-
 	public List remove(String dishId) {
 		HttpServletRequest req= ServletActionContext.getRequest();
 		HttpSession session =req.getSession();
