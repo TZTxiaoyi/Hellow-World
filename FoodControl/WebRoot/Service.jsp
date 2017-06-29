@@ -342,6 +342,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						}
 						var dd = "<a href=\"Seating_details.jsp?ord="+orderid+"&&dname="+value[1]+"\"><div class=\"pull-left col-sm-2 tclick "+tdiv+"\" id=\"deskname"+value[5]+"\">"+ value[1]+
 						"<p>"+ordertext+"</p></div></a>";
+						//alert("value:"+value[5]);
 						$("#all-home").append(dd);
 					});
 					$(".tdiv1").css("background-color","#33ff33");
@@ -372,7 +373,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								var tdiv="tdiv3";	
 							}
 							var dd1= "<div class=\"pull-left col-sm-2 "+tdiv+"\" id=\"deskname"+value[0]+"\">"+ value[1]+"</div>";
-							var tbid="deskname"+value[5];
+							var tbid="deskname"+value[0];
+							//alert("value0:"+value[0]);
+							//alert("tbid:"+tbid);
 							$("#"+tbid).remove();
 							$("#all-home").prepend(dd1);
 							

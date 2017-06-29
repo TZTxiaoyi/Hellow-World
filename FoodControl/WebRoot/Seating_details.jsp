@@ -478,15 +478,12 @@
 				type:"post",
 				data:{"st.deskName":dname,"addorder.ordersId":ord,"svalue":svalue},
 				success:function(data){	
-					if(data!=-1){
-					 	$("#clear").attr("disabled",false); 
-						window.open("http://localhost:8080/FoodControl/service.jsp");
-					}else{
-						alert("请先选择支付方式");
-					}
-				},
+					alert("haha123");
+					//$(window).attr("location","http://www.baidu.com");
+					
+				}
 			});
-			
+			window.history.back(-1);
 		})
 		/*
 			清台
@@ -501,6 +498,7 @@
 				success:function(data){
 					if(data!=-1){
 						window.open("http://localhost:8080/FoodControl/service.jsp");
+						//href="service.jsp";
 					}
 					
 					

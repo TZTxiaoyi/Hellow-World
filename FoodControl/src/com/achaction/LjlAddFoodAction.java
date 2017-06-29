@@ -131,7 +131,7 @@ public class LjlAddFoodAction {
 		response.setContentType("text/html;charset=UTF-8");
 		List list=dish.sel();
 		toJson.toJson("newlfood", list);
-
+		
 		try {
 			response.getWriter().println(toJson.toJson("newlfood", list));
 		} catch (IOException e) {
@@ -147,6 +147,7 @@ public class LjlAddFoodAction {
 		response.setContentType("text/html;charset=UTF-8");
 		List list=dish.sel(kindname);
 		toJson.toJson("newlfood", list);
+		
 		try {
 			response.getWriter().println(toJson.toJson("newlfood", list));
 		} catch (IOException e) {
@@ -601,11 +602,20 @@ public class LjlAddFoodAction {
 		int flag =-1;
 		System.out.println("cost"+svalue);
 		int od=orders.upOrders(addorder,svalue);
-		System.out.println("od:"+od);
+	
 		if(od>0){
 			int ud=orders.updesk(st);
 			if(ud>0){
 				flag=1;	
+				try {
+					
+					//response.sendRedirect("http://localhost:8080/FoodControl/service.jsp");
+					response.getWriter().println(flag);
+					System.out.println(000);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		try {

@@ -17,23 +17,37 @@
 body{
 	margin:0;
 	padding:0;
+	
 }
 
 td{
-	width:150px;
+	height:50px;
+	width:200px;
+	font-size:30px;
+	margin-top:10px;
+	margin-bottom:10px;
+	border-bottom:1px solid #ff6600;
+}
+td button{
+	margin-top:10px;
 }
 #top {
 	height: 9%;
+	font-size:20px;
+	margin-left:20px;
 }
 #cbody {
-	height: 75%;
+	height:65%;
+	border-bottom:1px solid #ff6666;
+	
 }
 
 #col1 {
-
+	height: 100%;
 	width: 48%;
-	margin-right: 1%;
+	
 	float: left;
+	border-right:1px solid #99ff99;
 }
 
 
@@ -49,10 +63,30 @@ td{
 #top{
 	float:left;
 	width:50%;
-	
 }
 #bottom{
 	height:15%;
+	background-color:#ffcc99;
+	font-size:25px;
+}
+#titlemading{
+	max-height:400px;;
+	margin-left:10px;
+	margin-right:10px;
+	background-color:#ffcc99;
+}
+#titlemade{
+	margin-left:10px;
+	background-color:#ff99cc;
+	max-height:400px;
+}
+#bhead{
+	padding-top:25px;
+	border-bottom:1px solid #ff6666;
+	background-color:#ffffcc;
+}
+.pre-scrollable{
+	overflow:auto;
 }
 </style>
 </head>
@@ -63,7 +97,7 @@ td{
 	<!----------------------------------------------------------------------------------------------------->
 	<div class="container-fluid"  >
 		<!-------------------------------页面头部------------------------------------------->
-		<div class="row" >
+		<div class="row" id="bhead">
 			<div class= "row"id="top"></div>
 			<div class="btn-group btn-group-lg" role="group">	
 				<button  class="btn btn-info btn-group-lg" id="default">默认</button>
@@ -77,29 +111,26 @@ td{
 			<div class="column" id="col1">
 		
 				<!-- 左边窗口 -->
-				<table class="row pre-scrollable" id="titlemading">
+				<h1>制作中</h1>
+				<div class="row pre-scrollable" id="titlemading">
 					
 				
-				</table>
+				</div>
 				
 			</div>
 
 			<div class="row" id="col2">
 				<!------------右边窗口-------------->
-				<table class=" pre-scrollable"id="titlemade">
+				<h1>待做</h1>
+				<div class=" pre-scrollable"id="titlemade">
 					
-				</table>
-				
-				<div >
-					<table >
-			
-					</table>
 				</div>
 			</div>
 			
 	
 		</div>
 			<!-- 最下面窗口 -->
+			<h1>制作完成</h1>
 			<div class="row pre-scrollable" id="bottom">
 			</div>
 		<!--白色，浅蓝色，深蓝色，绿色，黄色，红色，黑色，对应的class为btn,btn btn-primary,btn btn-info,btn btn-success,btn btn-warning,btn btn-danger,btn btn-inverse-->

@@ -76,7 +76,7 @@
 					data:{"partname.partname":namehtml},
 					success:function(data){
 						var json=JSON.parse(data);
-						for(var i=1;i<22;i++){
+						for(var i=1;i<24;i++){
 							$($("input[name=\"check"+i+"\"]")[0]).prop("checked",false);
 						}	
 						$.each(json,function(index,value){						
@@ -96,7 +96,7 @@
 		var j=0;
 		var powersname=$("#powersname").html();
 		//alert("000:"+powersname);
-			for(var i=1;i<22;i++){	
+			for(var i=1;i<24;i++){	
 			//$("#chk2").prop("checked") == true
 				
 				if($($("input[name=\"check"+i+"\"]")[0]).prop("checked")){

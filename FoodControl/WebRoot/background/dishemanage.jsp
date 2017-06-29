@@ -23,7 +23,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <style>
 
-	#modb li{list-style-type:none;display:block;}
+	#modb li{list-style-type:none;display:block;
+	}
 	#sel{width:135px;}
 	
 </style>
@@ -73,12 +74,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										</li><br/><!--3-->
 										<li>菜品时间&nbsp&nbsp&nbsp&nbsp&nbsp:<input id="makeTime"/></li><br/><!--4-->
 										<li>菜品优先级:<input id="priority"/></li><br/><!--5-->
-										<li>菜品图片&nbsp&nbsp&nbsp&nbsp&nbsp:<input id="pictureName"/></li><br/><!--6-->
-										<li>
-											<form action="GJYFC_uploads.action" method="post" enctype="multipart/form-data">
-												<input type="file" name="phone"/><input type="submit" value="submit"/>
-											</form>
-										</li><br/>
+										<li><input type="file" id="file1" /><br />
+        											<input type="button" class="upload" value="上传" />
+        											<span id="fileload"></span></li><br/><!--6-->
+										
 										<li>最大并菜份数:<input id="maxCopies"/></li><br/><!--7-->
 										<li>菜品状态&nbsp&nbsp&nbsp&nbsp&nbsp:<input id="dishState"/></li><br/>
 									</ul> 	
@@ -150,7 +149,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</li><br/><!--3-->
 					<li>菜品时间&nbsp&nbsp&nbsp&nbsp&nbsp:<input id="makeTimechg"/></li><br/><!--4-->
 					<li>菜品优先级:<input id="prioritychg"/></li><br/><!--5-->
-					<li>菜品图片&nbsp&nbsp&nbsp&nbsp&nbsp:<input id="pictureNamechg"/></li><br/><!--6-->
+					<li>选择文件:<input type="file" id="file2" />
+        				<input type="button" class="upload" value="上传" />
+        				<span id="fileload"></span>
+					</li><br/><!--6-->
 					<li>最大并菜份数:<input id="maxCopieschg"/></li><br/><!--7-->
 					<li>菜品状态&nbsp&nbsp&nbsp&nbsp&nbsp:<input id="dishStatechg"/></li><br/>
 				</ul> 	
@@ -205,7 +207,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var kindId=$("#sel").val();
 			var makeTime=$("#makeTime").val();
 			var priority=$("#priority").val();
-			var pictureName=$("#pictureName").val();
+			var uppicture=$("#fileload").html();
+
 			var maxCopies=$("#maxCopies").val();
 			var dishState=$("#dishState").val();
 			
@@ -215,11 +218,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			else if(kindId=="小炒"){kindId=4;}
 			else if(kindId=="汤类"){kindId=5;}
 			
-			if(dishName && price && kindId && makeTime && priority && pictureName && maxCopies ){
+			if(dishName && price && kindId && makeTime && priority && uppicture && maxCopies ){
 				$.ajax({
 					type:"post",
 					url:"GJYFC_insertFood.action",
-					data:{"fdCry.dishName":dishName,"fdCry.price":price,"fdCry.kindId":kindId,"fdCry.makeTime":makeTime,"fdCry.priority":priority,"fdCry.pictureName":pictureName,"fdCry.maxCopies":maxCopies,"fdCry.dishState":dishState},
+					data:{"fdCry.dishName":dishName,"fdCry.price":price,"fdCry.kindId":kindId,"fdCry.makeTime":makeTime,"fdCry.priority":priority,"fdCry.pictureName":uppicture,"fdCry.maxCopies":maxCopies,"fdCry.dishState":dishState},
 					success:function(data){
 						if(data==-1){
 							alert("添加失败");
@@ -247,7 +250,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 $("#selchg").val($("#d"+p1).html());
 			 $("#makeTimechg").val($("#e"+p1).html());			/*获得数据库中的值放入input中*/
 		 	 $("#prioritychg").val($("#f"+p1).html());
-		 	 $("#pictureNamechg").val($("#g"+p1).html());
+		 	// $("#pictureNamechg").val($("#g"+p1).html());
+		 	$("#fileload").html($("#g"+p1).html());
 			 $("#maxCopieschg").val($("#h"+p1).html());
 		 	 $("#dishStatechg").val($("#i"+p1).html());
 		 
@@ -259,7 +263,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var sech= $("#selchg").val();
 			var mati=$("#makeTimechg").val();
 			var pror= $("#prioritychg").val();
-			var pict= $("#pictureNamechg").val();
+			var pict= $("#fileload").html();
 			var maco= $("#maxCopieschg").val();
 			var stat= $("#dishStatechg").val();
 			
@@ -295,7 +299,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 	});
 		
-
+	/*
+			上传文件；
+		*/
+	$(function () {
+            $(".upload").click(function () {
+            alert(2);
+                var formData = new FormData();
+                //formData.append("myfile", $("#file1").files[0]);  
+                formData.append("myfile", document.getElementById("file1").files[0]);
+                $.ajax({
+                    url: "GJYFC_uploads.action",
+                    type: "POST",
+                    data: formData,
+                    /**
+                    *必须false才会自动加上正确的Content-Type
+                    */
+                    contentType: false,
+                    /**
+                    * 必须false才会避开jQuery对 formdata 的默认处理
+                    * XMLHttpRequest会对 formdata 进行正确的处理
+                    */
+                    processData: false,
+                    success: function (data) {
+                    alert(data);
+                    $("#fileload").html(data);
+                        if (data.status == "true") {
+                            alert("上传成功！");
+                        }
+                    },
+                    error: function () {
+                        alert("上传失败！");
+                       
+                    }
+                });
+            });
+        });
+	
 		
 	
 	
