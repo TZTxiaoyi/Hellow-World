@@ -46,6 +46,14 @@ public class LjlAddFoodAction {
 	 * kindname 分类名字
 	 * 
 	 */
+	/**
+	 * addfood 菜品实体类 名字 价格 id
+	 * addorder 订单实体类 id 总计 菜品数量 状态 下单时间 使用桌台
+	 * st 桌台信息 id 名字 状态
+	 * ddname 当前选用桌台名字；
+	 * kindname 分类名字
+	 * 
+	 */
 	private LjlAddFood addfood;
 	private LjlAddOrder addorder;
 	private SxmTable st;
