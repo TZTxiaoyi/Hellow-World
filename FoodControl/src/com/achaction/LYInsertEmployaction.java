@@ -91,7 +91,7 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int partId = ied.selectpartId(partname);
 		int enterId = ied.selectenterid(employId);
-		//System.out.println(partId+"::::"+enterId);
+		//System.out.println("888888888:"+partId+"::::"+enterId);
 		int flag=ied.eminsert(employee,partId,enterId);	
 		try {
 			response.getWriter().print(flag);
@@ -131,11 +131,12 @@ public class LYInsertEmployaction {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 
-		List<String> list=ied.selemploy(employee);		
+		List<String> list=ied.selemploy(employee);	
+		System.out.println("000:"+list);
 		toJson json=new toJson();
 	
 		json.toJson("vlaue", list);	
-	
+		
 		try {
 			response.getWriter().print(json.toJson("vlaue", list).toString());
 		} catch (IOException e) {
@@ -167,6 +168,7 @@ public class LYInsertEmployaction {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		int flag=9;
+		System.out.println(employee.getEmsex());
 		flag=ied.update(employee);		
 		try {
 			response.getWriter().print(flag);
@@ -179,7 +181,6 @@ public class LYInsertEmployaction {
 	 */
 	public void searchEM(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
-
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");			
 		List<String> list=ied.searchsome(putvalue);

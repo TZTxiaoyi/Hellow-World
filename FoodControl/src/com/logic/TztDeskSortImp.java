@@ -25,12 +25,10 @@ import com.insertemploydao.TztDishOrderImp;
  * @°æ±¾£ºV1.0  
  */
 public class TztDeskSortImp implements TztSort {
-
-
-
 	public List queryMade() {		
 		return null;
 	}
+		
 	public List queryMading() {
 		return null;
 	}

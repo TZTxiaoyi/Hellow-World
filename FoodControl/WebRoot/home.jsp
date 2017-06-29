@@ -102,13 +102,13 @@
 					<button type="button" class="btn btn-default btn-lg btn-danger" 
 					data-toggle="modal" data-target="#myModal4">
 						<h1 class="glyphicon glyphicon-cutlery" aria-hidden="true"></h1>
-						<p>自助点餐</p>
+						<p>网络点餐</p>
 					</button>
 					
 					<button type="button" class="btn btn-default btn-lg btn-Info"
 						data-toggle="modal" data-target="#myModal2"  id="orderfood">
 						<h1 class="glyphicon glyphicon-heart" aria-hidden="true"></h1>
-						<p>开始点餐</p>
+						<p>自助点餐</p>
 					</button>
 				</div>
 				<div class="media media-y margin-big-bottom"></div>

@@ -22,9 +22,12 @@ public class LYEmployee {
 	private String account;
 	
 	public String getAccount() {
+
+		
+
+
 		return account;
 	}
-	
 	private int staffinfoState;
 	public int getStaffinfoState() {
 		staffinfoState=19;

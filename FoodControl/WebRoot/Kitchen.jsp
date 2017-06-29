@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -67,20 +67,28 @@ td button{
 #bottom{
 	height:15%;
 	background-color:#ffcc99;
+
+	font-size:25px;
 }
 #titlemading{
-	height:50px;
+	max-height:400px;;
 	margin-left:10px;
+	margin-right:10px;
 	background-color:#ffcc99;
 }
 #titlemade{
 	margin-left:10px;
 	background-color:#ff99cc;
+	max-height:400px;
 }
 #bhead{
 	padding-top:25px;
 	border-bottom:1px solid #ff6666;
 	background-color:#ffffcc;
+}
+.pre-scrollable{
+	overflow:auto;
+
 }
 </style>
 </head>
@@ -106,24 +114,18 @@ td button{
 		
 				<!-- 左边窗口 -->
 				<h1>制作中</h1>
-				<table class="row pre-scrollable" id="titlemading">
-					
+				<div class="row pre-scrollable" id="titlemading">
 				
-				</table>
+				</div>
 				
 			</div>
 
 			<div class="row" id="col2">
 				<!------------右边窗口-------------->
 				<h1>待做</h1>
-				<table class=" pre-scrollable"id="titlemade">
+
+				<div class=" pre-scrollable"id="titlemade">
 					
-				</table>
-				
-				<div > 
-					<table >
-			
-					</table>
 				</div>
 			</div>
 			

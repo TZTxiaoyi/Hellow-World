@@ -29,9 +29,9 @@
 			border-bottom:1px solid #666699;
 		}
 		#left-subject{
-			height:80%;
+			height:85%;
 			position:relative;
-			
+			margin-left:5%;
 		}
 		#lefttop-subject{
 			background:#ffffcc;
@@ -39,7 +39,7 @@
 		}
 		#righttop-subject{
 			background:#ffffcc;
-			height:80%;
+			height:85%;
 		}
 		#right-subject{
 			position:relative;
@@ -70,19 +70,30 @@
 		#subject-style{
 			padding-left:10px;
 			height:50px;
-			background-color: #ff9999;
+			background-color:#ff9999;
+			font-size:20px;
+			line-height:50px;
+		}
+		#subject-styler{
+			padding-left:15px;
+			height:50px;
+			background-color: #6666ff;
 			font-size:20px;
 			line-height:50px;
 		}
 		.torder td{
 			
-			font-size:20px;
-			width:100px;
-			height:40px;
+			font-size:18px;
+			width:20%;
+			height:50px;
 			text-align:center;
 			margin-top:5px;
 			border-bottom:1px solid #ff9999;
+			line-height:50px;
 					
+		}
+		#vageorder td{
+			width:23%;
 		}
 		#vageorder{
 			height:500px;
@@ -90,14 +101,21 @@
 		}
 		#vageadd{
 		
-			height:230px;
+			height:500px;
 			background-color:#ffff99;
 		}
+		#vageitem td{
+			width:22%;
+		}
 		#vageitem{
-			height:180px;
+			height:500px;
 		}
 		#subject-style td{
 			width:100px;
+			text-align:center;
+		}
+		#subject-styler td{
+			width:150px;
 			text-align:center;
 		}
 		#torder a{
@@ -109,16 +127,12 @@
 			color:#ff6600;
 			overflow:auto;
 		}
-		#money{
-			height:80px;
-			position:absolute;
-			bottom:0px;
-		}
 		
 		#money a{
+			
 			margin-top:25px;
 			margin-right:10px;
-			margin-left:10px;
+			margin-left:150px;
 		}
 		#times{
 			position:absolute;
@@ -138,10 +152,13 @@
 		}
 		#btm{
 			margin-top:5%;
+			height:80px;
+			position:absolute;
+			bottom:30px;
 		}
 		#vagenum{
 			position:relative;
-			left:60%;
+			left:50%;
 		}
 		#area{
 			margin-left:15px;
@@ -169,6 +186,12 @@
 		#lishi{
 			color:#3333ff;
 			
+		}
+		#selectmoney{
+			margin-top:25px;
+			margin-right:-50px;
+			margin-left:100px;
+			background-color:#ff99ff;
 		}
 	</style>
   
@@ -225,77 +248,49 @@
 		</div>
 
 	
-		<div class="row"> <!--主体 -->
+		<div class="row" id="rowsubject"> <!--主体 -->
 			<div class="col-md-4" id="left-subject"><!--左部主体内容-->
 				<div id="lefttop-subject">
-					<h3>已订菜<a id="vagenum" href=""
+					<h3>临时加菜<a id="vagenum" href=""
 						role="button">总计：<span class="tred"></span></a></h3>
-					<div >
+					<div id="vageadd" >
 						<div id="subject-style">
 							
 						</div>
-						<div id="vageorder" class="pre-scrollable torder">
-							
-						</div>
-					</div>
-					<div id="vageadd">
-						<h3 id="lishi">临时加菜</h3>
 						<div  id="vageitem" class="pre-scrollable torder">
 						
 						</div>
 					</div>
+					
 				</div>
 				
 				
 			</div>
 			
-			<div class="col-md-8" id="right-subject"><!--右部主体内容-->
+			<div class="col-md-6" id="right-subject"><!--右部主体内容-->
 				<div id="righttop-subject">
-					<h3>菜品类别</h3>
+					<h3>已订菜</h3>
 					<div id="callimg"><img id="img" src="images/del.jpg" alt="已取消" class="img-circle"><span id="imgdel">已取消</span></div>
-					<div class="container-fluid" id="classify"><!--菜品分类-->
-						<div class="row">
-							<div class="col-md-4" id="classify-css">
-								热菜
-							</div>
-							<div class="col-md-4" id="classify-css">
-								凉菜
-							</div>
-							<div class="col-md-4" id="classify-css">
-								主食
-							</div>
-							<div class="col-md-4" id="classify-css">
-								饮品
-							</div>
-							<div class="col-md-4" id="classify-css">
-								汤类
-							</div>
+					<div id="subject-styler">
 							
-						</div>
-					</div>	
-					
-		
-					<div class="container-fluid pre-scrollable"><!-- 菜单-->
-						<div class="row " id="menu-height" >
-							<c:forEach var="next"  items="${dish}" varStatus="statu">
-								<div class="col-md-4" id="menu-within-height">
-									<span name="name${statu.index}">${next[1]}</span>:  <span name="name${statu.index}">${next[2]}</span>元 / 份<br/>
-									<div class="row" >
-										<div class=" center-block"  id="food-btn">
-											<input type="button" name="name${statu.index}" value="-1" class="remove btn btn-default">
-											<input type="text" value="0" class="number-cl btn btn-default" size="3" name="name${statu.index}">
-											<input type="button" name="name${statu.index}" value="+1" class="add btn btn-default">
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-						</div>
 					</div>
+					<div id="vageorder" class="pre-scrollable torder">
+							
+					</div>	
 				</div>
-				<div id="btm"><!--底部功能模块-->
+				
+				
+			</div>
+			<div id="btm"><!--底部功能模块-->
 					<span id="money">
+						<select  id ="selectmoney" class="btn btn-lg dropdown-toggle" name="selectvalue"> 
+							<option>结账方式</option>
+							<option value="9">现金支付</option>
+							<option value="11">微信支付</option>
+							<option value="10">支付宝支付</option>
+						</select>
 						<a class="btn btn-danger btn-lg" href=""
-						role="button" id="paymoney">结账</a>
+						role="button" id="paymoney">确认结账</a>
 						<a class="btn btn-success btn-lg " href=""
 						role="button" id="clear">清扫结束</a> 
 						<a role="button" class="btn btn-danger btn-lg" id="alldel">整单取消</a>
@@ -303,8 +298,6 @@
 						<a role="button" class="btn btn-primary btn-lg" id="anxious">催菜</a>
 					</span>
 					
-
-				</div>
 				
 			</div>
 		<div id="times"></div>
@@ -341,8 +334,7 @@
 		*/
 		$(function() {
 			setInterval("getTime()",1000);
-			
-			if($("#orders").html()!=""){
+			if($("#order").html()!="undefined"){
 				setInterval("outtime()",1000);
 			}
 		});
@@ -397,7 +389,7 @@
 			
 		});
 		$(function(){
-			$("#vageadd").hide();
+			//$("#vageadd").hide();
 			if($("#order").html()!=""){
 				outfood();
 			}
@@ -413,7 +405,6 @@
 				type:"post",
 				data:{"addorder.ordersId":ord},
 				success:function(data){
-					
 					var json=JSON.parse(data);
 					var dname=null;//桌子名字
 					var fnum=null;//菜品数量
@@ -422,8 +413,10 @@
 					var dnum=0;//菜品数量
 					var num=0;//订单总金额
 					$("#subject-style").html("");
+					$("#subject-styler").html("");
 					var th="<tr><td>菜品</td><td>数量</td><td>单价</td><td>金额</td><td></td></tr>";
 					$("#subject-style").append(th);
+					$("#subject-styler").append(th);
 					var foodnum=1;
 					$("#torder").html("");
 					$("#vageorder").html("");
@@ -455,14 +448,14 @@
 							$("#vageorder").append(odertext);
 						}
 						if(value[9]==1){
-							$("#vageadd").show();
+							//$("#vageadd").show();
 							$("#vageitem").append(odertext);
 						}
 						num=num+allnum;
 						
 					});
 					
-					//$("#dname").html(dname);
+					$("#dname").html(dname);
 					$("#pnum").html(fnum);
 					$(".tred").html(ordersnum);	
 				 	$("#clear").attr("disabled",true); 
@@ -478,20 +471,19 @@
 		$("#paymoney").click(function(){
 			var ord=$("#order").html();
 			var dname=$("#dname").html();
+			var svalue=$("#selectmoney option:selected").val();
 			$.ajax({
 				async:false,
 				url:"addfood_updateOrder.action",
 				type:"post",
-				data:{"st.deskName":dname,"addorder.ordersId":ord},
+				data:{"st.deskName":dname,"addorder.ordersId":ord,"svalue":svalue},
 				success:function(data){	
-					if(data!=-1){
-					 	//$("#clear").removeAttr("disabled");
-					 	$("#clear").attr("disabled",false); 
-						window.open("http://localhost:8080/FoodControl/service.jsp");
-					}
-				},
+					alert("haha123");
+					//$(window).attr("location","http://www.baidu.com");
+					
+				}
 			});
-			
+			window.history.back(-1);
 		})
 		/*
 			清台
@@ -506,6 +498,7 @@
 				success:function(data){
 					if(data!=-1){
 						window.open("http://localhost:8080/FoodControl/service.jsp");
+						//href="service.jsp";
 					}
 					
 					
@@ -518,41 +511,24 @@
 		$("#alldel").click(function(){
 			var dname=$("#dname").html();
 			var ord=$("#order").html();
-			
 			$.ajax({
 				url:"addfood_alldelect.action",
 				type:"post",
 				data:{"addorder.ordersId":ord,"st.deskName":dname},
 				success:function(data){
-				
-					if(data!=-1){
-					
+					if(data==1){
 						$("#callimg").show();//切换元素为可见状态==$("#callimg").css("display","block");
 						outfood();
-					}
+					}else if(data==-1){
+						alert("整单删除失败！");	
+					}	
 				}
 			});
-		})
-
-	$("#anxious").click(function(){
-		var orderid=$("#order").html();
-		$.ajax({
-			url:"",
-			type:"post",
-			data:{"addorder.ordersId":orderid},
-			success:function(data){
-				json=JSON.parse(data);
-				
-				$.each(json,function(index,value){
-				var state=value[0];
-					state=state+1;
-				})
-			}
 		});
 		/*
 			单个菜品取消；
 		*/
-		$("#lefttop-subject").on('click',".del", function(){
+		$("#rowsubject").on('click',".del", function(){
 			var delid=$(this).attr("id");
 			var vagename=$("#qu"+delid).html();
 			var num=$("#mon"+delid).html();//取消金额
@@ -594,7 +570,6 @@
 			type:"post",
 			data:{"addorder.ordersId":orderid},
 			success:function(data){
-				alert(data);
 				if(data!=-1){
 					alert("催菜成功！");
 				}
@@ -608,7 +583,6 @@
 	$("#shuxin").click(function(){
 		outfood();
 	})
-
 	</script>
   </body>
 </html>

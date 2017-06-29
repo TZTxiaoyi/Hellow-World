@@ -19,9 +19,7 @@ public class LyLanJieQi extends MethodFilterInterceptor{
 		//request.getSession().getAttribute("name");
 		String uri = request.getRequestURI();
 
-		//System.out.println("lujing:"+uri);
-
-
+		System.out.println("lujing:"+uri);
 		List list = (List) request.getSession().getAttribute("listvalue");
 		for (int i = 0; i < list.size(); i++) {			
 			List list6=(List) list.get(i);
@@ -31,6 +29,7 @@ public class LyLanJieQi extends MethodFilterInterceptor{
 				String result = arg0.invoke();
 				return result;
 			}
+			
 		}
 		return "login";
 	}		

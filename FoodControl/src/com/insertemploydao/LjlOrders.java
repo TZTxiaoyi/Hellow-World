@@ -5,7 +5,6 @@ import java.util.List;
 import com.daointerface.DaoInterface;
 import com.entity.LjlAddOrder;
 import com.entity.SxmTable;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import com.utils.DaoFactory;
 
 public class LjlOrders implements DaoInterface{
@@ -46,7 +45,9 @@ public class LjlOrders implements DaoInterface{
 		return list;
 	}
 	/**
+	 * 自动刷新显示当天订单已结未结状态
 	 * 根据订单查询菜品订单表
+
 	 * @param oId
 	 * @return
 	 */
@@ -55,9 +56,8 @@ public class LjlOrders implements DaoInterface{
 				"ds.price,od.dishNnum,ds.dishId,od.dishStatus,od.addDish,od.dishtime,o.ordersPrice from  " +
 				"desk_restaff d join orders o on d.deskId=o.deskId and o.ordersId="+oId+
 				"join orders_dish od on o.ordersId=od.ordersId " +
-				"join dish ds on ds.dishId=od.dishId";		
+				"join dish ds on ds.dishId=od.dishId";
 		List list=DaoFactory.Query(sql);
-	
 		return list;
 	}
 	/**
@@ -84,10 +84,10 @@ public class LjlOrders implements DaoInterface{
 	 * 根据订单号更新订单状态
 	 * @return
 	 */
-	public int upOrders(Object order){
+	public int upOrders(Object order,int svalue){
 		LjlAddOrder ord=(LjlAddOrder)order;
-		String sql="update orders set ordersStatus=16 where ordersId=?";
-		Object[] params = new Object[] {ord.getOrdersId()}; 
+		String sql="update orders set ordersStatus=16,cost=? where ordersId=? and ordersStatus=15";
+		Object[] params = new Object[] {svalue,ord.getOrdersId()}; 
 		return DaoFactory.Updata(sql, params);
 		
 	}
@@ -142,7 +142,7 @@ public class LjlOrders implements DaoInterface{
 	public int clearDesk(Object dnam){
 		SxmTable dname = (SxmTable) dnam;
 		String sql="update desk set deskState=6 where deskName=? and deskState=8";
-		System.out.println(dname.getDeskName());
+	
 		Object[] params = new Object[] {dname.getDeskName()};
 		return DaoFactory.Updata(sql, params);
 	}
@@ -176,6 +176,13 @@ public class LjlOrders implements DaoInterface{
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
+	 * 点击整单取消查询订单菜品表里菜品的状态
+	 */
+	public List vagestate(int ords){
+		String sql="select dishStatus from orders_dish where ordersId="+ords+" and (dishStatus=13 or dishStatus=14)";
+		return DaoFactory.Query(sql);
+	}
+	/**
 	 * 根据订单id改变菜的状态为17
 	 * @param obj
 	 * @param obj1
@@ -187,6 +194,7 @@ public class LjlOrders implements DaoInterface{
 		Object[] params=new Object[]{addo.getOrdersId()};
 		return DaoFactory.Updata(sql, params);
 	}
+	
 	public int update(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;

@@ -1,6 +1,6 @@
 
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+ 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <!-- 
@@ -72,7 +72,8 @@
   </ul>
   <h2><span class="icon-pencil-square-o"></span>其他</h2>
   <ul>
-  	<li><a href="leaveword.jsp" target="right"><span class="icon-caret-right"></span>留言管理</a></li>      
+  	<li><a href="leaveword.jsp" target="right"><span class="icon-caret-right"></span>留言管理</a></li>
+	<li><a href="customer.jsp" target="right"><span class="icon-caret-right"></span>顾客信息</a></li>     
   </ul>    
 </div>
 <ul class="bread">
@@ -123,5 +124,6 @@ $(function(){
     	});
 		
 </script>
+
 </body>
 </html>
