@@ -92,14 +92,14 @@
 		});
 		
 		function liyang(a){
-		alert(a);
+		//alert(a);
 			$.ajax({				
 					url:"order_apages.action",
 					type:"post",
 					data:{"countpage":a},
 					success:function(data){					
 					var json=JSON.parse(data);
-					alert(json);
+					//alert(json);
 						stamp(json);					
 					}
 				});
@@ -153,3 +153,4 @@
 </div>
 </body>
 </html>
+/FoodControl/background/GJYFC_FCdelete.action

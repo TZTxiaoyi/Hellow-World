@@ -20,12 +20,14 @@
 			*/
 			$(function(){
 				$("#addent").click(function(){
+				
 					var ementer = $("#ementer").val();
-					var emword	= $("#emword").val();					
+					var emword	= $("#emword").val();
+						alert("0000:"+ementer+"::"+emword);				
 					if(ementer && emword){					
 						$.ajax({
 							type:"post",
-							url:"fresh_enterid.action",
+							url:"achieve_enterid.action",
 							data:{"employId.ementer":ementer,"employId.emword":emword},
 							success:function(data){
 								if(data==-1){
@@ -101,8 +103,7 @@
 					var json=JSON.parse(data);				
 						var th="<tr><td></td><td>账号</td><td>密码</td><td>当前状态</td><td>操作</td></tr>";
 					 	$("#tableid").html("");	
-					 	$("#tableid").append(th);
-					 
+					 	$("#tableid").append(th);					 
 						$.each(json,function(index,value){
 						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
 							var emtable=
@@ -181,8 +182,7 @@
 		});		
 		</script>
 	</head>
-	<body>
-	
+	<body>	
 		  <div class="panel admin-panel">
 		    <div class="panel-head">
 			    <strong class="icon-reorder">内容列表</strong> 
@@ -213,30 +213,56 @@
 			</div>	
 		  </div>
 		  
-		  
-		  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-				<div class="text-center margin-big padding-big-top">
-							<h1>密码或状态修改</h1>
-				</div>
-				<div id="modalform">
-					<!--<div>
-					    <span>账号</span><input type="text" name="st.personNum" id="per"/>
-					</div>  -->
-					 <div>
-					   <span>密码</span><input type="text" name="st.deskName" id="perid"/>
-					 </div>
-					  <div>
-					    <span>当前状态</span><input type="text" name="st.deskState" id="perphone"/>
-					  </div>
-					   
+		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">									
+						<h4 class="modal-title" id="myModalLabel">添加员工账号</h4>
+					</div>
+									<!-- 
+										添加员工信息的输入框 ----
+									 -->									 
+					<div class="modal-body1">
+															
+						账	号：<input type="text" id="ementer" name="ementer"><br/>
+						密	码：<input type="text" id="emword" name="emword"><br/>									
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
-
+										<!-- 
+											关闭模态框按钮
+										 -->
+						<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<!-- 
+											点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
+										 -->
+						<input type="submit" class="btn btn-primary"  value="添加" id="addent"/>	
+					</div>
+				 </div>
+			</div>
+		  </div>
+		  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+						<div class="text-center margin-big padding-big-top">
+								<h1>密码或状态修改</h1>
+						</div>
+						<div id="modalform">
+							<!--<div>
+							    <span>账号</span><input type="text" name="st.personNum" id="per"/>
+							</div>  -->
+							 <div>
+							   <span>密码</span><input type="text" name="st.deskName" id="perid"/>
+							 </div>
+							  <div>
+							    <span>当前状态</span><input type="text" name="st.deskState" id="perphone"/>
+							  </div>					   
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
+	
+						</div>
 					</div>
 				</div>
 			</div>

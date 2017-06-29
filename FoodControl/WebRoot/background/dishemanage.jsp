@@ -75,9 +75,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<li>菜品优先级:<input id="priority"/></li><br/><!--5-->
 										<li>菜品图片&nbsp&nbsp&nbsp&nbsp&nbsp:<input id="pictureName"/></li><br/><!--6-->
 										<li>
-											<form action="GJYFC_uploads.action" method="post" enctype="multipart/form-data">
-												<input type="file" name="phone"/><input type="submit" value="submit"/>
-											</form>
+											选择文件:<input type="file" id="file1" /><br />
+        											<input type="button" id="upload" value="上传" />
+        											<span id="fileload"></span>
+										
+        
+										
+										
 										</li><br/>
 										<li>最大并菜份数:<input id="maxCopies"/></li><br/><!--7-->
 										<li>菜品状态&nbsp&nbsp&nbsp&nbsp&nbsp:<input id="dishState"/></li><br/>
@@ -205,21 +209,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var kindId=$("#sel").val();
 			var makeTime=$("#makeTime").val();
 			var priority=$("#priority").val();
-			var pictureName=$("#pictureName").val();
+			//var pictureName=$("#pictureName").val();
 			var maxCopies=$("#maxCopies").val();
 			var dishState=$("#dishState").val();
-			
+			var uppicture=$("#fileload").html();
 			if(kindId=="凉拌"){kindId=1;}
 			else if(kindId=="主食"){kindId=2;}
 			else if(kindId=="拌饭"){kindId=3;}
 			else if(kindId=="小炒"){kindId=4;}
 			else if(kindId=="汤类"){kindId=5;}
 			
-			if(dishName && price && kindId && makeTime && priority && pictureName && maxCopies ){
+			if(dishName && price && kindId && makeTime && priority && uppicture && maxCopies ){
 				$.ajax({
 					type:"post",
 					url:"GJYFC_insertFood.action",
-					data:{"fdCry.dishName":dishName,"fdCry.price":price,"fdCry.kindId":kindId,"fdCry.makeTime":makeTime,"fdCry.priority":priority,"fdCry.pictureName":pictureName,"fdCry.maxCopies":maxCopies,"fdCry.dishState":dishState},
+					data:{"fdCry.dishName":dishName,"fdCry.price":price,"fdCry.kindId":kindId,"fdCry.makeTime":makeTime,"fdCry.priority":priority,"fdCry.pictureName":uppicture,"fdCry.maxCopies":maxCopies,"fdCry.dishState":dishState},
 					success:function(data){
 						if(data==-1){
 							alert("添加失败");
@@ -446,7 +450,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 				});
 		}
-	
+		/*
+			上传文件；
+		*/
+	$(function () {
+            $("#upload").click(function () {
+                var formData = new FormData();
+                //formData.append("myfile", $("#file1").files[0]);  
+                formData.append("myfile", document.getElementById("file1").files[0]);
+                $.ajax({
+                    url: "GJYFC_uploads.action",
+                    type: "POST",
+                    data: formData,
+                    /**
+                    *必须false才会自动加上正确的Content-Type
+                    */
+                    contentType: false,
+                    /**
+                    * 必须false才会避开jQuery对 formdata 的默认处理
+                    * XMLHttpRequest会对 formdata 进行正确的处理
+                    */
+                    processData: false,
+                    success: function (data) {
+                    $("#fileload").html(data);
+                        if (data.status == "true") {
+                            alert("上传成功！");
+                        }
+                    },
+                    error: function () {
+                        alert("上传失败！");
+                       
+                    }
+                });
+            });
+        });
+   
 </script>
 </body>
 </html>

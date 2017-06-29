@@ -76,7 +76,7 @@
 					data:{"partname.partname":namehtml},
 					success:function(data){
 						var json=JSON.parse(data);
-						for(var i=1;i<22;i++){
+						for(var i=1;i<24;i++){
 							$($("input[name=\"check"+i+"\"]")[0]).prop("checked",false);
 						}	
 						$.each(json,function(index,value){						
@@ -96,13 +96,13 @@
 		var j=0;
 		var powersname=$("#powersname").html();
 		//alert("000:"+powersname);
-			for(var i=1;i<22;i++){	
+			for(var i=1;i<24;i++){	
 			//$("#chk2").prop("checked") == true
 				
 				if($($("input[name=\"check"+i+"\"]")[0]).prop("checked")){
 					powersId.push(i);
 					//alert(powersId);
-					//alert(powersId);
+					alert(powersId);
 					j++;
 				}
 			}
@@ -167,8 +167,8 @@
         		<hr>
         		菜品管理<input type="checkbox" name="check5" aria-label="..."><br>
         		添加菜品<input type="checkbox" name="check17" aria-label="...">  
-        		修改菜品<input type="checkbox" name="check" aria-label="...">  
-        		删除菜品<input type="checkbox" name="check" aria-label="..."><br>
+        		修改菜品<input type="checkbox" name="check22" aria-label="...">  
+        		删除菜品<input type="checkbox" name="check23" aria-label="..."><br>
         		<hr>
         		订单详情<input type="checkbox" name="check19" aria-label="...">
         		退单详情<input type="checkbox" name="check20" aria-label="...">  
