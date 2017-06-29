@@ -9,8 +9,8 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+
+
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSON;
@@ -28,13 +28,6 @@ public class GJYFCaction {
 	private int countpage;/*当前分页的页码*/
 	File myfile;
 	String myfileFileName;
-	public String getMyfileFileName() {
-		return myfileFileName;
-	}
-
-	public void setMyfileFileName(String myfileFileName) {
-		this.myfileFileName = myfileFileName;
-	}
 
 	public File getMyfile() {
 		return myfile;
@@ -43,6 +36,20 @@ public class GJYFCaction {
 	public void setMyfile(File myfile) {
 		this.myfile = myfile;
 	}
+
+
+
+	public String getMyfileFileName() {
+		return myfileFileName;
+	}
+
+
+
+	public void setMyfileFileName(String myfileFileName) {
+		this.myfileFileName = myfileFileName;
+	}
+
+
 
 	private GJYFoodCategory fdCry = new GJYFoodCategory();/*创建菜品实体类*/
 	GJYInsertFoodcategory inFc=new GJYInsertFoodcategory();/*创建Dao对象*/
@@ -179,9 +186,9 @@ public class GJYFCaction {
 	
 	public void uploads(){
 		try {
-			
 			String name=new Date().getTime()+myfileFileName.substring(myfileFileName.lastIndexOf("."));
-			File file=new File("e:/"+name);
+			System.out.println(name);
+			File file=new File("D:/NO9/FoodControl/WebRoot/image/"+name);
 			InputStream is=new FileInputStream(myfile);
 			OutputStream os=new FileOutputStream(file);
 			byte[] b=new byte[1024];
@@ -189,11 +196,10 @@ public class GJYFCaction {
 				while(is.read(b)!=-1){
 					os.write(b);
 				}
-				
 				is.close();
 				os.close();
 				HttpServletResponse response=ServletActionContext.getResponse();
-				HttpServletRequest request=ServletActionContext.getRequest();
+
 				response.getWriter().print(name);
 			} catch (Exception e) {
 				// TODO: handle exception

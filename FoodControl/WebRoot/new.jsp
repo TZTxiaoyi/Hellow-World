@@ -61,18 +61,8 @@
 			
 			display:none;
 		}
-		div input {
-			margin-top:30px;
+		#food-btn{
 			
-			
-		}
-		#aa2{
-			color:red;
-		}
-		#zbid{
-			float:left;
-			margin-left:300px;
-			margin-top:-330px;
 		}
 		.active{
 			margin-top:50px;
@@ -102,92 +92,10 @@
 		<div id="zbtop">
 			<a type="button" class="btn btn-default"id="zbbutton1" href = "addfood_backhome.action"><h1 class="glyphicon glyphicon-home"></h1></a><!-- 主页 -->
 			
-
-			<span>当前系统时间：</span><span id="date_1"></span>
-			<span id="deskname">${sessionScope.dname}</span>
-			<span id ="desk2"></span>
 			
-			<%	String desknub = request.getParameter("desknub");
-				String personnub = request.getParameter("personnub");
-				String zbphone = request.getParameter("zbphone");
-				String zbaddress = request.getParameter("zbaddress");
-				
-				out.println("桌号:"+desknub);
-				out.println("人数:"+personnub);
-				out.println("电话:"+zbphone);
-				out.println("地址："+zbaddress);
-				
-			 %>	
-			 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1">
-		  我的资料
-		</button>
-
-<!-- Modal -->
-		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">个人基本信息</h4>
-		      </div>
-<!-- form表单 -->	
-				<form action ="home_nom.action" method ="post" onsubmit ="return show()">
-					<div>
-						<input placeholder="姓名" type="text" id="zb_name" name ="zb.name"/><br/>
-					</div>
-					<div>
-						<input placeholder="年龄" type="text" id="zb_age" name ="zb.age"/><br/>
-					</div>
-					
-					<div>
-						<input type ="radio" name ="zb.sex"  value ="4"/>男<input type ="radio" name ="zb.sex" value ="5"/>女<br>
-					</div>
-					<div>
-						<input placeholder="电话" type="text" id="zb_phone1" name ="zb.phone1"/><br/>
-					</div>
-					<div>
-						<input placeholder="地址" type="text" id="zb_adress" name ="zb.adress"/><br/>
-					</div>
-					
-					<button type="submit" class="btn btn-warning btn-group-lg" id ="zbsub">提交</button>
-				</form>
-				
-				<form action ="home_nom.action" method ="post" id = "zbid">
-					
-					<h4 class="modal-title" id="myModalLabel">修改密码</h4>
-					<div>
-						<input placeholder="输入旧密码" type="password" id="zb_pwd0" name ="zb.pwd0"/><br/>
-					</div>
-					<div>
-						<input placeholder="输入新密码" type="password" id="zb_pwd1" name ="zb.pwd1"/><br/>
-					</div>
-					<div>
-						<input placeholder="再次输入新密码" type="password" id="zb_pwd2"
-							onfocus="passFocus()" onblur="passBlur()" name ="zb.pwd2"/> <span
-							id="aa2"></span>
-					</div>
-					
-					<button type="submit" class="btn btn-warning btn-group-lg" id ="zbsub">确认修改</button>
-				</form>
-<!--form表单  -->		      
-		      <!-- <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">×</button>
-		        
-		        <button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >保存更改</button>
-		        $("#usagepwd").blur(function(){
-					alert($("#usagepwd").val());
-				});	
-		        
-		      </div> -->
-		    </div>
-		  </div>
+			<span id="deskname">当前桌号：${sessionScope.dname}</span>
+			<span id ="desk2"></span>
 		</div>
-			 
-			 
-			 
-			 
-			 
-		</div>	
 <!-- 左侧 -->		
 		<div class=" col-md-2" id="zbleft">
 			<div id="navbarExample" class="navbar navbar-static">
@@ -274,47 +182,6 @@
 	  		</div>
 		</div><!-- 底部div -->
 		<script>
-			
-				
-			/* 
-			$sex=$_POST["sex"];
-			alert($_POST['sex']);
-			
-			
-			$("#zbsub").click(function(){
-			alert("++++++++++++++");
-				var sex = $($("input[name=\"sex\"]")[0]).val;
-				alert(sex);
-				var s = $(s).attr("sex").val();
-				
-				
-			}); */
-			//++++++++++++++++++++++++++修改密码++++++++++++++++++++++++++++++++++++++++++++++
-			$("#zb_pwd0").blur(function(){
-				var password = $("#usagepwd").val();a
-				$.ajax({
-					url : "",
-					data: {},
-					type "post",
-					success:function(data){
-						
-					},
-				});
-				alert(password);
-			});
-			$("#zb_pwd2").blur(function(){
-				var pwd1 = $("#zb_pwd1").val();
-				var pwd2 = $("#zb_pwd2").val();
-				alert(pwd1);
-				alert(pwd2);
-				if(pwd1 != pwd2){
-					$("#aa2").html("*两次密码不一致");
-				}else{
-					$("#aa2").html("");
-				}
-			});
-			
-=======
 				function kindfood(){
 					$.ajax({
 						type:"post",
@@ -351,7 +218,6 @@
 					});
 				};
 				
->>>>>>> 287b559215696a71f8c7abc3722500aeee7f9cb9:FoodControl/WebRoot/new.jsp
 				//添加菜品，更新菜单和总价
 				function upfood(btnid,foodname,uprice,number,price){	
 					$.ajax({
@@ -461,6 +327,7 @@
 							var num=0;
 							$("#selOrder-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
+							
 								var tdclass="<td></td>";;
 								if(value[9]==1){
 									tdclass="<td>新增</td>";	
@@ -485,7 +352,6 @@
 						url:"addfood_addOrderfood.action",
 						data:{"df":"df"},
 						success:function(data){
-						alert("ddd");
 							if(data==1){
 							alert("添菜成功!");
 								clearfood();
@@ -553,7 +419,7 @@
 						var orderStatus=15;
 						var orderPrice=parseInt($("#mtTotal").html());
 						var foodNum=parseInt($("#foodnum").html());
-						var cost=21;
+						var cost=9;
 						//获得菜单数据
 						$.ajax({
 							type:"post",

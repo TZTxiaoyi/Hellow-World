@@ -93,7 +93,7 @@ public class LYquanxianaction {
 				request.getSession().setAttribute("username", employId.getEmenter());
 				return "part";
 			}else if(partname.equals("³øÊ¦")){
-				request.getSession().setAttribute("username", employId.getEmenter());
+				//request.getSession().setAttribute("username", employId.getEmenter());
 				return "cook";
 			}else{
 

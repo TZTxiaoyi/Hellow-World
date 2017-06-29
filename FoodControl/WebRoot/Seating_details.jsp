@@ -187,6 +187,12 @@
 			color:#3333ff;
 			
 		}
+		#selectmoney{
+			margin-top:25px;
+			margin-right:-50px;
+			margin-left:100px;
+			background-color:#ff99ff;
+		}
 	</style>
   
   <script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
@@ -277,8 +283,14 @@
 			</div>
 			<div id="btm"><!--底部功能模块-->
 					<span id="money">
+						<select  id ="selectmoney" class="btn btn-lg dropdown-toggle" name="selectvalue"> 
+							<option>结账方式</option>
+							<option value="9">现金支付</option>
+							<option value="11">微信支付</option>
+							<option value="10">支付宝支付</option>
+						</select>
 						<a class="btn btn-danger btn-lg" href=""
-						role="button" id="paymoney">结账</a>
+						role="button" id="paymoney">确认结账</a>
 						<a class="btn btn-success btn-lg " href=""
 						role="button" id="clear">清扫结束</a> 
 						<a role="button" class="btn btn-danger btn-lg" id="alldel">整单取消</a>
@@ -287,7 +299,7 @@
 					</span>
 					
 				
-				</div>
+			</div>
 		<div id="times"></div>
 		</div>
 		
@@ -459,19 +471,19 @@
 		$("#paymoney").click(function(){
 			var ord=$("#order").html();
 			var dname=$("#dname").html();
+			var svalue=$("#selectmoney option:selected").val();
 			$.ajax({
 				async:false,
 				url:"addfood_updateOrder.action",
 				type:"post",
-				data:{"st.deskName":dname,"addorder.ordersId":ord},
+				data:{"st.deskName":dname,"addorder.ordersId":ord,"svalue":svalue},
 				success:function(data){	
-					if(data!=-1){
-					 	$("#clear").attr("disabled",false); 
-						window.open("http://localhost:8080/FoodControl/service.jsp");
-					}
-				},
+					alert("haha123");
+					//$(window).attr("location","http://www.baidu.com");
+					
+				}
 			});
-			
+			window.history.back(-1);
 		})
 		/*
 			清台
@@ -486,6 +498,7 @@
 				success:function(data){
 					if(data!=-1){
 						window.open("http://localhost:8080/FoodControl/service.jsp");
+						//href="service.jsp";
 					}
 					
 					
@@ -504,7 +517,6 @@
 				data:{"addorder.ordersId":ord,"st.deskName":dname},
 				success:function(data){
 					if(data==1){
-					alert("成功");
 						$("#callimg").show();//切换元素为可见状态==$("#callimg").css("display","block");
 						outfood();
 					}else if(data==-1){
@@ -517,7 +529,6 @@
 			单个菜品取消；
 		*/
 		$("#rowsubject").on('click',".del", function(){
-		alert("dd");
 			var delid=$(this).attr("id");
 			var vagename=$("#qu"+delid).html();
 			var num=$("#mon"+delid).html();//取消金额
@@ -530,7 +541,6 @@
 				type:"post",
 				data:{"addfood.foodname":vagename,"addorder.ordersId":ord,"foodtime":name,"foodprice":foodprice},
 				success:function(data){
-				alert("er");
 					//$(".tred").html(pay);
 					if(data!=-1){
 						outfood();
@@ -560,7 +570,6 @@
 			type:"post",
 			data:{"addorder.ordersId":orderid},
 			success:function(data){
-				alert(data);
 				if(data!=-1){
 					alert("催菜成功！");
 				}

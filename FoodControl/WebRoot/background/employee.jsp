@@ -304,7 +304,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var ementer=$("#ementer"). val();	
 				
 				//alert(empart+";"+ementer);							
-								
+					if(emsex=="男"){
+						emsex=4;
+					}else{
+						emsex=5;
+					}			
 					$.ajax({
 						type:"post",
 						url:"achieve_save.action",

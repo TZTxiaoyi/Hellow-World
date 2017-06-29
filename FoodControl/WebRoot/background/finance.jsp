@@ -27,10 +27,12 @@
 				$.each(json,function(index,value){
 					//var oldTime = (new Date(value[5])).getTime()/1000;
 					//time=value[5].getfullyear+"-"+value[5].getfullmonth+"-"+value[5].getfullday
+					
+					var timett=format(value[5].time);
 					var emtable=
 						"<tr><td id=\"anum"+value[0]+"\">"+value[0]+
 						"</td><td id=\"bnum"+value[0]+"\">"+value[1]+"</td><td id=\"cnum"+value[0]+"\">"+value[2]+"</td><td id=\"dnum"+value[0]+"\">"+value[3]+"</td><td id=\"enum"+value[0]+"\">"+value[4]+
-						"</td><td id=\"fnum"+value[0]+"\">"+value[5]+"</td><td id=\"gnum"+value[0]+"\">"+value[6]+"</td>"+
+						"</td><td id=\"fnum"+value[0]+"\">"+timett+"</td><td id=\"gnum"+value[0]+"\">"+value[6]+"</td>"+
 						"<td id=\"fnum"+value[0]+"\">"+
 						"<a class=\"button border-main alterbtn\" id=\"num"+value[0]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal\" data-toggle=\"modal\">"+
 						"<span class=\"icon-edit\"></span> 订单详情</a></td></tr>";
@@ -57,7 +59,19 @@
 				});	
 				liyang(0);								
 			});
-		
+		//时间戳转时间
+		function add0(m){return m<10?'0'+m:m }
+		function format(shijianchuo){
+		//shijianchuo是整数，否则要parseInt转换
+			var time = new Date(shijianchuo);
+			var y = time.getFullYear();
+			var m = time.getMonth()+1;
+			var d = time.getDate();
+			var h = time.getHours();
+			var mm = time.getMinutes();
+			var s = time.getSeconds();
+			return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+		} 
 		
 		$(function(){
 			$(".minuspage").click(function(){			
@@ -92,14 +106,13 @@
 		});
 		
 		function liyang(a){
-		//alert(a);
+
 			$.ajax({				
 					url:"order_apages.action",
 					type:"post",
 					data:{"countpage":a},
 					success:function(data){					
 					var json=JSON.parse(data);
-					//alert(json);
 						stamp(json);					
 					}
 				});
@@ -153,4 +166,3 @@
 </div>
 </body>
 </html>
-/FoodControl/background/GJYFC_FCdelete.action
