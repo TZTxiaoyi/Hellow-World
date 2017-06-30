@@ -47,6 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
+	
 	<div class="panel admin-panel">
 		<div class="panel-head">
 			<strong><span class="icon-pencil-square-o"></span> 桌台信息</strong>
@@ -144,6 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 		</div>
+		
 		<script type="text/javascript">
 			/*
 				总页数

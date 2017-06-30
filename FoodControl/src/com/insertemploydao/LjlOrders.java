@@ -53,7 +53,7 @@ public class LjlOrders implements DaoInterface{
 	 */
 	public List orderDish(int oId){
 		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum," +
-				"ds.price,od.dishNnum,ds.dishId,od.dishStatus,od.addDish,od.dishtime,o.ordersPrice from  " +
+				"ds.price,od.dishNnum,ds.dishId,od.dishStatus,od.addDish,od.dishtime,o.ordersPrice,o.cost from  " +
 				"desk_restaff d join orders o on d.deskId=o.deskId and o.ordersId="+oId+
 				"join orders_dish od on o.ordersId=od.ordersId " +
 				"join dish ds on ds.dishId=od.dishId";
@@ -81,16 +81,18 @@ public class LjlOrders implements DaoInterface{
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
-	 * 根据订单号更新订单状态
+	 * 结账时根据订单号更新订单状态（未付-svalue）
+	 * svalue 支付方式（现金，微信，支付宝）
 	 * @return
 	 */
 	public int upOrders(Object order,int svalue){
 		LjlAddOrder ord=(LjlAddOrder)order;
-		String sql="update orders set ordersStatus=16,cost=? where ordersId=? and ordersStatus=15";
+		String sql="update orders set cost=? where ordersId=? and ordersStatus=15";
 		Object[] params = new Object[] {svalue,ord.getOrdersId()}; 
 		return DaoFactory.Updata(sql, params);
 		
 	}
+	
 	public int upOP(int price,int orid){
 		//System.out.println("price"+price+","+orid);
 		String sql="update orders set ordersPrice=? where ordersId=?";
@@ -147,7 +149,41 @@ public class LjlOrders implements DaoInterface{
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
-	 * 服务员界面的清理桌台按钮
+	 * 根据桌子名字查找桌子id
+	 * @param dnam
+	 * @return
+	 */
+	public List selectdeskname(Object dnam){
+		SxmTable dname = (SxmTable) dnam;
+		String sql="select deskId from desk where deskName='"+dname.getDeskName()+"'";
+		return DaoFactory.Query(sql);
+	}
+	public List selectcost(int orderid){
+		String sql="select cost from orders where ordersId="+orderid;
+		return DaoFactory.Query(sql);
+	}
+
+	/**
+	 * 根据桌子id改变订单状态
+	 * @param deskid
+	 * @return
+	 */
+	public int updateorders(int deskid){
+		String sql="update orders set ordersStatus=16 where deskId=?";
+		Object[] params = new Object[] {deskid};
+		return DaoFactory.Updata(sql, params);
+	}
+	/**
+	 * 服务员界面的清理桌台按钮，更改订单状态为完成
+	 * @return
+	 */
+	public int upordstate(){
+		String sql="update orders set ordersStatus=16 where cost not in(21)";
+		Object[] params = new Object[] {};
+		return DaoFactory.Updata(sql, params);
+	}
+	/**
+	 * 服务员界面的清理桌台按钮更改桌台状态为可用
 	 * @return
 	 */
 	public int clearAllDesk(){
