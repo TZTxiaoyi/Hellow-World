@@ -46,14 +46,6 @@ public class LjlAddFoodAction {
 	 * kindname 分类名字
 	 * 
 	 */
-	/**
-	 * addfood 菜品实体类 名字 价格 id
-	 * addorder 订单实体类 id 总计 菜品数量 状态 下单时间 使用桌台
-	 * st 桌台信息 id 名字 状态
-	 * ddname 当前选用桌台名字；
-	 * kindname 分类名字
-	 * 
-	 */
 	private LjlAddFood addfood;
 	private LjlAddOrder addorder;
 	private SxmTable st;
@@ -181,9 +173,10 @@ public class LjlAddFoodAction {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		HttpSession session=request.getSession();
-		String orderup=(String) session.getAttribute("orderStatus");
-		if (orderup!="1") {
-			String[] foodnames=session.getValueNames();
+		String orderid=(String) session.getAttribute("orderid");
+		String[] foodnames=session.getValueNames();
+		System.out.println("foodnames:"+foodnames.length);
+		if (foodnames.length>1&&orderid==null) {
 			String tablename=(String) session.getAttribute("dname");
 			List listtable=tableSql.idTablename(tablename);
 			List listtId=(List) listtable.get(0);
@@ -193,7 +186,7 @@ public class LjlAddFoodAction {
 			session.setAttribute("orderid", Integer.toString(rsid));
 			//System.out.println("id："+session.getAttribute("orderid"));
 			for (int i = 0; i < foodnames.length; i++) {
-				if (foodnames[i]!="dname"&&foodnames[i]!="orderStatus"&&foodnames[i]!="orderid") {
+				if (foodnames[i]!="dname"&&foodnames[i]!="orderid") {
 					List list=dish.seldishName(foodnames[i]);
 					session.getAttribute(foodnames[i]);
 					LjlAddFood addf= (LjlAddFood)session.getAttribute(foodnames[i]);
@@ -208,10 +201,9 @@ public class LjlAddFoodAction {
 					flag=1;
 				}
 			}
-		}else{
+		}else if(orderid!=null){
 			flag=2;
 		}
-		session.setAttribute("orderStatus", "1");
 		//HttpServletResponse response=ServletActionContext.getResponse();
 		try {
 			response.getWriter().print(flag);
@@ -231,12 +223,10 @@ public class LjlAddFoodAction {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		HttpSession session=request.getSession();
-		String orderup=(String) session.getAttribute("orderStatus");
-		if (orderup=="1") {
-			System.out.println("jin");
+		String orderid=(String) session.getAttribute("orderid");
+		if (orderid!=null) {
 			String[] foodnames=session.getValueNames();
 			String tablename=(String) session.getAttribute("dname");
-
 			List listtable=tableSql.idTablename(tablename);
 			List listtId=(List) listtable.get(0);
 			int tableid=(Integer) listtId.get(0);
@@ -359,6 +349,30 @@ public class LjlAddFoodAction {
 		}
 	}
 	/**
+	 * 
+	 * 方法功能说明：  购物车改变菜品数量价格
+	 * 创建：2017-6-20 by li   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数：     addfood菜品实体类  
+	 * @return void     
+	 * @throws
+	 */
+	public void shopfoodnum(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		HttpSession session=ServletActionContext.getRequest().getSession();
+		session.setAttribute(addfood.getFoodname(), addfood);
+		String[] nameString=session.getValueNames();
+		try {
+			
+			response.getWriter().print("1");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
 	 * 获得订单详细信息菜品数量价格
 	 * 输出到new我的订单模态框
 	 * 
@@ -400,7 +414,7 @@ public class LjlAddFoodAction {
 		int price=0;
 		int num=0;
 		for (int i = 0; i <sname.length; i++) {
-			if(sname[i]!="dname"&&sname[i]!="orderStatus"&&sname[i]!="orderid"){
+			if(sname[i]!="dname"&&sname[i]!="orderid"){
 				LjlAddFood addf= (LjlAddFood)session.getAttribute(sname[i]);
 				price=addf.getPrice()+price;
 				num=addf.getNumber()+num;
@@ -608,15 +622,12 @@ public class LjlAddFoodAction {
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int flag =-1;
-		System.out.println("cost"+svalue);
 		int od=orders.upOrders(addorder,svalue);
-	
 		if(od>0){
 			int ud=orders.updesk(st);
 			if(ud>0){
 				flag=1;	
 				try {
-					
 					//response.sendRedirect("http://localhost:8080/FoodControl/service.jsp");
 					response.getWriter().println(flag);
 					System.out.println(000);

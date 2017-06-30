@@ -193,12 +193,15 @@
 			margin-left:100px;
 			background-color:#ff99ff;
 		}
+		#form1{
+		display:none;
+		}
 	</style>
   
   <script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
   <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript">
-   		$(document).ready(function(){
+  /* 		$(document).ready(function(){
    			$("#btn").click(
    				function(){
    					alert("确认修改吗？");
@@ -217,13 +220,16 @@
 				var total=parseInt($("#Total").html())+price;//先转为int类型再做加法运算
 				$("#Total").html(total);//把当前菜的总价格加上当前订单的金额
 			});
-		});
+		});*/
   </script>
 
   
   </head>
   
   <body>
+  <form action="service.jsp" id="form1">
+  	<input type="submit" />
+  </form>
     <div class="container-fluid" id="div"><!--最外层 -->
 		<div class="row" id="head"><!-- 头部-->
 			<div class="col-md-2">
@@ -291,7 +297,7 @@
 						</select>
 						<a class="btn btn-danger btn-lg" href=""
 						role="button" id="paymoney">确认结账</a>
-						<a class="btn btn-success btn-lg " href=""
+						<a class="btn btn-success btn-lg " 
 						role="button" id="clear">清扫结束</a> 
 						<a role="button" class="btn btn-danger btn-lg" id="alldel">整单取消</a>
 					
@@ -332,24 +338,24 @@
 		/*
 			系统加载自动运行;
 		*/
-		$(function() {
+	/*	$(function() {
 			setInterval("getTime()",1000);
 			if($("#order").html()!="undefined"){
 				setInterval("outtime()",1000);
 			}
-		});
+		});*/
 		/*
 			获取系统时间;
 		*/
-		function getTime(){
+		/*function getTime(){
 			var time = new Date();
    			$("#times").html(time.toLocaleString());
    			//souttime();
-		}
+		}*/
 		/*
 			开台时间；
 		*/
-		function outtime(){
+		/*function outtime(){
 		
 			var ord=$("#order").html();
 			$.ajax({
@@ -387,17 +393,17 @@
 				$("#subject-style").html("<button type=\"button\" class=\"btn btn-danger\" id=\"cddd\">btn</button>");
 			});
 			
-		});
-		$(function(){
+		});*/
+	/*	$(function(){
 			//$("#vageadd").hide();
 			if($("#order").html()!=""){
 				outfood();
 			}
-		});
+		});*/
 		/*
 			动态添加菜单；页面顶部；
 		*/
-		function outfood(){
+		/*function outfood(){
 		
 			var ord=$("#order").html();
 			$.ajax({
@@ -463,12 +469,12 @@
 						
 				}
 			});
-		};
+		};*/
 	
 		/*
 			结账
 		*/
-		$("#paymoney").click(function(){
+	/*	$("#paymoney").click(function(){
 			var ord=$("#order").html();
 			var dname=$("#dname").html();
 			var svalue=$("#selectmoney option:selected").val();
@@ -478,37 +484,16 @@
 				type:"post",
 				data:{"st.deskName":dname,"addorder.ordersId":ord,"svalue":svalue},
 				success:function(data){	
-					alert("haha123");
 					//$(window).attr("location","http://www.baidu.com");
 					
 				}
 			});
-			window.history.back(-1);
-		})
-		/*
-			清台
-		*/
-		$("#clear").click(function(){
-			var dname=$("#dname").html();
-			$.ajax({
-				async:false,
-				url:"addfood_clearDesk.action",
-				type:"post",
-				data:{"st.deskName":dname},
-				success:function(data){
-					if(data!=-1){
-						window.open("http://localhost:8080/FoodControl/service.jsp");
-						//href="service.jsp";
-					}
-					
-					
-				}
-			});
-		});
+		})*/
+	
 		/*
 			整单取消；
 		*/
-		$("#alldel").click(function(){
+	/*	$("#alldel").click(function(){
 			var dname=$("#dname").html();
 			var ord=$("#order").html();
 			$.ajax({
@@ -524,11 +509,11 @@
 					}	
 				}
 			});
-		});
+		});*/
 		/*
 			单个菜品取消；
 		*/
-		$("#rowsubject").on('click',".del", function(){
+	/*	$("#rowsubject").on('click',".del", function(){
 			var delid=$(this).attr("id");
 			var vagename=$("#qu"+delid).html();
 			var num=$("#mon"+delid).html();//取消金额
@@ -559,11 +544,11 @@
 			var mm = time.getMinutes();
 			var s = time.getSeconds();
 			return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
-		} 
+		} */
 		/*
 			催菜
 		*/
-		$("#anxious").click(function(){
+		/*$("#anxious").click(function(){
 		var orderid=$("#order").html();
 		$.ajax({
 			url:"addfood_anxious.action",
@@ -576,13 +561,47 @@
 				
 			}
 		});
-	})
+	})*/
 	/*
 		刷新
 	*/
-	$("#shuxin").click(function(){
+	/*$("#shuxin").click(function(){
 		outfood();
-	})
+	})*/
+	
+	
+	
+	
+		/*
+			清台
+		*/
+		function aa(){
+		alert(3);
+			//window.location.href("http://localhost:8080/FoodControl/service.jsp");
+			$("#form1").submit();
+		}
+		$("#clear").click(function(){
+			var dname=$("#dname").html();
+			/*$.ajax({
+				async:false,
+				url:"addfood_clearDesk.action",
+				type:"post",
+				data:{"st.deskName":dname},
+				success:function(data){
+					if(data!=-1){
+						//window.location.href("http://localhost:8080/FoodControl/service.jsp");
+						//href="service.jsp";
+						aa();
+					}
+					
+					
+				}
+			});*/
+			
+			aa();
+		});
+	
+	
 	</script>
   </body>
 </html>

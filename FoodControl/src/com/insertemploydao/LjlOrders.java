@@ -18,7 +18,7 @@ public class LjlOrders implements DaoInterface{
 		LjlAddOrder orders=(LjlAddOrder)order;
 		// TODO Auto-generated method stub
 		String sql="insert into orders values(?,?,?,?,?,?,?)";
-		Object[] params=new Object[]{orders.getOrderStatus(),orders.getOrderPrice(),orders.getFoodNum(),orders.getCost(),orders.getOrdersTime(),orders.getDeskid(),0};
+		Object[] params=new Object[]{orders.getOrderStatus(),orders.getOrderPrice(),orders.getFoodNum(),21,orders.getOrdersTime(),orders.getDeskid(),0};
 		return DaoFactory.rsUpdata(sql,params);
 	}
 
@@ -53,7 +53,7 @@ public class LjlOrders implements DaoInterface{
 	 */
 	public List orderDish(int oId){
 		String sql="select distinct d.deskName,o.ordersId,o.ordersTime,ds.dishName,o.FoodNum," +
-				"ds.price,od.dishNnum,ds.dishId,od.dishStatus,od.addDish,od.dishtime,o.ordersPrice from  " +
+				"ds.price,od.dishNnum,ds.dishId,od.dishStatus,od.addDish,od.dishtime,o.ordersPrice,o.cost,o.ordersStatus from  " +
 				"desk_restaff d join orders o on d.deskId=o.deskId and o.ordersId="+oId+
 				"join orders_dish od on o.ordersId=od.ordersId " +
 				"join dish ds on ds.dishId=od.dishId";
@@ -142,7 +142,6 @@ public class LjlOrders implements DaoInterface{
 	public int clearDesk(Object dnam){
 		SxmTable dname = (SxmTable) dnam;
 		String sql="update desk set deskState=6 where deskName=? and deskState=8";
-	
 		Object[] params = new Object[] {dname.getDeskName()};
 		return DaoFactory.Updata(sql, params);
 	}
