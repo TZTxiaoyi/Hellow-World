@@ -142,7 +142,6 @@ public class TztQuerDishAction {
 		rep.setContentType("html/text;charset=utf-8");
 		createImp(method);
 		List result =sort.made(dishId);
-		session.setAttribute((String) result.get(0),result);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {

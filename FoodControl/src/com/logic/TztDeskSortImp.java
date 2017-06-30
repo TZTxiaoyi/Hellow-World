@@ -1,16 +1,13 @@
-
-/**     
- * @文件名称: TztDeskSortImp.java  
- * @类路径: com.logic  
- * @描述: TODO  
- * @作者：TZT  
- * @时间：2017-6-26 下午9:11:46  
- * @版本：V1.0     
- */  
 package com.logic;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.jms.Session;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.daointerface.TztSort;
 import com.insertemploydao.TztDishOrderImp;
@@ -27,7 +24,12 @@ import com.insertemploydao.TztDishOrderImp;
 public class TztDeskSortImp implements TztSort {
 
 	public List queryMade() {
-		
+		HttpServletRequest req=ServletActionContext.getRequest();
+		HttpSession session =req.getSession();
+		Integer dd= (Integer) session.getAttribute("desk");
+		if(dd==null){
+			dd=0;
+		}
 		TztDishOrderImp dao= new TztDishOrderImp();
 		List dishpriority =dao.queryDishpriority(12);
 		List desk = dao.quertDesk(12);
@@ -54,6 +56,8 @@ public class TztDeskSortImp implements TztSort {
 
 	public List made(String dishId) {
 		return null;
+		
+		
 	} 
 
 	public List mading(String dishId) {

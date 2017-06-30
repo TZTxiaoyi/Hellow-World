@@ -78,6 +78,8 @@ public class TztDefaultSortImp implements TztSort {
 	}
 
 	public List made(String dishId) {
+		HttpServletRequest req=ServletActionContext.getRequest();
+		HttpSession session = req.getSession();
 		TztDishOrderImp dao =new TztDishOrderImp();
 		TztDish dish = new TztDish();
 		List list=new ArrayList();
@@ -101,6 +103,7 @@ public class TztDefaultSortImp implements TztSort {
 		list.add(m);
 		list.add(((List) dishList.get(0)).get(1));
 		list.add(count);
+		session.setAttribute((String) list.get(0),list);
 		return list;
 	}
 

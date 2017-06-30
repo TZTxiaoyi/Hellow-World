@@ -64,7 +64,7 @@ td{
 	<div class="container-fluid"  >
 		<!-------------------------------页面头部------------------------------------------->
 		<div class="row" >
-			<div class= "row"id="top"></div>
+			<div class= ""id="top"></div>
 			<div class="btn-group btn-group-lg" role="group">	
 				<button  class="btn btn-info btn-group-lg" id="default">默认</button>
 				<button class="btn btn-info btn-group-lg" id = "priority">优先级</button>
