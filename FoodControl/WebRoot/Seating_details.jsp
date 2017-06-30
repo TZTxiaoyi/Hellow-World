@@ -196,13 +196,15 @@
 			margin-left:100px;
 			background-color:#ff99ff;
 		}
-		
+
 	</style>
   
   <script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
   <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript">
-   	/*	$(document).ready(function(){
+
+  /* 		$(document).ready(function(){
+
    			$("#btn").click(
    				function(){
    					alert("确认修改吗？");
@@ -228,7 +230,7 @@
   </head>
   
   <body>
- 
+
     <div class="container-fluid" id="div"><!--最外层 -->
 		<div class="row" id="head"><!-- 头部-->
 			<div class="col-md-2">
@@ -300,6 +302,7 @@
 						<a class="btn btn-success btn-lg "
 						role="button" id="clear">清扫结束</a>
 						
+
 						<a role="button" class="btn btn-danger btn-lg" id="alldel">整单取消</a>
 					
 						<a role="button" class="btn btn-primary btn-lg" id="anxious">催菜</a>
@@ -351,7 +354,7 @@
 		/*
 			获取系统时间;
 		*/
-		function getTime(){
+		/*function getTime(){
 			var time = new Date();
    			$("#times").html(time.toLocaleString());
    			
@@ -361,7 +364,6 @@
 		*/
 		function outtime(){
 			
-				
 			var ord=$("#order").html();
 			$.ajax({
 				url:"addfood_ordertime.action",
@@ -398,7 +400,7 @@
 				$("#subject-style").html("<button type=\"button\" class=\"btn btn-danger\" id=\"cddd\">btn</button>");
 			});
 			
-		});
+		});*/
 		$(function(){
 			//$("#vageadd").hide();
 			if($("#order").html()!=""){
@@ -408,6 +410,7 @@
 		/*
 			动态添加菜单；页面顶部；
 		*/
+
 		function outfood(){
 			
 			var ord=$("#order").html();
@@ -503,6 +506,7 @@
 			}
 			
 		});
+
 	
 		/*
 			整单取消；
@@ -602,6 +606,7 @@
 			});
 		});
 	
+
 	</script>
   </body>
 </html>

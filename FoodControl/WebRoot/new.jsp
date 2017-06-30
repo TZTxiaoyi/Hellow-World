@@ -81,6 +81,9 @@
 			font-size:18px;
 			margin-left:25%;
 		}
+		/* #order_Total{
+			padding-right:80%;
+		} */
    </style>
    </head>
   
@@ -170,8 +173,8 @@
 								</table>
 							</div>
 							
-							<div class="modal-footer"> <!-- 模态框下的关闭和保存按钮--> 
-								<span>点菜数量：</span><span id="order_num"></span> <span>总价：</span><span id="order_Total"></span>
+							<div class="modal-footer" id="ordermodal"> <!-- 模态框下的关闭和保存按钮--> 
+								<span>订单状态：</span><span id="orderstatus"></span><span>结账方式：</span><span id="ordercost"></span><span> 点菜数量：</span><span id="order_num"></span> <span> 总价：</span><span id="order_Total"></span>
 								<button type="button" class="btn btn-default" data-dismiss="modal">
 									关闭
 								</button>
@@ -217,7 +220,6 @@
 						}
 					});
 				};
-				
 				//添加菜品，更新菜单和总价
 				function upfood(btnid,foodname,uprice,number,price){	
 				 alert(2);
@@ -230,7 +232,6 @@
 						}
 					});
 				};
-				
 				function OrderTotal(){
 					$.ajax({
 						type:"post",
@@ -259,6 +260,48 @@
 					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())+1;
 					$($("input[name=\""+btnid+"\"]")[1]).val(number);
 				});
+				//购物车数量变动
+				function shopfoodnum(btnid,foodname,uprice,number,price){	
+					$.ajax({
+						type:"post",
+						url:"addfood_shopfoodnum.action",
+						data:{"addfood.foodname":foodname,"addfood.uprice":uprice,"addfood.number":number,"addfood.price":price},
+						success:function(data){
+							$($("td[name=\""+btnid+"\"]")[2]).html(price)
+							OrderTotal();	
+						}
+					});
+					if(number==0){
+						LookOrder();
+					}
+				};
+				//购物车减少点菜的数量更新总价
+				$("#modall-table").on('click',".remove",function(){
+					var btnid=$(this).attr("name");//当前点击的按钮的name
+					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())-1;
+					if(number<0){
+						number=0;
+					}
+					//var price=uprice*number;//价格*数量获得总价	
+					$($("input[name=\""+btnid+"\"]")[1]).val(number);
+					var btnid=$(this).attr("name");
+					var foodname=$($("td[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
+					var uprice=parseInt($($("td[name=\""+btnid+"\"]")[1]).html());//单价
+					var price=parseInt(uprice*number);//价格*数量获得总价
+					shopfoodnum(btnid,foodname,uprice,number,price);
+					
+				});
+				//购物车增加点菜的数量更新总价
+				$("#modall-table").on('click',".add",function(){
+					var btnid=$(this).attr("name");//当前点击的按钮的name
+					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())+1;
+					$($("input[name=\""+btnid+"\"]")[1]).val(number);
+					var btnid=$(this).attr("name");
+					var foodname=$($("td[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
+					var uprice=parseInt($($("td[name=\""+btnid+"\"]")[1]).html());//单价
+					var price=parseInt(uprice*number);//价格*数量获得总价
+					shopfoodnum(btnid,foodname,uprice,number,price);
+				});
 				
 				//点击种类刷新菜单
 				$("#kindli").on('click',".kindbtn",function(){
@@ -277,7 +320,7 @@
 									"<input type=\"text\" value=\"0\" class=\"number-cl btn btn-default\" size=\"3\" name=\""+index+"\">"+
 									"<input type=\"button\" name=\""+index+"\" value=\"+1\" class=\"add btn btn-default\"><input type=\"button\" class=\"btn btn-default\" name=\""+index+"\" id=\"addto\" value=\"添加\"></div></div></div>";
 									$("#zbright").append(food);
-								});
+								});        
 							}
 						});
 				});
@@ -306,8 +349,11 @@
 							var json=JSON.parse(data);
 							$("#modall-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
-									var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
-									$("#modall-table").append(dd);
+								var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td name=\""+index+"\">"+value.uprice+"</td>"+"<td>"+
+								"<input type=\"button\" name=\""+index+"\" value=\"-\" class=\"remove btn btn-default\">"+
+								"<input type=\"text\" value=\""+value.number+"\" class=\"number-cl btn btn-default\" size=\"3\" name=\""+index+"\">"+
+								"<input type=\"button\" name=\""+index+"\" value=\"+\" class=\"add btn btn-default\">"+"</td>"+"<td name=\""+index+"\">"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
+								$("#modall-table").append(dd);
 							});	
 							OrderTotal(); 
 						}
@@ -328,14 +374,40 @@
 							var num=0;
 							$("#selOrder-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
-							
-								var tdclass="<td></td>";;
+								var trclass="";
+								var tdstate="<td></td>";
+								var ordercost="";
+								var orderStatus="";
 								if(value[9]==1){
-									tdclass="<td>新增</td>";	
+									trclass="class=\"trclass\"";	
+								}
+								if(value[8]==14){
+									tdstate="<td>已完成</td>";
+								}else if(value[8]==17){
+									tdstate="<td>已取消</td>";
+								}
+								if(value[12]==21){
+									ordercost="未支付";
+								}else if(value[12]==9){
+									ordercost="现金支付";
+								}else if(value[12]==11){
+									ordercost="微信支付";
+								}else if(value[12]==10){
+									ordercost="支付宝支付";
+								}
+								if(value[13]==15){
+									orderStatus="进行中";
+								}else if(value[13]==16){
+									orderStatus="已完成";
+								}else if(value[13]==17){
+									orderStatus="已取消";
 								}
 								price=value[5]*value[6];
-								var dd="<tr>"+"<td name=\""+index+"\">"+value[3]+"</td>"+"<td>"+value[5]+"</td>"+"<td>"+value[6]+"</td>"+"<td>"+price+"</td>"+tdclass+"</tr>";
+								var dd="<tr "+trclass+">"+"<td name=\""+index+"\">"+value[3]+"</td>"+"<td>"+value[5]+"</td>"+"<td>"+value[6]+"</td>"+"<td>"+price+"</td>"+tdstate+"</tr>";
 								$("#selOrder-table").append(dd);
+								$(".trclass").css("background-color","#66ccff");
+								$("#ordercost").html(ordercost);
+								$("#orderstatus").html(orderStatus);
 							});	
 							ordertotal();
 							//OrderTotal();
