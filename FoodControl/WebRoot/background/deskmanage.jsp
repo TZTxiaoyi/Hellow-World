@@ -383,7 +383,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							url : "../SxmTable_appendTable.action",
 							type :"post",
 							data : {"st.personNum" : pn,"st.deskName" : dn,},
-							success : function(data) {							
+							success :function(data){							
 								if(data==-1){
 									alert("添加失败");
 								}else if(data==1){
