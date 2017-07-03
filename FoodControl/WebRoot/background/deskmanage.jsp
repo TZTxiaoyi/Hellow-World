@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -50,6 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
+	
 	<div class="panel admin-panel">
 		<div class="panel-head">
 			<strong><span class="icon-pencil-square-o"></span> 桌台信息</strong>
@@ -156,6 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 		</div>
+		
 		<script type="text/javascript">
 			/*
 				总页数
@@ -169,7 +171,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			/*
 				总条数
 			*/
-			var mdzz=0;
 			var pagestate=0;//记录当前页的状态
 			function allpage(allput){
 					$.ajax({
@@ -433,14 +434,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var pn = $("#personNum").val();
 					var dn = $(".tableName").val();
 					var fu=$("#addtab option:selected").val();
-					//alert(fu);
 					if(pn && dn){
 						$.ajax({
 							url : "../SxmTable_appendTable.action",
+
 							type : "post",
 							data : {"st.personNum" : pn,"st.deskName" : dn,"em.emid":fu},
 							success : function(data) {	
-										
 								if(data==-1){
 									alert("添加失败");
 								}else if(data==1){

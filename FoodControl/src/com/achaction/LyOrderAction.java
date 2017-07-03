@@ -94,8 +94,13 @@ public class LyOrderAction {
 			// TODO: handle exception
 		}
 	}
-	
-	
+	/**
+	 * selmoney:查询订单总金额action
+	 */
+	public void selmoney(){
+		HttpServletResponse response=ServletActionContext.getResponse();	
+		//int flag =ld.
+	}
 	
 	
 	public void removeTotal(){

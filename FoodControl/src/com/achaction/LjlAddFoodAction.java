@@ -35,6 +35,7 @@ import com.insertemploydao.LjlKind;
 import com.insertemploydao.LjlOrders;
 import com.insertemploydao.SxmTableSql;
 import com.insertemploydao.TztDishOrderImp;
+import com.jspsmart.upload.Request;
 import com.utils.toJson;
 
 public class LjlAddFoodAction {
@@ -620,24 +621,28 @@ public class LjlAddFoodAction {
 	public void updateOrder(){
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
+		HttpServletRequest request=ServletActionContext.getRequest();
 		int flag =-1;
-		int od=orders.upOrders(addorder,svalue);
-		if(od>0){
+
+		//根据订单id查找订单支付状态
+		List listcost=orders.selectcost(addorder.getOrdersId());
+		List licost=(List) listcost.get(0);
+		int coststate=(Integer) licost.get(0);
+		System.out.println("aa"+coststate);
+		int od=-1;
+		if(coststate==21){
+			od=orders.upOrders(addorder,svalue);
+		}
+	
+		if(od==1){
 			int ud=orders.updesk(st);
 			if(ud>0){
-				flag=1;	
-				try {
-					//response.sendRedirect("http://localhost:8080/FoodControl/service.jsp");
-					response.getWriter().println(flag);
-					System.out.println(000);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				flag=1;
 			}
 		}
 		try {
 			response.getWriter().println(flag);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -649,10 +654,32 @@ public class LjlAddFoodAction {
 	 * 清理桌子
 	 */
 	public void clearDesk(){
-		HttpServletResponse response=ServletActionContext.getResponse();	
-		int cd=orders.clearDesk(st);
+		HttpServletResponse response=ServletActionContext.getResponse();
+		
+		//根据桌名查找桌子id;
+		List list=orders.selectdeskname(st);
+		List li=(List) list.get(0);
+		int deskid=(Integer) li.get(0);
+		//根据订单id查找订单支付状态
+		List listcost=orders.selectcost(addorder.getOrdersId());
+		List licost=(List) listcost.get(0);
+		int coststate=(Integer) licost.get(0);
+		int ordstate=-1;
+		int cd=-1;
+		if(coststate!=21){
+			//根据桌子id更改订单状态为已完成
+			System.out.println("asdf");
+			ordstate=orders.updateorders(deskid);
+			//根据桌名更改桌子状态为可用
+			cd=orders.clearDesk(st);
+		}
+		
+		int flag=-1;
+		if(cd!=-1 && ordstate!=-1){
+			flag=1;
+		}
 		try {
-			response.getWriter().println(cd);
+			response.getWriter().println(flag);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -665,8 +692,13 @@ public class LjlAddFoodAction {
 	public void clearAllDesk(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int acd=orders.clearAllDesk();
+		int aa=orders.upordstate();
+		int flag=-1;
+		if(acd!=-1 && aa!=-1){
+			flag=1;
+		}
 		try {
-			response.getWriter().println(acd);
+			response.getWriter().println(flag);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -700,36 +732,28 @@ public class LjlAddFoodAction {
 	public void onedelect(){
 		HttpServletResponse response=ServletActionContext.getResponse();
 		//根据菜品明字获取菜品id
-		//System.out.println(addorder.getOrdersId()+","+addfood.getFoodname()+","+foodtime+","+foodprice);
 		int orderid=addorder.getOrdersId();
 		List list=dish.seldish(addfood);
 		List li=(List) list.get(0);
-		//System.out.println(li);
 		int dishid=(Integer) li.get(0);//菜品id
 		//int uprice=(Integer) li.get(2);//菜品单价
 		List listOD=orders.idselOrder(addorder.getOrdersId());
 		List ODlist=(List) listOD.get(0);
 		int ODprice=(Integer) ODlist.get(2);//订单价格
-		//System.out.println("dishid:"+dishid+","+"uprice:"+uprice+","+"ODprice:"+ODprice);
-		int flag=orders.uporderdish(foodtime,dishid);
-		//System.out.println(flag);//更新了几条菜品状态
+		int flag=orders.uporderdish(foodtime,dishid);//更新了几条菜品状态
 		int price=ODprice-foodprice;
-		//System.out.println("foodp:"+price);
-		//System.out.println("orderid"+orderid);
 		orders.upOP(price, orderid);
 	}
 	/**
 	 * 催菜
 	 */
 	public void anxious(){
-		//System.out.println("----");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		List list=orders.anxiousOrder(addorder);
 		List li=(List) list.get(0);
 		int pri=(Integer) li.get(0);
 		int anx=pri+1;
 		int orderspro=orders.proty(anx, addorder);
-		//System.out.println("aaa"+orderspro);
 		try {
 			response.getWriter().println(orderspro);
 		} catch (IOException e) {
