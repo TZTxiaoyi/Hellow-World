@@ -82,7 +82,6 @@
 			line-height:50px;
 		}
 		.torder td{
-			
 			font-size:18px;
 			width:20%;
 			height:50px;

@@ -385,4 +385,21 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		} 	
 	}
+	/**
+	 * 点击添加桌台信息时自动显示所有服务员
+	 */
+	public void selectservice(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		List list=ied.selectfu();
+		System.out.println(list);
+		JSON json=toJson.toJson("cc", list);
+		try {
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

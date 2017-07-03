@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -42,7 +42,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		#modalform span{
 			font-size:20px;
 		}
-	
+		.fuze select{
+			width: 250px;
+			height: 40px;
+		}
 	</style>
 </head>
 
@@ -58,11 +61,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="padding border-bottom">
 						<ul class="search">
 							<li>
-								<button type="button" class="button border-green" id="checkall">
-									<span class="icon-check"></span> 全选
-								</button> <a class="button border-yellow" href="" data-toggle="modal"
-								data-target="#myModaltable"><span class="icon-plus-square-o"></span>
-									添加桌台</a></li>
+								<a class="button border-yellow" href="fresh_deskmanage.action">查看所有</a>
+								<a class="button border-yellow " href="" data-toggle="modal"
+								data-target="#myModaltable" id="alterbtn"><span class="icon-plus-square-o"></span>
+									添加桌台</a>
+							</li>
 							<li><input type="text" placeholder="请输入搜索关键字"
 								name="keywords" class="input"style="width:250px; line-height:17px;display:inline-block" /> <a
 								href="javascript:void(0)" class="button border-main icon-search fastsearch"
@@ -98,12 +101,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</div>
 						 <div id="modalform">
 					    	<div>
-					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="personNum"/>
+					    		<span>桌位人数 </span><input type="text" name="st.personNum" class="personNum" id="personNum"/>
+					    		<br/><span id="appenum"></span>
 					    	</div>
 					    	<div>
-					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"/>
+					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"id="tablen"/>
+					    		<br/><span id="appename"></span>
 					    	</div>
-					    	
+					    	<div class="fuze">
+					    		<span>负责人&nbsp;</span><select id="addtab">
+					    			
+					    		</select>
+					    	</div>
 					    	<div>
 								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
 							</div>
@@ -127,13 +136,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</div>
 						<div id="modalform">
 					    	<div>
-					    		<span>桌位人数 </span><input type="text" name="st.personNum" id="pname"/>
+					    		<span>桌位人数 </span><input type="text" name="st.personNum" class="personNum" id="pname"/>
 					    	</div>
 					    	<div>
 					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName" class="tableName"/>
 					    	</div>
-					    	<div>
-					    		<span>负责人</span><input type="text" name="st.deskName" id="tableperson"/>
+					    	
+					    	<div class="fuze">
+					    		<span>负责人&nbsp;</span><select  id="tableperson">
+					    			
+					    		</select>
 					    	</div>
 					    	
 					 </div>
@@ -150,31 +162,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			/*
 				总页数
 			*/
-			$(function(){
-				$.ajax({
+			$(function (){
+				var currpage=0;
+				tabonload(currpage);
+				allpage("");
+			});
+			
+			/*
+				总条数
+			*/
+			var pagestate=0;//记录当前页的状态
+			function allpage(allput){
+					$.ajax({
 					url:"SxmTable_pageTotal.action",
 					type:"post",
-					data:{},
+					data:{"search":allput},
 					success:function(data){
+					alert(data);
 						var pagetotal=parseInt(data/3);	
 						if(data%3==0){
 							$("#spanpage").html(pagetotal);
+							pagestate=1;
 						}
 						if(data%3!=0){
 							$("#spanpage").html(parseInt(pagetotal)+1);
+							pagestate=0;
 						}
 					},
-				});
-			})
-		
+					});
+				};
 			
 			/*
 				分页
 			*/
 			$(function (){
 				$(".page").click(function(){
+					var allput=$(".input").val();//获取输入框的值
 					var name=$(this).attr("name");
-					
 					var inpval=parseInt($("#pageinp").val());
 					
 					
@@ -199,42 +223,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 					$("#pageinp").val(inpval);
 					var curr=inpval-1;
-					tabonload(curr);
+					if(allput==""){
+						tabonload(curr);
+					}else{
+						fastsearch(curr);
+					}
 				});
-			}),
+			});
 			/*
 				快速搜索
 			*/
+			
 			$(".fastsearch").click(function(){
-				var allput=$(".input").val();	
+				var currpage=0;
+				fastsearch(currpage);
+				$("#pageinp").val("1");
+			});
+			function fastsearch(curr){
+				var allput=$(".input").val();//获取输入框的值
+				allpage(allput);//输入框的值传进查询总页数方法里
+				//var curr=parseInt($("#pageinp").val());
 				$.ajax({
 					url : "../SxmTable_searchTable.action",
 					type : "post",
-					data : {"search" :allput},
+					data : {"currPage":curr,"search" :allput},
 					success:function(data){
 						var json = JSON.parse(data);
 						refresh(json);
 					}
 				});
-			});
+			}
 			/*
 				点击删除按钮删除一行数据;
 			*/
 			$("#tab").on('click',".deskbtn",function(){
 				var deskbtn=$(this).attr("id");
 				var deskid=$("#desk"+deskbtn).html();
-				var inpval=parseInt($("#pageinp").val());
+				//var inpval=parseInt($("#pageinp").val());
 				if(confirm("您确定要删除吗?")){
 					$.ajax({
 						url:"SxmTable_delLineTable.action",
 						type:"post",
 						data:{"st.deskId":deskid},
-						success:function(data){		
+						success:function(data){	
+							
 							if(data==-1){
 							alert("修改失败");
 							}else if(data==1){
-								alert("修改成功");
-								tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
+								allpage("");
+								var inpval=parseInt($("#spanpage").html());
+								if(pagestate==1){
+									$("#pageinp").val(inpval);
+									tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
+								}else{
+									$("#pageinp").val(inpval);
+									tabonload(inpval-1);
+								}  
+								
 							}else{
 								alert("没有权限");
 							}				
@@ -245,45 +290,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		/*
 			点击修改按钮修改一行数据表单里自动获取这一行的值
 		*/
+		var deskid="";
 		$("#tab").on('click',".alterbtn",function(){
 			var deskalter=$(this).attr("id");
-			var deskid=$(".desk"+deskalter).html();//桌子Id
+			deskid=$(".desk"+deskalter).html();//桌子Id
 			var deskname=$("#name"+deskalter).html();//桌子名字
 			var deskperson=$("#person"+deskalter).html();//桌子人数
 			var tperalter=$("#tper"+deskalter).html();//负责人
 			$("#pname").val(deskperson);
-			$(".tableName").val(deskname);
-			$("#tableperson").val(tperalter);
-			updata(deskid,tperalter);
+			$("#tableName").val(deskname);
+			append();
+			
 		});
 		//点击确定修改按钮时执行；
-			
-		function updata(desk,talter) {
-			//bind/unbind点击事件只执行一次
+	
 			$(".modal-alterbtn").bind('click', function() {//绑定事件处理函数
-				var inpval=parseInt($("#pageinp").val());
+				//$(this).unbind('click');//移除当前事件处理函数
+				//bind/unbind点击事件只执行一次
+				alert(deskid);
+			var inpval=parseInt($("#pageinp").val());
 				var pn = $("#pname").val();
 				var dn = $("#tableName").val();
-				var tp=$("#tableperson").val();
+				var tp=$("#tableperson option:selected").val();
 				$.ajax({
 					url : "SxmTable_upLineTable.action",
 					type : "post",
-					data : {"st.deskId" : desk,"st.deskName" : dn,"st.personNum" : pn},
-					success : function(data){					
+					data : {"st.deskId" : deskid,"st.deskName" : dn,"st.personNum" : pn,"em.emid":tp},
+					success : function(data){				
 						if(data==-1){
 							alert("修改失败");
 						}else if(data==1){
-							alert("修改成功");
-							tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
-							$(this).unbind('click');//移除当前事件处理函数
+							deskid="";
+							tabonload(inpval-1,null);//调用页面加载时自动查询数据库，显示桌台信息
+							
 						}else{
 							alert("没有权限");
 						}						
 					},
 				});
-
 			});
-		};
+
+		
 
 			$("#checkall").click(function() {
 				$("input[name='id[]']").each(function() {
@@ -315,50 +362,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			/*
 				添加桌子名字失焦时检测是否已存在改桌名的函数
 			 */
+			$(".tableName").focus(function(){
+				$("#appename").html("");
+			});
 			$(".tableName").blur(function() {
-				$.ajax({
-					url : "../SxmTable_equalTable.action",
-					type : "post",
-					data : {"st.deskName" : $(this).val()},
-					success : function(data) {
-						var json = JSON.parse(data);
-						if (json != -1) {
-							alert("该桌名已存在！");
-						}
-					},
-				});
+				//var reg=new RegExp(/^[\u4e00-\u9fa5A-Za-z0-9]$/,"gi");
+				var reg = /^[\u4e00-\u9fa5A-Za-z0-9]+$/i;
+				var tname=$(this).val();
+				if(tname.length>20||tname.length<1){
+					$("#appename").html("长度有误！");
+				}else if(reg.test(tname)){
+					$.ajax({
+						url : "../SxmTable_equalTable.action",
+						type : "post",
+						data : {"st.deskName" : $(this).val()},
+						success : function(data) {
+							var json = JSON.parse(data);
+							if (json != -1) {
+								$("#appename").html("该桌名已存在！");
+							}
+						},
+					});
+				}else{
+					$("#appename").html("桌名含有非法字符");
+				}
 			});
 			/*
 				页面加载时自动查询数据库，显示桌台信息
 			 */
-			$(function() {
-				var currpage=0;
-				tabonload(currpage);
-			});
+			
 			function tabonload(curr) {
 				$.ajax({
 					url : "SxmTable_tabPage.action",
 					type : "post",
 					data : {"currPage":curr},
-					success : function flash(data){
+					success : function(data){
 						var json = JSON.parse(data);
-						//alert("5555:"+json);
 						refresh(json);
 					}
 				});
 
 			};
 			function refresh(json) {
-				var th = "<tr><td></td><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
+				var th = "<tr><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
 					$("#tab").html("");
 					$("#tab").append(th);
-					
 					$.each(json,function(index, value) {
 					var chargeper=value[3];
 						if(value[3]==null){
 							chargeper="未分配";
 						}
-						var dd = "<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td class=\"deskalter"+
+						var dd = "<tr><td class=\"deskalter"+
 						value[0]+"\" id=\"desknumId"+value[0]+"\">"+ value[0]+ "</td><td id=\"namealter"+value[0]+"\">"+ 
 						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td id=\"tperalter"+value[0]+"\">"+ chargeper+
 						"</td><td id=\"statealter"+value[0]+"\">"+ value[4]+ "</td>"+
@@ -376,19 +430,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 */
 			$(function() {
 				$(".confirm-btn").click(function() {
+					var curr=$("#spanpage").html();
 					var pn = $("#personNum").val();
 					var dn = $(".tableName").val();
+					var fu=$("#addtab option:selected").val();
 					if(pn && dn){
 						$.ajax({
 							url : "../SxmTable_appendTable.action",
-							type :"post",
-							data : {"st.personNum" : pn,"st.deskName" : dn,},
-							success :function(data){							
+							type : "post",
+							data : {"st.personNum" : pn,"st.deskName" : dn,"em.emid":fu},
+							success : function(data) {	
 								if(data==-1){
 									alert("添加失败");
 								}else if(data==1){
-									alert("添加成功");
-									tabonload();//调用页面加载时自动查询数据库，显示桌台信息								
+									allpage("");
+									var inpval=parseInt($("#spanpage").html());
+									if(pagestate==1){
+										$("#pageinp").val(inpval+1);
+										tabonload(inpval);//调用页面加载时自动查询数据库，显示桌台信息
+									}else{
+										$("#pageinp").val(inpval);
+										tabonload(inpval-1);
+									}
+									$("#personNum").html("");
+									$(".tableName").html("");
 								}else{
 									alert("没有权限");
 								}												
@@ -400,6 +465,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 				});
 
+			});
+			/*
+				点击添加桌台时的功能,自动查询服务员
+			*/
+			
+			
+			$("#alterbtn").click(function (){
+					append();
+			});
+			function append(){
+				$.ajax({
+						url:"achieve_selectservice.action",
+						type:"post",
+						data:{},
+						success:function(data){
+							var json=JSON.parse(data);
+							$("#addtab").html("");
+							$("#tableperson").html("");
+							$.each(json,function(index,value){
+								var opt="<option value=\""+value[1]+"\">"+value[0]+"</option>";
+								$("#addtab").append(opt);
+								$("#tableperson").append(opt);
+							});
+						}
+				});
+			};
+			/*
+				桌位人数的聚焦事件
+			*/	
+			$(".personNum").focus(function(){
+				$("#appenum").html("");
+			})
+			/*
+				桌位人数的失焦事件
+			*/
+			$(".personNum").blur(function(){
+				var pnum=$(".personNum").val();
+				var reg=new RegExp("[^0-9]+","gi");
+				if(reg.test(pnum)){
+					$("#appenum").html("请输入数字");
+				}
+				if(pnum>20){
+					$("#appenum").html("输入人数过多");
+				}
 			});
 		</script>
 	</div>

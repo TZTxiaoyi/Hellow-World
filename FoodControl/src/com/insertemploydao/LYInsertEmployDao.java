@@ -332,4 +332,8 @@ public class LYInsertEmployDao {
 		}
 		//return null;
 	}
+	public List selectfu(){
+		String sql="select Name,staffId from staffInfo where partId=3";
+		return DaoFactory.Query(sql);
+	}
 }
