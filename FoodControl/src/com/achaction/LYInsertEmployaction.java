@@ -10,7 +10,9 @@ import net.sf.json.JSON;
 import org.apache.struts2.ServletActionContext;
 import com.entity.LYEmployId;
 import com.entity.LYEmployee;
+import com.entity.LyPart;
 import com.insertemploydao.LYInsertEmployDao;
+
 import com.utils.toJson;
 
 public class LYInsertEmployaction {
@@ -27,6 +29,15 @@ public class LYInsertEmployaction {
 	private LYEmployId employId;
 	private String putvalue;
 	private int countpage;
+	private LyPart partname;
+	
+	public LyPart getPartname() {
+		return partname;
+	}
+
+	public void setPartname(LyPart partname) {
+		this.partname = partname;
+	}
 	/**
 	 * LYInsertEmployDao：实现类
 	 * 
@@ -68,17 +79,42 @@ public class LYInsertEmployaction {
 	
 	
 	/**
+	 * 先根据角色名称查询角色id
+	 * 再根据账号查询账号id
 	 * save:得到响应后，
 	 * 调用员工实现类方法
 	 * 将员工实体类对象传给员工实现类方法
 	 * 
 	 */
-	public void save(){		
-		
-		ied.eminsert(employee);	
-		
+	public void save(){
+		//System.out.println(employId.getEmenter());
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int partId = ied.selectpartId(partname);
+		int enterId = ied.selectenterid(employId);
+		//System.out.println("888888888:"+partId+"::::"+enterId);
+		int flag=ied.eminsert(employee,partId,enterId);	
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	
+	/**
+	 * emterid：得到前端响应，调用enterid方法，
+	 * 调用Dao实现类方法
+	 * 将员工账号的实体类对象传给插入员工账号的实现类方法
+	 */
+	public void enterid(){
+		System.out.println("1515:");
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int flag=ied.emidinsert(employId);		
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	   /**
 		 * 
 	     * 方法功能说明：  将员工信息放到list中，
@@ -96,11 +132,12 @@ public class LYInsertEmployaction {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 
-		List<String> list=ied.selemploy(employee);		
+		List<String> list=ied.selemploy(employee);	
+		System.out.println("000:"+list);
 		toJson json=new toJson();
 	
 		json.toJson("vlaue", list);	
-	
+		
 		try {
 			response.getWriter().print(json.toJson("vlaue", list).toString());
 		} catch (IOException e) {
@@ -132,6 +169,7 @@ public class LYInsertEmployaction {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		int flag=9;
+		System.out.println(employee.getEmsex());
 		flag=ied.update(employee);		
 		try {
 			response.getWriter().print(flag);
@@ -144,9 +182,8 @@ public class LYInsertEmployaction {
 	 */
 	public void searchEM(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
-
 		response.setContentType("text/html;charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");		
+		response.setCharacterEncoding("UTF-8");			
 		List<String> list=ied.searchsome(putvalue);
 		//System.out.println(list);
 		toJson json=new toJson();
@@ -169,8 +206,7 @@ public class LYInsertEmployaction {
 			response.getWriter().print(a);
 		} catch (Exception e) {
 			// TODO: handle exception
-		} 
-		
+		} 		
 	} 
 	/**
 	 * getpage:由前台data传来的值，countpage接收，调用pagepage(实现类方法)
@@ -192,17 +228,82 @@ public class LYInsertEmployaction {
 	}
 	/**
 	 * modul:权限表action
-	 
-	public void modul(){		
+	 */
+	public void modul(){	
+		//System.out.println("00000000000");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");	
-		List list = ied.aperson();	
+		List list = ied.selectpartname();
+		//System.out.println(list);
 		JSON json=toJson.toJson("value", list);		
 		try {
 			response.getWriter().print(json);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-	}*/
+	}
+	public void addpart(){
+		//System.out.println("0101:cuo");
+		HttpServletResponse response=ServletActionContext.getResponse();
+		//System.out.println(partname.getPartname());
+		int flag=ied.addpartname(partname);
+		//System.out.println("777:"+flag);
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	/**
+	 * getacount:获得员工账号表数据条数action
+	 */
+	public void getaccount(){
+		
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int a=ied.getpages();		
+		try {
+			response.getWriter().print(a);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 		
+	} 
+	/**
+	 * getpage:由前台data传来的值，countpage接收，调用pagepage(实现类方法)
+	 * 得到返回list，将查询的结果放到json中，返回给前台data
+	 */
+	public void getidpage(){
+		
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");		
+		List list=ied.setpages(countpage);
+		JSON json=toJson.toJson("value", list);
+		//System.out.println(json);
+		try {
+			response.getWriter().print(json);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	/**
+	 * updatestaff:修改员工信息的action
+	 * 得到员工dao工厂返回给修改员工实现类的值，
+	 * 再将值给前台可判断是否修改成功与否；
+	 * @return
+	 */
+	public void updatestaffid(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
+		int	flag=ied.updateid(employId);
+		//System.out.println("7777:"+flag);
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 	
+	}
 }

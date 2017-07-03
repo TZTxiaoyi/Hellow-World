@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class GJYFoodCategory {
 	
+	 private int dishId;//菜品编号
 	 private String dishName;//菜品名
 	 private int price;//价格
 	 private int kindId;//菜品类别编号
@@ -13,7 +14,13 @@ public class GJYFoodCategory {
 	 private int maxCopies;//最大并菜数
 	 private int dishState;//菜品状态
 	
-	 public String getDishName() {
+	 public int getDishId() {
+		return dishId;
+	}
+	public void setDishId(int dishId) {
+		this.dishId = dishId;
+	}
+	public String getDishName() {
 		return dishName;
 	}
 	public void setDishName(String dishName) {
@@ -61,10 +68,6 @@ public class GJYFoodCategory {
 	public void setDishState(int dishState) {
 		this.dishState = dishState;
 	}
-	 
-	 
 	
-	 
-	 
 	 
 }

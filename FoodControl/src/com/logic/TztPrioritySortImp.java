@@ -70,7 +70,26 @@ public class TztPrioritySortImp implements TztSort {
 			odId=odId.substring(0,odId.length()-1);
 			dishList.add(odId);
 			dishList.add(((List)dishpriority.get(i)).get(8));
-			dishList.add(sum);		
+			dishList.add(sum);	
+			
+			//ºÏ²¢×À×Ó
+			List list= dishOrder.queryDesk(odId);
+			String de="";
+			for(int j=0;j<list.size();j++){
+				int aa=(Integer) ((List)list.get(j)).get(4);
+				de=de+(String)((List) list.get(j)).get(10)+",";
+				for (int k = j+1; k<list.size();k++) {
+					int bb=(Integer) ((List)list.get(k)).get(4);
+					if(aa==bb){
+						list.remove(k);
+						k--;
+					}
+				}
+
+			}
+			de=de.substring(0,de.length()-1);
+			dishList.add(de);
+			
 			madeList.add(dishList);
 		}
 		return madeList;
@@ -113,6 +132,24 @@ public class TztPrioritySortImp implements TztSort {
 		list.add(m);
 		list.add(((List) dishList.get(0)).get(1));
 		list.add(count);
+		
+		List delist= dao.queryDesk(m);
+		String de="";
+		for(int j=0;j<delist.size();j++){
+			int aa=(Integer)((List) delist.get(j)).get(4);
+			de=de+(String)((List) delist.get(j)).get(10)+",";
+
+			for (int k = j+1; k<delist.size();k++) {
+				int bb=(Integer) ((List)delist.get(k)).get(4);
+				if(aa==bb){
+					delist.remove(k);
+					k--;
+				}
+			}
+		} 
+		de=de.substring(0,de.length()-1);
+		list.add(de);
+		
 		session.setAttribute((String) list.get(0),list);
 		return list;
 	}
@@ -127,11 +164,11 @@ public class TztPrioritySortImp implements TztSort {
 		
 		for (int i=0; i<list.size();i++){
 			List deskList=new ArrayList();
-			int a=(Integer) ((List)list.get(i)).get(2);
+			int a=(Integer) ((List)list.get(i)).get(4);
 			int sum=1;
 			String desk = (String) ( (List)list.get(i)).get(10);
 				for (int j = i+1; j <list.size(); j++) {
-				int b=(Integer) ((List)list.get(j)).get(2);
+				int b=(Integer) ((List)list.get(j)).get(4);
 				if(a==b){
 					list.remove(j);
 					sum++;
@@ -150,7 +187,6 @@ public class TztPrioritySortImp implements TztSort {
 		TztDishOrderImp dao = new  TztDishOrderImp();
 		dao.updataDishStatus(12, dishId);
 		session.removeAttribute(dishId);
-		
 		return null;
 	}
 

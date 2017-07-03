@@ -15,6 +15,7 @@ import com.entity.TztDish;
 import com.insertemploydao.TztDishImp;
 import com.insertemploydao.TztDishOrderImp;
 import com.logic.TztDefaultSortImp;
+import com.logic.TztDeskSortImp;
 import com.logic.TztPrioritySortImp;
 import com.entity.TztDishOrder;
 
@@ -66,6 +67,8 @@ public class TztQuerDishAction {
 	 */
 	public void createImp(int method){
 			if(method==1){
+				TztSort sort=new TztDeskSortImp();
+				setSort(sort);
 			}else if(method ==2){
 				TztSort sort =new TztPrioritySortImp();
 				setSort(sort);
@@ -142,6 +145,7 @@ public class TztQuerDishAction {
 		rep.setContentType("html/text;charset=utf-8");
 		createImp(method);
 		List result =sort.made(dishId);
+		System.out.println("make++"+result);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {

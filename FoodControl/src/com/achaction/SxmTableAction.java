@@ -2,10 +2,6 @@ package com.achaction;
 
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +10,9 @@ import net.sf.json.JSON;
 
 import org.apache.struts2.ServletActionContext;
 
-import com.entity.LjlAddOrder;
+import sun.awt.SunToolkit.InfiniteLoop;
+
+import com.entity.LYEmployee;
 import com.entity.SxmTable;
 import com.insertemploydao.SxmTableSql;
 import com.utils.toJson;
@@ -37,6 +35,34 @@ public class SxmTableAction {
 	     * @throws
 	 */
 	SxmTable st;
+	LYEmployee em;
+	String chargename;
+	String tablename;
+	public String getTablename() {
+		return tablename;
+	}
+
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
+	}
+
+	public String getChargename() {
+		return chargename;
+	}
+
+	public void setChargename(String chargename) {
+		this.chargename = chargename;
+	}
+
+	public LYEmployee getEm() {
+		return em;
+	}
+
+	public void setEm(LYEmployee em) {
+		this.em = em;
+	}
+
+
 	String search;
 	int currPage;
 	public int getCurrPage() {
@@ -162,8 +188,24 @@ public class SxmTableAction {
 	public void upLineTable(){
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		int table=sts.update(st);
+		int cname=-1;
+		int tname=-1;
+		List list=(List) sts.updateper(em);
+		List li=(List) list.get(0);
+		int emp=(Integer) li.get(0);
+		System.out.println("---------"+chargename);
+		if(chargename.equals("未分配")){
+			
+			cname=sts.insertcharge(emp, st);
+		}else{	
+			tname=sts.uppertab(st,emp);
+		}
+		int flag=-1;
+		if(cname!=-1||tname!=-1){
+			flag=1;
+		}
 		try {
-			hsr.getWriter().print(table);
+			hsr.getWriter().print(flag);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage()+3333);
@@ -255,6 +297,40 @@ public class SxmTableAction {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+	/**
+	 * 更改桌台
+	 */
+	public void changedesk(){
+		HttpServletResponse hsr=ServletActionContext.getResponse();
+		//根据更换前的桌名获取桌子id
+		List beforelist=sts.getbeforeid(st);
+		List beforeli=(List) beforelist.get(0);
+		int getbeid=(Integer) beforeli.get(0);
+		//根据更换后的桌名获取id
+		List list=sts.gettableid(tablename);
+		List li=(List) list.get(0);
+		int getid=(Integer) li.get(0);
+		//根据更改前桌子的id获取订单id
+		List getorderid=sts.getorderid(getbeid);
+		List getoid=(List) getorderid.get(0);
+		int orderid=(Integer) getoid.get(0);
+		//根据订单id将桌子更改为更改后的
+		int chaid=sts.changeid(getid, orderid);
+		//根据更换前的桌名更改桌子状态为可用
+		int castate=sts.changedstate(st);
+		//根据更换前的桌名更改桌子状态为占用
+		int aftercastate=sts.changeafterdstate(tablename);
+		int flag=-1;
+		if(chaid!=-1 && castate!=-1 && aftercastate!=-1){
+			flag=1;
+		}
+		try {
+			hsr.getWriter().print(flag);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		
+	}
 	
 }

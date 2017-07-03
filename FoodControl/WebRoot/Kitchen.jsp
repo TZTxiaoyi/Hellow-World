@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -17,23 +17,34 @@
 body{
 	margin:0;
 	padding:0;
+	
 }
 
 td{
-	width:150px;
+	width:200px;
+	margin-top:10px;
+	margin-bottom:10px;
+	border-bottom:1px solid #ff6600;
+}
+td button{
 }
 #top {
 	height: 9%;
+	font-size:20px;
+	margin-left:20px;
 }
 #cbody {
-	height: 75%;
+	height: 65%;
+	border-bottom:1px solid #ff6666;
+	
 }
 
 #col1 {
-
+	height: 100%;
 	width: 48%;
-	margin-right: 1%;
+	
 	float: left;
+	border-right:1px solid #99ff99;
 }
 
 
@@ -49,10 +60,32 @@ td{
 #top{
 	float:left;
 	width:50%;
-	
 }
 #bottom{
 	height:15%;
+	background-color:#ffcc99;
+
+	font-size:25px;
+}
+#titlemading{
+	max-height:400px;;
+	margin-left:10px;
+	margin-right:10px;
+	background-color:#ffcc99;
+}
+#titlemade{
+	margin-left:10px;
+	background-color:#ff99cc;
+	max-height:400px;
+}
+#bhead{
+	padding-top:25px;
+	border-bottom:1px solid #ff6666;
+	background-color:#ffffcc;
+}
+.pre-scrollable{
+	overflow:auto;
+
 }
 </style>
 </head>
@@ -63,8 +96,8 @@ td{
 	<!----------------------------------------------------------------------------------------------------->
 	<div class="container-fluid"  >
 		<!-------------------------------页面头部------------------------------------------->
-		<div class="row" >
-			<div class= ""id="top"></div>
+		<div class="row" id="bhead">
+			<div class= "row"id="top"></div>
 			<div class="btn-group btn-group-lg" role="group">	
 				<button  class="btn btn-info btn-group-lg" id="default">默认</button>
 				<button class="btn btn-info btn-group-lg" id = "priority">优先级</button>
@@ -77,29 +110,26 @@ td{
 			<div class="column" id="col1">
 		
 				<!-- 左边窗口 -->
-				<table class="row pre-scrollable" id="titlemading">
-					
+				<h1>制作中</h1>
+				<div class="row pre-scrollable" id="titlemading">
 				
-				</table>
+				</div>
 				
 			</div>
 
 			<div class="row" id="col2">
 				<!------------右边窗口-------------->
-				<table class=" pre-scrollable"id="titlemade">
+				<h1>待做</h1>
+
+				<div class=" pre-scrollable"id="titlemade">
 					
-				</table>
-				
-				<div >
-					<table >
-			
-					</table>
 				</div>
 			</div>
 			
 	
 		</div>
 			<!-- 最下面窗口 -->
+			<h1>制作完成</h1>
 			<div class="row pre-scrollable" id="bottom">
 			</div>
 		<!--白色，浅蓝色，深蓝色，绿色，黄色，红色，黑色，对应的class为btn,btn btn-primary,btn btn-info,btn btn-success,btn btn-warning,btn btn-danger,btn btn-inverse-->
@@ -168,12 +198,13 @@ td{
  					data:{"method":method},
  					dataType:"json",
  					success:function(data){
+ 			
  					$("#titlemading").html("");
- 					var tr="<tr><td>菜名</td><td>数量</td><td>操作</td><td><input class=\"btn btn-info\" id=\"querymading\" type=\"button\" value=\"刷新\" /></td></tr>";
+ 					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td><td><input class=\"btn btn-info\" id=\"querymading\" type=\"button\" value=\"刷新\" /></td></tr>";
 					$("#titlemading").append(tr);
-					$.each(data,function(index,value){				
-					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button></td>"
-					+"<td><button class=\"btn btn-danger\" id=\"removebutton\" name =\""+value[0]+ "\">取消制作</button></td>"+"</tr>";
+					$.each(data,function(index,value){	
+					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td>"+value[3]+"</td>"+"<td><div class=\"btn-group\"><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button>"
+					+"<button class=\"btn btn-danger\" id=\"removebutton\" name =\""+value[0]+ "\">取消制作</button></div></td>"+"</tr>";
 					$("#titlemading").append(dd);		
 					});
 					}
@@ -182,7 +213,6 @@ td{
  				
  		$(function(){
  			$("#titlemading").on('click',"#madingbutton",function(){	
- 			
  				var aa=$(this).attr("name");
  				var foodname=$($("td[name=\""+aa+"\"]")[0]).html();
  				var foodnum=$($("td[name=\""+aa+"\"]")[1]).html();
@@ -195,7 +225,7 @@ td{
  					dataType:"json",
  					success:function(data){
  					$.each(data,function(index,value){				
-						table=table+value[0]+value[1]+"份"
+						table=table+value[0]+":"+value[1]+"份，"
 					});
  					var dd="<div>"+time+"已完成菜品："+foodname+"共"+foodnum+"份  ，"+table+"</div>";
 					$("#bottom").prepend(dd);		
@@ -236,10 +266,10 @@ td{
  					dataType:"json",
  					success:function(data){
  					$("#titlemade").html("");
- 					var tr="<tr><td>菜名</td><td>数量</td><td>操作</td><td><input  class=\"btn btn-info\" \"id=\"querymade\" type=\"button\" value=\"刷新\" /></td></tr>";
+ 					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td><td><input  class=\"btn btn-info\" \"id=\"querymade\" type=\"button\" value=\"刷新\" /></td></tr>";
 					$("#titlemade").append(tr);
 					$.each(data,function(index,value){
-					var dd="<tr>"+"<td   name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td  name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
+					var dd="<tr>"+"<td   name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td  name =\""+value[0]+ "\">"+value[2] +"</td>"+ "</td>"+"<td>"+value[3]+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
 					$("#titlemade").append(dd);
 					});
  					}

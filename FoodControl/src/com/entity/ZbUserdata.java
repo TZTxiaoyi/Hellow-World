@@ -15,6 +15,13 @@ public class ZbUserdata {
 	
 	private String account;
 	private String pwd;
+	private String userState;
+	public String getUserState() {
+		return userState;
+	}
+	public void setUserState(String userState) {
+		this.userState = userState;
+	}
 	public String getAccount() {
 		return account;
 	}

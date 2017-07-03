@@ -6,13 +6,20 @@ import java.util.Date;
 
 public class LjlAddOrder {
 	private int ordersId;
-	private int orderStatus;
+	public int orderStatus;
 	private int orderPrice;
 	private int foodNum;
 	private int cost;
 	private String ordersTime;
 	private String deskname;
 	private int deskid;
+	private int orderpriority;
+	public int getOrderpriority() {
+		return orderpriority;
+	}
+	public void setOrderpriority(int orderpriority) {
+		this.orderpriority = orderpriority;
+	}
 	public int getOrdersId() {
 		return ordersId;
 	}

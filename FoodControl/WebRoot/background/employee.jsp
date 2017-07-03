@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					data:{"countpage":a},
 					success:function(data){					
 					var json=JSON.parse(data);				
-						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>操作</td></tr>";
+						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>账号</td><td>操作</td></tr>";
 					 	$("#tableid").html("");	
 					 	$("#tableid").append(th);
 					 
@@ -89,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var emtable=
 								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
-								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td>"+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
 								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
 								"<span class=\"icon-trash-o\"></span>删除 </button>"+
 								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
@@ -101,6 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});
 		}
 		/*
+		* 模糊查询
 		* 点击搜索按钮，触发点击事件
 		* 先获得输入框中的值
 		* ajax将值传给action
@@ -110,6 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$(function(){
 			$("#searchem").click(function(){  //button
 				var putvalue=$("#condition").val();	 //shurukuang
+				
 				$.ajax({
 					url:"achieve_searchEM.action",
 					type:"post",
@@ -118,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					success:function(data){
 					var json=JSON.parse(data);
 					$("#tableid").html("");
-						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>操作</td></tr>";
+						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>账号</td><td>操作</td></tr>";
 					 	$("#tableid").append(th);
 						$.each(json,function(index,value){
 						
@@ -126,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var emtable=
 								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
-								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td>"+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
 								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
 								"<span class=\"icon-trash-o\"></span>删除 </button>"+
 								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
@@ -155,10 +157,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$(function(){
 			$("#tableid").on('click',".alterbtn",function(){
 				var alterbtn = $(this).attr("id");
-				
+				//alert("sss:"+alterbtn);
 				var namehtml =$("#a"+alterbtn).html();	
-				//alert(namehtml);			
+				alert(namehtml);			
 				var idhtml =$("#b"+alterbtn).html();
+				//alert(idhtml); 
 				var phonehtml =$("#c"+alterbtn).html();
 				var sexhtml =$("#d"+alterbtn).html();
 				var agehtml =$("#e"+alterbtn).html();
@@ -193,13 +196,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					//var spart=$("#per").val();
 					//var stable=$("#per").val();
 					//alert(stime);
+					if(ssex=="女"){
+						ssex=5;
+					}else{
+						ssex=4;
+					}
 					$.ajax({
 						url:"achieve_updatestaff.action",
 						type:"post",
 						data:{"employee.emid":sid,"employee.emname":sname,"employee.emsex":ssex,"employee.emage":sage,"employee.emphone":sphone,"employee.emadress":sadress,"employee.emjointime":stime},
 						success:function(data){
-							alert("修改成功");	
-								liyang();	
+							if(data==-1){
+								alert("修改失败");
+							}else if(data==1){
+								alert("修改成功");
+							}else{
+								alert("没有权限");
+							}		
+							liyang();								
 						}
 					});
 				});
@@ -223,10 +237,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					data:{"employee.emid":emhtml},					
 					success:function(data){
 						if(data==-1){
-							alert("删除失败");
-						}else{
+								alert("删除失败");
+						}else if(data==1){
 							alert("删除成功");
-						}										
+						}else{
+							alert("没有权限");
+						}		
+						liyang();										
 					}
 				});
 			});	
@@ -284,22 +301,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var emadress=$("#emadress").val();
 				var emjointime=$("#emjointime").val();
 				var empart=$("#empart").val();
-				//var ementer=$("#ementer"). val();	
+				var ementer=$("#ementer"). val();	
 				
-											
-				if(emid && emname && emsex && emage && emphone && emadress && emjointime && empart ){					
+				//alert(empart+";"+ementer);							
+					if(emsex=="男"){
+						emsex=4;
+					}else{
+						emsex=5;
+					}			
 					$.ajax({
 						type:"post",
 						url:"achieve_save.action",
 						data:{"employee.emid":emid,"employee.emname":emname,"employee.emsex":emsex,"employee.emage":emage,
-							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,"employee.empart":empart,"employee.ementer":ementer},
+							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,
+							"partname.partname":empart,"employId.ementer":ementer},
 						success:function(data){
-							alert("success");
+							if(data==-1){
+								alert("添加失败");
+						}else if(data==1){
+							alert("添加成功");
+						}else{
+							alert("没有权限");
+						}	
 						}
 					});
-				}else{
-					alert("添加员工失败");
-				}
+				
 			});
 		});	
 	</script>  
@@ -346,8 +372,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									电	话：<input type="text" id="emphone" name="employee.emphone"><br/> 									
 									地	址：<input type="text" id="emadress" name="employee.emadress"><br/>
 									就职时间：<input type="text" id="emjointime" name="employee.emjointime"><br/>
-									<!--  员工角色：<input type="text" id="empart" name="empart"><br>
-									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>-->
+									员工角色：<input type="text" id="empart" name="empart"><br>
+									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>
 										     
 								
 								</div>
