@@ -295,7 +295,7 @@
 				$.ajax({
 					url : "",
 					data: {},
-					type "post",
+					type:"post",
 					success:function(data){
 						
 					},
@@ -314,7 +314,6 @@
 				}
 			});
 			
-=======
 				function kindfood(){
 					$.ajax({
 						type:"post",
@@ -351,7 +350,6 @@
 					});
 				};
 				
->>>>>>> 287b559215696a71f8c7abc3722500aeee7f9cb9:FoodControl/WebRoot/new.jsp
 				//添加菜品，更新菜单和总价
 				function upfood(btnid,foodname,uprice,number,price){	
 					$.ajax({
