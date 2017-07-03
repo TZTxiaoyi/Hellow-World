@@ -18,7 +18,13 @@ public class LYEmployee {
 	private String emphone;			
 	private String emadress;
 	private String emjointime;
-	
+	private int partId;
+	public int getPartId() {
+		return partId;
+	}
+	public void setPartId(int partId) {
+		this.partId = partId;
+	}
 	private String account;
 	
 	public String getAccount() {

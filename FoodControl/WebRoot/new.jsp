@@ -333,6 +333,7 @@
 					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val());
 					var price=parseInt(uprice*number);//价格*数量获得总价
 					upfood(btnid,foodname,uprice,number,price);
+					$($("input[name=\""+btnid+"\"]")[1]).val(0);
 				});
 				//点击查看我的菜单
 				$("#LookOrder").click(function(){				

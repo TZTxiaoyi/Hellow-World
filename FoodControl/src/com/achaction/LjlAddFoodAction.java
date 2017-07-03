@@ -175,7 +175,6 @@ public class LjlAddFoodAction {
 		HttpSession session=request.getSession();
 		String orderid=(String) session.getAttribute("orderid");
 		String[] foodnames=session.getValueNames();
-		System.out.println("foodnames:"+foodnames.length);
 		if (foodnames.length>1&&orderid==null) {
 			String tablename=(String) session.getAttribute("dname");
 			List listtable=tableSql.idTablename(tablename);

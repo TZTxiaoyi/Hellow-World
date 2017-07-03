@@ -7,38 +7,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'MyJsp.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-	<script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
-  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-
+    <title>BootStrap欢迎你</title>
+    <!-- <link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' /> -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"></link>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-datetimepicker.css" type="text/css"></link>
+   <style>
+       body{
+        position: relative;
+        padding-top:40px;
+      } 
+      #ddd{
+      	margin-left:200px;
+      }
+   </style>
   </head>
-  
-  <body>
-  <input type="button"value="ss" id="aa"/>
-   <form action="service.jsp" id="form1">
-  	<input type="submit" />
-  </form>
-  <script>
-  $("#aa").click(function(){
-  	aa();
-  })
-  function aa(){
-		alert(3);
-			//window.location.href("http://localhost:8080/FoodControl/service.jsp");
-			$("#form1").submit();
-		}
-	
+  <body>  
+    <div id="ddd" class="input-append date form_datetime">
+      <input size="16" type="text" value="" readonly>
+      <span class="add-on"><i class="icon-th"></i></span>
+     </div>
+    <script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+   <script type="text/javascript" src="bootstrap/js/bootstrap-datetimepicker.js"></script>
+     <script type="text/javascript" src="bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+   <script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+      format: "yyyy-mm-dd hh:ii",
+      autoclose: true,
+      todayBtn: true,
+      language:'zh-CN',
+      pickerPosition:"bottom-left"
+    });
   </script>
   </body>
 </html>
