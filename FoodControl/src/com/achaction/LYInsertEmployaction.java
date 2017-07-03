@@ -77,7 +77,18 @@ public class LYInsertEmployaction {
 	}
 	
 	
-	
+	/**
+	 * 失焦时间查询员工编号
+	 */
+	public void selemid(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		List list=ied.selstaffid(employee);		
+		try {	
+				response.getWriter().print(list.size());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
+	}
 	/**
 	 * 先根据角色名称查询角色id
 	 * 再根据账号查询账号id
@@ -88,10 +99,14 @@ public class LYInsertEmployaction {
 	 */
 	public void save(){
 		//System.out.println(employId.getEmenter());
+		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int partId = ied.selectpartId(partname);
+		//System.out.println("00000000000:"+partname.getPartId());
 		int enterId = ied.selectenterid(employId);
+		ied.updatestate(enterId);
 		//System.out.println("888888888:"+partId+"::::"+enterId);
+		
 		int flag=ied.eminsert(employee,partId,enterId);	
 		try {
 			response.getWriter().print(flag);
@@ -99,14 +114,48 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
-	
+	/**
+	 * 查询员工的所有角色名称
+	 */
+	public void selpa(){	
+		//System.out.println("00000000000");
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");	
+		List list = ied.selpaList();
+		//System.out.println("555555:"+list);
+		JSON json=toJson.toJson("value", list);		
+		try {
+			response.getWriter().print(json);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	/**
+	 * 模糊查询账号
+	 */
+	public void searchac(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");	
+		System.out.println("++++++++++");
+		List list=ied.searchacclist(putvalue);
+		JSON json=toJson.toJson("value", list);
+		System.out.println(json);
+		try {
+			response.getWriter().print(json);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
 	/**
 	 * emterid：得到前端响应，调用enterid方法，
 	 * 调用Dao实现类方法
 	 * 将员工账号的实体类对象传给插入员工账号的实现类方法
 	 */
 	public void enterid(){
-		System.out.println("1515:");
+		//System.out.println("1515:");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int flag=ied.emidinsert(employId);		
 		try {
@@ -114,6 +163,18 @@ public class LYInsertEmployaction {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	/**
+	 * 失焦事件查询账号
+	 */
+	public void selaccount(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		List list=ied.selacc(employId);
+		try {	
+				response.getWriter().print(list.size());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
 	}
 	   /**
 		 * 
@@ -149,11 +210,12 @@ public class LYInsertEmployaction {
 	 * delem:删除员工action
 	 */
 	public void delem(){
-		int flag=ied.delone(employee);
-		 HttpServletResponse response=ServletActionContext.getResponse();		 
+		 HttpServletResponse response=ServletActionContext.getResponse();
+		 ied.upstate(employId);
+		 int flag=ied.delone(employee);
 		 try {
 			response.getWriter().print(flag);
-		} catch (IOException e) {
+		} catch (IOException e){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -165,12 +227,14 @@ public class LYInsertEmployaction {
 	 * @return
 	 */
 	public void updatestaff(){
+		//System.out.println("999999999999");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		int flag=9;
-		System.out.println(employee.getEmsex());
-		flag=ied.update(employee);		
+		int partId = ied.selectpartId(partname);
+		//System.out.println("00000:"+partId);
+		flag=ied.update(employee,partId);		
 		try {
 			response.getWriter().print(flag);
 		} catch (Exception e) {
@@ -243,6 +307,9 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		}
 	}
+	/**
+	 * 添加角色action
+	 */
 	public void addpart(){
 		//System.out.println("0101:cuo");
 		HttpServletResponse response=ServletActionContext.getResponse();
@@ -251,6 +318,18 @@ public class LYInsertEmployaction {
 		//System.out.println("777:"+flag);
 		try {
 			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	/**
+	 * 添加角色失焦事件判断是否已存在的角色
+	 */
+	public void reselpart(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		List list=ied.selpt(partname);
+		try {
+			response.getWriter().print(list.size());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

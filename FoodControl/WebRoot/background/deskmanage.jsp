@@ -379,7 +379,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					if(pn && dn){
 						$.ajax({
 							url : "../SxmTable_appendTable.action",
-							type : "post",
+							type :"post",
 							data : {"st.personNum" : pn,"st.deskName" : dn,},
 							success : function(data) {							
 								if(data==-1){

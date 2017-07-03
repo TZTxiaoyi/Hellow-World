@@ -21,14 +21,141 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" href="css/admin.css">
 	<script src="js/jquery.js"></script>
 	<script src="js/pintuer.js"></script>
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.css" type="text/css"></link>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap-datetimepicker.css" type="text/css"></link>
 	
-	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"
-		type="text/css"></link>
-	<script type="text/javascript"
-		src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
+
+	<style>
+		#modalform input {
+			
+			width: 250px;
+			height: 40px;
+			
+		}
+		#modalform div{
+			margin-top:30;
+			margin-left:20%;
+		}
+		#modalform span{
+			font-size:20px;
+		}
+	
+	</style>
+</head>
+
+<body>
+	<div class="panel admin-panel">
+		<div class="panel-head">
+			<strong><span class="icon-pencil-square-o"></span> 订单信息</strong>
+		</div>
+		<div>
+
+
+				<div class="panel admin-panel">
+					<div class="padding border-bottom">
+						<ul>
+							<li>
+					  			
+					  			<input placeholder="起始时间" size="16" type="text" value="" readonly class="form_datetime" id="readytime">
+					  			<input placeholder="终止时间" size="16" type="text" value="" readonly class="form_datetime" id="lasttime">
+					  		</li>
+					  		<li>
+					  			
+					          <a type="button" href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchorder"> 搜索</a>
+					  		</li>
+					  		
+					  	</ul>  
+
+					</div>
+				
+				    <table class="table table-hover text-center" id="tableid">
+				    </table>
+	   
+					<div class="pagelist">
+							<a  class="minuspage" name="firstname">首页</a>
+							<a  class="minuspage" name="minusname">上一页</a> 
+							<a  class="minuspage" name="addname">下一页</a>
+							<a  class="minuspage" name="lastname">尾页</a>
+							共<span id="pagenum"></span>页
+							<input type="text" id="someone" value="1">
+							<input type="button" value="跳转" id="commitone">
+					</div>			
+				</div>
+		
+
+		</div>
+		<!-- 
+			查询订单模态框
+ 		-->
+		<div class="media media-y margin-big-bottom"></div>
+		<div class="modal fade" id="myModaltable" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss=modal></button>
+						<div class="text-center margin-big padding-big-top">
+							<h1>订单详细信息</h1>
+						</div>
+						 <div id="modalform">
+
+					    	<table id="mdalform_tab">
+					    		
+					    	</table>
+
+					    	<div>
+								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
+							</div>
+					 </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 
+			订单详情模态框
+		 -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close"></button>
+						<div class="text-center margin-big padding-big-top">
+							<h1>订单详细信息</h1>
+						</div>
+						<div id="modalform">
+
+					    	
+					 </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >确定更改</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 
+	
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
 	<script type="text/javascript">
+	
+	    $(".form_datetime").datetimepicker({
+	      format: "yyyy-mm-dd hh:ii",
+	      autoclose: true,
+	      todayBtn: true,
+	      language:'zh-CN',
+	      pickerPosition:"bottom-left"
+	    });
+
 			/*
 				总页数
 			*/
@@ -158,119 +285,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});
 			});
 		});
-		</script>
-
-	<style>
-		#modalform input {
-			
-			width: 250px;
-			height: 40px;
-			
-		}
-		#modalform div{
-			margin-top:30;
-			margin-left:20%;
-		}
-		#modalform span{
-			font-size:20px;
-		}
-	
-	</style>
-</head>
-
-<body>
-	<div class="panel admin-panel">
-		<div class="panel-head">
-			<strong><span class="icon-pencil-square-o"></span> 订单信息</strong>
-		</div>
-		<div>
-
-
-				<div class="panel admin-panel">
-					<div class="padding border-bottom">
-						<ul>
-							<li>
-					  			<input type="text" placeholder="xxxx年xx月xx日" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" id="readytime"/>
-					  		</li>
-					  		<li>
-					  			<input type="text" placeholder="xxxx年xx月xx日" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" id="lasttime"/>
-					          <a type="button" href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchorder"> 搜索</a>
-					  		</li>
-					  		
-					  	</ul>  
-
-					</div>
-				
-				    <table class="table table-hover text-center" id="tableid">
-				    </table>
-	   
-					<div class="pagelist">
-							<a  class="minuspage" name="firstname">首页</a>
-							<a  class="minuspage" name="minusname">上一页</a> 
-							<a  class="minuspage" name="addname">下一页</a>
-							<a  class="minuspage" name="lastname">尾页</a>
-							共<span id="pagenum"></span>页
-							<input type="text" id="someone" value="1">
-							<input type="button" value="跳转" id="commitone">
-					</div>			
-				</div>
 		
-
-		</div>
-		<!-- 
-			查询订单模态框
- 		-->
-		<div class="media media-y margin-big-bottom"></div>
-		<div class="modal fade" id="myModaltable" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss=modal></button>
-						<div class="text-center margin-big padding-big-top">
-							<h1>订单详细信息</h1>
-						</div>
-						 <div id="modalform">
-
-					    	<table id="mdalform_tab">
-					    		
-					    	</table>
-
-					    	<div>
-								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
-							</div>
-					 </div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 
-			订单详情模态框
-		 -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close"></button>
-						<div class="text-center margin-big padding-big-top">
-							<h1>订单详细信息</h1>
-						</div>
-						<div id="modalform">
-
-					    	
-					 </div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >确定更改</button>
-
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-	</div>
+		/*
+		* 自运行查询总单金额
+		*/
+		$(function(){
+			$.ajax({
+				url:"order_selmoney.action",
+				type:"post",
+				data:{},
+				success:function(){
+					
+				}	
+			});
+		});
+		</script>
 </body>
 </html>
