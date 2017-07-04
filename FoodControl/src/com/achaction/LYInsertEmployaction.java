@@ -30,7 +30,15 @@ public class LYInsertEmployaction {
 	private String putvalue;
 	private int countpage;
 	private LyPart partname;
-	
+	private int pageflag;
+	public int getPageflag() {
+		return pageflag;
+	}
+
+	public void setPageflag(int pageflag) {
+		this.pageflag = pageflag;
+	}
+
 	public LyPart getPartname() {
 		return partname;
 	}
@@ -146,7 +154,7 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");	
-		List list=ied.searchacclist(putvalue);
+		List list=ied.searchacclist(countpage,putvalue);
 		JSON json=toJson.toJson("value", list);
 		System.out.println(json);
 		try {
@@ -248,15 +256,16 @@ public class LYInsertEmployaction {
 	/**
 	 * searchEM:Ä£ºý²éÑ¯action
 	 */
-	public void searchEM(){		
+	public void searchEM(){	
+		System.out.println("sear");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");			
-		List<String> list=ied.searchsome(putvalue);
-		//System.out.println(list);
-		toJson json=new toJson();
+		List list=ied.searchsome(putvalue,countpage);
+		System.out.println("searchEM:"+list);
+		JSON json=toJson.toJsonArray("searchEM", list);
 		try {			
-			response.getWriter().print(json.toJson("value", list).toString());			
+			response.getWriter().print(json);			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -268,7 +277,15 @@ public class LYInsertEmployaction {
 	 */
 	public void getcount(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int a=ied.getallpage();		
+		int a=-1;
+		if(pageflag==0){
+			System.out.println("getewfd");
+			a=ied.getallpage();		
+		}else if(pageflag==1){
+			System.out.println("getewfd11111111");
+			a=ied.searchsometatol(putvalue);
+		}
+		System.out.println("a:"+a);
 		try {
 			response.getWriter().print(a);
 		} catch (Exception e) {
@@ -336,7 +353,7 @@ public class LYInsertEmployaction {
 	public void getaccount(){
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int a=ied.getpages();		
+		int a=ied.getpages(putvalue);		
 		try {
 			response.getWriter().print(a);
 		} catch (Exception e) {

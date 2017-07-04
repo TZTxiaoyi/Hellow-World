@@ -200,6 +200,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			selflag=5;
 	   			totalpage(va,va1,va2);
 	   			Zbdedeskallno(curr);
+	   		}else{
+	   			alert("请选择时间段。");
 	   		}
 	   		//alert( va+","+va1+","+va2);
 	   		
@@ -229,7 +231,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				selflag=6;
 				totalpage(va,va1,va2);
 				Zbdedishallno(curr);
-			}
+			}else{
+	   			alert("请选择时间段！。");
+	   		}
 		});
 		function pageresultsdesk(curr){
 	   		var va = $("#desknub").val();
@@ -401,7 +405,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   				var dish="<tr><td>菜品名称</td><td>菜品单价</td><td>销售数量</td><td>销售金额</td></tr>";
 	   				$("#tab").append(dish);
 	   				$.each(json,function(index,value){
-	   					var dish="<tr><td>"+value[1]+"</td><td>"+value[3]+"</td><td>"+value[2]+"</td><td>"+value[4]+"</td></tr>";
+	   					var num=0;
+	   					if(value[3]!=null){
+	   						num=value[3];
+	   					}
+	   					var price=value[2]*num;
+	   					var dish="<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+num+"</td><td>"+price+"</td></tr>";
 	   					$("#tab").append(dish);
 	   				});
 	   			}
@@ -441,7 +450,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   				var dish="<tr><td>菜品名称</td><td>菜品单价</td><td>销售数量</td><td>销售金额</td></tr>";
 	   				$("#tab").append(dish);
 	   				$.each(json,function(index,value){
-	   					var dish="<tr><td>"+value[1]+"</td><td>"+value[3]+"</td><td>"+value[2]+"</td><td>"+value[4]+"</td></tr>";
+	   					var num=0;
+	   					if(value[3]!=null){
+	   						num=value[3];
+	   					}
+	   					var price=value[2]*num;
+	   					var dish="<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+num+"</td><td>"+price+"</td></tr>";
 	   					$("#tab").append(dish);
 	   				});
 	   			}
@@ -476,11 +490,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				url : "zborders_zbtotalpage.action",
 				data: {"zbde.va":va,"zbde.va1":va1,"zbde.va2":va2,"zbde.selflag":selflag},
 				success : function(data){
-					var zbtotal = parseInt(data/3);
-					if(data%3 == 0){
+					var zbtotal = parseInt(data/5);
+					if(data%5 == 0){
 						$("#zbpagenum").html(zbtotal);
 					}
-					if(data%3 != 0){
+					if(data%5 != 0){
 						$("#zbpagenum").html(parseInt(zbtotal)+1);
 					}
 				},

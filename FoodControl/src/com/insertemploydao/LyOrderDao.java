@@ -11,12 +11,18 @@ public class LyOrderDao {
 	 * @return
 	 */
 	public int getcount(){
-		String sql="select count(*) from orders_table " +
-				" where statuss not in ('已取消')";
+		String sql="select count(*) from orders_table ";
 		List list =DaoFactory.Query(sql);
 		List list1=(List) list.get(0);
 		int li=(Integer) list1.get(0);
 		//System.out.println(li);
+		return li;
+	}
+	public int ordertimetatol(String begintime,String endtime){
+		String sql="select count(*) from orders_table where ordersTime between '"+begintime+"' and '"+endtime+"'";
+		List list =DaoFactory.Query(sql);
+		List list1=(List) list.get(0);
+		int li=(Integer) list1.get(0);
 		return li;
 	}
 	/**
@@ -26,8 +32,8 @@ public class LyOrderDao {
 	 */
 	public List pagesize(int startIndex){
 		String sql="select top 5 * from orders_table "+
-"where ordersId not in(select top ("+startIndex*5+") ordersId from orders_table where statuss not in ('已取消')) and statuss not in ('已取消')";
-		//System.out.println("ddddddddddd");         
+"where ordersId not in(select top ("+startIndex*5+") ordersId from orders_table )";
+		System.out.println("ddddddddddd");         
 		return DaoFactory.Query(sql);
 	}
 	/**
@@ -36,9 +42,8 @@ public class LyOrderDao {
 	 * @param endtime
 	 * @return
 	 */
-	public List setimeorder(String begintime,String endtime){
-		String sql=" select * from orders_table " +
-				" where ordersTime between '"+begintime+"' and '"+endtime+"' and statuss not in ('已取消')";
+	public List setimeorder(String begintime,String endtime,int curr){
+		String sql="select top 5 * from orders_table where ordersId not in(select top ("+curr*5+") ordersId from orders_table where ordersTime between '"+begintime+"' and '"+endtime+"') and ordersTime between '"+begintime+"' and '"+endtime+"'";
 		return DaoFactory.Query(sql);
 	}
 	/**
@@ -59,8 +64,8 @@ public class LyOrderDao {
 		return li;
 	}
 	public List asizes(int startIndex){
-		String sql="select top ("+2+") * from orders_table"+
-				" where ordersId not in(select top ("+startIndex*2+") ordersId from orders_table) and statuss in ('已取消')";
+		String sql="select top ("+5+") * from orders_table"+
+				" where ordersId not in(select top ("+startIndex*5+") ordersId from orders_table) and statuss in ('已取消')";
 		System.out.println("ddddddddddd:"+startIndex);         
 		return DaoFactory.Query(sql);
 	}	

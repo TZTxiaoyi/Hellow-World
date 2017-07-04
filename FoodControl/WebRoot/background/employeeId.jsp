@@ -173,16 +173,16 @@
 				});
 			});
 		$(function(){
-			allpages();
+			allpages("");
 			liyang(0);		
 		});
 		var pagestate=0;
-		function allpages(){			
+		function allpages(allput){		
 			$.ajax({
 				url:"achieve_getaccount.action",
 				type:"post",
-				data:{},
-				success:function(data){						
+				data:{"putvalue":allput},
+				success:function(data){				
 					if(data%5==0){
 						var pagesize=parseInt(data/5);
 						$("#pagenum").html(pagesize);	
@@ -202,7 +202,7 @@
 				var somename=$(this).attr("name");
 						//alert(somename);				 
 				var onepage=parseInt($("#someone").val());	
-							
+				var putvalue=$("#input_value").val();		
 				var pagesize=$("#pagenum").html();
 				if(somename=="firstname"){
 					onepage=1;					
@@ -225,9 +225,17 @@
 				$("#someone").val(onepage);
 				a=onepage-1;
 				//alert(inputnum);	
-				liyang(a);				
+					
+				if(putvalue==""){
+					liyang(a);
+				}else{
+					fastsearch(a);
+				}		
 			});			
 		});
+		/*
+			进入页面动态打印
+		*/
 		function liyang(a){
 			$.ajax({				
 					url:"achieve_getidpage.action",
@@ -235,24 +243,26 @@
 					data:{"countpage":a},
 					success:function(data){					
 					var json=JSON.parse(data);				
-						var th="<tr><td>账号</td><td>密码</td><td>当前状态</td><td>操作</td></tr>";
-					 	$("#tableid").html("");	
-					 	$("#tableid").append(th);					 
-						$.each(json,function(index,value){
-						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
-							var emtable=
-								"<tr><td id=\"anum"+value[1]+"\">"+value[0]+
-								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td>"+
-								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
-								"<span class=\"icon-trash-o\"></span>删除 </button>"+
-								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
-								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
-							$("#tableid").append(emtable);																												
-						});
-													
+						emplo(json);
 					}
 				});
 		}	
+		function emplo(json){
+			var th="<tr><td>账号</td><td>密码</td><td>当前状态</td><td>操作</td></tr>";
+			$("#tableid").html("");	
+			$("#tableid").append(th);					 
+			$.each(json,function(index,value){
+				//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
+				var emtable=
+				"<tr><td id=\"anum"+value[1]+"\">"+value[1]+
+				"</td><td id=\"bnum"+value[1]+"\">"+value[2]+"</td><td id=\"cnum"+value[1]+"\">"+value[3]+"</td>"+
+				"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
+				"<span class=\"icon-trash-o\"></span>删除 </button>"+
+				"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
+				"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+				$("#tableid").append(emtable);																												
+			});
+		}
 		/**
 		* 跳转页码点击事件
 		*/
@@ -269,38 +279,24 @@
 		*/
 		$(function(){
 			$("#search_account").click(function(){
-				var putvalue=$("#input_value").val();	
-				$.ajax({
-					url:"achieve_searchac.action",
-					type:"post",
-					data:{"putvalue":putvalue},
-					success:function(data){
-						var json=JSON.parse(data);
-						$("#tableid").html("");
-						var th="<tr><td>账号</td><td>密码</td><td>状态</td><td>操作</td></tr>";
-					 	$("#tableid").append(th);
-						$.each(json,function(index,value){					
-							var emtable=
-								"<tr><td id=\"anum"+value[1]+"\">"+value[0]+"</td>"+
-								"<td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td>"+
-								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
-								"<span class=\"icon-trash-o\"></span>删除 </button>"+
-								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
-								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
-								$("#tableid").append(emtable);																
-						});
-						var emtable="<tr id=\"trtab\">"+
-	        				"<td colspan=\"10\">"+
-	        				"<div class=\"pagelist\"> <a href=\"\">上一页</a> <span class=\"current\">1</span><a href=\"\">2</a><a href=\"\">3</a><a href=\"\">下一页</a><a href=\"\">尾页</a> </div></td></tr>"
-						
-						$("#trtab").append(emtable);
-						
-						
-					
-					}
-				});
+				var currpage=0;
+				fastsearch(currpage);
+				$("#someone").val("1");
 			});
 		});
+		function fastsearch(curr){
+			var putvalue=$("#input_value").val();
+			allpages(putvalue);//输入框的值传进查询总页数方法里	
+			$.ajax({
+				url:"achieve_searchac.action",
+				type:"post",
+				data:{"countpage":curr,"putvalue":putvalue},
+				success:function(data){
+					var json=JSON.parse(data);
+					emplo(json);
+				}
+			});
+		}
 				/*
 		* tableid：表id
 		* 点击修改按钮触发点击事件，获得每行数据放到模态框中
@@ -311,17 +307,10 @@
 		$(function(){
 			$("#tableid").on('click',".alterbtn",function(){
 				var alterbtn = $(this).attr("id");
-				//alert("sss:"+alterbtn);
-				var namehtml =$("#a"+alterbtn).html();	
-				//alert(namehtml);			
+				var namehtml =$("#a"+alterbtn).html();			
 				var idhtml =$("#b"+alterbtn).html();
-				//alert(idhtml); 
 				var phonehtml =$("#c"+alterbtn).html();			
-				//$("#per").val(namehtml);//将要修改某行的数据放入到模态框中
 				$("#perid").val(idhtml);
-				//$("#perphone").val(phonehtml);
-					
-				
 				update(namehtml);					
 			});
 			function update(namehtml){
@@ -329,8 +318,6 @@
 					$(this).unbind('click');
 					//var sname=$("#per").val();//修改后将值传给action
 					var sid=$("#perid").val();
-					//var sphone=$("#perphone").val();
-					//alert(sphone);
 					$.ajax({
 						url:"achieve_updatestaffid.action",
 						type:"post",

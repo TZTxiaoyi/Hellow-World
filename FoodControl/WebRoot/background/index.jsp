@@ -68,8 +68,6 @@
   <h2><span class="icon-pencil-square-o"></span>财务管理</h2>
   <ul> 
     <li><a href="fresh_orderdetail.action" target="right"><span class="icon-caret-right"></span>订单详情</a></li>
-    <li><a href="fresh_returnorder.action" target="right"><span class="icon-caret-right"></span>退单详情</a></li>   
-    
     <li><a href="fresh_incomedetail.action" target="right"><span class="icon-caret-right"></span>收入详情</a></li>        
   </ul>
   <h2><span class="icon-pencil-square-o"></span>其他</h2>
@@ -79,8 +77,8 @@
   </ul>    
 </div>
 <ul class="bread">
-  <li><a href="{:U('Index/employee')}" target="right" class="icon-home"> 首页</a></li>
-  <li><a href="##" id="a_leader_txt">网站信息</a></li>
+  <li><a  target="right" class="icon-home"> 首页</a></li>
+  <li><a  id="a_leader_txt">网站信息</a></li>
   
   
 </ul>

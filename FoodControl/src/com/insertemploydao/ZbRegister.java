@@ -152,7 +152,7 @@ public class ZbRegister implements DaoInterface{
 	}
 	public List page(int currPage) {
 		//System.out.println("currPage:"+currPage);
-		String sql="select top ("+3+") * from cus_enter1 where Id not in(select top "+(currPage)*3+" Id from cus_enter1)";
+		String sql="select top ("+5+") * from cus_enter1 where Id not in(select top "+(currPage)*5+" Id from cus_enter1)";
 		List list = DaoFactory.Query(sql);
 		
 		return list;
@@ -167,7 +167,7 @@ public class ZbRegister implements DaoInterface{
 		String sql="select * from dish";
 		return DaoFactory.Query(sql);
 		
-	}
+	} 	
 	//查询桌子
 	public List zbSelectDesk(){
 		String sql = "select * from desk";
@@ -193,7 +193,7 @@ public class ZbRegister implements DaoInterface{
 		//System.out.println("curr:"+zbde.getCurr());
 		//System.out.println("not:"+zbde.getCurr()*3);
 		//System.out.println(zbde.getVa()+","+zbde.getVa1()+","+zbde.getVa2());
-		String sql ="select top 3 * from orders where ordersId not in(select top ("+zbde.getCurr()*3+
+		String sql ="select top 5 * from orders where ordersId not in(select top ("+zbde.getCurr()*5+
 				") ordersId from orders where ordersTime>'"+zbde.getVa1()+"' and ordersTime<'"+zbde.getVa2()+
 				"' and deskId="+zbde.getVa()+") and ordersTime>'"+zbde.getVa1()+"' and ordersTime<'"+zbde.getVa2()+
 				"' and deskId="+zbde.getVa();
@@ -216,11 +216,11 @@ public class ZbRegister implements DaoInterface{
 	public List ZbOrdersdish(ZbDetails zbde){
 		String sql ="select * from (SELECT MAX(id) numid,COUNT(*) num  FROM orders_dish od where "+
 				"dishId="+zbde.getVa()+" and dishtime>'"+zbde.getVa1()+"' and dishtime<'"+zbde.getVa2()+"'  "+
-				"GROUP BY od.dishId,od.ordersId  )a  join (select top(3) od.id,od.ordersId,od.dishId,"+
+				"GROUP BY od.dishId,od.ordersId  )a  join (select top(5) od.id,od.ordersId,od.dishId,"+
 				"od.dishStatus,od.dishtime,od.addDish,d.dishName,d.price,c.id as cid,c.codeName FROM orders_dish od,"+
 				"dish d,codetable c where od.id in(SELECT MAX(id) ds FROM orders_dish where dishId="+zbde.getVa()+
 				" and dishtime>'"+zbde.getVa1()+"' and dishtime<'"+zbde.getVa2()+"' GROUP BY dishId,ordersId)and "+
-				"od.id not in(select top("+zbde.getCurr()*3+") id FROM orders_dish where id in(SELECT MAX(id) ds "+
+				"od.id not in(select top("+zbde.getCurr()*5+") id FROM orders_dish where id in(SELECT MAX(id) ds "+
 				"FROM orders_dish where dishId="+zbde.getVa()+" and dishtime>'"+zbde.getVa1()+"' and dishtime<'"+zbde.getVa2()+
 				"' GROUP BY dishId,ordersId) order by id desc ) and od.dishId=d.dishId and od.dishStatus=c.id "+
 				"order by od.id desc )as b on a.numid=b.id  order by id desc";
@@ -266,41 +266,22 @@ public class ZbRegister implements DaoInterface{
 		return DaoFactory.Query(sql);
 	}
 	public List ZbDishAll(ZbDetails zbde){
-		String sql="select top(5)* from (select z.dishId,z.dishName, sum(z.ss) '数量',MAX(z.pri) '单价',max(ss*pri) '总金额' from("
-				+"select c.dishId,c.dishName,count(c.dishId) ss,MAX(c.price) pri,MAX(c.dishState) st from("
-				+"select d.dishName,"
-				+"d.dishId,d.dishState,od.dishNnum,d.price from dish d left join " 
-				+"orders_dish od on d.dishId=od.dishId and od.dishtime<'"+zbde.getVa2()+"' and od.dishtime>'"+zbde.getVa1()+"')"
-				+"c where  c.dishState=19 group by c.dishId,c.dishName)"
-				+"z where  z.st=19 group by z.dishId,z.dishName)"
-				+"f where f.dishId not in (select top ("+zbde.getCurr()*5+")zf.dishId from ("
-				+"select z.dishId,z.dishName, sum(z.ss) '数量',MAX(z.pri) '单价',max(ss*pri) '总金额' from("
-				+"select c.dishId,c.dishName,count(c.dishId) ss,MAX(c.price) pri,MAX(c.dishState) st from("
-				+"select d.dishName,"
-				+"d.dishId,d.dishState,od.dishNnum,d.price from "+
-				"dish d left join orders_dish od on d.dishId=od.dishId and od.dishtime<'"+zbde.getVa2()+"' and od.dishtime>'"+zbde.getVa1()+"')"
-				+"c where  c.dishState=19 group by c.dishId,c.dishName)"
-				+"z where  z.st=19 group by z.dishId,z.dishName"
-				+")zf)";
+		String sql="select top(5) *from(select top(5) d.dishId,d.dishName,d.price,odnum.num from dish d left join "+
+				"(select od.dishId,COUNT(od.dishId) num from orders_dish od where od.dishtime>'"+zbde.getVa1()+"' and od.dishtime<'"+zbde.getVa2()+"' group by od.dishId) odnum on "+
+				"d.dishId=odnum.dishId) btop where btop.dishId not in "+
+				"(select atop.dishId from (select top("+zbde.getCurr()*5+") d.dishId,d.dishName,d.price,odnum.num from dish d left join "+
+				"(select od.dishId,COUNT(od.dishId) num from orders_dish od where od.dishtime>'"+zbde.getVa1()+"' and od.dishtime<'"+zbde.getVa2()+"' group by od.dishId) odnum on "+
+				"d.dishId=odnum.dishId) atop )";
 		return DaoFactory.Query(sql);
 	}
 	public List ZbDishAllno(ZbDetails zbde){
-		String sql="select top(5)* from (select z.dishId,z.dishName, sum(z.ss) '数量',MAX(z.pri) '单价',max(ss*pri) '总金额' from("
-				+"select c.dishId,c.dishName,count(c.dishId) ss,MAX(c.price) pri,MAX(c.dishState) st from("
-				+"select d.dishName,"
-				+"d.dishId,d.dishState,od.dishNnum,d.price from dish d left join " 
-				+"orders_dish od on d.dishId=od.dishId )"
-				+"c where  c.dishState=19 group by c.dishId,c.dishName)"
-				+"z where  z.st=19 group by z.dishId,z.dishName)"
-				+"f where f.dishId not in (select top ("+zbde.getCurr()*5+")zf.dishId from ("
-				+"select z.dishId,z.dishName, sum(z.ss) '数量',MAX(z.pri) '单价',max(ss*pri) '总金额' from("
-				+"select c.dishId,c.dishName,count(c.dishId) ss,MAX(c.price) pri,MAX(c.dishState) st from("
-				+"select d.dishName,"
-				+"d.dishId,d.dishState,od.dishNnum,d.price from "+
-				"dish d left join orders_dish od on d.dishId=od.dishId )"
-				+"c where  c.dishState=19 group by c.dishId,c.dishName)"
-				+"z where  z.st=19 group by z.dishId,z.dishName"
-				+")zf)";
+		System.out.println("zbde:"+zbde.getCurr());
+		String sql="select top(5) *from(select  d.dishId,d.dishName,d.price,odnum.num from dish d left join "+
+				"(select od.dishId,COUNT(od.dishId) num from orders_dish od  group by od.dishId) odnum on "+
+				"d.dishId=odnum.dishId) btop where btop.dishId not in "+
+				"(select atop.dishId from (select top("+zbde.getCurr()*5+") d.dishId,d.dishName,d.price,odnum.num from dish d left join "+
+				"(select od.dishId,COUNT(od.dishId) num from orders_dish od  group by od.dishId) odnum on "+
+				"d.dishId=odnum.dishId) atop )";
 		return DaoFactory.Query(sql);
 		
 	}

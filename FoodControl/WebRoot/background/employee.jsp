@@ -240,20 +240,55 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 <script type="text/javascript">
-	$(function(){
-		allpages();
-		liyang(0);		
+
+
+function del(id){
+	if(confirm("您确定要删除吗?")){
+		
+	}
+}
+
+$("#checkall").click(function(){ 
+  $("input[name='id[]']").each(function(){
+	  if (this.checked) {
+		  this.checked = false;
+	  }
+	  else {
+		  this.checked = true;
+	  }
+  });
+})
+
+function DelSelect(){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
 	});
-	function allpages(){		
+	if (Checkbox){
+		var t=confirm("您确认要删除选中的内容吗？");
+		if (t==false) return false; 		
+	}
+	else{
+		alert("请选择您要删除的内容!");
+		return false;
+	}
+}
+	/*
+		分页-获取总条数；
+	*/
+	var pageflag=0;
+	function pagetotal(){
+	var putvalue=$("#condition").val();
 			$.ajax({
 				url:"achieve_getcount.action",
 				type:"post",
-				data:{},
-				success:function(data){						
+				data:{"pageflag":pageflag,"putvalue":putvalue},
+				success:function(data){					
 					if(data%5==0){
 						var pagesize=parseInt(data/5);
-						$("#pagenum").html(pagesize);	
-						pagestate=1;				
+						$("#pagenum").html(pagesize);					
 					}else{
 						var pagesize=parseInt(data/5)+1;
 						$("#pagenum").html(pagesize);
@@ -262,17 +297,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						}
 					}				
 				},
+			});								
+	};
 
-			});										
-		}
-
-		
 		/*
 			分页
 		*/
 
 		$(function(){
-			$(".minuspage").click(function(){			
+			$(".minuspage").click(function(){	
 				var somename=$(this).attr("name");
 						//alert(somename);				 
 				var onepage=parseInt($("#someone").val());	
@@ -294,11 +327,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 				}else{
 					onepage = pagesize;
-				}				
+				}
 				$("#someone").val(onepage);
-				a=onepage-1;
+				var a=onepage-1;
+				if(pageflag==1){
+					searchEM(a);
+				}else if(pageflag==0){
+					liyang(a);
+				}				
+				
 				//alert(inputnum);	
-				liyang(a);				
+								
 			});			
 		});
 		/*
@@ -341,11 +380,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		*/
 		$(function(){
 			$("#searchem").click(function(){  //button
-				var putvalue=$("#condition").val();	 //shurukuang			
+			var putvalue=$("#condition").val();
+				if(putvalue==""){
+					pageflag=0;
+					curr=0;
+					pagetotal();
+					liyang(curr);
+				}else if(putvalue!=""){
+					pageflag=1;
+					curr=0;
+					pagetotal();
+					searchEM(curr);
+				}
+				
+			});
+		});
+		$(function(){
+			pagetotal();
+			liyang(0);		
+		})
+		function searchEM(curr){
+			var putvalue=$("#condition").val();	 //shurukuang		
 				$.ajax({
 					url:"achieve_searchEM.action",
 					type:"post",
-					data:{"putvalue":putvalue},	//action穿件一个属性类型	
+					data:{"putvalue":putvalue,"countpage":curr},	//action穿件一个属性类型	
 					datatype:"json",	
 					success:function(data){
 					var json=JSON.parse(data);
@@ -356,7 +415,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var emtable=
 								"<tr><td></td><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
-								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[8]+"</td><td id=\"inum"+value[1]+"\">"+value[9]+"</td>"+
 								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
 								"<span class=\"icon-trash-o\"></span>删除 </button>"+
 								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
@@ -369,8 +428,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						$("#trtab").append(emtable);					
 					}
 				});
-			});
-		});
+		}
 		/*
 		* tableid：表id
 		* 点击修改按钮触发点击事件，获得每行数据放到模态框中

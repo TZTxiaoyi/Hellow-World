@@ -204,7 +204,7 @@ public class ZbOrdersAction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		List list=re.ZbDishAll(zbde);
-		//System.out.println("alldish:"+list);
+		System.out.println("alldish:"+list);
 		JSON json=toJson.toJson("dishall", list);
 		try {
 			response.getWriter().print(json);
@@ -219,7 +219,7 @@ public class ZbOrdersAction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		List list=re.ZbDeskAllno(zbde);
-		//System.out.println("allno:"+list);
+		System.out.println("allno:"+list);
 		JSON json=toJson.toJson("deskallno", list);
 		try {
 			response.getWriter().print(json);
@@ -234,7 +234,7 @@ public class ZbOrdersAction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		List list=re.ZbDishAllno(zbde);
-		//System.out.println("alldishno:"+list);
+		System.out.println("alldishno:"+list);
 		JSON json=toJson.toJson("dishallno", list);
 		try {
 			response.getWriter().print(json);

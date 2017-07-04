@@ -85,7 +85,8 @@ public class LYquanxianaction {
 		System.out.println("1");
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
-		//request.getSession().setAttribute("username", employId.getEmenter());		
+		//request.getSession().setAttribute("username", employId.getEmenter());	
+		
 		List list = ied.selectemid(employId);
 		if (list.size()==1){			
 			request.getSession().invalidate();

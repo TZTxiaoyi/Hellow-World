@@ -91,12 +91,18 @@ public class LYInsertEmployDao {
 	 */
 	
 	/**
-	 * 模糊查询找你
+	 * 模糊查询找
 	 */
-	public List searchacclist(String putvalue){
-		String sql="select sp.account,sp.pwd,sp.codeName " +
-				" from staffEnter_pic sp" +
-				" where account like'%"+putvalue+"%' or pwd like'%"+putvalue+"%' or codeName like'%"+putvalue+"%' ";
+	public List searchacclist(int curr,String putvalue){
+		String sql="select top(5)* from (select * from staffEnter_pic sp " +
+				"where sp.codeName not in('已禁用') and account like'%"+
+				putvalue+"%' or pwd like'%"+putvalue+"%' or codeName like" +
+				"'%"+putvalue+"%' )ss where ss.enterId not in " +
+				"(select top ("+curr+"*5) sp.enterId from staffEnter_pic sp " +
+				"where sp.codeName not in('已禁用') and account like" +
+				"'%"+putvalue+"%' or pwd like'%"+putvalue+
+				"%' or codeName like'%"+putvalue+"%') and ss.codeName" +
+				" not in('已禁用')";
 		return DaoFactory.Query(sql);
 	}
 	public int emidinsert(LYEmployId eld){		
@@ -148,14 +154,29 @@ public class LYInsertEmployDao {
 	 * @param em
 	 * @return
 	 */
-	public List searchsome(String em){
-		String sql="select * from  staffinfo_sf where Name like'%"+em+
-				"%' or staffId like'%"+em+"%' or phone like'%"+em+
-				"%' or codeName like'%"+em+"%' or age like'%"+em+
-				"%'  or adress like'%"+em+"%'  or accession like'%"+em+
-				"%' or partName like'%"+em+"%' or account like'%"+em+"%'";		
+	public List searchsome(String em,int curr){
+		String sql="select top(5) *  from  staffinfo_sf  where (staffId!=1 and staffId not in"+
+				"(select top("+curr*5+") staffId  from  staffinfo_sf  where staffId!=1 and (Name like "+
+				"'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or codeName "+
+				"like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession "+
+				"like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%'))) and (Name like "+
+				"'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or codeName "+
+				"like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession "+
+				"like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%')";		
 		return DaoFactory.Query(sql);
 	}
+	public int searchsometatol(String em){
+		System.out.println("toem:"+em);
+		String sql="select  COUNT(staffId)  from  staffinfo_sf  where staffId!=1 and ( Name like "+
+				"'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or codeName "+
+				"like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession "+
+				"like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%')";	
+		List lsit=DaoFactory.Query(sql);
+		List list1=(List) lsit.get(0);
+		int num=(Integer) list1.get(0);
+		return num;
+		
+	} 
 	/**
 	 * selectemid：查询员工账号表实现类
 	 * LYEmployId：员工账号实体类
@@ -199,7 +220,6 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public List pagepage(int startIndex){
-
 		//System.out.println("aaaaaaaaaa");
 		String sql="select top 5 ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName,ss.account"+
 				   " from (select * from staffinfo_sf s1 where s1.staffInfoState=19 and s1.staffId not in (1)) ss where ss.staffId"+
@@ -250,8 +270,12 @@ public class LYInsertEmployDao {
 	 * 得到二维数组list，
 	 * @return
 	 */
-	public int getpages(){
-		String sql="select count(*) from staffEnter where enterState not in (3)";
+	public int getpages(String putvalue){
+		String sql="select count(*) from (select * from staffEnter_pic " +
+				"where codeName not in('已禁用')) sp " +
+				"where sp.codeName not in('已禁用') and account" +
+				" like '%"+putvalue+"%' or pwd like'%"+putvalue+"%'" +
+				" or codeName like'%"+putvalue+"%'";
 		List list =DaoFactory.Query(sql);
 		List list1=(List) list.get(0);
 		int li=(Integer) list1.get(0);
@@ -264,13 +288,14 @@ public class LYInsertEmployDao {
 	 */
 	public List setpages(int startIndex){
 		//System.out.println("aaaaaaaaaa");
-		String sql="select top 5 aa.account,aa.pwd,aa.codeName " +
+		String sql="select top 5 aa.enterId,aa.account,aa.pwd,aa.codeName " +
 				"from(select * from staffEnter_pic ss where " +
 				"ss.codeName not in ('已禁用') and ss.enterId not in (1)) aa where aa.enterId " +
 				"not in(select top ("+startIndex+"*5) enterId from staffEnter_pic  " +
 				"s1 where s1.codeName not in ('已禁用') and s1.enterId not in (1)) and aa.codeName " +
 				"not in ('已禁用') and aa.enterId not in (1)";
 		//System.out.println("ddddddddddd");
+
 		return DaoFactory.Query(sql);
 	}
 	/**
