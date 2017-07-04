@@ -45,8 +45,9 @@
     <h1><img src="images/index.jpg" class="radius-circle rotate-hover" height="50" alt="" />后台管理中心<span id="user"></span></h1>
   </div>
   <div class="head-l">
-	 
-	   &nbsp;&nbsp;<a class="button button-little bg-red" href="login.jsp"><span class="icon-power-off"></span> 退出登录</a> 
+	 <a href="front_chief.action" class="button button-little bg-blue"><span class="icon-wrench"></span>后厨界面</a> 
+	 	&nbsp;&nbsp;<a href="front_waiter.action" class="button button-little bg-blue"><span class="icon-wrench"></span>服务员面</a> &nbsp;&nbsp;
+	    &nbsp;&nbsp;<a class="button button-little bg-red" href="login.jsp"><span class="icon-power-off"></span> 退出登录</a> 
   </div>
 </div>
 <div class="leftnav">

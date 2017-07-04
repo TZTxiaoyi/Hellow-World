@@ -78,6 +78,14 @@ public class LYInsertEmployDao {
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
+	 * 删除账号
+	 */
+	public int delnumber(LYEmployId en){
+		String sql="update staffEnter set enterState=3 where account=?";
+		Object[] params=new Object[]{en.getEmenter()};
+		return DaoFactory.Updata(sql, params);
+	}
+	/**
 	 * emidinsert:员工账号的实现类
 	 * 
 	 * @param eld
@@ -197,9 +205,9 @@ public class LYInsertEmployDao {
 	 */
 	public List pagepage(int startIndex){
 		//System.out.println("aaaaaaaaaa");
-		String sql="select top "+2+" ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName,ss.account" +
-				" from staffinfo_sf ss" +
-				" where staffId not in(select top "+startIndex*2+" staffId from staffinfo_sf) and staffInfoState=19";
+		String sql="select top 5 ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName,ss.account"+
+				   " from (select * from staffinfo_sf s1 where s1.staffInfoState=19) ss where ss.staffId"+
+				   " not in (select top ("+startIndex+"*5) staffId from staffinfo_sf s2 where s2.staffInfoState =19) and ss.staffInfoState=19";
 		//System.out.println("ddddddddddd");         
 		return DaoFactory.Query(sql);
 	}
@@ -221,7 +229,7 @@ public class LYInsertEmployDao {
 	public List selectpartname(){
 		String sql="select p1.partName"+
 					" from part p1"+
-					" where partName not in('管理员','服务员','厨师')";
+					" where partName not in('管理员','服务员','厨师') and partState=19";
 		 return DaoFactory.Query(sql);
 	}
 	/**
@@ -250,7 +258,7 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int getpages(){
-		String sql="select count(*) from staffEnter where enterState=1 or enterState=2";
+		String sql="select count(*) from staffEnter where enterState not in (3)";
 		List list =DaoFactory.Query(sql);
 		List list1=(List) list.get(0);
 		int li=(Integer) list1.get(0);
@@ -263,9 +271,12 @@ public class LYInsertEmployDao {
 	 */
 	public List setpages(int startIndex){
 		//System.out.println("aaaaaaaaaa");
-		String sql="select top 2 ss.account,ss.pwd,ss.codeName"+
-				   " from staffEnter_pic ss"+
-				   " where enterId not in(select top " +startIndex*2+" enterId from staffEnter_pic  ) and ss.codeName not in ('已禁用')";
+		String sql="select top 5 aa.account,aa.pwd,aa.codeName " +
+				"from(select * from staffEnter_pic ss where " +
+				"ss.codeName not in ('已禁用')) aa where aa.enterId " +
+				"not in(select top ("+startIndex+"*5) enterId from staffEnter_pic  " +
+				"s1 where s1.codeName not in ('已禁用')) and aa.codeName " +
+				"not in ('已禁用')";
 		//System.out.println("ddddddddddd");
 		return DaoFactory.Query(sql);
 	}
@@ -276,9 +287,9 @@ public class LYInsertEmployDao {
 	 */
 	public int updateid(LYEmployId em){
 
-		String sql="Update staffEnter set pwd=?,enterState=? where account=?";
+		String sql="Update staffEnter set pwd=? where account=?";
 		
-		Object[] params=new Object[]{em.getEmword(),em.getEnterstate(),em.getEmenter(),};
+		Object[] params=new Object[]{em.getEmword(),em.getEmenter(),};
 
 		//System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+em.getEmid());
 		return DaoFactory.Updata(sql, params);
@@ -336,4 +347,13 @@ public class LYInsertEmployDao {
 		String sql="select Name,staffId from staffInfo where partId=3";
 		return DaoFactory.Query(sql);
 	}
+	/**
+	 * 删除角色
+	 */
+	public int deletepart(LyPart lp){
+		String sql="update part set partState=20 where partName=? ";
+		Object[] params=new Object[]{lp.getPartname()};
+		return DaoFactory.Updata(sql, params);
+	}
+	
 }

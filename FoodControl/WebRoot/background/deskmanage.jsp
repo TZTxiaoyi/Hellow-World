@@ -173,12 +173,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			*/
 			var pagestate=0;//记录当前页的状态
 			function allpage(allput){
-					$.ajax({
+				$.ajax({
 					url:"SxmTable_pageTotal.action",
 					type:"post",
 					data:{"search":allput},
 					success:function(data){
-					alert(data);
+					//alert(data);
 						var pagetotal=parseInt(data/3);	
 						if(data%3==0){
 							$("#spanpage").html(pagetotal);
@@ -189,8 +189,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							pagestate=0;
 						}
 					},
-					});
-				};
+				});
+			};
 			
 			/*
 				分页
@@ -315,7 +315,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					url : "SxmTable_upLineTable.action",
 					type : "post",
-					data : {"st.deskId" : deskid,"st.deskName" : dn,"st.personNum" : pn,"em.emid":tp},
+					data : {"st.deskId":deskid,"st.deskName":dn,"st.personNum" : pn,"em.emid":tp},
 					success : function(data){				
 						if(data==-1){
 							alert("修改失败");
@@ -439,7 +439,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							url : "../SxmTable_appendTable.action",
 							type : "post",
 							data : {"st.personNum" : pn,"st.deskName" : dn,"em.emid":fu},
-							success : function(data) {	
+							success : function(data){	
 								if(data==-1){
 									alert("添加失败");
 								}else if(data==1){

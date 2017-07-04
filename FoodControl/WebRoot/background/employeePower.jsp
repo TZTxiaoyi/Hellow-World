@@ -57,6 +57,7 @@
         		<hr>
         		员工账号<input type="checkbox" checkflag="check2" name="check2" aria-label="..." class="parent_one"><br>  				
         		添加员工账号<input type="checkbox" checkflag="check2" name="check10" aria-label="..." class="children1">
+        		删除员工账号<input type="checkbox" checkflag="check2" name="check24" aria-label="..." class="children1">
         		修改员工账号<input type="checkbox" checkflag="check2" name="check18" aria-label="..." class="children1"><br>       		
         		<hr>
         		桌台管理<input type="checkbox" checkflag="check3" name="check4" aria-label="..." class="parent_one"><br>
@@ -71,7 +72,10 @@
         		<hr>
         		订单详情<input type="checkbox" name="check19" aria-label="...">
         		退单详情<input type="checkbox" name="check20" aria-label="...">  
-        		收入详情<input type="checkbox" name="check21" aria-label="...">                    		      			
+        		收入详情<input type="checkbox" name="check21" aria-label="...">
+        		<hr>
+        		 后厨界面<input type="checkbox" name="check25" aria-label="...">
+        		 服务员面<input type="checkbox" name="check26" aria-label="...">                     		      			
 			</div>
 			<div class="modal-footer">			
 				<button type="button" class="btn btn-primary" id="save_powers" data-dismiss="modal">保存</button>
@@ -121,7 +125,9 @@
 				$.each(json,function(index,value){												 									 			
 				var emtable=
 					"<tr><td id=\"anum"+value[0]+"\">"+value[0]+"</td>"+
-					"<td><a class=\"button border-main alterbtn\" id=\"num"+value[0]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal1\" data-toggle=\"modal\">"+
+					"<td><button class=\"button border-red deskbtn\" id=\"num"+value[0]+"\" >"+
+					"<span class=\"icon-trash-o\"></span>删除 </button>"+
+					"<a class=\"button border-main alterbtn\" id=\"num"+value[0]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal1\" data-toggle=\"modal\">"+
 					"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
 				$("#tableid").append(emtable);																												
 				});			
@@ -147,6 +153,28 @@
 			}
 		});
 	});
+	/**
+	*	删除角色
+	*/
+	$(function(){
+		$("#tableid").on('click',".deskbtn",function(){
+				var alterbtn = $(this).attr("id");
+				//alert("sss:"+alterbtn);
+				var partname =$("#a"+alterbtn).html();
+				//alert(partname);
+				$.ajax({
+					url:"fresh_delpart.action",
+					type:"post",
+					data:{"partname.partname":partname},
+					success:function(data){
+						if(data==1){
+							alert("删除成功");
+							powers();
+						}
+					}
+				});
+		});	
+	});
 	$(function(){	
 		$("#tableid").on('click',".alterbtn",function(){
 			var alterbtn = $(this).attr("id");
@@ -161,7 +189,7 @@
 					data:{"partname.partname":namehtml},
 					success:function(data){
 						var json=JSON.parse(data);
-						for(var i=1;i<24;i++){
+						for(var i=1;i<27;i++){
 							$($("input[name=\"check"+i+"\"]")[0]).prop("checked",false);
 						}	
 						$.each(json,function(index,value){						
@@ -175,12 +203,13 @@
 		});
 	});
 	$(function(){
+	//alert("0000");
 		$("#save_powers").click(function(){
 		var powersId=[];
 		var j=0;
 		var powersname=$("#powersname").html();
 		//alert("000:"+powersname);
-			for(var i=1;i<24;i++){	
+			for(var i=1;i<27;i++){	
 			//$("#chk2").prop("checked") == true				
 				if($($("input[name=\"check"+i+"\"]")[0]).prop("checked")){
 					powersId.push(i);
@@ -217,26 +246,26 @@
 	/**
 	* 子绑定点击事件
 	*/		
-	$(function(){
+		$(function(){
+		//alert("00000");
 	 		$(".children1").click(function(){ 
 	 		var checkflag=$(this).attr("checkflag");
 	 			if($(this).prop("checked")){
 	 				//$(".parent_one").prop("checked",true);
 	 				$($("input[checkflag=\""+checkflag+"\"]")[0]).prop("checked",true);
 	 			}
-	 		});
-	 		
+	 		});	 		
 	 	});
 	 	$(function(){
+	 	//alert("8888");
 	 		$(".parent_one").click(function(){
-	 			var checkflag=$(this).attr("checkflag");.
-	 			alert("fu:"+checkflag);
+	 			var checkflag=$(this).attr("checkflag");
+	 			//alert("fu:"+checkflag);
 	 			if(!$(this).prop("checked")){
-	 			alert("222");
+	 			//alert("222");
 	 				//$(".children1").prop("checked",false);
 	 				$("input[checkflag=\""+checkflag+"\"]").prop("checked",false);
-	 			}
-	 			
+	 			}	 			
 	 		});
 	 	});
 </script>
