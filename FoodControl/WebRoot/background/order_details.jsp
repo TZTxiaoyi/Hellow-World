@@ -212,8 +212,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							共<span id="pagenum"></span>页
 							<input type="text" id="someone" value="1">
 							<input type="button" value="跳转" id="commitone">
-					</div>	
-							
+					</div>			
 				</div>
 		
 

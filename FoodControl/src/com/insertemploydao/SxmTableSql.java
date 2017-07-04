@@ -30,11 +30,31 @@ public class SxmTableSql implements DaoInterface {
 	 */
 	public int add(Object tabp) {
 		SxmTable tab = (SxmTable) tabp;
-		String sql = "insert into desk values (?,?,?,?)";
+		String sql = "insert  into desk values (?,?,?,?)";
 		Object[] params = new Object[] { tab.getPersonNum(), tab.getDeskName(),tab.getDeskState(),tab.getDeskdelState()};
 		return DaoFactory.Updata(sql, params);
 	}
-
+	/**
+	 * 根据桌子名字获取桌子id
+	 * @param tabp
+	 * @return
+	 */
+	public List seltabid(Object tabp){
+		SxmTable tab = (SxmTable) tabp;
+		String sql="select deskId from desk where deskName='"+tab.getDeskName()+"'";
+		return DaoFactory.Query(sql);
+	}
+	/**
+	 * 根据桌子id和员工id插入员工桌子表
+	 * @param tabid
+	 * @param emid
+	 * @return
+	 */
+	public int insertstaff(int tabid,int emid){
+		String sql="insert into desk_staff values(?,?)";
+		Object[] params = new Object[] {tabid,emid};
+		return DaoFactory.Updata(sql, params);
+	}
 	/**
 	 * 
 	 * 方法功能说明： 查询桌子名字信息 创建：2017-6-14 by Administrator 修改：日期 by 修改者 修改内容：
@@ -59,12 +79,21 @@ public class SxmTableSql implements DaoInterface {
 		return flag;
 	}
 	/**
-	 * 后台桌子快速查询
+	 * 后台桌子快速查询+分页
 	 * @param ser
 	 * @return
 	 */
-	public List selTable(String ser) {
-		String sql = "select top ("+3+") * from desk_restaff where deskId like'%"+ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
+	public List selTable(int currPage,String ser) {
+		System.out.println("sql"+currPage);
+		String sql = "select top(3)* from (select  * from  " +
+				"desk_restaff where deskId like'%"+ser+"%' or personNum " +
+				"like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name " +
+				"like'%"+ser+"%' or codeName like'%"+ser+"%') ss where " +
+				"ss.deskId not in(select top ("+currPage+"*3 )d.deskId from " +
+				"desk_restaff d where deskId like'%"+ser+"%' or " +
+				"personNum like'%"+ser+"%' or deskName like'%"+ser+
+				"%' or  Name like'%"+ser+"%' or codeName " +
+				"like'%"+ser+"%')";
 		List list = DaoFactory.Query(sql);
 		return list;
 	}
@@ -151,8 +180,8 @@ public class SxmTableSql implements DaoInterface {
 	 */
 	public int uppertab(Object tabp,int emId){
 		SxmTable tab = (SxmTable) tabp;
-		String sql="update desk_staff set staffId='"+emId+"' where deskId=?";
-		Object[] params = new Object[] {tab.getDeskId()};
+		String sql="update desk_staff set staffId=? where deskId=?";
+		Object[] params = new Object[] {emId,tab.getDeskId()};
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
@@ -184,7 +213,9 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public List page(int currPage) {
-		String sql="select top ("+3+") * from desk_restaff where deskId not in(select top "+(currPage)*3+" deskId from desk_restaff)";
+		String sql="select distinct  top(3)* from desk_restaff where " +
+				"deskId not in (select distinct top ("+currPage+"*3) deskId " +
+				"from desk_restaff)";
 		List list = DaoFactory.Query(sql);
 		return list;
 	}
@@ -192,8 +223,10 @@ public class SxmTableSql implements DaoInterface {
 	 * 分页中的得到总条数
 	 * @return
 	 */
-	public int getCount(){
-		String sql="select count(*) from desk_restaff";
+	public int getCount(String ser){
+		String sql="select count(distinct deskId) from desk_restaff where deskId like'%"+
+				ser+"%' or personNum like'%"+ser+"%' or deskName like'%"+ser+
+				"%' or Name like'%"+ser+"%' or codeName like'%"+ser+"%'";
 		List list = DaoFactory.Query(sql);
 		int total=0;
 		List li=(List) list.get(0);

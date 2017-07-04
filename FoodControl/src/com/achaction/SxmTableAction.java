@@ -104,8 +104,17 @@ public class SxmTableAction {
 	public void appendTable(){
 		int state=sts.add(st);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
+		List list=sts.seltabid(st);
+		List li=(List) list.get(0);
+		int tabid=(Integer) li.get(0);//获取桌子id
+		//根据桌子id,员工id插入桌子员工表
+		int aa=sts.insertstaff(tabid,em.getEmid());
+		int flag=-1;
+		if(state!=-1 && aa!=-1){
+			flag=1;
+		}
 		try {
-			hsr.getWriter().print(state);
+			hsr.getWriter().print(flag);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,22 +197,17 @@ public class SxmTableAction {
 	public void upLineTable(){
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		int table=sts.update(st);
-		int cname=-1;
 		int tname=-1;
-		List list=(List) sts.updateper(em);
+		/*List list=(List) sts.updateper(em);
+		System.out.println("list"+list);
 		List li=(List) list.get(0);
-		int emp=(Integer) li.get(0);
-		System.out.println("---------"+chargename);
-		if(chargename.equals("未分配")){
-			
-			cname=sts.insertcharge(emp, st);
-		}else{	
-			tname=sts.uppertab(st,emp);
-		}
+		int emp=(Integer) li.get(0);	*/
+		tname=sts.uppertab(st,em.getEmid());
 		int flag=-1;
-		if(cname!=-1||tname!=-1){
+		if(table!=-1&&tname!=-1){
 			flag=1;
 		}
+		System.out.println(flag);
 		try {
 			hsr.getWriter().print(flag);
 		} catch (IOException e) {
@@ -222,7 +226,8 @@ public class SxmTableAction {
 	     * @throws
 	 */
 	public void searchTable(){
-		List ser=sts.selTable(search);
+		System.out.println("curr"+currPage);
+		List ser=sts.selTable(currPage,search);
 		JSON json=toJson.toJson("ss", ser);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
@@ -288,7 +293,7 @@ public class SxmTableAction {
 	     * @throws
 	 */
 	public void pageTotal(){
-		int total=sts.getCount();
+		int total=sts.getCount(search);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		try {
 			hsr.getWriter().print(total);

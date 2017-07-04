@@ -37,16 +37,16 @@
 		}
 		
 		.container {
-			margin-left: 280px;
+			margin-left: 250px;
 		}
 		
 		#model input {
-			width: 210px;
+			width: 200px;
 			height: 40px;
 		}
 		
 		form div {
-			margin-left:20%;
+			margin-left:15%;
 			width: 350px;
 			height: 40px;
 			margin-top: 30;
@@ -84,6 +84,10 @@
 			top:10px;
 			right:300px;
 			font-size:20px;
+		}
+		form span{
+			font-size:18px;
+			white-space:nowrap;
 		}
 	</style>
 	
@@ -129,7 +133,7 @@
 			<div id="times"></div>
 		</div>
 	</div>
-<!-- 自助点餐模态框 -->	
+<!-- 网络点餐模态框 -->	
 		<div class="media media-y margin-big-bottom"></div>
 	<div class="modal fade" id="myModal4" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -165,7 +169,7 @@
 	</div>
 	
 	
-<!-- 开始点餐模态框 -->
+<!-- 自助点餐模态框 -->
 
 	<div class="media media-y margin-big-bottom"></div>
 		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
@@ -220,8 +224,8 @@
 
 					<div>
 						<input placeholder="手机号/用户名/邮箱" type="text" id="usageuser"
-							 name ="zbud.account"/> <span
-							id="aa1"></span>
+							 name ="zbud.account"/> 
+							 <span ></span>
 					</div>
 					<div>
 						<input placeholder="输入密码" type="password" id="usagepwd"
@@ -264,19 +268,16 @@
 				<form action="home_register.action" method="post" onsubmit="return show()">
 
 					<div>
-						<input placeholder="手机号/用户名/邮箱" type="text" id="adduser"
-							onfocus="userFocus()" onblur="userBlur()" name ="userdata.account"/> <span
-							id="aaa1"></span>
+						<input placeholder="手机号/用户名/邮箱" type="text" id="adduser" name ="userdata.account"/> 
+						<br/><span id="loginuser"></span>
 					</div>
 					<div>
 						<input placeholder="输入密码" type="password" id="addpwd"
-							onfocus="passFocus()" onblur="passBlur()" name ="userdata.pwd"/> <span
-							id="aa2"></span>
+						name ="userdata.pwd"/><br/> <span id="aa2"></span>
 					</div>
 					<div>
-						<input placeholder="再次输入密码" type="password" id="addpwds"
-							onfocus="repassFocus()" onblur="repassBlur()" /> <span
-							id="aa3"></span>
+						<input placeholder="再次输入密码" type="password" id="addpwds"/> 
+						<br/><span id="aa3"></span>
 					</div>
 					<div>
 						<button type="submit" class="btn btn-warning btn-group-lg" >注册</button>
@@ -300,80 +301,78 @@
     		}
     		
 		});
-		function userFocus(){
-			var user1=document.getElementById("aa1");
-			//user1.style.display="none";
-			user1.innerHTML="";
-		}
-		function userBlur(){
-		
-			var user2=document.getElementById("adduser").value;
-			var user1=document.getElementById("aa1");
-			var reg=new RegExp("[^A-Za-z0-9]+","gi");
+		/*
+			注册的用户名聚焦事件
+		*/
+		$("#adduser").focus(function(){
+			$("#loginuser").html("");
+		});
+		/*
+			注册的用户名失焦事件
+		*/
+		$("#adduser").blur(function(){
+			var user2=$("#adduser").val();
+			var reg=new RegExp("[^A-Za-z0-9\u4e00-\u9fa5]+","gi");
 			if (reg.test(user2)){
-				
-				user1.innerHTML="用户名格式有误";
-				//user1.style.display="block";
-				return false;
-				
+				$("#loginuser").html("用户名格式有误");
+			}else if(user2.length<=6||user2.length>=20){
+				$("#loginuser").html("请输入6位以上20位以下账号");
 			}else{
-			
 				$.ajax({
 					type:"post",
 					url:"home_seluser.action",
 					data:{"userdata.account":user2},
 					success:function(data){
-						
 						if(data!=0){
-							$("#aaa1").html("*用户名已占用");
-							
-							
-						}else{
-							
-							$("#aaa1").html("");
+							$("#aa1").html("*用户名已占用");	
+						}else{	
+							$("#aa1").html("");
 						}
 					}
 				});
 				return true;
 			}
-		}
-		
-		function passFocus(){
-			var user1=document.getElementById("aa2");
-			//user1.style.display="none";
-			user1.innerHTML="";
-		}
-		function passBlur(){
-		
-			var user2=document.getElementById("addpwd").value;
-			var user1=document.getElementById("aa2");
-			if (user2.length>=6){
-				
+		});
+		/*
+			密码的聚焦事件
+		*/
+		$("#addpwd").focus(function(){
+			$("#aa2").html("");
+		});
+		/*
+			密码的失焦事件
+		*/
+		$("#addpwd").blur(function(){
+			var reg=new RegExp("[^A-Za-z0-9]+","gi");
+			var user2=$("#addpwd").val();
+			if (reg.test(user2)){
+				$("#aa2").html("密码格式有误");
+			}else if (user2.length>=6 && user2.length<=20){
 				return true;
 			}else{
-				
-				user1.innerHTML="密码不正确";
+				$("#aa2").html("请输入6位以上20位以下密码");
 				return false;
 			}
-		}
-		function repassFocus(){
-			var user1=document.getElementById("aa3");
-			//user1.style.display="none";
-			user1.innerHTML="";
-		}
-		function repassBlur(){
-			var user2=document.getElementById("addpwd").value;
-			var user1=document.getElementById("aa3");
-			var user3=document.getElementById("addpwds").value;
-			
+		})
+		/*
+			重复密码的聚焦事件
+		*/
+		$("#addpwds").focus(function(){
+			$("#aa3").html("");
+		});
+		/*
+			重复密码的失焦事件
+		*/
+		$("#addpwds").blur(function(){
+			var user2=$("#addpwd").val();
+			var user3=$("#addpwds").val();
 			if (user2 == user3){
-				
 				return true;
 			}else{
-				user1.innerHTML="密码不一致";
+				$("#aa3").html("密码不一致");
 				return false;
 			}
-		}
+		});
 		function show(){
 			var c1=userBlur();
 			var c2=passBlur();
@@ -395,8 +394,7 @@
 		$(function(){
 			$("#orderfood").click(function(){
 				
-				//$("option").val();
-				//alert($("#personnub").val());
+				
 			});
 			$.ajax({
 				url:"home_orders.action",
@@ -478,6 +476,16 @@
 		$(function(){
 			if('${zb}' == 1){
 				alert("注册成功");
+			}
+		});
+		$("#personnub").blur(function(){
+			var pnum=$(this).val();
+			var reg=new RegExp("[^0-9]+","gi");
+			if(reg.test(pnum)){
+				alert("请正确输入人数");
+			}
+			if(pnum>20){
+					alert("输入人数过多");
 			}
 		});
 		</script>
