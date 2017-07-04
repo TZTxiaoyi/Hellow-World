@@ -200,6 +200,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			selflag=5;
 	   			totalpage(va,va1,va2);
 	   			Zbdedeskallno(curr);
+	   		}else{
+	   			alert("请选择时间段。");
 	   		}
 	   		//alert( va+","+va1+","+va2);
 	   		
@@ -229,7 +231,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				selflag=6;
 				totalpage(va,va1,va2);
 				Zbdedishallno(curr);
-			}
+			}else{
+	   			alert("请选择时间段！。");
+	   		}
 		});
 		function pageresultsdesk(curr){
 	   		var va = $("#desknub").val();
@@ -476,11 +480,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				url : "zborders_zbtotalpage.action",
 				data: {"zbde.va":va,"zbde.va1":va1,"zbde.va2":va2,"zbde.selflag":selflag},
 				success : function(data){
-					var zbtotal = parseInt(data/3);
-					if(data%3 == 0){
+					var zbtotal = parseInt(data/5);
+					if(data%5 == 0){
 						$("#zbpagenum").html(zbtotal);
 					}
-					if(data%3 != 0){
+					if(data%5 != 0){
 						$("#zbpagenum").html(parseInt(zbtotal)+1);
 					}
 				},

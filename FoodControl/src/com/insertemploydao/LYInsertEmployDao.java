@@ -191,11 +191,11 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public List pagepage(int startIndex){
-		String sql="select top "+2+" ss.Name,ss.staffId,ss.phone," +
+		String sql="select top "+5+" ss.Name,ss.staffId,ss.phone," +
 				"ss.codeName,ss.age,ss.adress,ss.accession," +
 				"ss.partName,ss.account" +
 				" from staffinfo_sf ss" +
-				" where staffId not in(select top "+startIndex*2+
+				" where staffId not in(select top "+startIndex*5+
 				" staffId from staffinfo_sf) and staffInfoState=19";       
 		return DaoFactory.Query(sql);
 	}
@@ -255,10 +255,10 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public List setpages(int startIndex){
-		String sql="select top 2 aa.account,aa.pwd,aa.codeName " +
+		String sql="select top 5 aa.account,aa.pwd,aa.codeName " +
 				"from(select * from staffEnter_pic ss where " +
 				"ss.codeName not in ('已禁用')) aa where aa.enterId " +
-				"not in(select top ("+startIndex+"*2) enterId from staffEnter_pic  " +
+				"not in(select top ("+startIndex+"*5) enterId from staffEnter_pic  " +
 				"s1 where s1.codeName not in ('已禁用')) and aa.codeName " +
 				"not in ('已禁用')";
 		return DaoFactory.Query(sql);

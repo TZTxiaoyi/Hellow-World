@@ -42,6 +42,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		#modalform span{
 			font-size:20px;
 		}
+		#timedate{
+			padding-left:100px;
+		}
 	
 	</style>
 </head>
@@ -57,16 +60,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="panel admin-panel">
 					<div class="padding border-bottom">
 						<ul>
-							<li>
+							<li id="timedate">
 					  			
 					  			<input placeholder="起始时间" size="16" type="text" value="" readonly class="form_datetime" id="readytime">
-					  			<input placeholder="终止时间" size="16" type="text" value="" readonly class="form_datetime" id="lasttime">
-					  		</li>
-					  		<li>
-					  			
-					          <a type="button" href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchorder"> 搜索</a>
-					  		</li>
-					  		
+					  			——&nbsp;<input placeholder="终止时间" size="16" type="text" value="" readonly class="form_datetime" id="lasttime">
+					  			<a type="button" href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchorder"> 搜索</a>
+					  		</li>	
 					  	</ul>  
 
 					</div>

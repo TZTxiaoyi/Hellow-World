@@ -152,7 +152,7 @@ public class ZbRegister implements DaoInterface{
 	}
 	public List page(int currPage) {
 		//System.out.println("currPage:"+currPage);
-		String sql="select top ("+3+") * from cus_enter1 where Id not in(select top "+(currPage)*3+" Id from cus_enter1)";
+		String sql="select top ("+5+") * from cus_enter1 where Id not in(select top "+(currPage)*5+" Id from cus_enter1)";
 		List list = DaoFactory.Query(sql);
 		
 		return list;
@@ -167,7 +167,7 @@ public class ZbRegister implements DaoInterface{
 		String sql="select * from dish";
 		return DaoFactory.Query(sql);
 		
-	}
+	} 	
 	//²éÑ¯×À×Ó
 	public List zbSelectDesk(){
 		String sql = "select * from desk";
@@ -193,7 +193,7 @@ public class ZbRegister implements DaoInterface{
 		//System.out.println("curr:"+zbde.getCurr());
 		//System.out.println("not:"+zbde.getCurr()*3);
 		//System.out.println(zbde.getVa()+","+zbde.getVa1()+","+zbde.getVa2());
-		String sql ="select top 3 * from orders where ordersId not in(select top ("+zbde.getCurr()*3+
+		String sql ="select top 5 * from orders where ordersId not in(select top ("+zbde.getCurr()*5+
 				") ordersId from orders where ordersTime>'"+zbde.getVa1()+"' and ordersTime<'"+zbde.getVa2()+
 				"' and deskId="+zbde.getVa()+") and ordersTime>'"+zbde.getVa1()+"' and ordersTime<'"+zbde.getVa2()+
 				"' and deskId="+zbde.getVa();
@@ -216,11 +216,11 @@ public class ZbRegister implements DaoInterface{
 	public List ZbOrdersdish(ZbDetails zbde){
 		String sql ="select * from (SELECT MAX(id) numid,COUNT(*) num  FROM orders_dish od where "+
 				"dishId="+zbde.getVa()+" and dishtime>'"+zbde.getVa1()+"' and dishtime<'"+zbde.getVa2()+"'  "+
-				"GROUP BY od.dishId,od.ordersId  )a  join (select top(3) od.id,od.ordersId,od.dishId,"+
+				"GROUP BY od.dishId,od.ordersId  )a  join (select top(5) od.id,od.ordersId,od.dishId,"+
 				"od.dishStatus,od.dishtime,od.addDish,d.dishName,d.price,c.id as cid,c.codeName FROM orders_dish od,"+
 				"dish d,codetable c where od.id in(SELECT MAX(id) ds FROM orders_dish where dishId="+zbde.getVa()+
 				" and dishtime>'"+zbde.getVa1()+"' and dishtime<'"+zbde.getVa2()+"' GROUP BY dishId,ordersId)and "+
-				"od.id not in(select top("+zbde.getCurr()*3+") id FROM orders_dish where id in(SELECT MAX(id) ds "+
+				"od.id not in(select top("+zbde.getCurr()*5+") id FROM orders_dish where id in(SELECT MAX(id) ds "+
 				"FROM orders_dish where dishId="+zbde.getVa()+" and dishtime>'"+zbde.getVa1()+"' and dishtime<'"+zbde.getVa2()+
 				"' GROUP BY dishId,ordersId) order by id desc ) and od.dishId=d.dishId and od.dishStatus=c.id "+
 				"order by od.id desc )as b on a.numid=b.id  order by id desc";

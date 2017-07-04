@@ -56,7 +56,7 @@ public class LyOrderAction {
 		response.setCharacterEncoding("UTF-8");	
 		//System.out.println("9999999:"+countpage);
 		List list=ld.pagesize(countpage);
-		JSON json=toJson.toJson("value", list);
+		JSON json=toJson.toJsonArray("value", list);
 		//System.out.println("8888:"+json);
 		try {
 			response.getWriter().print(json);

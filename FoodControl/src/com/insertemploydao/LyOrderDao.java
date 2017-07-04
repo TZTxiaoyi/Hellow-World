@@ -26,7 +26,7 @@ public class LyOrderDao {
 	 */
 	public List pagesize(int startIndex){
 		String sql="select top 5 * from orders_table "+
-"where ordersId not in(select top ("+startIndex*5+") ordersId from orders_table where statuss not in ('已取消')) and statuss not in ('已取消')";
+"where ordersId not in(select top ("+startIndex*5+") ordersId from orders_table )";
 		//System.out.println("ddddddddddd");         
 		return DaoFactory.Query(sql);
 	}
@@ -59,8 +59,8 @@ public class LyOrderDao {
 		return li;
 	}
 	public List asizes(int startIndex){
-		String sql="select top ("+2+") * from orders_table"+
-				" where ordersId not in(select top ("+startIndex*2+") ordersId from orders_table) and statuss in ('已取消')";
+		String sql="select top ("+5+") * from orders_table"+
+				" where ordersId not in(select top ("+startIndex*5+") ordersId from orders_table) and statuss in ('已取消')";
 		System.out.println("ddddddddddd:"+startIndex);         
 		return DaoFactory.Query(sql);
 	}	

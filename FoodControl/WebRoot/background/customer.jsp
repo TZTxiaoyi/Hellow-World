@@ -34,7 +34,7 @@
 		    <div class="padding border-bottom">
 		      <ul class="search">
 		        <li>
-		          <button type="button"  class="button border-green" id="checkall"><span class="icon-check"></span> 全选</button>
+		          <!--  <button type="button"  class="button border-green" id="checkall"><span class="icon-check"></span> 全选</button>-->
 		          <!-- <button type="submit" class="button border-red"><span class="icon-trash-o"></span> 批量删除</button> -->
 		          
 		      
@@ -56,7 +56,7 @@
 		    
 		    </table>
 		   
-			<div class="zbpagelist">
+			<div class="zbpagelist  pagelist">
 					<a  class="zbpage" name="zbfirst" href="#">首页</a>
 					<a  class="zbpage" name="zbminus" href="#">上一页</a> 
 					<a  class="zbpage" name="zbadd" href="#">下一页</a>
@@ -97,11 +97,11 @@
 			}); */
 		});
 		function refresh(json) {
-				var th = "<tr><td></td><td>Id</td><td>姓名</td><td>性别</td><td>电话</td><td>地址</td><td>年龄</td></tr>";
+				var th = "<tr><td>编号</td><td>姓名</td><td>性别</td><td>电话</td><td>地址</td><td>年龄</td></tr>";
 					$("#tableid").html("");
 					$("#tableid").append(th);
 					$.each(json,function(index, value) {
-						var dd = "<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td class=\"Id"+
+						var dd = "<tr><td class=\"Id"+
 						value[0]+"\" id=\"Name"+value[0]+"\">"+ value[0]+ "</td><td id=\"sex"+value[0]+"\">"+ 
 						value[1]+ "</td><td id=\"plone"+value[0]+"\">"+ value[2]+ "</td><td>"+ value[3]+
 						"</td><td id=\"adress"+value[0]+"\">"+ value[4]+ "</td>"+
@@ -142,11 +142,11 @@
 				data: {},
 				type: "post",
 				success : function(data){
-					var zbtotal = parseInt(data/3);
-					if(data%3 == 0){
+					var zbtotal = parseInt(data/5);
+					if(data%5 == 0){
 						$("#zbpagenum").html(zbtotal);
 					}
-					if(data%3 != 0){
+					if(data%5 != 0){
 						$("#zbpagenum").html(parseInt(zbtotal)+1);
 					}
 				},
