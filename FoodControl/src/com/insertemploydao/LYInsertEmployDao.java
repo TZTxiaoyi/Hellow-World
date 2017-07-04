@@ -280,11 +280,18 @@ public class LYInsertEmployDao {
 	 */
 	public int updateid(LYEmployId em){
 		String sql="Update staffEnter set pwd=? where account=?";		
-		Object[] params=new Object[]{em.getEmword(),em.getEmenter(),};
+		Object[] params=new Object[]{em.getEmword(),em.getEmenter()};
 		//System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+em.getEmid());
 		return DaoFactory.Updata(sql, params);
 	}
-	
+	/**
+	 * 修改管理员密码
+	 */
+	public int updateadmin(LYEmployId em){
+		String sql="update staffEnter set pwd=? where account='admin'";
+		Object[] params=new Object[]{em.getEmword()};
+		return DaoFactory.Updata(sql, params);
+	}
 	/**
 	 * selectpowers:查询权限实现类
 	 */

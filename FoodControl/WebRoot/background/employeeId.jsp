@@ -41,6 +41,9 @@
 		#ementer_span{
 			color:red;
 		}
+		#emword_span{
+			color:red;
+		}
 	</style>
 		
 	</head>
@@ -87,14 +90,14 @@
 						<h2 class="modal-title" id="myModalLabel">添加员工账号</h2>
 					</div>
 						<!-- 
-							添加员工信息的输入框 ----
+							添加员工账号的输入框 ----
 						-->									 
 					<div class="modal-body1">
 						<div>								
 							<span>账	号：</span><input type="text" id="ementer" name="ementer"><span id="ementer_span"></span><br/>
 						</div>
 						<div>
-							<span>密	码：</span><input type="text" id="emword" name="emword"><br/>									
+							<span>密	码：</span><input type="text" id="emword" name="emword"><span id="emword_span"></span><br/>									
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -140,7 +143,7 @@
 				$("#addent").click(function(){
 					var ementer = $("#ementer").val();
 					var emword	= $("#emword").val();				
-					if(ementer && emword){					
+					if(ementer && emword && emword.length>=6 && ementer>=5){					
 						$.ajax({
 							type:"post",
 							url:"achieve_enterid.action",
@@ -380,22 +383,45 @@
 					}				
 				},			
 			});
+		});
+		/*
+		* 添加员工账号聚焦清空提示信息
+		*/
+		$("#ementer").focus(function(){
+			$("#ementer_span").html("");
 		});		
 		/**
 		*添加员工账号的失焦事件，查询是否添加的账号是否已存在
 		*/
-		$("#ementer").blur(function(){	
+		$("#ementer").blur(function(){
+				if($(this).val().length<5){
+					$("#ementer_span").html("长度不能小于5");
+				}		
 				$.ajax({
 					url : "achieve_selaccount.action",
 					type : "post",
 					data : {"employId.ementer":$(this).val()},
 					success : function(data){						
 						if(data == 1){
-							$("#ementer_span").html("该角色已存在")
+							$("#ementer_span").html("该角色已存在");
 						}
 					},
 				});
 			});
+		/*
+		* 添加员工账号聚焦清空提示信息
+		*/
+		$("#emword").focus(function(){
+			$("#emword_span").html("");
+		});	
+		/**
+		*	添加密码失焦事件
+		*/
+		$("#emword").blur(function(){
+			if($(this).val().length<6){
+				$("#emword_span").html("密码长度不能小于6");
+			}
+		});
 		</script>
 	</body>
 </html>

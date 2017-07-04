@@ -363,7 +363,7 @@ public class LYInsertEmployaction {
 	}
 	
 	/**
-	 * updatestaff:修改员工信息的action
+	 * updatestaffid:修改账号的action
 	 * 得到员工dao工厂返回给修改员工实现类的值，
 	 * 再将值给前台可判断是否修改成功与否；
 	 * @return
@@ -372,8 +372,20 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
-
-		int	flag=ied.updateid(employId);
+		int	flag=ied.updateid(employId); //修改员工账号密码
+		//System.out.println("7777:"+flag);
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 	
+	}
+	public void updateadminid(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		System.out.println("000000:"+employId.getEmword());
+		int flag=ied.updateadmin(employId);//修改管理员密码
 		//System.out.println("7777:"+flag);
 		try {
 			response.getWriter().print(flag);
