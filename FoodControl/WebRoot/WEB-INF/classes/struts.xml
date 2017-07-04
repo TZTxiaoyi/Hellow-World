@@ -12,7 +12,7 @@
 			<result name="backhome" type="redirect">/home.jsp</result>
 		</action>
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
-			<result name="tztquerok" type="redirect">/order_vegetable.jsp</result>
+			<result name="exit" type="redirect">/background/login.jsp</result>
 		</action>
 <!-- 注册 -->
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">			

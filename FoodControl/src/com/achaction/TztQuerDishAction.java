@@ -66,19 +66,19 @@ public class TztQuerDishAction {
 	 * @throws
 	 */
 	public void createImp(int method){
-			if(method==1){
-				TztSort sort=new TztDeskSortImp();
-				setSort(sort);
-			}else if(method ==2){
-				TztSort sort =new TztPrioritySortImp();
-				setSort(sort);
-			}else {
-				TztSort sort = new TztDefaultSortImp();
-				setSort(sort);
-			}
-		} 
-		
-	
+		if(method==1){
+			TztSort sort=new TztDeskSortImp();
+			setSort(sort);
+		}else if(method ==2){
+			TztSort sort =new TztPrioritySortImp();
+			setSort(sort);
+		}else {
+			TztSort sort = new TztDefaultSortImp();
+			setSort(sort);
+		}
+	} 
+
+
 	/**
 	 * 
 	 * 方法功能说明：  查询需要制作的菜
@@ -116,10 +116,16 @@ public class TztQuerDishAction {
 		HttpServletRequest req	=ServletActionContext.getRequest();
 		HttpSession session=req.getSession();
 		HttpServletResponse rep =ServletActionContext.getResponse();
+
+		Integer desknum = (Integer) session.getAttribute("desk");
+		if(desknum!=null){
+			session.removeAttribute("desk");
+		}
 		rep.setContentType("html/text;charset =utf-8");
 		createImp(method);
 		List result= sort.queryMading();
 		System.out.println("mading"+result);
+		session.setAttribute("desk", desknum);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {
@@ -173,13 +179,13 @@ public class TztQuerDishAction {
 		System.out.println("madeing++++++++++++=="+result);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("js", result).toString());
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void remove(){
 		HttpServletRequest req=ServletActionContext.getRequest();
 		HttpSession session =req.getSession();
@@ -190,11 +196,16 @@ public class TztQuerDishAction {
 		System.out.println("remove++++++++++++=="+result);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("js", result).toString());
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+	public String exit(){
+		HttpServletRequest req=ServletActionContext.getRequest();
+		HttpSession session= req.getSession();
+		session.invalidate();
+		return "exit";
+	}
 }

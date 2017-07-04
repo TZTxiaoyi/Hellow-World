@@ -14,7 +14,7 @@ import com.entity.TztDish;
 import com.insertemploydao.TztDishOrderImp;
 
 /**  
- * @类功能说明：  
+ * @类功能说明：  桌位轮转排序
  * @类修改者：  
  * @修改日期：  
  * @修改说明：   
@@ -58,8 +58,8 @@ public class TztDeskSortImp implements TztSort {
 				table=0;
 			}
 			int deskn=  (Integer) ((List) desk.get(table)).get(0);
-
-			for( int i=0;i<dishpriority.size();i++){
+			//找到这个桌子下的第一道菜进行并菜操作
+			for( int i=0;i<dishpriority.size();i++){//可能为合并桌子冲突 
 				List dishList=new ArrayList();
 				int deska=(Integer) ((List)dishpriority.get(i)).get(4);
 				int a=0;
@@ -72,13 +72,15 @@ public class TztDeskSortImp implements TztSort {
 					//第一菜的并菜和排序
 					dishName=(String) ((List)dishpriority.get(i)).get(8);
 					a=(Integer) ((List)dishpriority.get(i)).get(2);
-					for(int z=0;z<dishpriority.size();z++){
+					
+					for(int z=0;z<dishpriority.size();z++){//循环有问题循环完毕后未能将所有菜品合并。连续桌号的菜被判定为第二道菜
 						//寻找应道排序到这个位置的桌号
 						if(tablenum>=desk.size()){
 							tablenum=0;
 						}
 						int desknum=  (Integer) ((List) desk.get(tablenum)).get(0);
 						//从头开始开始比对菜品和对应的桌号
+						
 						for (int j =0; j <dishpriority.size(); j++) {
 							//取得比较的菜品B编号和菜品B的桌号
 							int b=(Integer) ((List)dishpriority.get(j)).get(2);
@@ -88,11 +90,9 @@ public class TztDeskSortImp implements TztSort {
 									odId=odId+((List)dishpriority.get(j)).get(0)+",";
 									dishpriority.remove(j);
 									sum++;
-									j--;
-									z--;
-									break;
 									////////BUG出没
 								}
+								z=-1;
 							}
 						}
 						tablenum++;
@@ -133,7 +133,6 @@ public class TztDeskSortImp implements TztSort {
 		Enumeration<String> e=Session.getAttributeNames();
 		List resultList=new ArrayList();
 		while (e.hasMoreElements()) {
-			List list = new ArrayList();
 			resultList.add(Session.getAttribute(e.nextElement()));
 		}
 		return resultList;
@@ -222,7 +221,9 @@ public class TztDeskSortImp implements TztSort {
 		HttpSession session =req.getSession();
 		TztDishOrderImp dao = new  TztDishOrderImp();
 		dao.updataDishStatus(12, dishId);
+		Integer dd = (Integer) session.getAttribute("desk");
 		session.removeAttribute(dishId);
+		session.setAttribute("desk", dd);
 		return null;
 	}
 
