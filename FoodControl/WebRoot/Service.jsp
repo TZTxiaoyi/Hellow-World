@@ -127,7 +127,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			color:#ff6600;
 
 		}
-
+	
+	.changet{
+		width:300px;
+		font-size:20px;
+	}
 	</style>
 
 </head>
@@ -143,7 +147,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="row1 row">
 			<!-- 模态框 -->
 			<button type="button" class="btn btn-primary btn-lg"
-				data-toggle="modal" data-target="#myModal">转台</button>
+				data-toggle="modal" data-target="#myModal" id="changetable">转台</button>
 
 			
 			<a class="btn btn-info btn-lg col-sm-offset-1" href="" role="button" data-toggle="modal" data-target="#myModal1">交班</a>
@@ -237,8 +241,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<h3 class="modal-title">更改桌号：</h3>
 
 						</div>
-						<div class="updatetable">请输入<span class="tablefont">当前</span>桌号：<input type="text" id="changebefore"></div>
-						<div class="updatetable">请输入<span class="tablefont">更改</span>桌号：<input type="text" id="changeafter"></div>
+						
+						<div class="changet"> 当前桌号：<select  id ="before" name="selectvalue">
+							 	  
+						</select></div>
+						<div class="changet">更改桌号： <select  id ="after" name="selectvalue">
+							 	  
+						</select></div>
 						<div class="modal-footer">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close" id="changesave">保存
@@ -451,9 +460,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		/*
 			转台
 		*/
+		//点转台按钮
+		$("#changetable").click(function(){
+			$.ajax({
+					url : "SxmTable_tableAdmin.action",
+					type : "post",
+					data : {map : null},
+					success : function flash(data) {
+						var json = JSON.parse(data);
+						
+						$("#after").html("");
+						$("#before").html("");
+						$.each(json,function(index, value) {			
+							if(value[0]=="6"){
+								var bopt="<option>"+value[1]+"</option>";	
+							}
+							$("#after").append(bopt);
+							if(value[0]=="7"){
+								var aopt="<option>"+value[1]+"</option>";
+							}
+							$("#before").append(aopt);
+						});
+						
+					},
+				});
+		});
+		//点转台模态框的保存按钮
 		$("#changesave").click(function(){
-			var cbefore=$("#changebefore").val();
-			var cafter=$("#changeafter").val();
+			var cbefore=$("#before option:selected").val();
+			var cafter=$("#after option:selected").val();
 			$.ajax({
 				url:"SxmTable_changedesk.action",
 				type:"post",
