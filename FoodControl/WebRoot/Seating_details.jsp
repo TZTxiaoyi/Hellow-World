@@ -400,7 +400,7 @@
 				$("#subject-style").html("<button type=\"button\" class=\"btn btn-danger\" id=\"cddd\">btn</button>");
 			});
 			
-		});*/
+		});
 		$(function(){
 			//$("#vageadd").hide();
 			if($("#order").html()!=""){
