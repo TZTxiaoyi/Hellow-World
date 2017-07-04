@@ -17,6 +17,88 @@
 <script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"></link>
 
+
+</head>
+  
+<body>
+<div class="panel admin-panel">
+  <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>权限管理</strong>
+  	<div class="panel admin-panel">
+
+  <div class="padding border-bottom">
+    <button type="button"  class="button border-yellow" onclick="window.location.href='#add'" aria-labelledby="myModalLabel"  data-target="#myModal2" data-toggle="modal">
+    	<span class="icon-plus-square-o"></span> 添加角色
+    </button>
+  </div>
+  <table class="table table-hover text-center" id="tableid">
+    
+  </table>
+</div>	
+  </div>
+</div>
+
+
+
+<!-- 修改权限模态框 -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel"><span id="powersname"></span>权限更改</h4>
+			</div>
+			<div class="modal-body1">
+				员工管理<input type="checkbox" checkflag="check1" name="check1" value="10" class="parent_one"><br>  				
+        		添加员工<input type="checkbox" checkflag="check1" name="check11" aria-label="..." class="children1">
+        		修改员工信息<input type="checkbox" checkflag="check1" name="check12" aria-label="..." class="children1">
+        		删除员工<input type="checkbox" checkflag="check1" name="check13" aria-label="..." class="children1"><br>        		
+        		<hr>
+        		员工账号<input type="checkbox" checkflag="check2" name="check2" aria-label="..." class="parent_one"><br>  				
+        		添加员工账号<input type="checkbox" checkflag="check2" name="check10" aria-label="..." class="children1">
+        		修改员工账号<input type="checkbox" checkflag="check2" name="check18" aria-label="..." class="children1"><br>       		
+        		<hr>
+        		桌台管理<input type="checkbox" checkflag="check3" name="check4" aria-label="..." class="parent_one"><br>
+        		添加桌台<input type="checkbox" checkflag="check3" name="check14" aria-label="..." class="children1">  
+        		删除桌台<input type="checkbox" checkflag="check3" name="check16" aria-label="..." class="children1">
+        		修改桌台<input type="checkbox" checkflag="check3" name="check15" aria-label="..." class="children1"><br>
+        		<hr>
+        		菜品管理<input type="checkbox" checkflag="check4" name="check5" aria-label="..." class="parent_one"><br>
+        		添加菜品<input type="checkbox" checkflag="check4" name="check17" aria-label="..." class="children1">  
+        		修改菜品<input type="checkbox" checkflag="check4" name="check22" aria-label="..." class="children1" >  
+        		删除菜品<input type="checkbox" checkflag="check4" name="check23" aria-label="..."class="children1"><br>
+        		<hr>
+        		订单详情<input type="checkbox" name="check19" aria-label="...">
+        		退单详情<input type="checkbox" name="check20" aria-label="...">  
+        		收入详情<input type="checkbox" name="check21" aria-label="...">                    		      			
+			</div>
+			<div class="modal-footer">			
+				<button type="button" class="btn btn-primary" id="save_powers" data-dismiss="modal">保存</button>
+			 </div>
+		</div>
+	 </div>
+</div>
+
+<!-- 添加角色模态框 -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">角色权限更改</h4>
+			</div>
+			<div class="modal-body1">
+				角色名称：<input type="text"  aria-label="..." size="30" id="inputpart">				                  		      			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="addpart" data-dismiss="modal">保存</button>
+			 </div>
+		</div>
+	 </div>
+</div>
 <script type="text/javascript">
 
 	/*
@@ -46,10 +128,13 @@
 			},
 		});
 	}
+	/**
+	* 添加角色
+	*/
 	$(function(){		
 		$("#addpart").click(function(){
 			var partname=$("#inputpart").val();
-			alert(partname);
+			//alert(partname);
 			if(partname){
 				$.ajax({
 					url:"achieve_addpart.action",
@@ -84,8 +169,7 @@
 							//alert(value[1]);
 							$($("input[name=\"check"+value[1]+"\"]")[0]).prop("checked",true);				
 						});
-						
-												
+														
 					}				
 			}); 		
 		});
@@ -97,12 +181,10 @@
 		var powersname=$("#powersname").html();
 		//alert("000:"+powersname);
 			for(var i=1;i<24;i++){	
-			//$("#chk2").prop("checked") == true
-				
+			//$("#chk2").prop("checked") == true				
 				if($($("input[name=\"check"+i+"\"]")[0]).prop("checked")){
 					powersId.push(i);
 					//alert(powersId);
-					alert(powersId);
 					j++;
 				}
 			}
@@ -118,88 +200,45 @@
 			});
 		});
 	});
+	$("#inputpart").blur(function() {	
+		//alert("0000");		
+				$.ajax({
+					url : "achieve_reselpart.action",
+					type : "post",
+					data : {"partname.partname":$(this).val()},
+					success : function(data){						
+						if(data == 1){
+							alert("该角色已存在！");
+						}
+					},
+				});
+			});
+			
+	/**
+	* 子绑定点击事件
+	*/		
+	$(function(){
+	 		$(".children1").click(function(){ 
+	 		var checkflag=$(this).attr("checkflag");
+	 			if($(this).prop("checked")){
+	 				//$(".parent_one").prop("checked",true);
+	 				$($("input[checkflag=\""+checkflag+"\"]")[0]).prop("checked",true);
+	 			}
+	 		});
+	 		
+	 	});
+	 	$(function(){
+	 		$(".parent_one").click(function(){
+	 			var checkflag=$(this).attr("checkflag");.
+	 			alert("fu:"+checkflag);
+	 			if(!$(this).prop("checked")){
+	 			alert("222");
+	 				//$(".children1").prop("checked",false);
+	 				$("input[checkflag=\""+checkflag+"\"]").prop("checked",false);
+	 			}
+	 			
+	 		});
+	 	});
 </script>
-</head>
-  
-<body>
-<div class="panel admin-panel">
-  <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>权限管理</strong>
-  	<div class="panel admin-panel">
-
-  <div class="padding border-bottom">
-    <button type="button"  class="button border-yellow" onclick="window.location.href='#add'" aria-labelledby="myModalLabel"  data-target="#myModal2" data-toggle="modal">
-    	<span class="icon-plus-square-o"></span> 添加角色
-    </button>
-  </div>
-  <table class="table table-hover text-center" id="tableid">
-    
-  </table>
-</div>	
-  </div>
-</div>
-
-
-
-<!-- 修改权限模态框 -->
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel"><span id="powersname"></span>权限更改</h4>
-			</div>
-			<div class="modal-body1">
-				员工管理<input type="checkbox" name="check1" value="10"><br>  				
-        		添加员工<input type="checkbox" name="check11" aria-label="...">
-        		修改员工信息<input type="checkbox" name="check12" aria-label="...">
-        		删除员工<input type="checkbox" name="check13" aria-label="..."><br>        		
-        		<hr>
-        		员工账号<input type="checkbox" name="check2" aria-label="..." value="员工管理"><br>  				
-        		添加员工账号<input type="checkbox" name="check10" aria-label="...">
-        		修改员工账号<input type="checkbox" name="check18" aria-label="..."><br>       		
-        		<hr>
-        		桌台管理<input type="checkbox" name="check4" aria-label="..."><br>
-        		添加桌台<input type="checkbox" name="check14" aria-label="...">  
-        		删除桌台<input type="checkbox" name="check16" aria-label="...">
-        		修改桌台<input type="checkbox" name="check15" aria-label="..."><br>
-        		<hr>
-        		菜品管理<input type="checkbox" name="check5" aria-label="..."><br>
-        		添加菜品<input type="checkbox" name="check17" aria-label="...">  
-        		修改菜品<input type="checkbox" name="check22" aria-label="...">  
-        		删除菜品<input type="checkbox" name="check23" aria-label="..."><br>
-        		<hr>
-        		订单详情<input type="checkbox" name="check19" aria-label="...">
-        		退单详情<input type="checkbox" name="check20" aria-label="...">  
-        		收入详情<input type="checkbox" name="check21" aria-label="...">                    		      			
-			</div>
-			<div class="modal-footer">			
-				<button type="button" class="btn btn-primary" id="save_powers" data-dismiss="modal">保存</button>
-			 </div>
-		</div>
-	 </div>
-</div>
-
-<!-- 添加角色模态框 -->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel">角色权限更改</h4>
-			</div>
-			<div class="modal-body1">
-				角色名称：<input type="text"  aria-label="..." size="30" id="inputpart">				                  		      			
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="addpart">Save changes</button>
-			 </div>
-		</div>
-	 </div>
-</div>
 </body>
 </html>

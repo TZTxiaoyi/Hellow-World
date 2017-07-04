@@ -14,6 +14,93 @@
 		<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 		<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 		
+		
+	</head>
+	<body>	
+		  <div class="panel admin-panel">
+		    <div class="panel-head">
+			    <strong class="icon-reorder">内容列表</strong> 
+			    <a href="" style="float:right; display:none;">添加字段</a>
+		    </div>
+		    <div class="padding border-bottom">
+		      <ul class="search" style="padding-left:10px;">       
+		        
+		        <li>
+		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal">
+		         		<span class="icon-plus-square-o"></span>添加员工账号
+		         	</a>	         
+		        <li>
+		          <input type="text" placeholder="请输入搜索关键字" name="keywords" id="input_value"class="input" style="width:250px; line-height:17px;display:inline-block" />
+		          <a id="search_account" type="button" class="button border-main icon-search" onclick="changesearch()" >搜索</a></li>
+		      </ul>
+		    </div>
+		    <table class="table table-hover text-center" id="tableid">
+	    	</table>	  
+		     <div class="pagelist">
+				<a  class="minuspage" name="firstname">首页</a>
+				<a  class="minuspage" name="minusname">上一页</a> 
+				<a  class="minuspage" name="addname">下一页</a>
+				<a  class="minuspage" name="lastname">尾页</a>
+				共<span id="pagenum"></span>页
+				<input type="text" id="someone" value="1">
+				<input type="button" value="跳转" id="commitone">
+			</div>	
+		  </div>
+		  
+		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">									
+						<h4 class="modal-title" id="myModalLabel">添加员工账号</h4>
+					</div>
+									<!-- 
+										添加员工信息的输入框 ----
+									 -->									 
+					<div class="modal-body1">
+															
+						账	号：<input type="text" id="ementer" name="ementer"><br/>
+						密	码：<input type="text" id="emword" name="emword"><br/>									
+					</div>
+					<div class="modal-footer">
+										<!-- 
+											关闭模态框按钮
+										 -->
+						<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<!-- 
+											点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
+										 -->
+						<input type="submit" class="btn btn-primary"  value="添加" id="addent"/>	
+					</div>
+				 </div>
+			</div>
+		  </div>
+		  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+						<div class="text-center margin-big padding-big-top">
+								<h1>密码或状态修改</h1>
+						</div>
+						<div id="modalform">
+							<!--<div>
+							    <span>账号</span><input type="text" name="st.personNum" id="per"/>
+							</div>  -->
+							 <div>
+							   <span>密码</span><input type="text" name="st.deskName" id="perid"/>
+							 </div>
+							  <div>
+							    <span>当前状态</span><input type="text" name="st.deskState" id="perphone"/>
+							  </div>					   
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
+	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script type="text/javascript">
 			/*
 			*添加员工账号
@@ -23,7 +110,7 @@
 				
 					var ementer = $("#ementer").val();
 					var emword	= $("#emword").val();
-						alert("0000:"+ementer+"::"+emword);				
+						//alert("0000:"+ementer+"::"+emword);				
 					if(ementer && emword){					
 						$.ajax({
 							type:"post",
@@ -101,17 +188,15 @@
 					data:{"countpage":a},
 					success:function(data){					
 					var json=JSON.parse(data);				
-						var th="<tr><td></td><td>账号</td><td>密码</td><td>当前状态</td><td>操作</td></tr>";
+						var th="<tr><td>账号</td><td>密码</td><td>当前状态</td><td>操作</td></tr>";
 					 	$("#tableid").html("");	
 					 	$("#tableid").append(th);					 
 						$.each(json,function(index,value){
 						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
 							var emtable=
-								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
+								"<tr><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td>"+
-								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
-								"<span class=\"icon-trash-o\"></span>删除 </button>"+
-								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
+								"<td id=\"fnum"+value[1]+"\"><a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
 								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
 							$("#tableid").append(emtable);																												
 						});
@@ -119,8 +204,44 @@
 					}
 				});
 		}	
-		
-		
+		/**
+		* 模糊查询账号
+		*
+		*
+		*/
+		$(function(){
+			$("#search_account").click(function(){
+				var putvalue=$("#input_value").val();	
+				$.ajax({
+					url:"achieve_searchac.action",
+					type:"post",
+					data:{"putvalue":putvalue},
+					success:function(data){
+						var json=JSON.parse(data);
+						$("#tableid").html("");
+						var th="<tr><td>账号</td><td>密码</td><td>状态</td><td>操作</td></tr>";
+					 	$("#tableid").append(th);
+						$.each(json,function(index,value){					
+							var emtable=
+								"<tr><td id=\"anum"+value[1]+"\">"+value[0]+"</td>"+
+								"<td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td>"+
+								"<td id=\"fnum"+value[1]+"\">"+
+								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
+								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
+								$("#tableid").append(emtable);																
+						});
+						var emtable="<tr id=\"trtab\">"+
+	        				"<td colspan=\"10\">"+
+	        				"<div class=\"pagelist\"> <a href=\"\">上一页</a> <span class=\"current\">1</span><a href=\"\">2</a><a href=\"\">3</a><a href=\"\">下一页</a><a href=\"\">尾页</a> </div></td></tr>"
+						
+						$("#trtab").append(emtable);
+						
+						
+					
+					}
+				});
+			});
+		});
 				/*
 		* tableid：表id
 		* 点击修改按钮触发点击事件，获得每行数据放到模态框中
@@ -136,10 +257,7 @@
 				//alert(namehtml);			
 				var idhtml =$("#b"+alterbtn).html();
 				//alert(idhtml); 
-				var phonehtml =$("#c"+alterbtn).html();
-				
-			 
-				
+				var phonehtml =$("#c"+alterbtn).html();			
 				//$("#per").val(namehtml);//将要修改某行的数据放入到模态框中
 				$("#perid").val(idhtml);
 				$("#perphone").val(phonehtml);
@@ -153,7 +271,6 @@
 					//var sname=$("#per").val();//修改后将值传给action
 					var sid=$("#perid").val();
 					var sphone=$("#perphone").val();
-					alert()
 					if(sphone=="未分配人"){
 						sphone=2;
 					}else if(sphone=="分配人"){
@@ -180,92 +297,22 @@
 				});
 			}
 		});		
+		/**
+		*添加员工账号的失焦事件，查询是否添加的账号是否已存在
+		*/
+		$("#ementer").blur(function() {	
+		//alert("0000");		
+				$.ajax({
+					url : "achieve_selaccount.action",
+					type : "post",
+					data : {"employId.ementer":$(this).val()},
+					success : function(data){						
+						if(data == 1){
+							alert("该账号已存在！");
+						}
+					},
+				});
+			});
 		</script>
-	</head>
-	<body>	
-		  <div class="panel admin-panel">
-		    <div class="panel-head">
-			    <strong class="icon-reorder">内容列表</strong> 
-			    <a href="" style="float:right; display:none;">添加字段</a>
-		    </div>
-		    <div class="padding border-bottom">
-		      <ul class="search" style="padding-left:10px;">       
-		        
-		        <li>
-		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal">
-		         		<span class="icon-plus-square-o"></span>添加员工账号
-		         	</a>	         
-		        <li>
-		          <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-		          <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" >搜索</a></li>
-		      </ul>
-		    </div>
-		    <table class="table table-hover text-center" id="tableid">
-	    	</table>	  
-		     <div class="pagelist">
-				<a  class="minuspage" name="firstname">首页</a>
-				<a  class="minuspage" name="minusname">上一页</a> 
-				<a  class="minuspage" name="addname">下一页</a>
-				<a  class="minuspage" name="lastname">尾页</a>
-				共<span id="pagenum"></span>页
-				<input type="text" id="someone" value="1">
-				<input type="button" value="跳转" id="commitone">
-			</div>	
-		  </div>
-		  
-		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">									
-						<h4 class="modal-title" id="myModalLabel">添加员工账号</h4>
-					</div>
-									<!-- 
-										添加员工信息的输入框 ----
-									 -->									 
-					<div class="modal-body1">
-															
-						账	号：<input type="text" id="ementer" name="ementer"><br/>
-						密	码：<input type="text" id="emword" name="emword"><br/>									
-					</div>
-					<div class="modal-footer">
-										<!-- 
-											关闭模态框按钮
-										 -->
-						<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
-										<!-- 
-											点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
-										 -->
-						<input type="submit" class="btn btn-primary"  value="添加" id="addent"/>	
-					</div>
-				 </div>
-			</div>
-		  </div>
-		  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-						<div class="text-center margin-big padding-big-top">
-								<h1>密码或状态修改</h1>
-						</div>
-						<div id="modalform">
-							<!--<div>
-							    <span>账号</span><input type="text" name="st.personNum" id="per"/>
-							</div>  -->
-							 <div>
-							   <span>密码</span><input type="text" name="st.deskName" id="perid"/>
-							 </div>
-							  <div>
-							    <span>当前状态</span><input type="text" name="st.deskState" id="perphone"/>
-							  </div>					   
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
-	
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</body>
 </html>
