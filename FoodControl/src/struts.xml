@@ -44,7 +44,7 @@
 		</global-results>
 		<action name="fresh_*" class="com.achaction.LYquanxianaction" method="{1}">
 			<result name="success" type="redirect">/background/index.jsp</result>
-			<result name="part" type="redirect">/Service.jsp</result>
+			<result name="part" type="redirect">/service.jsp</result>
 			<result name="cook" type="redirect">/kitchen.jsp</result>
 			<result name="false" type="redirect">/background/login.jsp</result>
 			<result name="sa" type="redirect">/background/employee.jsp</result>
@@ -56,12 +56,14 @@
 			<result name="sg" type="redirect">/background/order_details.jsp</result>
 			<result name="sh" type="redirect">/background/finance.jsp</result>
 			<result name="si" type="redirect">/background/income.jsp</result>
+			<result name="sj" type="redirect">/kitchen.jsp</result>
+			<result name="sk" type="redirect">/service.jsp</result>
 		</action>	
 	</package>
 	<package name="lanjieqi2" extends="struts-default">
 		<interceptors>
 			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
-				<param name="includeMethods">updatestaff,enterid,save,delem,updatestaffid,appendTable,upLineTable,delLineTable,FCchange,insertFood,FCdelete</param><!-- 拦截的方法 -->
+				<param name="includeMethods">updatestaff,enterid,delaccount,save,delem,updatestaffid,appendTable,upLineTable,delLineTable,FCchange,insertFood,FCdelete</param><!-- 拦截的方法 -->
 			</interceptor>
 <!-- 构建一个拦截器栈 -->
 			<interceptor-stack name="aaabbb">
@@ -95,5 +97,27 @@
 			<result name ="order">/a123.jsp</result>
 		</action>
 	</package>	
-	<constant name="struts.multipart.saveDir" value="e:/"/>		
+	<constant name="struts.multipart.saveDir" value="e:/"/>	
+	
+	<package name="lanjieqi3" extends="struts-default">
+		<interceptors>
+			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
+				<param name="includeMethods">chief,waiter</param><!-- 拦截的方法 -->
+			</interceptor>
+<!-- 构建一个拦截器栈 -->
+			<interceptor-stack name="aaabbb">
+				<interceptor-ref name="sessInter"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+<!-- 配置默认的拦截器 --><!-- 被拦截后跳转的jsp -->
+		<default-interceptor-ref name="aaabbb"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="dispatcher">/background/index.jsp</result>
+		</global-results>
+		<action name="front_*" class="com.achaction.LyqiantaiAction" method="{1}">			
+			<result name="sj" type="redirect">/kitchen.jsp</result>
+			<result name="sk" type="redirect">/service.jsp</result>
+		</action>	
+	</package>		
 </struts>    

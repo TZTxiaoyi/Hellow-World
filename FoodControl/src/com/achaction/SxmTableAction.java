@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSON;
+import net.sf.json.JSONObject;
+import net.sf.json.processors.JsonBeanProcessor;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -273,7 +275,7 @@ public class SxmTableAction {
 	 */
 	public void tabPage(){
 		List list=sts.page(currPage);
-		JSON json=toJson.toJson("ss", list);
+		JSON json=toJson.toJsonArray("ss", list);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
 		try {

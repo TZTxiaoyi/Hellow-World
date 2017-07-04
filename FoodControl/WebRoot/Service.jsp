@@ -41,9 +41,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			padding-top: 20px;
 		
 		}
-		
-		
-		
 		#table {
 			padding: 15px;
 			padding-left: 80px;

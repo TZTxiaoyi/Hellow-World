@@ -21,35 +21,40 @@ body{
 }
 
 td{
-	width:200px;
+	width:230px;
+	padding-right:30px;
 	margin-top:10px;
 	margin-bottom:10px;
 	border-bottom:1px solid #ff6600;
 }
-td button{
+table td{
+	width:120px;
+	font-size:18px;
 }
+ .firsthead{
+	background:#6666ff;
+	width: 100%;
+}
+
 #top {
 	height: 9%;
 	font-size:20px;
 	margin-left:20px;
 }
 #cbody {
-	height: 65%;
+	height: 60%;
 	border-bottom:1px solid #ff6666;
-	
 }
 
 #col1 {
 	height: 100%;
 	width: 48%;
-	
 	float: left;
 	border-right:1px solid #99ff99;
 }
 
 
 #col2 {
-	
 	width: 48%;
 	margin-left:1%;
 	float: left;
@@ -62,9 +67,8 @@ td button{
 	width:50%;
 }
 #bottom{
-	height:15%;
+	height:20%;
 	background-color:#ffcc99;
-
 	font-size:25px;
 }
 #titlemading{
@@ -74,22 +78,22 @@ td button{
 	background-color:#ffcc99;
 }
 #titlemade{
-	margin-left:10px;
 	background-color:#ff99cc;
-	max-height:400px;
+	max-height:350px;
 }
 #bhead{
-	padding-top:25px;
+	padding-top:15px;
 	border-bottom:1px solid #ff6666;
 	background-color:#ffffcc;
 }
 .pre-scrollable{
 	overflow:auto;
-
 }
+
 #exit{
 	float:right;
 }
+
 </style>
 </head>
 
@@ -113,7 +117,18 @@ td button{
 			<div class="column" id="col1">
 		
 				<!-- 左边窗口 -->
-				<h1>制作中</h1>
+				<h2>制作中</h2>
+				<div class="firsthead">
+					<table>
+						<tr>
+							<td>菜名</td>
+							<td style="width:150px">数量</td>
+							<td>桌位</td>
+							<td>操作
+							<input class="btn btn-info" id="querymading" type="button" value="刷新" /></td>
+						</tr>
+					</table>
+				</div>
 				<div class="row pre-scrollable" id="titlemading">
 				
 				</div>
@@ -122,8 +137,18 @@ td button{
 
 			<div class="row" id="col2">
 				<!------------右边窗口-------------->
-				<h1>待做</h1>
-
+				<h2>待做</h2>
+				<div class="firsthead">
+					<table>
+						<tr>
+							<td>菜名</td>
+							<td>数量</td>
+							<td style="width:190px">桌位</td>
+							<td>操作
+							<input class="btn btn-info\" id="querymade" type="button" value="刷新" /></td>
+						</tr>
+					</table>
+				</div>
 				<div class=" pre-scrollable"id="titlemade">
 					
 				</div>
@@ -132,7 +157,7 @@ td button{
 	
 		</div>
 			<!-- 最下面窗口 -->
-			<h1>制作完成</h1>
+			<h2>制作完成</h2>
 			<div class="row pre-scrollable" id="bottom">
 			</div>
 		<!--白色，浅蓝色，深蓝色，绿色，黄色，红色，黑色，对应的class为btn,btn btn-primary,btn btn-info,btn btn-success,btn btn-warning,btn btn-danger,btn btn-inverse-->
@@ -200,10 +225,10 @@ td button{
  					success:function(data){
  			
  					$("#titlemading").html("");
- 					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td></tr>";
+					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td></tr>";
 					$("#titlemading").append(tr);
 					$.each(data,function(index,value){	
-					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td>"+value[3]+"</td>"+"<td><div class=\"btn-group\"><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button>"
+					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td>"+value[3]+"</td>"+"<td><div class=\"btn-group\"><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button><br/>"
 					+"<button class=\"btn btn-danger\" id=\"removebutton\" name =\""+value[0]+ "\">取消制作</button></div></td>"+"</tr>";
 					$("#titlemading").append(dd);		
 					});

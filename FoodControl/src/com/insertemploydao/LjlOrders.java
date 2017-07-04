@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.daointerface.DaoInterface;
 import com.entity.LjlAddOrder;
+import com.entity.OrderBack;
 import com.entity.SxmTable;
 import com.utils.DaoFactory;
 
@@ -80,6 +81,11 @@ public class LjlOrders implements DaoInterface{
 		Object[] params =new Object[] {order.getOrderPrice(),order.getFoodNum(),order.getOrdersId()};
 		return DaoFactory.Updata(sql, params);
 	}
+	public int addback(int id,String reason,String vage){
+		String sql="insert into chargeback values(?,?,?)";
+		Object[] params =new Object[] {id,reason,vage};
+		return DaoFactory.Updata(sql, params);
+	}
 	/**
 	 * 结账时根据订单号更新订单状态（未付-svalue）
 	 * svalue 支付方式（现金，微信，支付宝）
@@ -92,14 +98,24 @@ public class LjlOrders implements DaoInterface{
 		return DaoFactory.Updata(sql, params);
 		
 	}
-	
+	/**
+	 * 根据订单id改变订单价格
+	 * @param price
+	 * @param orid
+	 * @return
+	 */
 	public int upOP(int price,int orid){
-		//System.out.println("price"+price+","+orid);
 		String sql="update orders set ordersPrice=? where ordersId=?";
 		Object[] params = new Object[] {price,orid}; 
 		return DaoFactory.Updata(sql, params);
 		
 	}
+	/**
+	 * 根据订单菜品id和时间戳改变菜品状态
+	 * @param foodtime
+	 * @param dishid
+	 * @return
+	 */
 	public int uporderdish(String foodtime,int dishid){
 		//System.out.println("food:"+foodtime+"，"+dishid);
 		String sql="update orders_dish set dishStatus=17 where dishtime=? and dishId=?";
@@ -158,6 +174,7 @@ public class LjlOrders implements DaoInterface{
 		return DaoFactory.Query(sql);
 	}
 	public List selectcost(int orderid){
+		System.out.println("cost");
 		String sql="select cost from orders where ordersId="+orderid;
 		return DaoFactory.Query(sql);
 	}

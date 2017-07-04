@@ -21,6 +21,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.entity.LjlAddFood;
 import com.entity.LjlAddOrder;
+import com.entity.OrderBack;
 
 import com.entity.ZbDesk;
 import com.entity.ZbUsagedata;
@@ -53,6 +54,7 @@ public class LjlAddFoodAction {
 	private String foodtime;
 	private int foodprice;
 	private int svalue;
+	private OrderBack ob;
 	public int getSvalue() {
 		return svalue;
 	}
@@ -628,12 +630,10 @@ public class LjlAddFoodAction {
 		List listcost=orders.selectcost(addorder.getOrdersId());
 		List licost=(List) listcost.get(0);
 		int coststate=(Integer) licost.get(0);
-		System.out.println("aa"+coststate);
 		int od=-1;
 		if(coststate==21){
 			od=orders.upOrders(addorder,svalue);
 		}
-	
 		if(od==1){
 			int ud=orders.updesk(st);
 			if(ud>0){
@@ -647,7 +647,6 @@ public class LjlAddFoodAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	/**
@@ -668,7 +667,6 @@ public class LjlAddFoodAction {
 		int cd=-1;
 		if(coststate!=21){
 			//根据桌子id更改订单状态为已完成
-			System.out.println("asdf");
 			ordstate=orders.updateorders(deskid);
 			//根据桌名更改桌子状态为可用
 			cd=orders.clearDesk(st);
@@ -719,6 +717,7 @@ public class LjlAddFoodAction {
 				flag=1;	
 			}
 		}
+	
 		try {
 			response.getWriter().print(flag);
 		} catch (IOException e) {
@@ -736,6 +735,10 @@ public class LjlAddFoodAction {
 		List list=dish.seldish(addfood);
 		List li=(List) list.get(0);
 		int dishid=(Integer) li.get(0);//菜品id
+		//根据订单id查找订单支付状态
+		List listcost=orders.selectcost(addorder.getOrdersId());
+		List licost=(List) listcost.get(0);
+		int coststate=(Integer) licost.get(0);
 		//int uprice=(Integer) li.get(2);//菜品单价
 		List listOD=orders.idselOrder(addorder.getOrdersId());
 		List ODlist=(List) listOD.get(0);
@@ -743,6 +746,11 @@ public class LjlAddFoodAction {
 		int flag=orders.uporderdish(foodtime,dishid);//更新了几条菜品状态
 		int price=ODprice-foodprice;
 		orders.upOP(price, orderid);
+		if(coststate!=21){
+			System.out.println(coststate);
+			orders.addback(orderid,null,addfood.getFoodname());
+		}
+		
 	}
 	/**
 	 * 催菜

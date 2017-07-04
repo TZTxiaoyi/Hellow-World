@@ -97,7 +97,6 @@ public class GJYFCaction {
 	 */
 
 	public void insertFood(){		
-		System.out.println("22121");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int a=inFc.FCinsert(fdCry);
 		try {
@@ -109,7 +108,6 @@ public class GJYFCaction {
 	
 	/*查询菜品action*/
 	public void seekfood(){
-		System.out.println("seekfood()");
 		List ser=inFc.sekFood(search);
 		JSON json=toJson.toJson("ss", ser);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
@@ -125,7 +123,6 @@ public class GJYFCaction {
 	
 	/* 修改菜品action*/
 	public void FCchange(){
-		System.out.println("FCchange()");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -140,8 +137,6 @@ public class GJYFCaction {
 	
 	/*删除菜品action*/
 	public void FCdelete(){
-		System.out.println("-------");
-		System.out.println(fdCry.getDishId());
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -158,7 +153,6 @@ public class GJYFCaction {
 	
 	/* 总页数查询action*/
 	public void getcount(){
-		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int a=inFc.getallpage();		
 		try {
@@ -171,12 +165,11 @@ public class GJYFCaction {
 	
 	/* 接收JSP中的页码并返回页码结果action*/
 	public void getpage(){
-		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
 		List list=inFc.pagepage(countpage);
-		JSON json=toJson.toJson("value", list);
+		JSON json=toJson.toJsonArray("value", list);
 		try {
 			response.getWriter().print(json);
 		} catch (Exception e) {
@@ -187,8 +180,7 @@ public class GJYFCaction {
 	public void uploads(){
 		try {
 			String name=new Date().getTime()+myfileFileName.substring(myfileFileName.lastIndexOf("."));
-			System.out.println(name);
-			File file=new File("D:/NO9/FoodControl/WebRoot/image/"+name);
+			File file=new File("E:/"+name);
 			InputStream is=new FileInputStream(myfile);
 			OutputStream os=new FileOutputStream(file);
 			byte[] b=new byte[1024];
@@ -210,6 +202,20 @@ public class GJYFCaction {
 			
 		}
 	}
+	
+	public void getselect(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");		
+		List list=inFc.getselect(fdCry);
+		JSON json=toJson.toJson("value",list);
+		try {
+			response.getWriter().print(json);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 	
 	
 	

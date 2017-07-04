@@ -62,7 +62,7 @@ public class toJson {
 	
 	/**
 	 * 
-	 * 方法功能说明：  JSON数组
+	 * 方法功能说明：  JSON数组排序
 	 * 创建：2017-6-26 by TZT   
 	 * 修改：日期 by 修改者  
 	 * 修改内容：  
@@ -75,7 +75,7 @@ public class toJson {
 	public static  JSONArray toJsonArray(String vlaue,List list) {
 		JSONArray json = new JSONArray();
 		for(int i=0;i<list.size();i++){
-		json.add(list.get(i));
+			json.add(list.get(i));
 		}
 		return json;
 	}
