@@ -89,6 +89,9 @@
 		<action name="order_*" class="com.achaction.LyOrderAction" method="{1}">
 			<result name="ok">/a123.jsp</result>
 		</action>
+		 <action name="zborders_*" class="com.achaction.ZbOrdersAction" method="{1}">
+		 	<result name="order">/a123.jsp</result>
+		 </action>
 	</package>	
 	<constant name="struts.multipart.saveDir" value="e:/"/>		
 </struts>    

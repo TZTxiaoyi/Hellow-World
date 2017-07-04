@@ -345,16 +345,16 @@
 		/*
 			系统加载自动运行;
 		*/
-	/*	$(function() {
+		$(function() {
 			setInterval("getTime()",1000);
 			if($("#order").html()!="undefined"){
 				setInterval("outtime()",1000);
 			}
-		});*/
+		});
 		/*
 			获取系统时间;
 		*/
-		/*function getTime(){
+		function getTime(){
 			var time = new Date();
    			$("#times").html(time.toLocaleString());
    			
@@ -400,7 +400,7 @@
 				$("#subject-style").html("<button type=\"button\" class=\"btn btn-danger\" id=\"cddd\">btn</button>");
 			});
 			
-		});*/
+		});
 		$(function(){
 			//$("#vageadd").hide();
 			if($("#order").html()!=""){
@@ -468,7 +468,7 @@
 						num=num+allnum;
 						if(value[12]!=21){
 							$("#callimgpay").show();
-							$("#clear").attr("disabled",false); 
+							
 						}
 					});
 					
@@ -476,7 +476,7 @@
 					$("#dname").html(dname);
 					$("#pnum").html(fnum);
 					$(".tred").html(ordersnum);	
-				 	$("#clear").attr("disabled",true); 
+				 
 					
 						
 				}
@@ -548,6 +548,7 @@
 					if(data!=-1){
 						outfood();
 					}
+					
 				}
 			});
 		});
