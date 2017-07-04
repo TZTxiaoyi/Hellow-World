@@ -174,6 +174,14 @@ public class ZbRegister implements DaoInterface{
 		List list = DaoFactory.Query(sql);
 		return list;
 	}
+	//≤È—Ø∂©µ•œÍ«È
+	public List zbordersInfo(int orderid){
+		
+		String sql = "select * from zb_order where ordersId="+orderid;
+		List list =DaoFactory.Query(sql);
+		
+		return list;
+	}
 	public List totalcurr(ZbDetails zbde){
 		//System.out.println("0099");
 		//System.out.println(zbde.getVa()+","+zbde.getVa1()+","+zbde.getVa2());

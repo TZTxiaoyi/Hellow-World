@@ -18,6 +18,25 @@ import com.utils.toJson;
 public class ZbOrdersAction {
 	private LjldishS dish;
 	private ZbDetails zbde;
+	private int orderD;//
+	private int currpage;
+	ZbRegister re=new ZbRegister();
+	public int getOrderD() {
+		return orderD;
+	}
+
+	public void setOrderD(int orderD) {
+		this.orderD = orderD;
+	}
+
+	public int getCurrpage() {
+		return currpage;
+	}
+
+	public void setCurrpage(int currpage) {
+		this.currpage = currpage;
+	}
+
 	public ZbDetails getZbde() {
 		return zbde;
 	}
@@ -25,7 +44,7 @@ public class ZbOrdersAction {
 	public void setZbde(ZbDetails zbde) {
 		this.zbde = zbde;
 	}
-	ZbRegister re=new ZbRegister();
+	
 	
 	public LjldishS getDish() {
 		return dish;
@@ -34,6 +53,21 @@ public class ZbOrdersAction {
 	public void setDish(LjldishS dish) {
 		this.dish = dish;
 	}
+	
+	public void ZbOrder(){
+		HttpServletResponse resp = ServletActionContext.getResponse();
+		resp.setContentType("text/html;charset=utf-8");
+		List list =re.zbordersInfo(orderD);
+		JSON json = toJson.toJson("toj", list);
+		try {
+			resp.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
 	public void dishnum(){
 		//System.out.println("ttt");
 		List list=re.dishnumsql();
