@@ -19,19 +19,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"></link>
 	<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
-	<!-- 
-		触发点击事件后，先判断是否得到输入框中的值，
-		当有一个输入框中的值为空时，将不执行Ajax语句
-	 -->
-	<style type="text/css">
-		#add_div span{
-			color:red;
+
+	
+	<style>
+		.modal-body1 input{
+			width:40%;
+		}
+		.modal-body1 div{
+			margin-top:15px;
+			margin-left:10%;
+		}
+		.modal-body1 select{
+			width:40%;
+			height:35px;
+		}
+		.modal-body1 span{
+			font-size:20px;
+		}
+		#modalform div{
+			margin-top:15px;
+			margin-left:10%;
+		}
+		#modalform span{
+			font-size:20px;
+		}
+		#modalform input{
+			width:40%;
+			height:35px;
+
 		}
 	</style>
 </head>
   <!-- 
   	员工信息页面
    -->
+   
   <body>
 <div class="panel admin-panel">
   <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 员工信息</strong></div>
@@ -40,11 +62,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <div class="panel admin-panel">	    
 	    <div class="padding border-bottom">
 	      <ul class="search">
-	        <li>          
-	          <!-- 
-	          	添加员工按钮
-	           -->
-	          <a type="button" class="button border-yellow" id="addstaffinfo"data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span> 添加员工</a>
+	        <li>    
+	        	<a class="button border-yellow" href="fresh_staffinfo.action">查看所有</a>      
+	          	<!-- 
+	          		添加员工按钮
+	           	-->
+	         	<a type="button" class="button border-yellow" id="addstaffinfo"data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span> 添加员工</a>
          		<!-- 
          			添加员工模态框
          		 -->
@@ -52,35 +75,68 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
+							
 							<div class="modal-header">
-								
-								<h4 class="modal-title" id="myModalLabel">添加员工信息</h4>
+								<!-- 
+									关闭模态框按钮
+								 -->
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+								<h2 class="modal-title" id="myModalLabel">添加员工信息</h2>
 							</div>
 							<!-- 
 								添加员工信息的输入框 ----
 							 -->							 
-								<div class="modal-body1" id="add_div">
-									编	号：<input type="text" class="inputname1" id="emid" name="employee.emid"><span id="emid_span"></span><br/>
-									姓	名：<input type="text" class="inputname2" id="emname" name="employee.emname"><span id="emname_span"></span><br/>
-									<!--  性	别：<input type="text" class="inputname3" id="emsex" name="employee.emsex"><br/>-->
-									性别：<select id="emsex">
-											<option>男</option>
-											<option>女</option>
+								<div class="modal-body1">
+									<div>
+										<span>&nbsp;&nbsp;编	&nbsp;&nbsp;号：&nbsp;&nbsp;</span>
+										<input type="text" class="inputname1" id="emid" name="employee.emid"><br/>
+									</div>
+									<div>
+										<span>&nbsp;&nbsp;姓	&nbsp;&nbsp;名：&nbsp;&nbsp;</span>
+										<input type="text" class="inputname2" id="emname" name="employee.emname"><br/>
+										<!--  性	别：<input type="text" class="inputname3" id="emsex" name="employee.emsex"><br/>-->
+									</div>
+									<div>
+										<span>&nbsp;&nbsp;性&nbsp;&nbsp;别：&nbsp;&nbsp;&nbsp;</span>
+										<select id="emsex">
+												<option>男</option>
+												<option>女</option>
 										</select><br/>
-									年	龄：<input type="text" class="inputname4" id="emage" name="employee.emage"><span id="emage_span"></span><br/>
-									电	话：<input type="text" class="inputname5" id="emphone" name="employee.emphone"><span id="emage_phone"></span><br/> 									
-									地	址：<input type="text" class="inputname6" id="emadress" name="employee.emadress"><br/>
-									就职时间：<input type="text" class="inputname7" id="emjointime" name="employee.emjointime" placeholder="0000年00月00日"><br/>
-									员工角色<select id="empart">									
-									</select><br/>
-									<!--  员工角色：<input type="text" class="inputname8" id="empart" name="empart"><br>-->
-									员工账号：<input type="text" class="inputname9" id="ementer" name="employee.ementer">											   								
+									</div>
+									<div>
+										<span>&nbsp;&nbsp;年	&nbsp;&nbsp;龄：&nbsp;&nbsp;</span>
+										<input type="text" class="inputname4" id="emage" name="employee.emage"><br/>
+									</div>
+									<div>
+										<span>&nbsp;&nbsp;电	&nbsp;&nbsp;话：&nbsp;&nbsp;</span>
+										<input type="text" class="inputname5" id="emphone" name="employee.emphone"><br/> 									
+									</div>
+									<div>
+										<span>&nbsp;&nbsp;地&nbsp;&nbsp;	址：&nbsp;&nbsp;</span>
+										<input type="text" class="inputname6" id="emadress" name="employee.emadress"><br/>
+									</div>
+									<div>
+										<span>就职时间：&nbsp;</span><input type="text" class="inputname7" id="emjointime" name="employee.emjointime" placeholder="0000年00月00日"><br/>
+									</div>
+									<div>
+										<span>员工角色：</span>
+										<select id="empart">
+											
+										</select><br/>
+									</div>
+									<div>
+										<!--  员工角色：<input type="text" class="inputname8" id="empart" name="empart"><br>-->
+										<span>员工账号：</span>
+										<select id="ementer">
+										
+										</select>
+									</div>
+									<!--  <input type="text" class="inputname9" id="ementer" name="employee.ementer">-->
+																			   								
+
 								</div>														
 								<div class="modal-footer">
-								<!-- 
-									关闭模态框按钮
-								 -->
-								<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
+								
 								<!-- 
 									点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
 								 -->
@@ -130,33 +186,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
 				<div class="text-center margin-big padding-big-top">
-							<h1>当前要修改的员工</h1>
+							<h2>当前要修改的员工</h2>
 				</div>
 				<div id="modalform">
 					<div>
-					    <span>员工姓名</span><input type="text" name="st.personNum" id="per"/>
+					    <span>&nbsp;&nbsp;姓&nbsp;&nbsp;名&nbsp;&nbsp;</span>
+					    <input type="text" name="st.personNum" id="per"/>
 					</div>
 					 <div>
-					   <span>员工编号</span><input type="text" name="st.deskName" id="perid"/>
+					   <span>&nbsp;&nbsp;编&nbsp;&nbsp;号&nbsp;&nbsp;</span>
+					   <input type="text" name="st.deskName" id="perid"/>
 					 </div>
 					  <div>
-					    <span>电话</span><input type="text" name="st.deskState" id="perphone"/>
+					    <span>&nbsp;&nbsp;电&nbsp;&nbsp;话&nbsp;&nbsp;</span>
+					    <input type="text" name="st.deskState" id="perphone"/>
 					  </div>
 					   <div>
-					    	<span>性别</span><input type="text" name="st.deskState" id="persex"/>
+					    	<span>&nbsp;&nbsp;性&nbsp;&nbsp;别&nbsp;&nbsp;</span>
+					    	<input type="text" name="st.deskState" id="persex"/>
 					   </div>
 					   <div>
-					    	<span>年龄</span><input type="text" name="st.deskState" id="perage"/>
+					    	<span>&nbsp;&nbsp;年&nbsp;&nbsp;龄&nbsp;&nbsp;</span>
+					    	<input type="text" name="st.deskState" id="perage"/>
 					   </div>
 					   <div>
-					    	<span>地址</span><input type="text" name="st.deskState" id="perdress"/>
+					    	<span>&nbsp;&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;</span>
+					    	<input type="text" name="st.deskState" id="perdress"/>
+					    </div>
+				   		<div>
+					    	<span>&nbsp;&nbsp;角&nbsp;&nbsp;色&nbsp;&nbsp;</span>
+					    	<input type="text" name="st.deskState" id="perpart"/>
 					    </div>
 					    <div>
 					    	<span>就职时间</span><input type="text" name="st.deskState" id="pertime"/>
 					    </div>
+
 				   		<div>
-					    	<span>角色</span><select id="perpart">
-					    		
+					    	<span>角色</span><select id="perpart">					    		
 					    	</select><!--  <input type="text" name="st.deskState" id="perpart"/>-->
 					    </div>
 					   <!--  <div>
@@ -195,8 +261,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						}
 					}				
 				},
+
 			});										
 		}
+
+		
+		/*
+			分页
+		*/
+
 		$(function(){
 			$(".minuspage").click(function(){			
 				var somename=$(this).attr("name");
@@ -228,6 +301,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				liyang(a);				
 			});			
 		});
+		/*
+			分页完成动态添加；
+		*/
 		function liyang(a){
 			$.ajax({				
 					url:"achieve_getpage.action",
@@ -434,9 +510,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});	
 		});
 		
-		/**
-		*	添加员工角色下拉框
-		*/
+
+			/*
+			* 点击添加员工；动态添加员工角色下拉框	
+			*/
+
 		$(function(){
 			$("#addstaffinfo").click(function(){
 				$.ajax({
@@ -454,7 +532,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});
 			});
 		});
-		
+		/*
+			 点击添加员工；动态添加员工账号下拉框	
+		*/
+		$(function(){
+			$("#addstaffinfo").click(function(){
+				$.ajax({
+					url:"achieve_appendlogin.action",
+					type:"post",
+					data:{},
+					success:function(data){
+					$("#ementer").html("");
+						var json=JSON.parse(data);						
+							$.each(json,function(index,value){							
+								var partname="<option value=\""+value[1]+"\">"+value[0]+"</option>";
+								$("#ementer").append(partname);
+							});
+							
+					}
+				});
+			});
+		});
 			/*
 			* 添加员工按钮，弹出模态框
 			* 

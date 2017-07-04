@@ -47,10 +47,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    <div class="padding border-bottom">
 	      <ul class="search">
 	        <li>																
-	          <a class="button border-yellow" href="fresh_dishmanage.action">查看所有</a>
+	          <a class="button border-yellow" href="fresh_dishmanage.action">查看所有</a>	
 	          <a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal" id="myMo"><span class="icon-plus-square-o"></span> 添加菜品</a>
          		<!-- 
-         			添加菜品模态框
+         			添加员工模态框
          		 -->
          
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<h4 class="modal-title" id="myModalLabel">添加菜品</h4>
 								</div>
 								<!-- 
-									添加菜品的输入框 
+									添加员工的输入框 ----form表单
 								 -->
 								<div class="modal-body1">
 									<div id="modb">
@@ -70,7 +70,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<div>									
 	    									<div>菜品类别:
 	      										<select id="sel">
-	        					
+	        										<option>凉菜</option>
+	        										<option>主食</option>
+	        										<option>拌饭</option>
+	       		 									<option>小炒</option>
+	        										<option>汤类</option>
 	     										 </select>
 	   										</div>														
 										</div><!--3-->
@@ -93,8 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<!-- 
 										保存模态框按钮   --- 可以此按钮跳转到一个servlet执行SQL语句，插入数据到数据库
 									 -->
-									<button type="submit" class="btn btn-primary"id="togo" data-dismiss="modal">保存</button>
-									
+									<button type="button" class="btn btn-primary"id="togo">保存</button>
 								</div>
 						   </div>
 						</div>
@@ -139,11 +142,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div id="modb">
 					<div>菜品名称:<input id="dishNamechg"/><span id="namechgNotnull"class="chgError">*菜品名称不能为空</span><span class="chgError" id="nameNothan">*菜品名不能大于20个字符</span></div><!--1-->
 					<div>菜品价格:<input id="pricechg"/><span class="chgError" id="pricechgNum">*必须输入数字</span><span id="pricechgNotnull"class="chgError">*价格不能为空</span></div><!--2-->								
-	    			<div><div>菜品类别:
+	    			<div>菜品类别:
 	      				<select id="selchg">
-	        			
+	        				<option>凉菜</option>
+	        				<option>主食</option>
+	        				<option>拌饭</option>
+	       		 			<option>小炒</option>
+	        				<option>汤类</option>
 	     				</select>
-	     				</div>
 	   				</div>														
 				
 					<div>菜品时间:<input id="makeTimechg"/><span class="chgError" id="TimechgNum">*必须输入数字 </span><span id="TimechgNotnull"class="chgError">*制作时间不能为空</span></div><!--4-->
@@ -190,7 +196,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var prtNu;
 			var maCopichg;
 			var maCopiNul;
-			var onepage;
     	
     		
     		/*
@@ -213,6 +218,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     /*添加菜品选项*/
 	$("#myMo").click(function(){
+		
 	
 				/*判断修改模态框中的值是否合法*/
 		
@@ -336,20 +342,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			}); 
 	
-		/*
-			添加菜品
-		*/
-		//$("#togo").click(function(){
-		
-			/*判断是否选择照片
-			$(function(){
-				$().click
-			});*/	
-		$("#togo").bind('click', function() {//绑定事件处理函数
-			$(this).unbind('click');//移除当前事件处理函数	
+	
+	
+	
+		$("#togo").click(function(){
 			var dishName=$("#dishName").val();
 			var price=$("#price").val();
-			var kindId=$("#sel option:selected").val();	
+			var kindId=$("#sel").val();	
 			var makeTime=$("#makeTime").val();
 			var priority=$("#priority").val();
 			var uppicture=$("#fileload").html();
@@ -359,6 +358,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			else if(kindId=="拌饭"){kindId=3;}
 			else if(kindId=="小炒"){kindId=4;}
 			else if(kindId=="汤类"){kindId=5;}
+			alert(uppicture);
 			
 			if( (namchg&&namNul)&&(prichg&&pricNul)&&(Timchg&&TimNul)&&(prtchg&&prtNul)&&(maCopichg&&maCopiNul)&& uppicture && kindId ){
 				$.ajax({
@@ -369,18 +369,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						if(data==-1){
 							alert("添加失败");
 						}else if(data==1){
-							//alert("添加成功");
-							//location.reload(true);
-							allpage("");
-									var inpval=parseInt($("#pagenum").html());
-									if(pagestate==1){
-									alert(pagestate);
-										$("#someone").val(inpval+1);
-										ces(inpval);//调用页面加载时自动查询数据库，显示桌台信息
-									}else{
-										$("#someone").val(inpval);
-										ces(inpval-1);
-									}
+							alert("添加成功");
 						}else{
 							alert("没有权限");
 						}		
@@ -404,7 +393,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 	 $("#prioritychg").val($("#f"+p1).html());
 		 	 $("#fileloadchg").text($("#j"+p1).html());
 			 $("#maxCopieschg").val($("#h"+p1).html());
-			 $("#selchg option:first").prop("selected",'selected');
+			 
 			 
 			 	 /*判断修改模态框中的值是否合法*/
 			//nameNothan
@@ -415,7 +404,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				namchg=false;
 			}else{
 				$("#namechgNotnull").css("display","none");
-				namchg=true;
+				namchg=true
 			}
 			
 			if(disnam.length>20){//输入的字符串不能大于20个
@@ -548,11 +537,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var picname=$("#fileloadchg").text();
 			var maco= $("#maxCopieschg").val();
 			
+		
+			
+		
 			if(sech=="凉菜"){sech=1;}	
 			else if(sech=="主食"){sech=2;}
 			else if(sech=="拌饭"){sech=3;}
 			else if(sech=="小炒"){sech=4;}
 			else if(sech=="汤类"){sech=5;}
+			 	
+			alert("name"+namchg);
+			alert("name2"+namNul);
+			alert("pricNul"+pricNul);
+			alert("prichg"+prichg);
+			alert("Timchg"+Timchg);
+			alert("TimNul"+TimNul);
+			alert("prtchg"+prtchg);
+			alert("prtNul"+prtNul);
+			alert("maCopichg"+maCopichg);
+			alert("namNul"+namNul);
+			 alert("dsid"+dsid);
+			 alert("sech"+sech); 
+			 alert("picname"+picname);
+			
 			if( (namchg&&namNul)&&(prichg&&pricNul)&&(Timchg&&TimNul)&&(prtchg&&prtNul)&&(maCopichg&&maCopiNul) && dsid && sech && picname){
 				$.ajax({
 					type:"post",
@@ -560,7 +567,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					data:{"fdCry.dishName":name,"fdCry.price":pri,"fdCry.kindId":sech,"fdCry.makeTime":mati,"fdCry.priority":pror,"fdCry.pictureName":picname,"fdCry.maxCopies":maco,"fdCry.dishState":19,"fdCry.dishId":dsid},
 					success:function(data){
 						alert("修改成功");
-						loaction.reload();
+						location.reload(true);   
 					}													
 				});
 			}else{
@@ -571,150 +578,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 		
 	});
-
-		/*显示具体数据*/
-		function ces(a){
-			$.ajax({				
-					url:"GJYFC_getpage.action",
-					type:"post",
-					data:{"countpage":a},
-					success:function(data){	
-					var json=JSON.parse(data);				
-						sekfood(json);							
-					}
-				});
-		}
-	function sekfood(json){
-		var th="<tr><td>菜品编号</td><td>菜品名称</td><td>菜品价格</td><td>类别</td><td>制作时间</td><td>优先级</td><td>菜品照片</td><td>最大并菜数</td></tr>";
-			 $("#tab").html("");
-			$("#tab").append(th);
-				$.each(json,function(index,value){
-					var emtable=
-						"<tr>"+
-						"<td id=\"amb"+value[0]+"\">"+value[0]+"</td>"+
-						"<td id=\"bmb"+value[0]+"\">"+value[1]+"</td>"+
-						"<td id=\"cmb"+value[0]+"\">"+value[2]+"</td>"+
-						"<td id=\"dmb"+value[0]+"\">"+value[3]+"</td>"+ 
-						"<td id=\"emb"+value[0]+"\">"+value[4]+"</td>"+
-						"<td id=\"fmb"+value[0]+"\">"+value[5]+"</td>"+
-						"<td id=\"gmb"+value[0]+"\"><img  src=\"../image/"+value[6]+
-						"\"  class=\"img-circle\" width=\"50\" height=\"50\"></td>"+
-						"<td id=\"hmb"+value[0]+"\">"+value[7]+"</td>"+
-						"<td><div class=\"button border-red deskbtn\" id=\"num"+value[0]+"\">"+
-						"<span class=\"icon-trash-o\"></span>删除 </div>"+
-						"<a type=\"button\" class=\"button border-main chgb\"data-toggle=\"modal\"data-target=\"#cgModal\" id=\"mb"+value[0]+"\">"+
-						"<span class=\con-edit\></span>修改</a></td></tr>";
-						$("#tab").append(emtable);
-				
-					});
-	};
-	
-	
-	/*删除选项*/
-	$(function(){
-		$("#tab").on('click',".deskbtn",function(){
-			var onepage=parseInt($("#someone").val());
-			var selct=confirm("确定要删除这条数据吗？");
-				if(selct==false){return};
-			var p1=$(this).attr("id");
-			var endStr=parseInt(p1.replace(/[^0-9]/ig,""));
-				endStr=parseInt(endStr); 
-				$.ajax({
-					type:"post",
-					url:"GJYFC_FCdelete.action",
-					data:{"fdCry.dishId":endStr},
-					success:function(data){
-						if(data==-1){
-							alert("删除失败");
-						}else if(data==1){
-							//alert("删除成功");
-							//location.reload(true); 
-							allpage("");
-									var inpval=parseInt($("#pagenum").html());
-									if(onepage==inpval && pagestate==0){
-									alert("s"+pagestate);
-										$("#someone").val(inpval-1);
-										ces(inpval-2);//调用页面加载时自动查询数据库，显示桌台信息
-									}else{
-									alert("d"+pagestate);
-										$("#someone").val(inpval);
-										ces(inpval-1);
-									}	  
-						}else{
-							alert("没有权限");
-						}		
-						
-				}													
-			});
+			
 		
-		});
-	});
-	
-	
-	
-	/*获得总页数及判断用户点击选项做出相应*/
-	var pagestate=0;
-	$(function(){
-			allpage("");
-			ces(0);						
-		});
-		function allpage(allput){
-			$.ajax({
-				url:"GJYFC_getcount.action",
-				type:"post",
-				data:{},
-				success:function(data){	
-				alert("data"+data);	
-					var pagesize=parseInt(data/5);				
-					if(data%5==0){
-						$("#pagenum").html(pagesize);
-						pagestate=1;					
-					}else if(data%5!=0){
-						$("#pagenum").html(parseInt(pagesize)+1);
-						if(data%5==1){
-							pagestate=0;
-						}
-					}				
-				},
-			});	
-					
-		}
-		/*
-			分页
+	/*
+			上传文件；
 		*/
-		$(function(){
-			$(".minuspage").click(function(){			
-				var somename=$(this).attr("name");	 
-				 	onepage=parseInt($("#someone").val());	
-				var pagesize=$("#pagenum").html();
-				if(somename=="firstname"){
-					onepage=1;					
-				}else if(somename=="minusname"){
-					
-					if(onepage<=1){
-						onepage=1;
-					}else{
-						onepage=onepage-1;
-					}
-				}else if(somename=="addname"){
-					if(onepage>=pagesize){
-						onepage = pagesize;
-					}else{
-						onepage = onepage +1;
-					}
-				}else{
-					onepage = pagesize;
-				}				
-				$("#someone").val(onepage);
-				a=onepage-1;
-				//alert(inputnum);	
-				ces(a);				
-			});			
-		});
-		
-		
-		
-		/*
+	$(function () {
+            $(".upload").click(function() {
+            alert(2);
+                var formData = new FormData();
+                //formData.append("myfile", $("#file1").files[0]);  
+                formData.append("myfile", document.getElementById("file1").files[0]);
+                $.ajax({
+                    url: "GJYFC_uploads.action",
+                    type: "POST",
+                    data: formData,
+                    /**
+                    *必须false才会自动加上正确的Content-Type
+                    */
+                    contentType: false,
+                    /**
+                    * 必须false才会避开jQuery对 formdata 的默认处理
+                    * XMLHttpRequest会对 formdata 进行正确的处理
+                    */
+                    processData: false,
+                    success: function (data) {
+                    alert(data);
+                    $("#fileload").html(data);
+                        if (data.status == "true") {
+                            alert("上传成功！");
+                        }
+                    },
+                    error: function () {
+                        alert("上传失败！");
+                       
+                    }
+                });
+            });
+        });
+	/*
 			上传文件；
 		*/
 	$(function () {
@@ -748,33 +650,155 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 });
             });
         });
-        
-        
-        
-     $(function(){
-       		var op=1;
-       		var oi=1;
-  		$.ajax({
-         	 url:"GJYFC_getselect.action",
-          	type:"POST",
-          	data:{},
-          	success:function(data){
-           	 	var json=JSON.parse(data);
-            	$.each(json,function(index,value){
-            	op++;
-            	oi++;
-				var emtable="<option value=\""+value[0]+"\"id=\"op"+op+"\">"+value[1]+"</option>";
-				$("#sel").append(emtable);	
-				$("#selchg").append(emtable);																							
-				
-				});
-			}
-		});		
-	});
-				
-
-  
    
+	/**function sekfood(json){
+		var th="<tr><td></td><td>菜品编号</td><td>菜品名称</td><td>菜品价格</td><td>类别</td><td>制作时间</td><td>优先级</td><td>菜品照片</td><td>最大并菜数</td></tr>";
+			 $("#tab").html("");
+			$("#tab").append(th);
+				$.each(json,function(index,value){
+					var emtable=
+						"<tr><td></td>"+
+						"<td id=\"amb"+value[0]+"\">"+value[0]+"</td>"+
+						"<td id=\"bmb"+value[0]+"\">"+value[1]+"</td>"+
+						"<td id=\"cmb"+value[0]+"\">"+value[2]+"</td>"+
+						"<td id=\"dmb"+value[0]+"\">"+value[3]+"</td>"+ 
+						"<td id=\"emb"+value[0]+"\">"+value[4]+"</td>"+
+						"<td id=\"fmb"+value[0]+"\">"+value[5]+"</td>"+
+						"<td id=\"gmb"+value[0]+"\"><img  src=\"../image/"+value[6]+
+						"\"  class=\"img-circle\" width=\"50\" height=\"50\"></td>"+
+						"<td id=\"hmb"+value[0]+"\">"+value[7]+"</td>"+
+						"<td><div class=\"button border-red deskbtn\" id=\"num"+value[0]+"\">"+
+						"<span class=\"icon-trash-o\"></span>删除 </div>"+
+						"<a type=\"button\" class=\"button border-main chgb\"data-toggle=\"modal\"data-target=\"#cgModal\" id=\"mb"+value[0]+"\">"+
+						"<span class=\con-edit\></span>修改</a></td></tr>";
+						$("#tab").append(emtable);
+				
+					});
+	};*/
+	
+	
+	/*删除选项*/
+	$(function(){
+		$("#tab").on('click',".deskbtn",function(){
+			var selct=confirm("确定要删除这条数据吗？");
+				if(selct==false){return};
+			var p1=$(this).attr("id");
+			var endStr=parseInt(p1.replace(/[^0-9]/ig,""));
+				endStr=parseInt(endStr); 
+				$.ajax({
+					type:"post",
+					url:"GJYFC_FCdelete.action",
+					data:{"fdCry.dishId":endStr},
+					success:function(data){
+						if(data==-1){
+							alert("删除失败");
+						}else if(data==1){
+							alert("删除成功");
+							location.reload(true);  	  
+						}else{
+							alert("没有权限");
+						}		
+						
+				}													
+			});
+		
+		});
+	});
+	
+	
+	
+	
+	
+	/*获得总页数及判断用户点击选项做出相应*/
+	
+	$(function(){
+			
+			$.ajax({
+				url:"GJYFC_getcount.action",
+				type:"post",
+				data:{},
+				success:function(data){						
+					if(data%2==0){
+						var pagesize=parseInt(data/2);
+						$("#pagenum").html(pagesize);					
+					}else{
+						var pagesize=parseInt(data/2);
+						$("#pagenum").html(pagesize);
+					}				
+				},
+			});	
+			ces(0);								
+		});
+		$(function(){
+			$(".minuspage").click(function(){			
+				var somename=$(this).attr("name");	 
+				var onepage=parseInt($("#someone").val());	
+				var pagesize=$("#pagenum").html();
+				if(somename=="firstname"){
+					onepage=1;					
+				}else if(somename=="minusname"){
+					
+					if(onepage<=1){
+						onepage=1;
+					}else{
+						onepage=onepage-1;
+					}
+				}else if(somename=="addname"){
+					if(onepage>=pagesize){
+						onepage = pagesize;
+					}else{
+						onepage = onepage +1;
+					}
+				}else{
+					onepage = pagesize;
+				}				
+				$("#someone").val(onepage);
+				a=onepage-1;
+				//alert(inputnum);	
+				ces(a);				
+			});			
+		});
+		
+		
+			/*显示具体数据*/
+		function ces(a){
+			$.ajax({				
+					url:"GJYFC_getpage.action",
+					type:"post",
+					data:{"countpage":a},
+					success:function(data){	
+					var json=JSON.parse(data);				
+					var th="<tr><td></td><td>菜品编号</td><td>菜品名称</td><td>菜品价格</td><td>类别</td><td>制作时间</td><td>优先级</td><td>菜品照片</td><td>最大并菜数</td></tr>";
+			 		$("#tab").html("");
+					$("#tab").append(th);
+				$.each(json,function(index,value){
+					var emtable=
+						"<tr><td></td>"+
+						"<td id=\"amb"+value[0]+"\">"+value[0]+"</td>"+
+						"<td id=\"bmb"+value[0]+"\">"+value[1]+"</td>"+
+						"<td id=\"cmb"+value[0]+"\">"+value[2]+"</td>"+
+						"<td id=\"dmb"+value[0]+"\">"+value[3]+"</td>"+ 
+						"<td id=\"emb"+value[0]+"\">"+value[4]+"</td>"+
+						"<td id=\"fmb"+value[0]+"\">"+value[5]+"</td>"+
+						"<td id=\"gmb"+value[0]+"\"><span id=\"jmb"+value[0]+
+						"\"></span>"+"<img src=\"../image/"+value[6]+
+						"\" class=\"img-circle\" width=\"50\" height=\"50\"/>"+"</td>"+
+						"<td id=\"hmb"+value[0]+"\">"+value[7]+"</td>"+
+						"<td><div class=\"button border-red deskbtn\" id=\"num"+value[0]+"\">"+
+						"<span class=\"icon-trash-o\"></span>删除 </div>"+
+						"<a type=\"button\" class=\"button border-main chgb\"+
+						"data-toggle=\"modal\"data-target=\"#cgModal\" id=\"mb"+value[0]+"\">"+
+						"<span class=\con-edit\></span>修改</a></td></tr>";
+						//$("#trtab").before(emtable);
+						img=value[6];
+						$("#tab").append(emtable);																							
+						});
+													
+					}
+				});
+		}
+	
+	
 </script>
 </body>
 </html>

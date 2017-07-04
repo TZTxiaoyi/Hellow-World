@@ -13,7 +13,32 @@
 		<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"></link>
 		<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 		<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+	<style>
+			.modal-body1 input{
+			width:40%;
+			height:40px;
+		}
+		.modal-body1 div{
+			margin-top:15px;
+			margin-left:10%;
+			margin-bottom:15px;
+		}
 		
+		.modal-body1 span{
+			font-size:20px;
+		}
+		#modalform div{
+			margin-top:15px;
+			margin-left:10%;
+		}
+		#modalform span{
+			font-size:20px;
+		}
+		#modalform input{
+			width:40%;
+			height:35px;
+		}
+	</style>
 		
 	</head>
 	<body>	
@@ -26,6 +51,7 @@
 		      <ul class="search" style="padding-left:10px;">       
 		        
 		        <li>
+		        	<a class="button border-yellow" href="fresh_staffid.action">查看所有</a>
 		         	<a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal">
 		         		<span class="icon-plus-square-o"></span>添加员工账号
 		         	</a>	         
@@ -50,22 +76,25 @@
 		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header">									
-						<h4 class="modal-title" id="myModalLabel">添加员工账号</h4>
+					<div class="modal-header">	
+						<!-- 
+							关闭模态框按钮
+						-->
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>								
+						<h2 class="modal-title" id="myModalLabel">添加员工账号</h2>
 					</div>
-									<!-- 
-										添加员工信息的输入框 ----
-									 -->									 
+						<!-- 
+							添加员工信息的输入框 ----
+						-->									 
 					<div class="modal-body1">
-															
-						账	号：<input type="text" id="ementer" name="ementer"><br/>
-						密	码：<input type="text" id="emword" name="emword"><br/>									
+						<div>								
+							<span>账	号：</span><input type="text" id="ementer" name="ementer"><br/>
+						</div>
+						<div>
+							<span>密	码：</span><input type="text" id="emword" name="emword"><br/>									
+						</div>
 					</div>
 					<div class="modal-footer">
-										<!-- 
-											关闭模态框按钮
-										 -->
-						<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
 										<!-- 
 											点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
 										 -->
@@ -80,36 +109,37 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
 						<div class="text-center margin-big padding-big-top">
-								<h1>密码或状态修改</h1>
+
+								<h2>密码或状态修改</h2>
 						</div>
-						<div id="modalform">
-							<!--<div>
-							    <span>账号</span><input type="text" name="st.personNum" id="per"/>
-							</div>  -->
-							 <div>
-							   <span>密码</span><input type="text" name="st.deskName" id="perid"/>
-							 </div>
-							  <!--<div>
-							    <span>当前状态</span><input type="text" name="st.deskState" id="perphone"/>
-							  </div>  -->					   
+					</div>
+					<div id="modalform">
+						<!--<div>
+							   <span>账号</span><input type="text" name="st.personNum" id="per"/>
+						</div>  -->
+						<div>
+							<span>&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;</span><input type="text" name="st.deskName" id="perid"/>
+
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>	
-						</div>
+						<div>
+							<span>当前状态</span><input type="text" name="st.deskState" id="perphone"/>
+						</div>					   
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
 					</div>
 				</div>
 			</div>
 		</div>
+		
 		<script type="text/javascript">
 			/*
 			*添加员工账号
 			*/
 			$(function(){
 				$("#addent").click(function(){
-				
 					var ementer = $("#ementer").val();
-					var emword	= $("#emword").val();
-						//alert("0000:"+ementer+"::"+emword);				
+					var emword	= $("#emword").val();				
 					if(ementer && emword){					
 						$.ajax({
 							type:"post",

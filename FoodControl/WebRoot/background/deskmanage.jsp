@@ -46,6 +46,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			width: 250px;
 			height: 40px;
 		}
+		#appenum,#appename{
+			color:red;
+		}
 	</style>
 </head>
 
@@ -97,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss=modal></button>
 						<div class="text-center margin-big padding-big-top">
-							<h1>桌位详细信息</h1>
+							<h2>桌位详细信息</h2>
 						</div>
 						 <div id="modalform">
 					    	<div>
@@ -105,17 +108,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    		<br/><span id="appenum"></span>
 					    	</div>
 					    	<div>
-					    		<span>桌位名字</span><input type="text" name="st.deskName" class="tableName"id="tablen"/>
+					    		<span>桌位名字 </span><input type="text" name="st.deskName" class="tableName"id="tablen"/>
 					    		<br/><span id="appename"></span>
 					    	</div>
 					    	<div class="fuze">
-					    		<span>负责人&nbsp;</span><select id="addtab">
+					    		<span>&nbsp;负&nbsp;责&nbsp;人&nbsp;</span><select id="addtab">
 					    			
 					    		</select>
 					    	</div>
-					    	<div>
-								<button type="submit" class="btn btn-warning btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
+					    	<div class="modal-footer">
+								<button type="submit" class="btn btn-primary btn-group-lg confirm-btn" data-dismiss="modal" >确认添加</button>	
 							</div>
+							
 					 </div>
 					</div>
 				</div>
@@ -132,18 +136,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close"></button>
 						<div class="text-center margin-big padding-big-top">
-							<h1>桌位详细信息</h1>
+							<h2>桌位详细信息</h2>
 						</div>
 						<div id="modalform">
 					    	<div>
 					    		<span>桌位人数 </span><input type="text" name="st.personNum" class="personNum" id="pname"/>
 					    	</div>
 					    	<div>
-					    		<span>桌位名字</span><input type="text" name="st.deskName" id="tableName" class="tableName"/>
+					    		<span>桌位名字 </span><input type="text" name="st.deskName" id="tableName" class="tableName"/>
 					    	</div>
 					    	
 					    	<div class="fuze">
-					    		<span>负责人&nbsp;</span><select  id="tableperson">
+					    		<span>&nbsp;负&nbsp;责&nbsp;人&nbsp;</span><select  id="tableperson">
 					    			
 					    		</select>
 					    	</div>
@@ -177,16 +181,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					url:"SxmTable_pageTotal.action",
 					type:"post",
 					data:{"search":allput},
-					success:function(data){
-					//alert(data);
-						var pagetotal=parseInt(data/3);	
-						if(data%3==0){
+					success:function(data){					
+					var pagetotal=parseInt(data/5);	
+						if(data%5==0){
 							$("#spanpage").html(pagetotal);
 							pagestate=1;
 						}
-						if(data%3!=0){
-							$("#spanpage").html(parseInt(pagetotal)+1);
-							pagestate=0;
+						if(data%5!=0){
+							$("#spanpage").html(parseInt(pagetotal)+1);							
+							if(data%5==1){
+								pagestate=0;
+							}
 						}
 					},
 				});
@@ -250,6 +255,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					success:function(data){
 						var json = JSON.parse(data);
 						refresh(json);
+						
 					}
 				});
 			}
@@ -259,7 +265,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#tab").on('click',".deskbtn",function(){
 				var deskbtn=$(this).attr("id");
 				var deskid=$("#desk"+deskbtn).html();
-				//var inpval=parseInt($("#pageinp").val());
+				var inpval=parseInt($("#pageinp").val());//获取当前页
 				if(confirm("您确定要删除吗?")){
 					$.ajax({
 						url:"SxmTable_delLineTable.action",
@@ -271,10 +277,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							alert("修改失败");
 							}else if(data==1){
 								allpage("");
-								var inpval=parseInt($("#spanpage").html());
-								if(pagestate==1){
-									$("#pageinp").val(inpval);
-									tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
+								var allinpval=parseInt($("#spanpage").html());//获取总页数
+								if(inpval==allinpval && pagestate==0){
+									$("#pageinp").val(inpval-1);
+									tabonload(inpval-2);//调用页面加载时自动查询数据库，显示桌台信息
 								}else{
 									$("#pageinp").val(inpval);
 									tabonload(inpval-1);
@@ -422,8 +428,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					   	"\"data-toggle=\"modal\" data-target=\"#myModal\">"+ 
 					   	"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
 						$("#tab").append(dd);
-					});			
+					});	
+					
+							
 			}
+			var sortBy = function (filed, rev, primer) {
+    	rev = (rev) ? -1 : 1;
+    		return function (a, b) {
+       	 	a = a[filed];
+        	b = b[filed];
+        	if (typeof (primer) != 'undefined') {
+            	a = primer(a);
+            	b = primer(b);
+        }
+        if (a < b) { return rev * -1; }
+        if (a > b) { return rev * 1; }
+        return 1;
+    }
+};
 			
 			/*
 				添加桌子信息
@@ -506,8 +528,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				if(reg.test(pnum)){
 					$("#appenum").html("请输入数字");
 				}
-				if(pnum>20){
-					$("#appenum").html("输入人数过多");
+				if(pnum>20||pnum<1){
+					$("#appenum").html("输入人数过多或过少");
 				}
 			});
 		</script>

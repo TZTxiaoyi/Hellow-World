@@ -60,8 +60,6 @@ public class LYInsertEmployDao {
 	 * 根据账号，找到账号对应的id 
 	 */
 	public int selectenterid(LYEmployId emword){
-		//System.out.println("000000000");
-		//System.out.println(emword.getEmword());
 		String sql="select enterId from staffEnter where account='"+emword.getEmenter()+"'";
 		List list = DaoFactory.Query(sql);
 		System.out.println(list);
@@ -104,7 +102,6 @@ public class LYInsertEmployDao {
 	public int emidinsert(LYEmployId eld){		
 		String sql="insert into staffEnter values(?,?,?)";
 		Object[] params = new Object[]{eld.getEmenter(),eld.getEmword(),2};
-
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
@@ -132,7 +129,6 @@ public class LYInsertEmployDao {
 	public int upstate(LYEmployId ld){
 		System.out.println("00000:::"+ld.getEmenter());
 		String sql="update staffEnter set enterState=3 where account=?";
-		
 		Object[] params = new Object[]{ld.getEmenter()};
 		return DaoFactory.Updata(sql, params);
 		
@@ -143,12 +139,8 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int update(LYEmployee em,int partId){
-
-		String sql="Update staffInfo set Name=?,sex=?,age=?,phone=?,adress=?,accession=?,partId=? where staffId=?";
-		
+		String sql="Update staffInfo set Name=?,sex=?,age=?,phone=?,adress=?,accession=?,partId=? where staffId=?";	
 		Object[] params=new Object[]{em.getEmname(),em.getEmsex(),em.getEmage(),em.getEmphone(),em.getEmadress(),em.getEmjointime(),partId,em.getEmid()};
-												
-		//System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+partId);
 		return DaoFactory.Updata(sql, params);
 	}
 	/**e
@@ -157,8 +149,11 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public List searchsome(String em){
-		//System.out.println(em.getEmid()+"ss");
-		String sql="select * from  staffinfo_sf where Name like'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or codeName like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%'";		
+		String sql="select * from  staffinfo_sf where Name like'%"+em+
+				"%' or staffId like'%"+em+"%' or phone like'%"+em+
+				"%' or codeName like'%"+em+"%' or age like'%"+em+
+				"%'  or adress like'%"+em+"%'  or accession like'%"+em+
+				"%' or partName like'%"+em+"%' or account like'%"+em+"%'";		
 		return DaoFactory.Query(sql);
 	}
 	/**
@@ -172,18 +167,18 @@ public class LYInsertEmployDao {
 
 		String sql="select s1.account,s1.pwd " +
 				" from staffEnter s1 " +
-				" where account='"+ld.getEmenter()+"' and pwd='"+ld.getEmword()+"' and enterState=1";
-		//Object[] params=new Object[]{ld.getEmenter(),ld.getEmword()};
+				" where account='"+ld.getEmenter()+
+				"' and pwd='"+ld.getEmword()+"' and enterState=1";
 		return DaoFactory.Query(sql); 
 	}
 	public String selectpart(LYEmployId ld){
 		String sql="select p1.partName"+
 				" from part p1,staffEnter s1,staffInfo st"+
-				" where p1.partId=st.partId and st.enterId=s1.enterId and account='"+ld.getEmenter()+"'";
+				" where p1.partId=st.partId and st.enterId=" +
+				"s1.enterId and account='"+ld.getEmenter()+"'";
 		List list = DaoFactory.Query(sql);
 		List list2 =(List) list.get(0);
 		String pname =(String) list2.get(0);
-		//System.out.println(pname);
 		return pname;
 	}
 	/**
@@ -204,11 +199,13 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public List pagepage(int startIndex){
+
 		//System.out.println("aaaaaaaaaa");
 		String sql="select top 5 ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName,ss.account"+
 				   " from (select * from staffinfo_sf s1 where s1.staffInfoState=19) ss where ss.staffId"+
 				   " not in (select top ("+startIndex+"*5) staffId from staffinfo_sf s2 where s2.staffInfoState =19) and ss.staffInfoState=19";
 		//System.out.println("ddddddddddd");         
+
 		return DaoFactory.Query(sql);
 	}
 	
@@ -216,7 +213,6 @@ public class LYInsertEmployDao {
 	 * 角色权限表实现类
 	 */
 	public List aperson(String partname){
-		//System.out.println("00000");
 		String sql="select pa.partName,pa.powersUul" +
 				" from pa_auth pa where partName='"+partname+"'";
 		return DaoFactory.Query(sql);
@@ -239,10 +235,8 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int addpartname(LyPart pt){
-		//System.out.println("444444");
 		String sql="insert into part values(?,?)";
 		Object[] params=new Object[]{pt.getPartname(),19};
-		//System.out.println(pt.getPartname());
 		return DaoFactory.Updata(sql, params);
 	}
 	/**
@@ -286,11 +280,8 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int updateid(LYEmployId em){
-
-		String sql="Update staffEnter set pwd=? where account=?";
-		
+		String sql="Update staffEnter set pwd=? where account=?";		
 		Object[] params=new Object[]{em.getEmword(),em.getEmenter(),};
-
 		//System.out.println(em.getEmname()+","+em.getEmsex()+","+em.getEmage()+","+em.getEmphone()+","+em.getEmadress()+","+em.getEmjointime()+","+em.getEmid());
 		return DaoFactory.Updata(sql, params);
 	}
@@ -308,13 +299,10 @@ public class LYInsertEmployDao {
 	 * selectpartId: 根据角色找到该角色id
 	 */
 	public int selectpartId(LyPart partname){
-		//System.out.println("-----");
 		String sql="select partId from part where partName='"+partname.getPartname()+"'";		
 		List list = DaoFactory.Query(sql);
 		List list1=(List) list.get(0);
-		//System.out.println("list1"+list1);
 		int list2=(Integer) list1.get(0);
-		//System.out.println("list2"+list2);
 		return list2;
 	}
 	/**
@@ -333,20 +321,17 @@ public class LYInsertEmployDao {
 	 * @param powersId：权限id的数组； 
 	 */
 	public void insertpowers(int partId,ArrayList<Integer> powersId){
-		//System.out.println("1314");
-		//System.out.println("55555:"+powersId.size());
 		for(int i=0; i<powersId.size();i++){
 			String sql="insert into part_powers values(?,?)";
 			Object[] params=new Object[]{partId,powersId.get(i)};
-			//System.out.println("9999:"+partId+powersId.get(i));
 			DaoFactory.Updata(sql, params);
 		}
-		//return null;
 	}
 	public List selectfu(){
 		String sql="select Name,staffId from staffInfo where partId=3";
 		return DaoFactory.Query(sql);
 	}
+
 	/**
 	 * 删除角色
 	 */
@@ -356,4 +341,10 @@ public class LYInsertEmployDao {
 		return DaoFactory.Updata(sql, params);
 	}
 	
+
+	public List applogin(){
+		String sql="select account from staffEnter where enterState=2";
+		return DaoFactory.Query(sql);
+	}
+
 }

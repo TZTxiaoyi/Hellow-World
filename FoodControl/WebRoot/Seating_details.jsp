@@ -200,31 +200,7 @@
   
   <script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
   <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
-
-  /* 		$(document).ready(function(){
-
-   			$("#btn").click(
-   				function(){
-   					alert("确认修改吗？");
-   				}
-   			);
-   			$("#add1").click(
-   				function(){
-   					
-   					alert($("#price").val);
-   				}
-   			);
-   		});
-   		$(function(){
-			$("#add").click(function(){
-				var price=$("#UPrice").html()*$("#Number").val();//价格*数量获得总价
-				var total=parseInt($("#Total").html())+price;//先转为int类型再做加法运算
-				$("#Total").html(total);//把当前菜的总价格加上当前订单的金额
-			});
-		});*/
-  </script>
-
+ 
   
   </head>
   
@@ -344,16 +320,16 @@
 		/*
 			系统加载自动运行;
 		*/
-	/*	$(function() {
+		$(function() {
 			setInterval("getTime()",1000);
 			if($("#order").html()!="undefined"){
 				setInterval("outtime()",1000);
 			}
-		});*/
+		});
 		/*
 			获取系统时间;
 		*/
-		/*function getTime(){
+		function getTime(){
 			var time = new Date();
    			$("#times").html(time.toLocaleString());
    			
@@ -399,7 +375,7 @@
 				$("#subject-style").html("<button type=\"button\" class=\"btn btn-danger\" id=\"cddd\">btn</button>");
 			});
 			
-		});*/
+		});
 		$(function(){
 			//$("#vageadd").hide();
 			if($("#order").html()!=""){
@@ -467,7 +443,7 @@
 						num=num+allnum;
 						if(value[12]!=21){
 							$("#callimgpay").show();
-							$("#clear").attr("disabled",false); 
+							
 						}
 					});
 					
@@ -475,7 +451,7 @@
 					$("#dname").html(dname);
 					$("#pnum").html(fnum);
 					$(".tred").html(ordersnum);	
-				 	$("#clear").attr("disabled",true); 
+				 
 					
 						
 				}
@@ -547,6 +523,7 @@
 					if(data!=-1){
 						outfood();
 					}
+					
 				}
 			});
 		});
@@ -567,24 +544,24 @@
 		*/
 		$("#anxious").click(function(){
 		var orderid=$("#order").html();
-		$.ajax({
-			url:"addfood_anxious.action",
-			type:"post",
-			data:{"addorder.ordersId":orderid},
-			success:function(data){
-				if(data!=-1){
-					alert("催菜成功！");
+			$.ajax({
+				url:"addfood_anxious.action",
+				type:"post",
+				data:{"addorder.ordersId":orderid},
+				success:function(data){
+					if(data!=-1){
+						alert("催菜成功！");
+					}
+					
 				}
-				
-			}
+			});
+		})
+		/*
+			刷新
+		*/
+		$("#shuxin").click(function(){
+			outfood();
 		});
-	})
-	/*
-		刷新
-	*/
-	$("#shuxin").click(function(){
-		outfood();
-	})
 
 		/*
 			清台
