@@ -143,8 +143,9 @@
 				$("#addent").click(function(){
 					var ementer = $("#ementer").val();
 					var emword	= $("#emword").val();				
-					if(ementer && emword && emword.length>=6 && ementer>=5){					
+					if(ementer && emword ){					
 						$.ajax({
+							async:false,
 							type:"post",
 							url:"achieve_enterid.action",
 							data:{"employId.ementer":ementer,"employId.emword":emword},
@@ -152,7 +153,7 @@
 								if(data==-1){
 									alert("添加失败");
 								}else if(data==1){								 	 
-									 allpages();
+									 allpages("");
 									 var inputvalue=parseInt($("#pagenum").html());//获取共多少页																	
 									 	if(pagestate==1){
 										 	$("#someone").val(inputvalue+1);
@@ -161,7 +162,6 @@
 									 		$("#someone").val(inputvalue);
 										 	liyang(inputvalue-1);
 									 	}										
-									alert("添加成功");
 								}else{
 									alert("没有权限");
 								}								
@@ -318,6 +318,7 @@
 					$(this).unbind('click');
 					//var sname=$("#per").val();//修改后将值传给action
 					var sid=$("#perid").val();
+					var inputvalue=parseInt($("#someone").val());
 					$.ajax({
 						url:"achieve_updatestaffid.action",
 						type:"post",
@@ -326,9 +327,9 @@
 							if(data==-1){
 								alert("修改失败");
 							}else if(data==1){
-								var inputvalue=parseInt($("#someone").val());
+								
 								//alert("565:"+inputvalue)
-								liyang(inputvalue);
+								liyang(inputvalue-1);
 								alert("修改成功");
 							}else{
 								alert("没有权限");
@@ -347,6 +348,7 @@
 			//alert("sss:"+alterbtn);
 			var namehtml =$("#a"+alterbtn).html();	
 			$.ajax({
+				async:false,
 				url:"achieve_delaccount.action",
 				type:"post",
 				data:{"employId.ementer":namehtml},
@@ -354,17 +356,16 @@
 					if(data==-1){
 						alert("删除失败");
 					}else if(data==1){
-						allpages();
+						allpages("");
 						var inputvalue=parseInt($("#someone").val());//获取当前页																
-					if(pagestate==0){								 	
+					if(pagestate==0){							 	
 						$("#someone").val(inputvalue-1);
 						liyang(inputvalue-2);
-					}else{
+					}else{	
 						$("#someone").val(inputvalue);
 								//alert("565:"+inputvalue)
 						liyang(inputvalue-1);								
 					}
-						alert("删除成功");
 					}else{
 						alert("没有权限");
 					}				

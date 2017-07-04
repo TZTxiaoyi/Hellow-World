@@ -298,7 +298,7 @@ function DelSelect(){
 					}				
 				},
 			});								
-	};
+		};
 
 		/*
 			分页
@@ -352,8 +352,7 @@ function DelSelect(){
 					var json=JSON.parse(data);				
 						var th="<tr><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>账号</td><td>操作</td></tr>";
 					 	$("#tableid").html("");	
-					 	$("#tableid").append(th);
-					 
+					 	$("#tableid").append(th);					 
 						$.each(json,function(index,value){
 						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
 							var emtable=
@@ -539,8 +538,6 @@ function DelSelect(){
 				var deskbtn=$(this).attr("id");
 				var emhtml = $("#b"+deskbtn).html();
 				var ementer =$("#i"+deskbtn).html();
-		
-			
 				$.ajax({
 					url:"achieve_delem.action",
 					type:"post",
@@ -549,10 +546,10 @@ function DelSelect(){
 						if(data==-1){
 							alert("删除失败");
 						}else if(data==1){
-							allpages();
-							var inputvalue=parseInt($("#someone").val());//获取当前页								
-								
-							if(pagestate==0){								 	
+							pagetotal();
+							var inputvalue=parseInt($("#someone").val());//获取当前页																
+							if(pagestate==0){
+							alert("111:"+inputvalue);								 	
 								$("#someone").val(inputvalue-1);
 								liyang(inputvalue-2);
 							}else{
@@ -648,13 +645,13 @@ function DelSelect(){
 							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,
 							"partname.partname":empart,"employId.ementer":ementer},
 						success:function(data){
+							alert(data);
 							if(data==-1){
 								alert("添加失败");
 							}else if(data==1){
-									allpages();
-									 var inputvalue=parseInt($("#pagenum").html());//获取共多少页								
-									// alert("9999:"+inputvalue);
-									
+									pagetotal();
+								
+									 var inputvalue=parseInt($("#pagenum").html());//获取共多少页																										
 									 	if(pagestate==1){
 										 	$("#someone").val(inputvalue+1);
 										 	//alert("565:"+inputvalue)
@@ -663,8 +660,7 @@ function DelSelect(){
 									 		$("#someone").val(inputvalue);
 										 	//alert("565:"+inputvalue)
 										 	liyang(inputvalue-1);
-									 	}								 	
-									 
+									 	}								 										 
 								alert("添加成功");
 							}else{
 								alert("没有权限");
