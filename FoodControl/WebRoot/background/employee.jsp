@@ -19,6 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"></link>
 	<script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+
 	
 	<style>
 		.modal-body1 input{
@@ -45,6 +46,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		#modalform input{
 			width:40%;
 			height:35px;
+
+		}
+		#emid_span{
+			color:red;
+		}
+		#emage_span{
+			color:red;
+		}
+		#emphone_span{
+			color:red;
 		}
 	</style>
 </head>
@@ -87,12 +98,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<div class="modal-body1">
 									<div>
 										<span>&nbsp;&nbsp;编	&nbsp;&nbsp;号：&nbsp;&nbsp;</span>
-										<input type="text" class="inputname1" id="emid" name="employee.emid"><br/>
+										<input type="text" class="inputname1" id="emid" name="employee.emid"><span id="emid_span"></span><br/>
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;姓	&nbsp;&nbsp;名：&nbsp;&nbsp;</span>
 										<input type="text" class="inputname2" id="emname" name="employee.emname"><br/>
-										<!--  性	别：<input type="text" class="inputname3" id="emsex" name="employee.emsex"><br/>-->
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;性&nbsp;&nbsp;别：&nbsp;&nbsp;&nbsp;</span>
@@ -103,11 +113,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;年	&nbsp;&nbsp;龄：&nbsp;&nbsp;</span>
-										<input type="text" class="inputname4" id="emage" name="employee.emage"><br/>
+										<input type="text" class="inputname4" id="emage" name="employee.emage"><span id="emage_span"></span><br/>
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;电	&nbsp;&nbsp;话：&nbsp;&nbsp;</span>
-										<input type="text" class="inputname5" id="emphone" name="employee.emphone"><br/> 									
+										<input type="text" class="inputname5" id="emphone" name="employee.emphone"><span id="emphone_span"></span><br/> 									
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;地&nbsp;&nbsp;	址：&nbsp;&nbsp;</span>
@@ -122,8 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 											
 										</select><br/>
 									</div>
-									<div>
-										<!--  员工角色：<input type="text" class="inputname8" id="empart" name="empart"><br>-->
+									<div>					
 										<span>员工账号：</span>
 										<select id="ementer">
 										
@@ -131,6 +140,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</div>
 									<!--  <input type="text" class="inputname9" id="ementer" name="employee.ementer">-->
 																			   								
+
 								</div>														
 								<div class="modal-footer">
 								
@@ -211,15 +221,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    	<input type="text" name="st.deskState" id="perdress"/>
 					    </div>
 				   		<div>
-					    	<span>&nbsp;&nbsp;角&nbsp;&nbsp;色&nbsp;&nbsp;</span>
-					    	<input type="text" name="st.deskState" id="perpart"/>
+					    	<span>角色</span><select id="perpart">					    		
+					    	</select>
 					    </div>
 					    <div>
 					    	<span>就职时间</span><input type="text" name="st.deskState" id="pertime"/>
 					    </div>
-					   <!--  <div>
-					    	<span>负责桌台</span><input type="text" name="st.deskState" id="pertable"/>
-					    </div>	-->
+
+				   							 
 					 </div>
 					</div>
 					<div class="modal-footer">
@@ -231,6 +240,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 <script type="text/javascript">
+
 
 function del(id){
 	if(confirm("您确定要删除吗?")){
@@ -282,13 +292,18 @@ function DelSelect(){
 					}else{
 						var pagesize=parseInt(data/5)+1;
 						$("#pagenum").html(pagesize);
+						if(data%5==1){
+							pagestate=0;
+						}
 					}				
 				},
 			});								
 	};
+
 		/*
 			分页
 		*/
+
 		$(function(){
 			$(".minuspage").click(function(){	
 				var somename=$(this).attr("name");
@@ -298,8 +313,7 @@ function DelSelect(){
 				var pagesize=$("#pagenum").html();
 				if(somename=="firstname"){
 					onepage=1;					
-				}else if(somename=="minusname"){
-					
+				}else if(somename=="minusname"){				
 					if(onepage<=1){
 						onepage=1;
 					}else{
@@ -336,14 +350,14 @@ function DelSelect(){
 					data:{"countpage":a},
 					success:function(data){					
 					var json=JSON.parse(data);				
-						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>账号</td><td>操作</td></tr>";
+						var th="<tr><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>账号</td><td>操作</td></tr>";
 					 	$("#tableid").html("");	
 					 	$("#tableid").append(th);
 					 
 						$.each(json,function(index,value){
 						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
 							var emtable=
-								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
+								"<tr><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
 								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
 								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
@@ -395,13 +409,11 @@ function DelSelect(){
 					success:function(data){
 					var json=JSON.parse(data);
 					$("#tableid").html("");
-						var th="<tr><td></td><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>账号</td><td>操作</td></tr>";
+						var th="<tr><td>员工姓名</td><td>员工编号</td><td>电话</td><td>性别</td><td>年龄</td><td>地址</td><td>就职时间</td><td>角色</td><td>账号</td><td>操作</td></tr>";
 					 	$("#tableid").append(th);
 						$.each(json,function(index,value){
-						
-						//value[6].getfullyear+"-"+value[6].getfullmonth+"-"+value[6].getfullmonth
 							var emtable=
-								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
+								"<tr><td></td><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
 								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[8]+"</td><td id=\"inum"+value[1]+"\">"+value[9]+"</td>"+
 								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
@@ -413,9 +425,7 @@ function DelSelect(){
 						var emtable="<tr id=\"trtab\">"+
 	        				"<td colspan=\"10\">"+
 	        				"<div class=\"pagelist\"> <a href=\"\">上一页</a> <span class=\"current\">1</span><a href=\"\">2</a><a href=\"\">3</a><a href=\"\">下一页</a><a href=\"\">尾页</a> </div></td></tr>"						
-						$("#trtab").append(emtable);
-						
-						
+						$("#trtab").append(emtable);					
 					}
 				});
 		}
@@ -439,7 +449,7 @@ function DelSelect(){
 				var agehtml =$("#e"+alterbtn).html();
 				var adresshtml =$("#f"+alterbtn).html();
 				var timehtml =$("#g"+alterbtn).html();
-				var parthtml =$("#h"+alterbtn).html();
+				//var parthtml =$("#h"+alterbtn).html();
 				
 				 
 				
@@ -450,9 +460,9 @@ function DelSelect(){
 				$("#perage").val(agehtml);
 				$("#perdress").val(adresshtml);
 				$("#pertime").val(timehtml);
-				$("#perpart").val(parthtml);
+				//$("#perpart").val(parthtml);
 				//$("#pertable").val(tablehtml);		
-				
+				updpart();
 				update(idhtml);					
 			});
 			function update(idhtml){
@@ -465,7 +475,7 @@ function DelSelect(){
 					var sage=$("#perage").val();
 					var sadress=$("#perdress").val();
 					var stime=$("#pertime").val();
-					var spart=$("#perpart").val();
+					var spart=$("#perpart option:selected").html();
 					//var stable=$("#per").val();
 					//alert(spart);
 					if(ssex=="女"){
@@ -482,16 +492,40 @@ function DelSelect(){
 							if(data==-1){
 								alert("修改失败");
 							}else if(data==1){
+								var inputvalue=parseInt($("#someone").val());
+									 	//alert("565:"+inputvalue)
+								liyang(inputvalue-1);
 								alert("修改成功");
 							}else{
 								alert("没有权限");
 							}		
-							liyang();								
+														
 						}
 					});
 				});
 			}
 		});
+		/**
+		*	修改员工 角色下拉框
+		*/
+		function updpart(){
+				$.ajax({
+					url:"achieve_selpa.action",
+					type:"post",
+					data:{},
+					success:function(data){
+					//alert(data);
+						$("#perpart").html("");
+						var json=JSON.parse(data);
+												
+							$.each(json,function(index,value){							
+								var partname="<option value=\""+value[1]+"\">"+value[0]+"</option>";
+								$("#perpart").append(partname);
+							});				
+					}
+				});
+			
+		}
 			/*
 			* tableid：表id
 			* deskbtn：删除id
@@ -515,19 +549,31 @@ function DelSelect(){
 						if(data==-1){
 							alert("删除失败");
 						}else if(data==1){
+							allpages();
+							var inputvalue=parseInt($("#someone").val());//获取当前页								
+								
+							if(pagestate==0){								 	
+								$("#someone").val(inputvalue-1);
+								liyang(inputvalue-2);
+							}else{
+								$("#someone").val(inputvalue);
+								//alert("565:"+inputvalue)
+								liyang(inputvalue-1);								
+							}
 							alert("删除成功");
 						}else{
 							alert("没有权限");
-						}		
-						liyang();										
+						}																	
 					}
 				});
 			});	
 		});
 		
+
 			/*
 			* 点击添加员工；动态添加员工角色下拉框	
 			*/
+
 		$(function(){
 			$("#addstaffinfo").click(function(){
 				$.ajax({
@@ -540,8 +586,7 @@ function DelSelect(){
 							$.each(json,function(index,value){							
 								var partname="<option value=\""+value[1]+"\">"+value[0]+"</option>";
 								$("#empart").append(partname);
-							});
-							
+							});							
 					}
 				});
 			});
@@ -578,8 +623,7 @@ function DelSelect(){
 		
 			$("#addem").click(function(){
 			
-				var emid=$("#emid").val();
-				
+				var emid=$("#emid").val();				
 				var emname=$("#emname").val();
 				var emsex=$("#emsex option:selected").val();
 				//alert("55555:"+emsex);
@@ -588,10 +632,9 @@ function DelSelect(){
 				var emphone=$("#emphone").val();
 				var emadress=$("#emadress").val();
 				var emjointime=$("#emjointime").val();
-				var empart=$("#empart option:selected").html();
-				
-				var ementer=$("#ementer"). val();
-					
+				var empart=$("#empart option:selected").html();			
+				var ementer=$("#ementer option:selected").html();
+				alert(ementer);	
 				//alert(empart+";"+ementer);							
 					if(emsex=="男"){
 						emsex=4;
@@ -608,6 +651,20 @@ function DelSelect(){
 							if(data==-1){
 								alert("添加失败");
 							}else if(data==1){
+									allpages();
+									 var inputvalue=parseInt($("#pagenum").html());//获取共多少页								
+									// alert("9999:"+inputvalue);
+									
+									 	if(pagestate==1){
+										 	$("#someone").val(inputvalue+1);
+										 	//alert("565:"+inputvalue)
+										 	liyang(inputvalue);
+									 	}else{
+									 		$("#someone").val(inputvalue);
+										 	//alert("565:"+inputvalue)
+										 	liyang(inputvalue-1);
+									 	}								 	
+									 
 								alert("添加成功");
 							}else{
 								alert("没有权限");
@@ -617,23 +674,39 @@ function DelSelect(){
 				
 			});
 		});	
-	
 		/**
-		*员工id失焦事件
+		* 添加员工编号聚焦事件
+		*/
+		$("#emid").focus(function(){
+			$("#emid_span").html("");
+		});
+		/**
+		*员工编号失焦事件
 		*/
 		
-	$("#emid").blur(function() {			
+	$("#emid").blur(function(){
+				var emidvalue=$("#emid").val();
+				//alert("sss:"+emidvalue);
+				if(emidvalue==""){				
+					$("#emid_span").html("员工编号必须填写！");
+				}			
 				$.ajax({
 					url : "achieve_selemid.action",
 					type : "post",
 					data : {"employee.emid":$(this).val()},
-					success : function(data) {						
+					success : function(data){						
 						if (data == 1) {
-							alert("该员工编号已存在！");
+							$("#emid_span").html("该员工编号已存在！");
 						}
 					},
 				});
 			});
+	/**
+		* 添加员工姓名聚焦事件
+		*/
+		$("#emname").focus(function(){
+			$("#emname_span").html("");
+		});
 	/**
 	* 员工姓名失焦事件验证
 	*/
@@ -642,36 +715,54 @@ function DelSelect(){
 				var tname=$(this).val();
 				//alert(tname);
 				if(tname.length>20||tname.length<1){
-					alert("长度有误！");
+					$("#emname_span").html("长度有误！");
 				}else if(reg.test(tname)){
 				}else{
-					alert("格式有误");
+					$("#emname_span").html("格式有误");
 				}
 	});
+	/**
+	*	聚焦清空提示信息
+	*/
 	
+	$("#emage").focus(function(){
+		$("#emage_span").html("");
+	});
 	   /**
-		* 表单验证年龄
-		*/
-	
+		* 失焦表单验证年龄
+		*/	
 	$("#emage").blur(function(){	
 		var	emage=parseInt($("#emage").val());
 			if(emage<=18 || emage>=60){
-				alert("年龄或大或小");
+				$("#emage_span").html("年龄或大或小");
 			}
-		//var reg = 
 	});
-	
 	/**
-	* 表单验证手机号
+	* 聚焦清空提示信息
+	*/	
+	$("#emphone").focus(function(){	
+		$("#emphone_span").html("");
+	})
+	/**
+	* 失焦表单验证手机号
 	*/	
 	$("#emphone").blur(function(){	
 		var reg=new RegExp("^1[0-9]{10}","gi");
 		var emphone=$("#emphone").val();
 		if(reg.test(emphone)){			
 		}else{
-			alert("号码格式有误");
+			$("#emphone_span").html("号码格式有误");
 		}
-	})
+	});
+		/**
+		* 跳转点击事件
+		*/
+		$(function(){
+			$("#commitone").click(function(){
+				var inputpage=paprseInt($("#someone").val());
+				liyang(inputpage-1);
+			});
+		});
 </script>
 
 </body>

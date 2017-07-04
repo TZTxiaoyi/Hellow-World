@@ -94,7 +94,7 @@ public class TztQuerDishAction {
 		rep.setContentType("text/html;charset=utf-8");
 		createImp(method);
 		List result= sort.queryMade();
-		System.out.println("made"+result);
+		//System.out.println("made"+result);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {
@@ -118,14 +118,18 @@ public class TztQuerDishAction {
 		HttpServletResponse rep =ServletActionContext.getResponse();
 
 		Integer desknum = (Integer) session.getAttribute("desk");
+		String username	= (String) session.getAttribute("username");
+		List listvalue = (List) session.getAttribute("listvalue");
 		if(desknum!=null){
 			session.removeAttribute("desk");
 		}
 		rep.setContentType("html/text;charset =utf-8");
 		createImp(method);
 		List result= sort.queryMading();
-		System.out.println("mading"+result);
+		//System.out.println("mading"+result);
 		session.setAttribute("desk", desknum);
+		session.setAttribute("username",username);
+		session.setAttribute("listvalue", listvalue);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {

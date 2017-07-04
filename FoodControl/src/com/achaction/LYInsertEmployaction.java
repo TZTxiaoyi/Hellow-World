@@ -90,6 +90,7 @@ public class LYInsertEmployaction {
 	 */
 	public void selemid(){
 		HttpServletResponse response=ServletActionContext.getResponse();
+		System.out.println(00000);
 		List list=ied.selstaffid(employee);		
 		try {	
 				response.getWriter().print(list.size());
@@ -124,10 +125,24 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");	
+		//System.out.println("888888888");
 		List list = ied.selpaList();
-		JSON json=toJson.toJson("value", list);		
+		JSON json=toJson.toJson("value", list);	
+		//System.out.println(json);
 		try {
 			response.getWriter().print(json);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	/**
+	 * 删除账号
+	 */
+	public void delaccount(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int flag=ied.delnumber(employId);
+		try {
+			response.getWriter().print(flag);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -139,15 +154,14 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");	
-		List list=ied.searchacclist(putvalue);
+		List list=ied.searchacclist(countpage,putvalue);
 		JSON json=toJson.toJson("value", list);
 		System.out.println(json);
 		try {
 			response.getWriter().print(json);
 		} catch (Exception e) {
 			// TODO: handle exception
-		}
-		
+		}		
 	}
 	/**
 	 * emterid：得到前端响应，调用enterid方法，
@@ -238,6 +252,7 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		} 	
 	}
+	
 	/**
 	 * searchEM:模糊查询action
 	 */
@@ -260,8 +275,7 @@ public class LYInsertEmployaction {
 	/**
 	 * getcount:获得员工表数据条数action
 	 */
-	public void getcount(){
-		
+	public void getcount(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int a=-1;
 		if(pageflag==0){
@@ -282,14 +296,12 @@ public class LYInsertEmployaction {
 	 * getpage:由前台data传来的值，countpage接收，调用pagepage(实现类方法)
 	 * 得到返回list，将查询的结果放到json中，返回给前台data
 	 */
-	public void getpage(){
-		
+	public void getpage(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
 		List list=ied.pagepage(countpage);
-		JSON json=toJson.toJson("value", list);
-		System.out.println("getpage:"+list);
+		JSON json=toJson.toJsonArray("value", list);
 		try {
 			response.getWriter().print(json);
 		} catch (Exception e) {
@@ -341,7 +353,7 @@ public class LYInsertEmployaction {
 	public void getaccount(){
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int a=ied.getpages();		
+		int a=ied.getpages(putvalue);		
 		try {
 			response.getWriter().print(a);
 		} catch (Exception e) {
@@ -358,7 +370,7 @@ public class LYInsertEmployaction {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
 		List list=ied.setpages(countpage);
-		JSON json=toJson.toJson("value", list);
+		JSON json=toJson.toJsonArray("value", list);
 		//System.out.println(json);
 		try {
 			response.getWriter().print(json);

@@ -149,8 +149,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div>菜品时间:<input id="makeTimechg"/><span class="chgError" id="TimechgNum">*必须输入数字 </span><span id="TimechgNotnull"class="chgError">*制作时间不能为空</span></div><!--4-->
 					<div>菜品等级:<input id="prioritychg"/></span><span class="chgError" id="priochgNum">*必须输入数字</span><span id="piochgNotnull"class="chgError">*优先级不能为空</div><!--5-->
 					<div id="loag">
-						<input type="file" id="file1"/><span id="fileloadchg">未设置图片名称</span></br>
-						<input type="button" id="upload" value="上传图片" />
+						<input type="file" id="file2"/><span id="fileload2"></span></br>
+						<input type="button" id="upload2" value="上传图片" />
 					</div>
 					<div>可并菜数:<input id="maxCopieschg"/><span class="chgError" id="MaxchgNum">*必须输入数字</span><span id="MaxchgNotnull"class="chgError">*并菜数不能为空</span></div><!--7-->
 				</div> 	
@@ -158,7 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 				</button>
-				<button type="button" class="btn btn-primary"id="caghave">
+				<button type="submit" class="btn btn-primary"id="caghave" data-dismiss="modal">
 					提交更改
 				</button>
 			</div>
@@ -198,18 +198,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			*/
 			
 			$("#sekbt").click(function(){
-				var allput=$("#sekm").val();
+				var currpage=0;
+				fastsearch(currpage);
+				$("#someone").val("1");
+		});
+		function fastsearch(curr){
+			var allput=$("#sekm").val();
+			allpage(allput);
 				$.ajax({
 					url:"GJYFC_seekfood.action",
 					type:"post",
-					data:{"search":allput},
+					data:{"countpage":curr,"search":allput},
 					success:function(data){
 						var json = JSON.parse(data);
 						sekfood(json);
 				}
 			});
-		});
-			
+		}
     
     /*添加菜品选项*/
 	$("#myMo").click(function(){
@@ -374,7 +379,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							allpage("");
 									var inpval=parseInt($("#pagenum").html());
 									if(pagestate==1){
-									alert(pagestate);
 										$("#someone").val(inpval+1);
 										ces(inpval);//调用页面加载时自动查询数据库，显示桌台信息
 									}else{
@@ -532,20 +536,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			 
 		$("#caghave").click(function(){
-		
+			
 		  		$("#dishNamechg").trigger("blur");
 			  	$("#pricechg").trigger("blur");
 			  	$("#makeTimechg").trigger("blur");
 			  	$("#prioritychg").trigger("blur");
 			  	$("#maxCopieschg").trigger("blur");
-			  	
+			var aa=$("#someone").val();	
 			var dsid=$("#a"+p1).html();
 			var name=$("#dishNamechg").val();
 			var pri=$("#pricechg").val();
 			var sech= $("#selchg").val();
 			var mati=$("#makeTimechg").val();
 			var pror= $("#prioritychg").val();
-			var picname=$("#fileloadchg").text();
+			var picname=$("#fileload2").html();
 			var maco= $("#maxCopieschg").val();
 			
 			if(sech=="凉菜"){sech=1;}	
@@ -559,8 +563,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					url:"GJYFC_FCchange.action",
 					data:{"fdCry.dishName":name,"fdCry.price":pri,"fdCry.kindId":sech,"fdCry.makeTime":mati,"fdCry.priority":pror,"fdCry.pictureName":picname,"fdCry.maxCopies":maco,"fdCry.dishState":19,"fdCry.dishId":dsid},
 					success:function(data){
-						alert("修改成功");
-						loaction.reload();
+						
+						//loaction.reload();
+						ces(aa-1);
 					}													
 				});
 			}else{
@@ -602,7 +607,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						"<td id=\"hmb"+value[0]+"\">"+value[7]+"</td>"+
 						"<td><div class=\"button border-red deskbtn\" id=\"num"+value[0]+"\">"+
 						"<span class=\"icon-trash-o\"></span>删除 </div>"+
-						"<a type=\"button\" class=\"button border-main chgb\"data-toggle=\"modal\"data-target=\"#cgModal\" id=\"mb"+value[0]+"\">"+
+						"<a class=\"button border-main chgb\"data-toggle=\"modal\"data-target=\"#cgModal\" id=\"mb"+value[0]+"\">"+
 						"<span class=\con-edit\></span>修改</a></td></tr>";
 						$("#tab").append(emtable);
 				
@@ -662,9 +667,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$.ajax({
 				url:"GJYFC_getcount.action",
 				type:"post",
-				data:{},
+				data:{"search":allput},
 				success:function(data){	
-				alert("data"+data);	
 					var pagesize=parseInt(data/5);				
 					if(data%5==0){
 						$("#pagenum").html(pagesize);
@@ -685,7 +689,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$(function(){
 			$(".minuspage").click(function(){			
 				var somename=$(this).attr("name");	 
-				 	onepage=parseInt($("#someone").val());	
+				var	onepage=parseInt($("#someone").val());
+				var allput=$("#sekm").val();	
 				var pagesize=$("#pagenum").html();
 				if(somename=="firstname"){
 					onepage=1;					
@@ -708,20 +713,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#someone").val(onepage);
 				a=onepage-1;
 				//alert(inputnum);	
-				ces(a);				
+				
+				if(allput==""){
+						ces(a);	
+				}else{
+					fastsearch(a);
+				}			
 			});			
 		});
 		
 		
 		
 		/*
+			添加上传文件；
+		*/
+		
+		$(function () {
+            $("#upload").click(function () {
+            	var a=$("#file1").attr("id");
+            	var b=$("#fileload").attr("id");
+                upload(a,b)
+            });
+        });
+        /*
+			修改上传文件；
+		*/
+       	$(function () {
+            $("#upload2").click(function () {
+                var a=$("#file2").attr("id");
+            	var b=$("#fileload2").attr("id");
+                upload(a,b)
+            });
+        });
+        /*
 			上传文件；
 		*/
-	$(function () {
-            $("#upload").click(function () {
-                var formData = new FormData();
+        function upload(file,id){
+        	alert("f"+file);
+        	alert("s"+id);
+        	var formData = new FormData();
                 //formData.append("myfile", $("#file1").files[0]);  
-                formData.append("myfile", document.getElementById("file1").files[0]);
+                formData.append("myfile", document.getElementById(file).files[0]);
                 $.ajax({
                     url: "GJYFC_uploads.action",
                     type: "POST",
@@ -736,7 +768,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     */
                     processData: false,
                     success: function (data) {
-                    $("#fileload").html(data);
+                    $("#"+id).html(data);
+                    //$("#fileloadchg").html(data);
                         if (data.status == "true") {
                             alert("上传成功！");
                         }
@@ -746,9 +779,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        
                     }
                 });
-            });
-        });
-        
+        }
         
         
      $(function(){

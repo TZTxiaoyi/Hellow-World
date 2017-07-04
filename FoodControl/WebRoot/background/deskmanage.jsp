@@ -83,7 +83,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						
 					</table>
 					<div class="pagelist">
-						<a name="first" class="page" href="#">首页</a><a name="minus" class="page" href="#">上一页</a><a name="add" class="page" href="#">下一页</a><a name="last" class="page" href="#">尾页</a><input type="text" id="pageinp" value="1" size="5"/>
+						<a name="first" class="page" href="#">首页</a>
+						<a name="minus" class="page" href="#">上一页</a>
+						<a name="add" class="page" href="#">下一页</a>
+						<a name="last" class="page" href="#">尾页</a>
+						<input type="text" id="pageinp" value="1" size="5"/>
 						<a class="page" type="button">跳转</a>共<span id="spanpage"></span>页
 					</div>
 				</div>
@@ -177,26 +181,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			*/
 			var pagestate=0;//记录当前页的状态
 			function allpage(allput){
-					$.ajax({
+				$.ajax({
 					url:"SxmTable_pageTotal.action",
 					type:"post",
 					data:{"search":allput},
-					success:function(data){
-						var pagetotal=parseInt(data/5);	
+					success:function(data){					
+					var pagetotal=parseInt(data/5);	
 						if(data%5==0){
 							$("#spanpage").html(pagetotal);
 							pagestate=1;
 						}
 						if(data%5!=0){
-							$("#spanpage").html(parseInt(pagetotal)+1);
-							
+							$("#spanpage").html(parseInt(pagetotal)+1);							
 							if(data%5==1){
 								pagestate=0;
 							}
 						}
 					},
-					});
-				};
+				});
+			};
 			
 			/*
 				分页
@@ -314,7 +317,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$(".modal-alterbtn").bind('click', function() {//绑定事件处理函数
 				//$(this).unbind('click');//移除当前事件处理函数
 				//bind/unbind点击事件只执行一次
-				alert(deskid);
 			var inpval=parseInt($("#pageinp").val());
 				var pn = $("#pname").val();
 				var dn = $("#tableName").val();
@@ -322,13 +324,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					url : "SxmTable_upLineTable.action",
 					type : "post",
-					data : {"st.deskId" : deskid,"st.deskName" : dn,"st.personNum" : pn,"em.emid":tp},
+					data : {"st.deskId":deskid,"st.deskName":dn,"st.personNum" : pn,"em.emid":tp},
 					success : function(data){				
 						if(data==-1){
 							alert("修改失败");
 						}else if(data==1){
 							deskid="";
-							tabonload(inpval-1,null);//调用页面加载时自动查询数据库，显示桌台信息
+							tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
 							
 						}else{
 							alert("没有权限");
@@ -433,20 +435,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 							
 			}
-			var sortBy = function (filed, rev, primer) {
-    	rev = (rev) ? -1 : 1;
-    		return function (a, b) {
-       	 	a = a[filed];
-        	b = b[filed];
-        	if (typeof (primer) != 'undefined') {
-            	a = primer(a);
-            	b = primer(b);
-        }
-        if (a < b) { return rev * -1; }
-        if (a > b) { return rev * 1; }
-        return 1;
-    }
-};
+
 			
 			/*
 				添加桌子信息
@@ -462,7 +451,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							url : "../SxmTable_appendTable.action",
 							type : "post",
 							data : {"st.personNum" : pn,"st.deskName" : dn,"em.emid":fu},
-							success : function(data) {	
+							success : function(data){	
 								if(data==-1){
 									alert("添加失败");
 								}else if(data==1){
