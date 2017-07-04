@@ -313,7 +313,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$(".modal-alterbtn").bind('click', function() {//绑定事件处理函数
 				//$(this).unbind('click');//移除当前事件处理函数
 				//bind/unbind点击事件只执行一次
-				alert(deskid);
 			var inpval=parseInt($("#pageinp").val());
 				var pn = $("#pname").val();
 				var dn = $("#tableName").val();
@@ -327,7 +326,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							alert("修改失败");
 						}else if(data==1){
 							deskid="";
-							tabonload(inpval-1,null);//调用页面加载时自动查询数据库，显示桌台信息
+							tabonload(inpval-1);//调用页面加载时自动查询数据库，显示桌台信息
 							
 						}else{
 							alert("没有权限");
@@ -432,20 +431,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 							
 			}
-			var sortBy = function (filed, rev, primer) {
-    	rev = (rev) ? -1 : 1;
-    		return function (a, b) {
-       	 	a = a[filed];
-        	b = b[filed];
-        	if (typeof (primer) != 'undefined') {
-            	a = primer(a);
-            	b = primer(b);
-        }
-        if (a < b) { return rev * -1; }
-        if (a > b) { return rev * 1; }
-        return 1;
-    }
-};
+
 			
 			/*
 				添加桌子信息

@@ -118,6 +118,8 @@ public class TztQuerDishAction {
 		HttpServletResponse rep =ServletActionContext.getResponse();
 
 		Integer desknum = (Integer) session.getAttribute("desk");
+		String username	= (String) session.getAttribute("username");
+		List listvalue = (List) session.getAttribute("listvalue");
 		if(desknum!=null){
 			session.removeAttribute("desk");
 		}
@@ -126,6 +128,8 @@ public class TztQuerDishAction {
 		List result= sort.queryMading();
 		//System.out.println("mading"+result);
 		session.setAttribute("desk", desknum);
+		session.setAttribute("username",username);
+		session.setAttribute("listvalue", listvalue);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {

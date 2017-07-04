@@ -263,6 +263,7 @@
 	 	//alert("8888");
 	 		$(".parent_one").click(function(){
 	 			var checkflag=$(this).attr("checkflag");
+	 			alert("fu:"+checkflag);
 	 			if(!$(this).prop("checked")){
 	 			//alert("222");
 	 				//$(".children1").prop("checked",false);
