@@ -98,7 +98,7 @@
 										<!-- 
 											点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
 										 -->
-						<input type="submit" class="btn btn-primary"  value="添加" id="addent"/>	
+						<input type="submit" class="btn btn-primary"  value="添加" id="addent" data-dismiss="modal"/>	
 					</div>
 				 </div>
 			</div>
@@ -109,6 +109,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
 						<div class="text-center margin-big padding-big-top">
+
 								<h2>密码或状态修改</h2>
 						</div>
 					</div>
@@ -118,6 +119,7 @@
 						</div>  -->
 						<div>
 							<span>&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;</span><input type="text" name="st.deskName" id="perid"/>
+
 						</div>
 						<div>
 							<span>当前状态</span><input type="text" name="st.deskState" id="perphone"/>
@@ -146,7 +148,25 @@
 							success:function(data){
 								if(data==-1){
 									alert("添加失败");
-								}else if(data==1){
+								}else if(data==1){								 	 
+									 allpages();
+									 var inputvalue=parseInt($("#pagenum").html());//获取共多少页								
+									 alert("9999:"+inputvalue);
+									 if(pagestate==1){								 	
+									 	$("#someone").val(inputvalue);
+									 	liyang(inputvalue-1);
+									 }else{
+									 	if(pagestate==0){
+										 	$("#someone").val(inputvalue);
+										 	//alert("565:"+inputvalue)
+										 	liyang(inputvalue-1);
+									 	}else if(pagestae==2){
+									 		$("#someone").val(inputvalue+1);
+										 	//alert("565:"+inputvalue)
+										 	liyang(inputvalue);
+									 	}
+									 	
+									 }
 									alert("添加成功");
 								}else{
 									alert("没有权限");
@@ -158,25 +178,31 @@
 					}
 				});
 			});
-			
 		$(function(){
-			
+			allpages();
+			liyang(0);		
+		});
+		var pagestate=0;
+		function allpages(){			
 			$.ajax({
 				url:"achieve_getaccount.action",
 				type:"post",
 				data:{},
 				success:function(data){						
-					if(data%2==0){
-						var pagesize=parseInt(data/2);
-						$("#pagenum").html(pagesize);					
+					if(data%5==0){
+						var pagesize=parseInt(data/5);
+						$("#pagenum").html(pagesize);	
+						pagestate=1;				
 					}else{
-						var pagesize=parseInt(data/2)+1;
+						var pagesize=parseInt(data/5)+1;
 						$("#pagenum").html(pagesize);
+						if(data%5==1){
+							pagestate=0;
+						}
 					}				
 				},
-			});	
-			liyang(0);								
-		});
+			});										
+		}
 		$(function(){
 			$(".minuspage").click(function(){			
 				var somename=$(this).attr("name");
@@ -223,7 +249,9 @@
 							var emtable=
 								"<tr><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td>"+
-								"<td id=\"fnum"+value[1]+"\"><a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
+								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
+								"<span class=\"icon-trash-o\"></span>删除 </button>"+
+								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
 								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
 							$("#tableid").append(emtable);																												
 						});
@@ -231,6 +259,15 @@
 					}
 				});
 		}	
+		/**
+		* 跳转页码点击事件
+		*/
+		$(function(){
+			$("#commitone").click(function(){
+				var input_page=$("#someone").val();
+				liyang(input_page);
+			});
+		});
 		/**
 		* 模糊查询账号
 		*
@@ -252,7 +289,8 @@
 							var emtable=
 								"<tr><td id=\"anum"+value[1]+"\">"+value[0]+"</td>"+
 								"<td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td>"+
-								"<td id=\"fnum"+value[1]+"\">"+
+								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
+								"<span class=\"icon-trash-o\"></span>删除 </button>"+
 								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
 								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
 								$("#tableid").append(emtable);																
@@ -287,7 +325,7 @@
 				var phonehtml =$("#c"+alterbtn).html();			
 				//$("#per").val(namehtml);//将要修改某行的数据放入到模态框中
 				$("#perid").val(idhtml);
-				$("#perphone").val(phonehtml);
+				//$("#perphone").val(phonehtml);
 					
 				
 				update(namehtml);					
@@ -297,32 +335,60 @@
 					$(this).unbind('click');
 					//var sname=$("#per").val();//修改后将值传给action
 					var sid=$("#perid").val();
-					var sphone=$("#perphone").val();
-					if(sphone=="未分配人"){
-						sphone=2;
-					}else if(sphone=="分配人"){
-						sphone=1;
-					}else{
-						sphone=3;
-					}
+					//var sphone=$("#perphone").val();
 					//alert(sphone);
 					$.ajax({
 						url:"achieve_updatestaffid.action",
 						type:"post",
-						data:{"employId.emword":sid,"employId.enterstate":sphone,"employId.ementer":namehtml},
+						data:{"employId.emword":sid,"employId.ementer":namehtml},
 						success:function(data){
 							if(data==-1){
 								alert("修改失败");
 							}else if(data==1){
+								var inputvalue=parseInt($("#someone").val());
+								//alert("565:"+inputvalue)
+								liyang(inputvalue);
 								alert("修改成功");
 							}else{
 								alert("没有权限");
 							}		
-							liyang();								
+															
 						}
 					});
 				});
 			}
+		});
+		/**
+		*	删除账号
+		*/
+		$("#tableid").on('click',".deskbtn",function(){
+			var alterbtn = $(this).attr("id");
+			//alert("sss:"+alterbtn);
+			var namehtml =$("#a"+alterbtn).html();	
+			$.ajax({
+				url:"achieve_delaccount.action",
+				type:"post",
+				data:{"employId.ementer":namehtml},
+				success:function(data){
+					if(data==-1){
+						alert("删除失败");
+					}else if(data==1){
+						allpages();
+						var inputvalue=parseInt($("#someone").val());//获取当前页																
+					if(pagestate==0){								 	
+						$("#someone").val(inputvalue-1);
+						liyang(inputvalue-2);
+					}else{
+						$("#someone").val(inputvalue);
+								//alert("565:"+inputvalue)
+						liyang(inputvalue-1);								
+					}
+						alert("删除成功");
+					}else{
+						alert("没有权限");
+					}				
+				},			
+			});
 		});		
 		/**
 		*添加员工账号的失焦事件，查询是否添加的账号是否已存在

@@ -125,6 +125,18 @@ public class LYInsertEmployaction {
 		}
 	}
 	/**
+	 * 删除账号
+	 */
+	public void delaccount(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int flag=ied.delnumber(employId);
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	/**
 	 * 模糊查询账号
 	 */
 	public void searchac(){
@@ -138,8 +150,7 @@ public class LYInsertEmployaction {
 			response.getWriter().print(json);
 		} catch (Exception e) {
 			// TODO: handle exception
-		}
-		
+		}		
 	}
 	/**
 	 * emterid：得到前端响应，调用enterid方法，
@@ -230,6 +241,7 @@ public class LYInsertEmployaction {
 			// TODO: handle exception
 		} 	
 	}
+	
 	/**
 	 * searchEM:模糊查询action
 	 */
@@ -251,8 +263,7 @@ public class LYInsertEmployaction {
 	/**
 	 * getcount:获得员工表数据条数action
 	 */
-	public void getcount(){
-		
+	public void getcount(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int a=ied.getallpage();		
 		try {
@@ -265,8 +276,7 @@ public class LYInsertEmployaction {
 	 * getpage:由前台data传来的值，countpage接收，调用pagepage(实现类方法)
 	 * 得到返回list，将查询的结果放到json中，返回给前台data
 	 */
-	public void getpage(){
-		
+	public void getpage(){		
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		

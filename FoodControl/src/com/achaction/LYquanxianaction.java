@@ -70,6 +70,8 @@ public class LYquanxianaction {
 	public String incomedetail(){
 		return "si";
 	}	
+	
+	
 	LYInsertEmployDao ied=new LYInsertEmployDao();
 	/**
 	 * getusername:后台登录验证action
@@ -85,8 +87,7 @@ public class LYquanxianaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		//request.getSession().setAttribute("username", employId.getEmenter());		
 		List list = ied.selectemid(employId);
-		if (list.size()==1){
-			
+		if (list.size()==1){			
 			request.getSession().invalidate();
 			String partname =ied.selectpart(employId);			
 			if(partname.equals("服务员")){							
@@ -96,12 +97,10 @@ public class LYquanxianaction {
 				//request.getSession().setAttribute("username", employId.getEmenter());
 				return "cook";
 			}else{
-
 				request.setAttribute("username", employId.getEmenter());
-
 				List list4 = ied.aperson(partname);
 				//System.out.println("999:"+list4);
-				request.getSession().setAttribute("username", employId.getEmenter());
+				request.getSession().setAttribute("username",employId.getEmenter());
 				request.getSession().setAttribute("listvalue", list4);
 				return "success";
 				
@@ -145,6 +144,18 @@ public class LYquanxianaction {
 		
 		ied.deletpowers(partId);//将角色的Id传到实现类，根据id删除该id下的所有权限；
 		ied.insertpowers(partId,powersId);		
+	}
+	/**
+	 * 删除角色
+	 */
+	public void delpart(){
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int flag=ied.deletepart(partname);
+		try {
+			response.getWriter().print(flag);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
 
