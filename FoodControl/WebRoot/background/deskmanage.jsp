@@ -83,7 +83,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						
 					</table>
 					<div class="pagelist">
-						<a name="first" class="page" href="#">首页</a><a name="minus" class="page" href="#">上一页</a><a name="add" class="page" href="#">下一页</a><a name="last" class="page" href="#">尾页</a><input type="text" id="pageinp" value="1" size="5"/>
+						<a name="first" class="page" href="#">首页</a>
+						<a name="minus" class="page" href="#">上一页</a>
+						<a name="add" class="page" href="#">下一页</a>
+						<a name="last" class="page" href="#">尾页</a>
+						<input type="text" id="pageinp" value="1" size="5"/>
 						<a class="page" type="button">跳转</a>共<span id="spanpage"></span>页
 					</div>
 				</div>

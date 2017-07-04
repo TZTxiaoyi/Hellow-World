@@ -91,12 +91,18 @@ public class LYInsertEmployDao {
 	 */
 	
 	/**
-	 * 模糊查询找你
+	 * 模糊查询找
 	 */
-	public List searchacclist(String putvalue){
-		String sql="select sp.account,sp.pwd,sp.codeName " +
-				" from staffEnter_pic sp" +
-				" where account like'%"+putvalue+"%' or pwd like'%"+putvalue+"%' or codeName like'%"+putvalue+"%' ";
+	public List searchacclist(int curr,String putvalue){
+		String sql="select top(5)* from (select * from staffEnter_pic sp " +
+				"where sp.codeName not in('已禁用') and account like'%"+
+				putvalue+"%' or pwd like'%"+putvalue+"%' or codeName like" +
+				"'%"+putvalue+"%' )ss where ss.enterId not in " +
+				"(select top ("+curr+"*5) sp.enterId from staffEnter_pic sp " +
+				"where sp.codeName not in('已禁用') and account like" +
+				"'%"+putvalue+"%' or pwd like'%"+putvalue+
+				"%' or codeName like'%"+putvalue+"%') and ss.codeName" +
+				" not in('已禁用')";
 		return DaoFactory.Query(sql);
 	}
 	public int emidinsert(LYEmployId eld){		
@@ -250,8 +256,12 @@ public class LYInsertEmployDao {
 	 * 得到二维数组list，
 	 * @return
 	 */
-	public int getpages(){
-		String sql="select count(*) from staffEnter where enterState not in (3)";
+	public int getpages(String putvalue){
+		String sql="select count(*) from (select * from staffEnter_pic " +
+				"where codeName not in('已禁用')) sp " +
+				"where sp.codeName not in('已禁用') and account" +
+				" like '%"+putvalue+"%' or pwd like'%"+putvalue+"%'" +
+				" or codeName like'%"+putvalue+"%'";
 		List list =DaoFactory.Query(sql);
 		List list1=(List) list.get(0);
 		int li=(Integer) list1.get(0);
@@ -264,7 +274,7 @@ public class LYInsertEmployDao {
 	 */
 	public List setpages(int startIndex){
 		//System.out.println("aaaaaaaaaa");
-		String sql="select top 5 aa.account,aa.pwd,aa.codeName " +
+		String sql="select top 5 aa.enterId,aa.account,aa.pwd,aa.codeName " +
 				"from(select * from staffEnter_pic ss where " +
 				"ss.codeName not in ('已禁用') and ss.enterId not in (1)) aa where aa.enterId " +
 				"not in(select top ("+startIndex+"*5) enterId from staffEnter_pic  " +

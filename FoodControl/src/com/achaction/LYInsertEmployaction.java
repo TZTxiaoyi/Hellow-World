@@ -146,7 +146,7 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");	
-		List list=ied.searchacclist(putvalue);
+		List list=ied.searchacclist(countpage,putvalue);
 		JSON json=toJson.toJson("value", list);
 		System.out.println(json);
 		try {
@@ -336,7 +336,7 @@ public class LYInsertEmployaction {
 	public void getaccount(){
 		
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int a=ied.getpages();		
+		int a=ied.getpages(putvalue);		
 		try {
 			response.getWriter().print(a);
 		} catch (Exception e) {
