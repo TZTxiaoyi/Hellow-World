@@ -229,7 +229,7 @@
 	 	});
 	 	$(function(){
 	 		$(".parent_one").click(function(){
-	 			var checkflag=$(this).attr("checkflag");.
+	 			var checkflag=$(this).attr("checkflag");
 	 			alert("fu:"+checkflag);
 	 			if(!$(this).prop("checked")){
 	 			alert("222");
