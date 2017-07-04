@@ -405,7 +405,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   				var dish="<tr><td>菜品名称</td><td>菜品单价</td><td>销售数量</td><td>销售金额</td></tr>";
 	   				$("#tab").append(dish);
 	   				$.each(json,function(index,value){
-	   					var dish="<tr><td>"+value[1]+"</td><td>"+value[3]+"</td><td>"+value[2]+"</td><td>"+value[4]+"</td></tr>";
+	   					var num=0;
+	   					if(value[3]!=null){
+	   						num=value[3];
+	   					}
+	   					var price=value[2]*num;
+	   					var dish="<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+num+"</td><td>"+price+"</td></tr>";
 	   					$("#tab").append(dish);
 	   				});
 	   			}
@@ -445,7 +450,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   				var dish="<tr><td>菜品名称</td><td>菜品单价</td><td>销售数量</td><td>销售金额</td></tr>";
 	   				$("#tab").append(dish);
 	   				$.each(json,function(index,value){
-	   					var dish="<tr><td>"+value[1]+"</td><td>"+value[3]+"</td><td>"+value[2]+"</td><td>"+value[4]+"</td></tr>";
+	   					var num=0;
+	   					if(value[3]!=null){
+	   						num=value[3];
+	   					}
+	   					var price=value[2]*num;
+	   					var dish="<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+num+"</td><td>"+price+"</td></tr>";
 	   					$("#tab").append(dish);
 	   				});
 	   			}

@@ -140,14 +140,29 @@ public class LYInsertEmployDao {
 	 * @param em
 	 * @return
 	 */
-	public List searchsome(String em){
-		String sql="select * from  staffinfo_sf where Name like'%"+em+
-				"%' or staffId like'%"+em+"%' or phone like'%"+em+
-				"%' or codeName like'%"+em+"%' or age like'%"+em+
-				"%'  or adress like'%"+em+"%'  or accession like'%"+em+
-				"%' or partName like'%"+em+"%' or account like'%"+em+"%'";		
+	public List searchsome(String em,int curr){
+		String sql="select top(5) *  from  staffinfo_sf  where (staffId!=1 and staffId not in"+
+				"(select top("+curr*5+") staffId  from  staffinfo_sf  where staffId!=1 and (Name like "+
+				"'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or codeName "+
+				"like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession "+
+				"like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%'))) and (Name like "+
+				"'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or codeName "+
+				"like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession "+
+				"like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%')";		
 		return DaoFactory.Query(sql);
 	}
+	public int searchsometatol(String em){
+		System.out.println("toem:"+em);
+		String sql="select  COUNT(staffId)  from  staffinfo_sf  where staffId!=1 and ( Name like "+
+				"'%"+em+"%' or staffId like'%"+em+"%' or phone like'%"+em+"%' or codeName "+
+				"like'%"+em+"%' or age like'%"+em+"%'  or adress like'%"+em+"%'  or accession "+
+				"like'%"+em+"%' or partName like'%"+em+"%' or account like'%"+em+"%')";	
+		List lsit=DaoFactory.Query(sql);
+		List list1=(List) lsit.get(0);
+		int num=(Integer) list1.get(0);
+		return num;
+		
+	} 
 	/**
 	 * selectemid：查询员工账号表实现类
 	 * LYEmployId：员工账号实体类
@@ -196,7 +211,7 @@ public class LYInsertEmployDao {
 				"ss.partName,ss.account" +
 				" from staffinfo_sf ss" +
 				" where staffId not in(select top "+startIndex*5+
-				" staffId from staffinfo_sf) and staffInfoState=19";       
+				" staffId from staffinfo_sf where staffId!=1) and staffInfoState=19 and staffId!=1";       
 		return DaoFactory.Query(sql);
 	}
 	

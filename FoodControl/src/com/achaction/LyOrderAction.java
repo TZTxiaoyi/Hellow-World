@@ -18,7 +18,20 @@ public class LyOrderAction {
 	
 	private String begintime;
 	private String endtime;
-	
+	private int pageflag;
+	private int curr;
+	public int getCurr() {
+		return curr;
+	}
+	public void setCurr(int curr) {
+		this.curr = curr;
+	}
+	public int getPageflag() {
+		return pageflag;
+	}
+	public void setPageflag(int pageflag) {
+		this.pageflag = pageflag;
+	}
 	LjlOrders ljd=new LjlOrders();
 	LyOrderDao ld= new LyOrderDao();
 	
@@ -42,8 +55,17 @@ public class LyOrderAction {
 	}
 	
 	public void pageTotal(){
-		HttpServletResponse response=ServletActionContext.getResponse();	
-		int flag = ld.getcount();	
+		HttpServletResponse response=ServletActionContext.getResponse();
+		System.out.println("p6666");
+		System.out.println("pageflag:"+pageflag);
+		int flag=-1;
+		if (pageflag==0){
+			flag = ld.getcount();
+		}else if(pageflag==1){
+			System.out.println("pf1");
+			flag=ld.ordertimetatol(begintime, endtime);
+			
+		}
 		try {
 			response.getWriter().print(flag);
 		} catch (Exception e) {
@@ -73,7 +95,7 @@ public class LyOrderAction {
 		response.setCharacterEncoding("UTF-8");
 		//System.out.println("56565:"+countpage);
 		List list=ljd.orderDish(countpage);
-		System.out.println("1314:"+list);
+		//System.out.println("1314:"+list);
 		JSON json=toJson.toJson("value", list);
 		try {
 			response.getWriter().print(json);
@@ -85,7 +107,7 @@ public class LyOrderAction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		List list=ld.setimeorder(begintime,endtime);
+		List list=ld.setimeorder(begintime,endtime,curr);
 		//System.out.println("1314:"+list);
 		JSON json=toJson.toJson("value", list);
 		try {

@@ -268,29 +268,29 @@ function DelSelect(){
 	/*
 		分页-获取总条数；
 	*/
-	$(function(){
-			
+	var pageflag=0;
+	function pagetotal(){
+	var putvalue=$("#condition").val();
 			$.ajax({
 				url:"achieve_getcount.action",
 				type:"post",
-				data:{},
-				success:function(data){						
-					if(data%2==0){
-						var pagesize=parseInt(data/2);
+				data:{"pageflag":pageflag,"putvalue":putvalue},
+				success:function(data){					
+					if(data%5==0){
+						var pagesize=parseInt(data/5);
 						$("#pagenum").html(pagesize);					
 					}else{
-						var pagesize=parseInt(data/2)+1;
+						var pagesize=parseInt(data/5)+1;
 						$("#pagenum").html(pagesize);
 					}				
 				},
-			});	
-			liyang(0);								
-		});
+			});								
+	};
 		/*
 			分页
 		*/
 		$(function(){
-			$(".minuspage").click(function(){			
+			$(".minuspage").click(function(){	
 				var somename=$(this).attr("name");
 						//alert(somename);				 
 				var onepage=parseInt($("#someone").val());	
@@ -313,11 +313,17 @@ function DelSelect(){
 					}
 				}else{
 					onepage = pagesize;
-				}				
+				}
 				$("#someone").val(onepage);
-				a=onepage-1;
+				var a=onepage-1;
+				if(pageflag==1){
+					searchEM(a);
+				}else if(pageflag==0){
+					liyang(a);
+				}				
+				
 				//alert(inputnum);	
-				liyang(a);				
+								
 			});			
 		});
 		/*
@@ -360,11 +366,31 @@ function DelSelect(){
 		*/
 		$(function(){
 			$("#searchem").click(function(){  //button
-				var putvalue=$("#condition").val();	 //shurukuang			
+			var putvalue=$("#condition").val();
+				if(putvalue==""){
+					pageflag=0;
+					curr=0;
+					pagetotal();
+					liyang(curr);
+				}else if(putvalue!=""){
+					pageflag=1;
+					curr=0;
+					pagetotal();
+					searchEM(curr);
+				}
+				
+			});
+		});
+		$(function(){
+			pagetotal();
+			liyang(0);		
+		})
+		function searchEM(curr){
+			var putvalue=$("#condition").val();	 //shurukuang		
 				$.ajax({
 					url:"achieve_searchEM.action",
 					type:"post",
-					data:{"putvalue":putvalue},	//action穿件一个属性类型	
+					data:{"putvalue":putvalue,"countpage":curr},	//action穿件一个属性类型	
 					datatype:"json",	
 					success:function(data){
 					var json=JSON.parse(data);
@@ -377,7 +403,7 @@ function DelSelect(){
 							var emtable=
 								"<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td id=\"anum"+value[1]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[1]+"\">"+value[1]+"</td><td id=\"cnum"+value[1]+"\">"+value[2]+"</td><td id=\"dnum"+value[1]+"\">"+value[3]+"</td><td id=\"enum"+value[1]+"\">"+value[4]+
-								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[7]+"</td><td id=\"inum"+value[1]+"\">"+value[8]+"</td>"+
+								"</td><td id=\"fnum"+value[1]+"\">"+value[5]+"</td><td id=\"gnum"+value[1]+"\">"+value[6]+"</td><td id=\"hnum"+value[1]+"\">"+value[8]+"</td><td id=\"inum"+value[1]+"\">"+value[9]+"</td>"+
 								"<td id=\"fnum"+value[1]+"\"><button class=\"button border-red deskbtn\" id=\"num"+value[1]+"\" >"+
 								"<span class=\"icon-trash-o\"></span>删除 </button>"+
 								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
@@ -392,8 +418,7 @@ function DelSelect(){
 						
 					}
 				});
-			});
-		});
+		}
 		/*
 		* tableid：表id
 		* 点击修改按钮触发点击事件，获得每行数据放到模态框中

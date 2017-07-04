@@ -140,7 +140,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						var oldTime = (new Date(value[5])).getTime()/1000;
 						//time=value[5].getfullyear+"-"+value[5].getfullmonth+"-"+value[5].getfullday
 							var timett=format(value[5].time);
-							
 							var emtable=
 								"<tr><td id=\"anum"+value[0]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[0]+"\">"+value[1]+"</td><td id=\"cnum"+value[0]+"\">"+value[2]+"</td><td id=\"dnum"+value[0]+"\">"+value[3]+"</td><td id=\"enum"+value[0]+"\">"+value[4]+
@@ -178,12 +177,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 						
 			//-------------------------------------------------------------------------------
+		var pageflag=0;
 		$(function(){
+			var a=0;
+			pagetatolint();
+			liyang(a);
+		});
+		$(function(){
+			$("#searchorder").click(function(){
+				var readyvalue=$("#readytime").val();
+				var lastvalue=$("#lasttime").val();
+				if (readyvalue==""&&lastvalue==""){
+					pageflag=0;
+					var a=0;
+					pagetatolint();
+					liyang(a);
+				}else if (readyvalue!=""&&lastvalue!=""){
+					pageflag=1;
+					var a=0;
+					pagetatolint();
+					orderpage(a);
+				}else{
+					alert("请选择完整的时间段。");
+				}
+			});
 			
+		});
+		function pagetatolint(){
+			var readyvalue=$("#readytime").val();
+			var lastvalue=$("#lasttime").val();
 				$.ajax({
 					url:"order_pageTotal.action",
 					type:"post",
-					data:{},
+					data:{"pageflag":pageflag,"begintime":readyvalue,"endtime":lastvalue},
 					success:function(data){						
 						if(data%5==0){
 							var pagesize=parseInt(data/5);
@@ -193,9 +219,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							$("#pagenum").html(pagesize);
 						}				
 					},
-				});	
-				liyang(0);								
-		});
+				});								
+		}
 		$(function(){
 			$(".minuspage").click(function(){			
 				var somename=$(this).attr("name");
@@ -220,11 +245,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 				}else{
 					onepage = pagesize;
+				}
+				
+				a=onepage-1;
+				
+				if (pageflag==0){
+					liyang(a);
+				}else if(pageflag==1){
+					orderpage(a);
 				}				
 				$("#someone").val(onepage);
-				a=onepage-1;
-				//alert(inputnum);	
-				liyang(a);				
+				
+				//alert(inputnum);			
 			});			
 		});
 		//时间戳转时间
@@ -246,44 +278,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					url:"order_getpage.action",
 					type:"post",
 					data:{"countpage":a},
-					success:function(data){					
-					var json=JSON.parse(data);
-					stamp(json);					
+					success:function(data){				
+						var json=JSON.parse(data);
+						stamp(json);					
 					}
 				});
 		}
-		/*
-		* 将每个订单传给action
-		*/
-		/* $(function(){
-			$("#tableid").on('click',".alterbtn",function(){
-				var alterbtn = $(this).attr("id");
-				//alert("sss:"+alterbtn);
-				var namehtml =$("#a"+alterbtn).html();	
-				//alert(namehtml);			
-				$.ajax({
-					url:"order_orderdish.action",
-					type:"post",
-					data:{"countpage":namehtml}
-				});							
-			});
-		}); */
-		$(function(){
-			$("#searchorder").click(function(){
+		
+			function orderpage(curr){
 				var readyvalue=$("#readytime").val();
 				var lastvalue=$("#lasttime").val();
 				//alert(readyvalue);
 				$.ajax({
 					url:"order_selorder.action",
 					type:"post",
-					data:{"begintime":readyvalue,"endtime":lastvalue},
+					data:{"begintime":readyvalue,"endtime":lastvalue,"curr":curr},
 					success:function(data){
 						var json=JSON.parse(data);
 						stamp(json);
 					}
 				});
-			});		
-		});
+			};		
+		
 	</script>
 </body>
 </html>
