@@ -115,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<a  class="minuspage" name="addname">下一页</a>
 				<a  class="minuspage" name="lastname">尾页</a>
 				共<span id="pagenum"></span>页
-				<input type="text" id="someone" value="1">
+				<input type="text" id="someone" value="1" size ="2">
 				<input type="button" value="跳转" id="commitone">
 		</div>					   
 	  </div>
@@ -637,11 +637,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							allpage("");
 									var inpval=parseInt($("#pagenum").html());
 									if(onepage==inpval && pagestate==0){
-									alert("s"+pagestate);
 										$("#someone").val(inpval-1);
 										ces(inpval-2);//调用页面加载时自动查询数据库，显示桌台信息
 									}else{
-									alert("d"+pagestate);
 										$("#someone").val(inpval);
 										ces(inpval-1);
 									}	  
@@ -749,8 +747,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			上传文件；
 		*/
         function upload(file,id){
-        	alert("f"+file);
-        	alert("s"+id);
         	var formData = new FormData();
                 //formData.append("myfile", $("#file1").files[0]);  
                 formData.append("myfile", document.getElementById(file).files[0]);

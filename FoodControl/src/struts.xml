@@ -13,6 +13,8 @@
 		</action>
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
 			<result name="exit" type="redirect">/background/login.jsp</result>
+			<result name="back" type="redirect">/background/index.jsp</result>
+			
 		</action>
 <!-- 注册 -->
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">			

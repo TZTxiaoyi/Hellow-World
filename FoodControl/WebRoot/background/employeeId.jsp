@@ -74,7 +74,7 @@
 				<a  class="minuspage" name="addname">下一页</a>
 				<a  class="minuspage" name="lastname">尾页</a>
 				共<span id="pagenum"></span>页
-				<input type="text" id="someone" value="1">
+				<input type="text" id="someone" value="1" size ="2">
 				<input type="button" value="跳转" id="commitone">
 			</div>	
 		  </div>
