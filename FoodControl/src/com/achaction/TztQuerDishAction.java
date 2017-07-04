@@ -120,13 +120,20 @@ public class TztQuerDishAction {
 		Integer desknum = (Integer) session.getAttribute("desk");
 		String username	= (String) session.getAttribute("username");
 		List listvalue = (List) session.getAttribute("listvalue");
+		//System.out.println(listvalue);
 		if(desknum!=null){
 			session.removeAttribute("desk");
+		}
+		if( username!=null){
+			session.removeAttribute("username");
+		}
+		if(listvalue!=null){
+			session.removeAttribute("listvalue");
 		}
 		rep.setContentType("html/text;charset =utf-8");
 		createImp(method);
 		List result= sort.queryMading();
-		//System.out.println("mading"+result);
+		System.out.println("mading"+result);
 		session.setAttribute("desk", desknum);
 		session.setAttribute("username",username);
 		session.setAttribute("listvalue", listvalue);
@@ -138,6 +145,7 @@ public class TztQuerDishAction {
 			e.getMessage();
 		}
 	}
+
 	/**
 	 * 
 	 * 方法功能说明：  点击制作按钮修改菜的状态为制作中
@@ -206,10 +214,25 @@ public class TztQuerDishAction {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 退出登录
+	 * @return
+	 */
 	public String exit(){
 		HttpServletRequest req=ServletActionContext.getRequest();
 		HttpSession session= req.getSession();
 		session.invalidate();
 		return "exit";
 	}
+	/**
+	 * 返回后台页面
+	 * @return
+	 */
+	public String back() {
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpSession session =request.getSession();
+		
+		return "back";
+	}
+
 }

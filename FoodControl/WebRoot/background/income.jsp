@@ -113,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<a  class="zbpage" name="zbadd" href="#">下一页</a>
 						<a  class="zbpage" name="zblast" href="#">尾页</a>
 						共<span id="zbpagenum"></span>页
-						<input type="text" id="zbsome" value="1" size ="5">
+						<input type="text" id="zbsome" value="1" size ="2">
 						<input type="button" value="跳转" class ="zbpage" name ="zbcommit" id="zbcommit">
 					</div>
 				</div>

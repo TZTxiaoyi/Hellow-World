@@ -178,7 +178,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<a  class="minuspage" name="addname">下一页</a>
 				<a  class="minuspage" name="lastname">尾页</a>
 				共<span id="pagenum"></span>页
-				<input type="text" id="someone" value="1">
+				<input type="text" id="someone" value="1" size ="2">
 				<input type="button" value="跳转" id="commitone">
 		</div>					   
 	  </div>
@@ -242,39 +242,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 
 
-function del(id){
-	if(confirm("您确定要删除吗?")){
-		
+	function del(id){
+		if(confirm("您确定要删除吗?")){
+			
+		}
 	}
-}
-
-$("#checkall").click(function(){ 
-  $("input[name='id[]']").each(function(){
-	  if (this.checked) {
-		  this.checked = false;
-	  }
-	  else {
-		  this.checked = true;
-	  }
-  });
-})
-
-function DelSelect(){
-	var Checkbox=false;
-	 $("input[name='id[]']").each(function(){
-	  if (this.checked==true) {		
-		Checkbox=true;	
-	  }
-	});
-	if (Checkbox){
-		var t=confirm("您确认要删除选中的内容吗？");
-		if (t==false) return false; 		
+	
+	$("#checkall").click(function(){ 
+	  $("input[name='id[]']").each(function(){
+		  if (this.checked) {
+			  this.checked = false;
+		  }
+		  else {
+			  this.checked = true;
+		  }
+	  });
+	})
+	
+	function DelSelect(){
+		var Checkbox=false;
+		 $("input[name='id[]']").each(function(){
+		  if (this.checked==true) {		
+			Checkbox=true;	
+		  }
+		});
+		if (Checkbox){
+			var t=confirm("您确认要删除选中的内容吗？");
+			if (t==false) return false; 		
+		}
+		else{
+			alert("请选择您要删除的内容!");
+			return false;
+		}
 	}
-	else{
-		alert("请选择您要删除的内容!");
-		return false;
-	}
-}
 	/*
 		分页-获取总条数；
 	*/
@@ -344,6 +344,7 @@ function DelSelect(){
 			分页完成动态添加；
 		*/
 		function liyang(a){
+		alert("ddf1"+a);
 			$.ajax({				
 					url:"achieve_getpage.action",
 					type:"post",
@@ -755,8 +756,8 @@ function DelSelect(){
 		*/
 		$(function(){
 			$("#commitone").click(function(){
-				var inputpage=paprseInt($("#someone").val());
-				liyang(inputpage-1);
+				var inputpage=parseInt($("#someone").val());
+				liyang(inputpage);
 			});
 		});
 </script>

@@ -90,9 +90,7 @@ table td{
 	overflow:auto;
 }
 
-#exit{
-	float:right;
-}
+
 
 </style>
 </head>
@@ -110,7 +108,9 @@ table td{
 				<button class="btn btn-info btn-group-lg" id = "priority">优先级</button>
 				<button class="btn btn-info btn-group-lg" id ="desksort">桌位轮转</button>
 			 </div>
+			 <button class="btn btn-danger btn-group-lg" id="back">后台页面</button>
 			<button class="btn btn-danger btn-group-lg" id="exit">退出登录</button>
+
 		</div>
 		<!-------------------------------------------------------------------------->
 		<div class="column" id="cbody">
@@ -213,8 +213,10 @@ table td{
 			queryMade();
  		});
  		$("#exit").click(function(){
- 			alert(1);
  			window.location.href="TztQueryDish_exit.action";
+ 		});
+ 		$("#back").click(function(){
+ 			window.location.href="TztQueryDish_back.action";
  		});
  		function queryMading(){
  				$.ajax({
@@ -225,8 +227,6 @@ table td{
  					success:function(data){
  			
  					$("#titlemading").html("");
-					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td></tr>";
-					$("#titlemading").append(tr);
 					$.each(data,function(index,value){	
 					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td>"+value[3]+"</td>"+"<td><div class=\"btn-group\"><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button><br/>"
 					+"<button class=\"btn btn-danger\" id=\"removebutton\" name =\""+value[0]+ "\">取消制作</button></div></td>"+"</tr>";
@@ -287,8 +287,6 @@ table td{
  					dataType:"json",
  					success:function(data){
  					$("#titlemade").html("");
- 					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td></tr>";
-					$("#titlemade").append(tr);
 					$.each(data,function(index,value){
 					var dd="<tr>"+"<td   name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td  name =\""+value[0]+ "\">"+value[2] +"</td>"+ "</td>"+"<td>"+value[3]+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
 					$("#titlemade").append(dd);

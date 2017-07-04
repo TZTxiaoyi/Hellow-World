@@ -180,7 +180,7 @@ public class GJYFCaction {
 	public void uploads(){
 		try {
 			String name=new Date().getTime()+myfileFileName.substring(myfileFileName.lastIndexOf("."));
-			File file=new File("E:/"+name);
+			File file=new File("D:/NO9/FoodControl/WebRoot/image/"+name);
 			InputStream is=new FileInputStream(myfile);
 			OutputStream os=new FileOutputStream(file);
 			byte[] b=new byte[1024];
@@ -214,9 +214,5 @@ public class GJYFCaction {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-	}
-	
-	
-	
-	
+	}	
 }

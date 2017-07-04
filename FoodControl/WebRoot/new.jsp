@@ -19,12 +19,14 @@
    		}
    		
    		#zbtop{
-   			border:1px solid red;			
+   			background-color:#ffcc66;			
 			width:auto;
 			height:100px;
    		}
-   		#zbright{
-   			border:1px solid green;
+   		#zbleft{
+   			background-color:#ffcc60;
+   		}
+   		#zbright{		
    			position:Absolute;
    			max-height:700px;   			
    		}

@@ -87,8 +87,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<a name="minus" class="page" href="#">上一页</a>
 						<a name="add" class="page" href="#">下一页</a>
 						<a name="last" class="page" href="#">尾页</a>
-						<input type="text" id="pageinp" value="1" size="5"/>
-						<a class="page" type="button">跳转</a>共<span id="spanpage"></span>页
+						共<span id="spanpage"></span>页<input type="text" class="page" id="pageinp" value="1" size ="2"/>
+						<a class="page" type="button">跳转</a>
 					</div>
 				</div>
 			</form>
