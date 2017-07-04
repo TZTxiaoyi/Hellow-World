@@ -213,12 +213,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var kindId=$("#sel").val();
 			var makeTime=$("#makeTime").val();
 			var priority=$("#priority").val();
-<<<<<<< HEAD
 			//var pictureName=$("#pictureName").val();
-=======
 			var uppicture=$("#fileload").html();
-
->>>>>>> 25501c4ec68fa63560b8d2f204080fc85a6c6d53
 			var maxCopies=$("#maxCopies").val();
 			var dishState=$("#dishState").val();
 			var uppicture=$("#fileload").html();

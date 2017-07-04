@@ -23,8 +23,187 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		触发点击事件后，先判断是否得到输入框中的值，
 		当有一个输入框中的值为空时，将不执行Ajax语句
 	 -->
-	<script type="text/javascript">
-		$(function(){
+	
+</head>
+  <!-- 
+  	员工信息页面
+   -->
+  <body>
+<div class="panel admin-panel">
+  <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 员工信息</strong></div>
+ <div>
+	 
+	  <div class="panel admin-panel">	    
+	    <div class="padding border-bottom">
+	      <ul class="search">
+	        <li>          
+	          <!-- 
+	          	添加员工按钮
+	           -->
+	          <a type="button" class="button border-yellow" id="addstaffinfo"data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span> 添加员工</a>
+         		<!-- 
+         			添加员工模态框
+         		 -->
+         
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								
+								<h4 class="modal-title" id="myModalLabel">添加员工信息</h4>
+							</div>
+							<!-- 
+								添加员工信息的输入框 ----
+							 -->							 
+								<div class="modal-body1">
+									编	号：<input type="text" class="inputname1" id="emid" name="employee.emid"><br/>
+									姓	名：<input type="text" class="inputname2" id="emname" name="employee.emname"><br/>
+									<!--  性	别：<input type="text" class="inputname3" id="emsex" name="employee.emsex"><br/>-->
+									性别：<select id="emsex">
+											<option>男</option>
+											<option>女</option>
+										</select><br/>
+									年	龄：<input type="text" class="inputname4" id="emage" name="employee.emage"><br/>
+									电	话：<input type="text" class="inputname5" id="emphone" name="employee.emphone"><br/> 									
+									地	址：<input type="text" class="inputname6" id="emadress" name="employee.emadress"><br/>
+									就职时间：<input type="text" class="inputname7" id="emjointime" name="employee.emjointime" placeholder="0000年00月00日"><br/>
+									员工角色<select id="empart">
+										
+									</select><br/>
+									<!--  员工角色：<input type="text" class="inputname8" id="empart" name="empart"><br>-->
+									员工账号：<input type="text" class="inputname9" id="ementer" name="employee.ementer">											   								
+								</div>														
+								<div class="modal-footer">
+								<!-- 
+									关闭模态框按钮
+								 -->
+								<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
+								<!-- 
+									点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
+								 -->
+								 <input type="submit" class="btn btn-primary"  data-dismiss="modal" value="添加" id="addem"/>	
+								
+							
+							</div>
+					   </div>
+					</div>
+				</div>
+	        </li>
+	        
+	        <!-- 
+	        	搜索员工信息框
+	         -->
+	        <li>
+	        
+	        	<input id="condition"type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          		<a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchem"> 搜索</a></li>
+	        </li>
+	      </ul>
+	    </div>
+	    <!-- 
+	    	查询出来的员工信息生成的table
+	     -->
+	    <table class="table table-hover text-center" id="tableid">
+	    </table>
+	   
+		<div class="pagelist">
+				<a  class="minuspage" name="firstname">首页</a>
+				<a  class="minuspage" name="minusname">上一页</a> 
+				<a  class="minuspage" name="addname">下一页</a>
+				<a  class="minuspage" name="lastname">尾页</a>
+				共<span id="pagenum"></span>页
+				<input type="text" id="someone" value="1">
+				<input type="button" value="跳转" id="commitone">
+		</div>					   
+	  </div>
+	
+</div>
+
+
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+				<div class="text-center margin-big padding-big-top">
+							<h1>当前要修改的员工</h1>
+				</div>
+				<div id="modalform">
+					<div>
+					    <span>员工姓名</span><input type="text" name="st.personNum" id="per"/>
+					</div>
+					 <div>
+					   <span>员工编号</span><input type="text" name="st.deskName" id="perid"/>
+					 </div>
+					  <div>
+					    <span>电话</span><input type="text" name="st.deskState" id="perphone"/>
+					  </div>
+					   <div>
+					    	<span>性别</span><input type="text" name="st.deskState" id="persex"/>
+					   </div>
+					   <div>
+					    	<span>年龄</span><input type="text" name="st.deskState" id="perage"/>
+					   </div>
+					   <div>
+					    	<span>地址</span><input type="text" name="st.deskState" id="perdress"/>
+					    </div>
+					    <div>
+					    	<span>就职时间</span><input type="text" name="st.deskState" id="pertime"/>
+					    </div>
+				   		<div>
+					    	<span>角色</span><input type="text" name="st.deskState" id="perpart"/>
+					    </div>
+					   <!--  <div>
+					    	<span>负责桌台</span><input type="text" name="st.deskState" id="pertable"/>
+					    </div>	-->
+					 </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+
+function del(id){
+	if(confirm("您确定要删除吗?")){
+		
+	}
+}
+
+$("#checkall").click(function(){ 
+  $("input[name='id[]']").each(function(){
+	  if (this.checked) {
+		  this.checked = false;
+	  }
+	  else {
+		  this.checked = true;
+	  }
+  });
+})
+
+function DelSelect(){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){
+		var t=confirm("您确认要删除选中的内容吗？");
+		if (t==false) return false; 		
+	}
+	else{
+		alert("请选择您要删除的内容!");
+		return false;
+	}
+}
+
+	$(function(){
 			
 			$.ajax({
 				url:"achieve_getcount.action",
@@ -110,8 +289,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		*/
 		$(function(){
 			$("#searchem").click(function(){  //button
-				var putvalue=$("#condition").val();	 //shurukuang
-				
+				var putvalue=$("#condition").val();	 //shurukuang			
 				$.ajax({
 					url:"achieve_searchEM.action",
 					type:"post",
@@ -133,13 +311,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								"<span class=\"icon-trash-o\"></span>删除 </button>"+
 								"<a class=\"button border-main alterbtn\" id=\"num"+value[1]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal2\" data-toggle=\"modal\">"+
 								"<span class=\"icon-edit\"></span> 修改</a></td></tr>";
-								$("#tableid").append(emtable);
-																
+								$("#tableid").append(emtable);																
 						});
 						var emtable="<tr id=\"trtab\">"+
 	        				"<td colspan=\"10\">"+
-	        				"<div class=\"pagelist\"> <a href=\"\">上一页</a> <span class=\"current\">1</span><a href=\"\">2</a><a href=\"\">3</a><a href=\"\">下一页</a><a href=\"\">尾页</a> </div></td></tr>"
-						
+	        				"<div class=\"pagelist\"> <a href=\"\">上一页</a> <span class=\"current\">1</span><a href=\"\">2</a><a href=\"\">3</a><a href=\"\">下一页</a><a href=\"\">尾页</a> </div></td></tr>"						
 						$("#trtab").append(emtable);
 						
 						
@@ -159,7 +335,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var alterbtn = $(this).attr("id");
 				//alert("sss:"+alterbtn);
 				var namehtml =$("#a"+alterbtn).html();	
-				alert(namehtml);			
+				//alert(namehtml);			
 				var idhtml =$("#b"+alterbtn).html();
 				//alert(idhtml); 
 				var phonehtml =$("#c"+alterbtn).html();
@@ -167,9 +343,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var agehtml =$("#e"+alterbtn).html();
 				var adresshtml =$("#f"+alterbtn).html();
 				var timehtml =$("#g"+alterbtn).html();
-				//var parthtml =$("#h"+alterbtn).html();
-				//ar tablehtml =$("#i"+alterbtn).html();
-				  
+				var parthtml =$("#h"+alterbtn).html();
+				
+				 
 				
 				$("#per").val(namehtml);//将要修改某行的数据放入到模态框中
 				$("#perid").val(idhtml);
@@ -178,7 +354,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#perage").val(agehtml);
 				$("#perdress").val(adresshtml);
 				$("#pertime").val(timehtml);
-				//$("#perpart").val(parthtml);
+				$("#perpart").val(parthtml);
 				//$("#pertable").val(tablehtml);		
 				
 				update(idhtml);					
@@ -193,9 +369,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var sage=$("#perage").val();
 					var sadress=$("#perdress").val();
 					var stime=$("#pertime").val();
-					//var spart=$("#per").val();
+					var spart=$("#perpart").val();
 					//var stable=$("#per").val();
-					//alert(stime);
+					//alert(spart);
 					if(ssex=="女"){
 						ssex=5;
 					}else{
@@ -204,7 +380,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$.ajax({
 						url:"achieve_updatestaff.action",
 						type:"post",
-						data:{"employee.emid":sid,"employee.emname":sname,"employee.emsex":ssex,"employee.emage":sage,"employee.emphone":sphone,"employee.emadress":sadress,"employee.emjointime":stime},
+						data:{"employee.emid":sid,"employee.emname":sname,"employee.emsex":ssex,"employee.emage":sage,"employee.emphone":sphone,"employee.emadress":sadress,
+						"employee.emjointime":stime,"partname.partname":spart},
 						success:function(data){
 							if(data==-1){
 								alert("修改失败");
@@ -231,13 +408,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#tableid").on('click',".deskbtn",function(){			
 				var deskbtn=$(this).attr("id");
 				var emhtml = $("#b"+deskbtn).html();
+				var ementer =$("#i"+deskbtn).html();
+		
+			
 				$.ajax({
 					url:"achieve_delem.action",
 					type:"post",
-					data:{"employee.emid":emhtml},					
+					data:{"employee.emid":emhtml,"employId.ementer":ementer},					
 					success:function(data){
 						if(data==-1){
-								alert("删除失败");
+							alert("删除失败");
 						}else if(data==1){
 							alert("删除成功");
 						}else{
@@ -283,7 +463,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 				});
 			
+		});*/
+		$(function(){
+			$("#addstaffinfo").click(function(){
+				$.ajax({
+					url:"achieve_selpa.action",
+					type:"post",
+					data:{},
+					success:function(data){
+					$("#empart").html("");
+						var json=JSON.parse(data);						
+							$.each(json,function(index,value){							
+								var partname="<option value=\""+value[1]+"\">"+value[0]+"</option>";
+								$("#empart").append(partname);
+							});
+							
+					}
+				});
+			});
 		});
+		
 			/*
 			* 添加员工按钮，弹出模态框
 			* 
@@ -292,17 +491,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			* 在我这就是不能为空
 			*/
 		$(function(){
+		
 			$("#addem").click(function(){
+			
 				var emid=$("#emid").val();
+				
 				var emname=$("#emname").val();
-				var emsex=$("#emsex").val();
+				var emsex=$("#emsex option:selected").val();
+				//alert("55555:"+emsex);
 				var emage=$("#emage").val();
+				//alert(emage);
 				var emphone=$("#emphone").val();
 				var emadress=$("#emadress").val();
 				var emjointime=$("#emjointime").val();
-				var empart=$("#empart").val();
-				var ementer=$("#ementer"). val();	
+				var empart=$("#empart option:selected").html();
 				
+				var ementer=$("#ementer"). val();
+					
 				//alert(empart+";"+ementer);							
 					if(emsex=="男"){
 						emsex=4;
@@ -318,198 +523,72 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						success:function(data){
 							if(data==-1){
 								alert("添加失败");
-						}else if(data==1){
-							alert("添加成功");
-						}else{
-							alert("没有权限");
-						}	
+							}else if(data==1){
+								alert("添加成功");
+							}else{
+								alert("没有权限");
+							}	
 						}
 					});
 				
 			});
 		});	
-	</script>  
-</head>
-  <!-- 
-  	员工信息页面
-   -->
-  <body>
-<div class="panel admin-panel">
-  <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 员工信息</strong></div>
- <div>
-	 
-	  <div class="panel admin-panel">	    
-	    <div class="padding border-bottom">
-	      <ul class="search">
-	        <li>
-	          <button type="button"  class="button border-green" id="checkall"><span class="icon-check"></span> 全选</button>
-	          <button type="submit" class="button border-red"><span class="icon-trash-o"></span> 批量删除</button>
-	          <!-- 
-	          	添加员工按钮
-	           -->
-	          <a type="button" class="button border-yellow" href="" data-target="#myModal" data-toggle="modal"><span class="icon-plus-square-o"></span> 添加员工</a>
-         		<!-- 
-         			添加员工模态框
-         		 -->
-         
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								
-								<h4 class="modal-title" id="myModalLabel">添加员工信息</h4>
-							</div>
-							<!-- 
-								添加员工信息的输入框 ----
-							 -->
-							 
-								<div class="modal-body1">
-													
-									编	号：<input type="text" id="emid" name="employee.emid"><br/>
-									姓	名：<input type="text" id="emname" name="employee.emname"><br/>
-									性	别：<input type="text" id="emsex" name="employee.emsex"><br/>
-									年	龄：<input type="text" id="emage" name="employee.emage"><br/>
-									电	话：<input type="text" id="emphone" name="employee.emphone"><br/> 									
-									地	址：<input type="text" id="emadress" name="employee.emadress"><br/>
-									就职时间：<input type="text" id="emjointime" name="employee.emjointime"><br/>
-									员工角色：<input type="text" id="empart" name="empart"><br>
-									员工账号：<input type="text" id="ementer" name="employee.ementer">	<br/>
-										     
-								
-								</div>
-								
-								
-															
-								<div class="modal-footer">
-								<!-- 
-									关闭模态框按钮
-								 -->
-								<button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
-								<!-- 
-									点击添加按钮，触发点击事件，当信息全部录入后执行Ajax语句；
-								 -->
-								 <input type="submit" class="btn btn-primary"  data-dismiss="modal" value="添加" id="addem"/>	
-								
-							
-							</div>
-					   </div>
-					</div>
-				</div>
-	        </li>
-	        
-	        <!-- 
-	        	搜索员工信息框
-	         -->
-	        <li>
-	        
-	        	<input id="condition"type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-          		<a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchem"> 搜索</a></li>
-	        </li>
-	      </ul>
-	    </div>
-	    <!-- 
-	    	查询出来的员工信息生成的table
-	     -->
-	    <table class="table table-hover text-center" id="tableid">
-	    </table>
-	   
-		<div class="pagelist">
-				<a  class="minuspage" name="firstname">首页</a>
-				<a  class="minuspage" name="minusname">上一页</a> 
-				<a  class="minuspage" name="addname">下一页</a>
-				<a  class="minuspage" name="lastname">尾页</a>
-				共<span id="pagenum"></span>页
-				<input type="text" id="someone" value="1">
-				<input type="button" value="跳转" id="commitone">
-		</div>					   
-	  </div>
 	
-</div>
-
-
-
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-				<div class="text-center margin-big padding-big-top">
-							<h1>当前要修改的员工</h1>
-				</div>
-				<div id="modalform">
-					<div>
-					    <span>员工姓名</span><input type="text" name="st.personNum" id="per"/>
-					</div>
-					 <div>
-					   <span>员工编号</span><input type="text" name="st.deskName" id="perid"/>
-					 </div>
-					  <div>
-					    <span>电话</span><input type="text" name="st.deskState" id="perphone"/>
-					  </div>
-					   <div>
-					    	<span>性别</span><input type="text" name="st.deskState" id="persex"/>
-					   </div>
-					   <div>
-					    	<span>年龄</span><input type="text" name="st.deskState" id="perage"/>
-					   </div>
-					   <div>
-					    	<span>地址</span><input type="text" name="st.deskState" id="perdress"/>
-					    </div>
-					    <div>
-					    	<span>就职时间</span><input type="text" name="st.deskState" id="pertime"/>
-					    </div>
-				<!--    <div>
-					    	<span>角色</span><input type="text" name="st.deskState" id="perpart"/>
-					    </div>
-					    <div>
-					    	<span>负责桌台</span><input type="text" name="st.deskState" id="pertable"/>
-					    </div>	-->
-					 </div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
-
-					</div>
-				</div>
-			</div>
-		</div>
-<script type="text/javascript">
-
-function del(id){
-	if(confirm("您确定要删除吗?")){
+		/**
+		*员工id失焦事件
+		*/
 		
-	}
-}
-
-$("#checkall").click(function(){ 
-  $("input[name='id[]']").each(function(){
-	  if (this.checked) {
-		  this.checked = false;
-	  }
-	  else {
-		  this.checked = true;
-	  }
-  });
-})
-
-function DelSelect(){
-	var Checkbox=false;
-	 $("input[name='id[]']").each(function(){
-	  if (this.checked==true) {		
-		Checkbox=true;	
-	  }
+	$("#emid").blur(function() {			
+				$.ajax({
+					url : "achieve_selemid.action",
+					type : "post",
+					data : {"employee.emid":$(this).val()},
+					success : function(data) {						
+						if (data == 1) {
+							alert("该员工编号已存在！");
+						}
+					},
+				});
+			});
+	/**
+	* 员工姓名失焦事件验证
+	*/
+	$("#emname").blur(function(){
+		var reg = /^[\u4e00-\u9fa5A-Za-z]+$/i;
+				var tname=$(this).val();
+				//alert(tname);
+				if(tname.length>20||tname.length<1){
+					alert("长度有误！");
+				}else if(reg.test(tname)){
+				}else{
+					alert("格式有误");
+				}
 	});
-	if (Checkbox){
-		var t=confirm("您确认要删除选中的内容吗？");
-		if (t==false) return false; 		
-	}
-	else{
-		alert("请选择您要删除的内容!");
-		return false;
-	}
-}
-
+	
+	   /**
+		* 表单验证年龄
+		*/
+	
+	$("#emage").blur(function(){	
+		var	emage=parseInt($("#emage").val());
+			if(emage<=18 || emage>=60){
+				alert("年龄或大或小");
+			}
+		//var reg = 
+	});
+	
+	/**
+	* 表单验证手机号
+	*/	
+	$("#emphone").blur(function(){	
+		var reg=new RegExp("^1[0-9]{10}","gi");
+		var emphone=$("#emphone").val();
+		if(reg.test(emphone)){			
+		}else{
+			alert("号码格式有误");
+		}
+	})
 </script>
-</div>
+
 </body>
 </html>

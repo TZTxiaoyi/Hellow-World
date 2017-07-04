@@ -21,15 +21,12 @@ body{
 }
 
 td{
-	height:50px;
 	width:200px;
-	font-size:30px;
 	margin-top:10px;
 	margin-bottom:10px;
 	border-bottom:1px solid #ff6600;
 }
 td button{
-	margin-top:10px;
 }
 #top {
 	height: 9%;
@@ -201,12 +198,13 @@ td button{
  					data:{"method":method},
  					dataType:"json",
  					success:function(data){
+ 			
  					$("#titlemading").html("");
- 					var tr="<tr><td>菜名</td><td>数量</td><td>操作</td><td><input class=\"btn btn-info\" id=\"querymading\" type=\"button\" value=\"刷新\" /></td></tr>";
+ 					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td><td><input class=\"btn btn-info\" id=\"querymading\" type=\"button\" value=\"刷新\" /></td></tr>";
 					$("#titlemading").append(tr);
-					$.each(data,function(index,value){				
-					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button></td>"
-					+"<td><button class=\"btn btn-danger\" id=\"removebutton\" name =\""+value[0]+ "\">取消制作</button></td>"+"</tr>";
+					$.each(data,function(index,value){	
+					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td>"+value[3]+"</td>"+"<td><div class=\"btn-group\"><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button>"
+					+"<button class=\"btn btn-danger\" id=\"removebutton\" name =\""+value[0]+ "\">取消制作</button></div></td>"+"</tr>";
 					$("#titlemading").append(dd);		
 					});
 					}
@@ -215,7 +213,6 @@ td button{
  				
  		$(function(){
  			$("#titlemading").on('click',"#madingbutton",function(){	
- 			
  				var aa=$(this).attr("name");
  				var foodname=$($("td[name=\""+aa+"\"]")[0]).html();
  				var foodnum=$($("td[name=\""+aa+"\"]")[1]).html();
@@ -228,7 +225,7 @@ td button{
  					dataType:"json",
  					success:function(data){
  					$.each(data,function(index,value){				
-						table=table+value[0]+value[1]+"份"
+						table=table+value[0]+":"+value[1]+"份，"
 					});
  					var dd="<div>"+time+"已完成菜品："+foodname+"共"+foodnum+"份  ，"+table+"</div>";
 					$("#bottom").prepend(dd);		
@@ -269,10 +266,10 @@ td button{
  					dataType:"json",
  					success:function(data){
  					$("#titlemade").html("");
- 					var tr="<tr><td>菜名</td><td>数量</td><td>操作</td><td><input  class=\"btn btn-info\" \"id=\"querymade\" type=\"button\" value=\"刷新\" /></td></tr>";
+ 					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td><td><input  class=\"btn btn-info\" \"id=\"querymade\" type=\"button\" value=\"刷新\" /></td></tr>";
 					$("#titlemade").append(tr);
 					$.each(data,function(index,value){
-					var dd="<tr>"+"<td   name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td  name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
+					var dd="<tr>"+"<td   name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td  name =\""+value[0]+ "\">"+value[2] +"</td>"+ "</td>"+"<td>"+value[3]+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
 					$("#titlemade").append(dd);
 					});
  					}

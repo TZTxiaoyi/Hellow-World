@@ -1,4 +1,4 @@
- 
+
 /**     
  * @文件名称: TztDefaultSoftImp.java  
  * @类路径: com.logic  
@@ -22,6 +22,7 @@ import com.daointerface.TztSort;
 import com.entity.TztDish;
 import com.insertemploydao.TztDishImp;
 import com.insertemploydao.TztDishOrderImp;
+import com.opensymphony.xwork2.ActionContext;
 
 /**  
  * @类功能说明：  默认排序算法
@@ -38,7 +39,7 @@ public class TztDefaultSortImp implements TztSort {
 		List dishpriority = new ArrayList();
 		dishpriority = dao.queryDishpriority(12);
 		List madeList=new ArrayList();
-		
+
 		for(int i=0;i<dishpriority.size();i++){
 			List dishList=new ArrayList();
 			int a=(Integer) ((List)dishpriority.get(i)).get(2);
@@ -54,12 +55,32 @@ public class TztDefaultSortImp implements TztSort {
 					j--;
 				}
 			}
+
 			odId=odId.substring(0,odId.length()-1);
 			dishList.add(odId);
 			dishList.add(((List)dishpriority.get(i)).get(8));
-			dishList.add(sum);		
+			dishList.add(sum);
+
+			List list= dao.queryDesk(odId);
+			String de="";
+			for(int j=0;j<list.size();j++){
+				int aa=(Integer) ((List)list.get(j)).get(4);
+				de=de+(String)((List) list.get(j)).get(10)+",";
+				for (int k = j+1; k<list.size();k++) {
+					int bb=(Integer) ((List)list.get(k)).get(4);
+					if(aa==bb){
+						list.remove(k);
+						k--;
+					}
+				}
+
+			}
+			de=de.substring(0,de.length()-1);
+			dishList.add(de);
 			madeList.add(dishList);
 		}
+
+
 		return madeList;
 	}
 
@@ -76,6 +97,8 @@ public class TztDefaultSortImp implements TztSort {
 	}
 
 	public List made(String dishId) {
+		HttpServletRequest req=ServletActionContext.getRequest();
+		HttpSession session = req.getSession();
 		TztDishOrderImp dao =new TztDishOrderImp();
 		TztDish dish = new TztDish();
 		List list=new ArrayList();
@@ -99,6 +122,24 @@ public class TztDefaultSortImp implements TztSort {
 		list.add(m);
 		list.add(((List) dishList.get(0)).get(1));
 		list.add(count);
+
+		List delist= dao.queryDesk(m);
+		String de="";
+		for(int j=0;j<delist.size();j++){
+			int aa=(Integer)((List) delist.get(j)).get(4);
+			de=de+(String)((List) delist.get(j)).get(10)+",";
+
+			for (int k = j+1; k<delist.size();k++) {
+				int bb=(Integer) ((List)delist.get(k)).get(4);
+				if(aa==bb){
+					delist.remove(k);
+					k--;
+				}
+			}
+		} 
+		de=de.substring(0,de.length()-1);
+		list.add(de);
+		session.setAttribute((String)list.get(0),list);
 		return list;
 	}
 
@@ -113,11 +154,11 @@ public class TztDefaultSortImp implements TztSort {
 		
 		for (int i=0; i<list.size();i++){
 			List deskList=new ArrayList();
-			int a=(Integer) ((List)list.get(i)).get(2);
+			int a=(Integer) ((List)list.get(i)).get(4);
 			int sum=1;
 			String desk = (String) ( (List)list.get(i)).get(10);
-				for (int j = i+1; j <list.size(); j++) {
-				int b=(Integer) ((List)list.get(j)).get(2);
+			for (int j = i+1; j <list.size(); j++) {
+				int b=(Integer) ((List)list.get(j)).get(4);
 				if(a==b){
 					list.remove(j);
 					sum++;
@@ -128,6 +169,7 @@ public class TztDefaultSortImp implements TztSort {
 			deskList.add(sum);
 			result.add(deskList);
 		}
+		System.out.println("aaaaaaaaaa+"+result);
 		return result;
 	}
 
@@ -137,7 +179,7 @@ public class TztDefaultSortImp implements TztSort {
 		TztDishOrderImp dao = new  TztDishOrderImp();
 		dao.updataDishStatus(12, dishId);
 		session.removeAttribute(dishId);
-		
+
 		return null;
 	}
 

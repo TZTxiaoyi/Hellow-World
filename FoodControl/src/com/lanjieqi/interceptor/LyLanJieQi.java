@@ -22,14 +22,13 @@ public class LyLanJieQi extends MethodFilterInterceptor{
 		System.out.println("lujing:"+uri);
 		List list = (List) request.getSession().getAttribute("listvalue");
 		for (int i = 0; i < list.size(); i++) {			
-			List list6=(List) list.get(i);
+			List list6=(List)list.get(i);
 			String parturi = (String) list6.get(1);
 			//System.out.println("8888"+uri+parturi);
 			if(uri.equals(parturi)){
 				String result = arg0.invoke();
 				return result;
-			}
-			
+			}			
 		}
 		return "login";
 	}		
