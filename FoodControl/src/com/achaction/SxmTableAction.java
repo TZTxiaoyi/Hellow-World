@@ -228,9 +228,8 @@ public class SxmTableAction {
 	     * @throws
 	 */
 	public void searchTable(){
-		System.out.println("curr"+currPage);
 		List ser=sts.selTable(currPage,search);
-		JSON json=toJson.toJson("ss", ser);
+		JSON json=toJson.toJsonArray("ss", ser);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("text/html;charset=UTF-8");
 		try {

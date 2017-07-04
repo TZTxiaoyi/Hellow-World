@@ -108,10 +108,10 @@ public class GJYFCaction {
 	
 	/*查询菜品action*/
 	public void seekfood(){
-		List ser=inFc.sekFood(search);
-		JSON json=toJson.toJson("ss", ser);
+		List ser=inFc.sekFood(countpage,search);
+		JSON json=toJson.toJsonArray("ss", ser);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
-		hsr.setContentType("textml;charset=UTF-8");
+		hsr.setContentType("text/html;charset=UTF-8");
 		hsr.setCharacterEncoding("UTF-8");
 		try {
 			hsr.getWriter().print(json);
@@ -154,7 +154,7 @@ public class GJYFCaction {
 	/* 总页数查询action*/
 	public void getcount(){
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int a=inFc.getallpage();		
+		int a=inFc.getallpage(search);		
 		try {
 			response.getWriter().print(a);
 		} catch (Exception e) {
@@ -168,7 +168,7 @@ public class GJYFCaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
-		List list=inFc.pagepage(countpage);
+		List list=inFc.pagepage(countpage); 
 		JSON json=toJson.toJsonArray("value", list);
 		try {
 			response.getWriter().print(json);
