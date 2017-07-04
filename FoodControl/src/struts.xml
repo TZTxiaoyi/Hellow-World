@@ -12,15 +12,16 @@
 			<result name="backhome" type="redirect">/home.jsp</result>
 		</action>
 		<action	name="TztQueryDish_*" class="com.achaction.TztQuerDishAction" method="{1}">
-			<result name="tztquerok" type="redirect">/order_vegetable.jsp</result>
+			<result name="exit" type="redirect">/background/login.jsp</result>
 		</action>
 <!-- 注册 -->
 		<action name ="home_*" class="com.achaction.ZbCustomerAction" method = "{1}">			
 			<result name = "zbfood">/new.jsp</result>
 			<result name="register" type="dispatcher">/home.jsp</result>
-			<result name ="list" type="dispatcher">/new.jsp</result>
+			<result name ="list" type="dispatcher">/newordering.jsp</result>
 			<result name ="nom" type = "dispatcher">/home.jsp</result>
 			<result name ="ordering" type = "dispatcher">/new.jsp</result>
+			
 		</action>
 	</package>
 	<!-- 有关权限的package -->
@@ -88,6 +89,10 @@
 <!-- 订单 -->
 		<action name="order_*" class="com.achaction.LyOrderAction" method="{1}">
 			<result name="ok">/a123.jsp</result>
+			
+		</action>
+		<action name ="zborders_*" class="com.achaction.ZbOrdersAction" method="{1}">
+			<result name ="order">/a123.jsp</result>
 		</action>
 	</package>	
 	<constant name="struts.multipart.saveDir" value="e:/"/>		

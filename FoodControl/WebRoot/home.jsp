@@ -394,8 +394,7 @@
 		$(function(){
 			$("#orderfood").click(function(){
 				
-				//$("option").val();
-				//alert($("#personnub").val());
+				
 			});
 			$.ajax({
 				url:"home_orders.action",

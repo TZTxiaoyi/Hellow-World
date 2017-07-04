@@ -443,7 +443,7 @@
 						num=num+allnum;
 						if(value[12]!=21){
 							$("#callimgpay").show();
-							$("#clear").attr("disabled",false); 
+							
 						}
 					});
 					
@@ -451,7 +451,7 @@
 					$("#dname").html(dname);
 					$("#pnum").html(fnum);
 					$(".tred").html(ordersnum);	
-				 	$("#clear").attr("disabled",true); 
+				 
 					
 						
 				}
@@ -523,6 +523,7 @@
 					if(data!=-1){
 						outfood();
 					}
+					
 				}
 			});
 		});

@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <title>BootStrap欢迎你</title>
     <!-- <link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' /> -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"></link>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"></link>
     <link rel="stylesheet" href="bootstrap/css/bootstrap-datetimepicker.css" type="text/css"></link>
    <style>
        body{
@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <span class="add-on"><i class="icon-th"></i></span>
      </div>
     <script type="text/javascript" src="bootstrap/jquery/jquery-2.1.3.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
    <script type="text/javascript" src="bootstrap/js/bootstrap-datetimepicker.js"></script>
      <script type="text/javascript" src="bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
    <script type="text/javascript">

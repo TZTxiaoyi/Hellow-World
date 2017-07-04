@@ -257,6 +257,7 @@ public class SxmTableAction {
 		hsr.setContentType("text/html;charset=UTF-8");
 		try {
 			hsr.getWriter().print(json);
+			System.out.print(json);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage()+3333);
@@ -310,23 +311,36 @@ public class SxmTableAction {
 	public void changedesk(){
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		//根据更换前的桌名获取桌子id
+		System.out.println("前桌名"+st.getDeskName());
 		List beforelist=sts.getbeforeid(st);
 		List beforeli=(List) beforelist.get(0);
 		int getbeid=(Integer) beforeli.get(0);
+		System.out.println("b"+getbeid);
 		//根据更换后的桌名获取id
+		System.out.println("后桌名"+tablename);
 		List list=sts.gettableid(tablename);
 		List li=(List) list.get(0);
 		int getid=(Integer) li.get(0);
+		System.out.println("a"+getid);
 		//根据更改前桌子的id获取订单id
 		List getorderid=sts.getorderid(getbeid);
-		List getoid=(List) getorderid.get(0);
+	
+		List getoid=(List) getorderid.get(getorderid.size()-1);
+		System.out.println("getoid"+getoid);
 		int orderid=(Integer) getoid.get(0);
-		//根据订单id将桌子更改为更改后的
-		int chaid=sts.changeid(getid, orderid);
-		//根据更换前的桌名更改桌子状态为可用
-		int castate=sts.changedstate(st);
-		//根据更换前的桌名更改桌子状态为占用
-		int aftercastate=sts.changeafterdstate(tablename);
+		System.out.println("orderid"+orderid);
+		int chaid=-1;
+		int castate=-1;
+		int aftercastate=-1;
+		if(getoid.size()!=0){
+			//根据订单id将桌子更改为更改后的
+			chaid=sts.changeid(getid, orderid);
+			//根据更换前的桌名更改桌子状态为可用
+			castate=sts.changedstate(st);
+			//根据更换前的桌名更改桌子状态为占用
+			aftercastate=sts.changeafterdstate(tablename);
+		}
+		
 		int flag=-1;
 		if(chaid!=-1 && castate!=-1 && aftercastate!=-1){
 			flag=1;

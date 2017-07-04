@@ -72,8 +72,8 @@ table td{
 	font-size:25px;
 }
 #titlemading{
-	max-height:350px;;
-	margin-left:0px;
+	max-height:400px;
+	margin-left:10px;
 	margin-right:10px;
 	background-color:#ffcc99;
 }
@@ -88,6 +88,10 @@ table td{
 }
 .pre-scrollable{
 	overflow:auto;
+}
+
+#exit{
+	float:right;
 }
 
 </style>
@@ -106,7 +110,7 @@ table td{
 				<button class="btn btn-info btn-group-lg" id = "priority">优先级</button>
 				<button class="btn btn-info btn-group-lg" id ="desksort">桌位轮转</button>
 			 </div>
-		
+			<button class="btn btn-danger btn-group-lg" id="exit">退出登录</button>
 		</div>
 		<!-------------------------------------------------------------------------->
 		<div class="column" id="cbody">
@@ -197,24 +201,21 @@ table td{
  			method=0;
  			queryMading();
 			queryMade();
- 			alert(method);
  		});
  		$("#priority").click(function(){
  			method=2;
  			queryMading();
 			queryMade();
- 			alert(method);
  		});
  		$("#desksort").click(function(){
  			method=1;
  			queryMading();
 			queryMade();
- 			alert(method);
  		});
- 		
- 			$("#querymading").click(function(){
- 				queryMading();
- 			});
+ 		$("#exit").click(function(){
+ 			alert(1);
+ 			window.location.href="TztQueryDish_exit.action";
+ 		});
  		function queryMading(){
  				$.ajax({
  					url:"TztQueryDish_queryMading.action",
@@ -224,8 +225,8 @@ table td{
  					success:function(data){
  			
  					$("#titlemading").html("");
- 					//var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td><td><input class=\"btn btn-info\" id=\"querymading\" type=\"button\" value=\"刷新\" /></td></tr>";
-					//$("#titlemading").before(tr);
+					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td></tr>";
+					$("#titlemading").append(tr);
 					$.each(data,function(index,value){	
 					var dd="<tr>"+"<td name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td name =\""+value[0]+ "\">"+value[2] +"</td>"+"<td>"+value[3]+"</td>"+"<td><div class=\"btn-group\"><button class=\"btn btn-success\" id=\"madingbutton\" name =\""+value[0]+ "\">制作完成</button><br/>"
 					+"<button class=\"btn btn-danger\" id=\"removebutton\" name =\""+value[0]+ "\">取消制作</button></div></td>"+"</tr>";
@@ -278,10 +279,6 @@ table td{
  		
  		
  		
- 			$("#querymade").click( function(){
- 				queryMade();
- 			});
- 		
  		function queryMade(){
  				$.ajax({
  					url:"TztQueryDish_queryMade.action",
@@ -290,8 +287,8 @@ table td{
  					dataType:"json",
  					success:function(data){
  					$("#titlemade").html("");
- 					//var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td><td><input  class=\"btn btn-info\" \"id=\"querymade\" type=\"button\" value=\"刷新\" /></td></tr>";
-					//$("#titlemade").before(tr);
+ 					var tr="<tr><td>菜名</td><td>数量</td><td>桌位</td><td>操作</td></tr>";
+					$("#titlemade").append(tr);
 					$.each(data,function(index,value){
 					var dd="<tr>"+"<td   name =\""+value[0]+ "\">"+value[1]+"</td>"+"<td  name =\""+value[0]+ "\">"+value[2] +"</td>"+ "</td>"+"<td>"+value[3]+"<td ><button class=\"btn btn-danger\" id=\"makebutton\" name =\""+value[0]+ "\">制作</button></td>"+"</tr>";
 					$("#titlemade").append(dd);
