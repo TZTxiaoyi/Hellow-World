@@ -16,7 +16,9 @@
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../bootstrap/jquery/jquery-2.1.3.min.js"></script>
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"></link>
-
+	<style>
+		
+	</style>
 
 </head>
   
@@ -26,6 +28,7 @@
   	<div class="panel admin-panel">
 
   <div class="padding border-bottom">
+  	<a class="button border-yellow" href="fresh_powers.action">查看所有</a>
     <button type="button"  class="button border-yellow" onclick="window.location.href='#add'" aria-labelledby="myModalLabel"  data-target="#myModal2" data-toggle="modal">
     	<span class="icon-plus-square-o"></span> 添加角色
     </button>
@@ -45,36 +48,35 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel"><span id="powersname"></span>权限更改</h4>
+				<h2 class="modal-title" id="myModalLabel"><span id="powersname"></span>权限更改</h2>
 			</div>
 			<div class="modal-body1">
-				员工管理<input type="checkbox" checkflag="check1" name="check1" value="10" class="parent_one"><br>  				
-        		添加员工<input type="checkbox" checkflag="check1" name="check11" aria-label="..." class="children1">
-        		修改员工信息<input type="checkbox" checkflag="check1" name="check12" aria-label="..." class="children1">
-        		删除员工<input type="checkbox" checkflag="check1" name="check13" aria-label="..." class="children1"><br>        		
+				<span>员工管理<input type="checkbox" checkflag="check1" name="check1" value="10" class="parent_one"><br>  				
+        		<span>添加员工<input type="checkbox" checkflag="check1" name="check11" aria-label="..." class="children1">
+        		<span>修改员工信息<input type="checkbox" checkflag="check1" name="check12" aria-label="..." class="children1">
+        		<span>删除员工<input type="checkbox" checkflag="check1" name="check13" aria-label="..." class="children1"><br>        		
         		<hr>
-        		员工账号<input type="checkbox" checkflag="check2" name="check2" aria-label="..." class="parent_one"><br>  				
-        		添加员工账号<input type="checkbox" checkflag="check2" name="check10" aria-label="..." class="children1">
-        		修改员工账号<input type="checkbox" checkflag="check2" name="check18" aria-label="..." class="children1"><br>       		
+        		<span>员工账号<input type="checkbox" checkflag="check2" name="check2" aria-label="..." class="parent_one"><br>  				
+        		<span>添加员工账号<input type="checkbox" checkflag="check2" name="check10" aria-label="..." class="children1">
+        		<span>修改员工账号<input type="checkbox" checkflag="check2" name="check18" aria-label="..." class="children1"><br>       		
         		<hr>
-        		桌台管理<input type="checkbox" checkflag="check3" name="check4" aria-label="..." class="parent_one"><br>
-        		添加桌台<input type="checkbox" checkflag="check3" name="check14" aria-label="..." class="children1">  
-        		删除桌台<input type="checkbox" checkflag="check3" name="check16" aria-label="..." class="children1">
-        		修改桌台<input type="checkbox" checkflag="check3" name="check15" aria-label="..." class="children1"><br>
+        		<span>桌台管理<input type="checkbox" checkflag="check3" name="check4" aria-label="..." class="parent_one"><br>
+        		<span>添加桌台<input type="checkbox" checkflag="check3" name="check14" aria-label="..." class="children1">  
+        		<span>删除桌台<input type="checkbox" checkflag="check3" name="check16" aria-label="..." class="children1">
+        		<span>修改桌台<input type="checkbox" checkflag="check3" name="check15" aria-label="..." class="children1"><br>
         		<hr>
-        		菜品管理<input type="checkbox" checkflag="check4" name="check5" aria-label="..." class="parent_one"><br>
-        		添加菜品<input type="checkbox" checkflag="check4" name="check17" aria-label="..." class="children1">  
-        		修改菜品<input type="checkbox" checkflag="check4" name="check22" aria-label="..." class="children1" >  
-        		删除菜品<input type="checkbox" checkflag="check4" name="check23" aria-label="..."class="children1"><br>
+        		<span>菜品管理<input type="checkbox" checkflag="check4" name="check5" aria-label="..." class="parent_one"><br>
+        		<span>添加菜品<input type="checkbox" checkflag="check4" name="check17" aria-label="..." class="children1">  
+        		<span>修改菜品<input type="checkbox" checkflag="check4" name="check22" aria-label="..." class="children1" >  
+        		<span>删除菜品<input type="checkbox" checkflag="check4" name="check23" aria-label="..."class="children1"><br>
         		<hr>
-        		订单详情<input type="checkbox" name="check19" aria-label="...">
-        		退单详情<input type="checkbox" name="check20" aria-label="...">  
-        		收入详情<input type="checkbox" name="check21" aria-label="...">                    		      			
+        		<span>订单详情<input type="checkbox" name="check19" aria-label="...">
+        		<span>退单详情<input type="checkbox" name="check20" aria-label="...">  
+        		<span>收入详情<input type="checkbox" name="check21" aria-label="...">                    		      			
 			</div>
 			<div class="modal-footer">			
-				<button type="button" class="btn btn-primary" id="save_powers" data-dismiss="modal">保存</button>
+				<button type="button" class="btn btn-warning" id="save_powers" data-dismiss="modal">保存</button>
 			 </div>
 		</div>
 	 </div>
@@ -86,9 +88,8 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">角色权限更改</h4>
+				<h2 class="modal-title" id="myModalLabel">角色权限更改</h2>
 			</div>
 			<div class="modal-body1">
 				角色名称：<input type="text"  aria-label="..." size="30" id="inputpart">				                  		      			
@@ -229,7 +230,7 @@
 	 	});
 	 	$(function(){
 	 		$(".parent_one").click(function(){
-	 			var checkflag=$(this).attr("checkflag");.
+	 			var checkflag=$(this).attr("checkflag");
 	 			alert("fu:"+checkflag);
 	 			if(!$(this).prop("checked")){
 	 			alert("222");

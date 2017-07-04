@@ -44,7 +44,7 @@
 		<action name="fresh_*" class="com.achaction.LYquanxianaction" method="{1}">
 			<result name="success" type="redirect">/background/index.jsp</result>
 			<result name="part" type="redirect">/service.jsp</result>
-			<result name="cook" type="redirect">/Kitchen.jsp</result>
+			<result name="cook" type="redirect">/kitchen.jsp</result>
 			<result name="false" type="redirect">/background/login.jsp</result>
 			<result name="sa" type="redirect">/background/employee.jsp</result>
 			<result name="se" type="redirect">/background/employeeId.jsp</result>

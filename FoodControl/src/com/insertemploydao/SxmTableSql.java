@@ -85,11 +85,11 @@ public class SxmTableSql implements DaoInterface {
 	 */
 	public List selTable(int currPage,String ser) {
 		System.out.println("sql"+currPage);
-		String sql = "select top(3)* from (select  * from  " +
+		String sql = "select top(5)* from (select  * from  " +
 				"desk_restaff where deskId like'%"+ser+"%' or personNum " +
 				"like'%"+ser+"%' or deskName like'%"+ser+"%' or  Name " +
 				"like'%"+ser+"%' or codeName like'%"+ser+"%') ss where " +
-				"ss.deskId not in(select top ("+currPage+"*3 )d.deskId from " +
+				"ss.deskId not in(select top ("+currPage+"*5 )d.deskId from " +
 				"desk_restaff d where deskId like'%"+ser+"%' or " +
 				"personNum like'%"+ser+"%' or deskName like'%"+ser+
 				"%' or  Name like'%"+ser+"%' or codeName " +
@@ -213,8 +213,8 @@ public class SxmTableSql implements DaoInterface {
 	 * @throws
 	 */
 	public List page(int currPage) {
-		String sql="select distinct  top(3)* from desk_restaff where " +
-				"deskId not in (select distinct top ("+currPage+"*3) deskId " +
+		String sql="select distinct  top(5)* from desk_restaff where " +
+				"deskId not in (select distinct top ("+currPage+"*5) deskId " +
 				"from desk_restaff)";
 		List list = DaoFactory.Query(sql);
 		return list;

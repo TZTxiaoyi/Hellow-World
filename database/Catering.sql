@@ -323,7 +323,11 @@ add constraint desk_unique unique(deskName)
 alter table desk
 alter column deskName varchar(20) not null
 
-
+/*
+	ÍËµ¥±íÌí¼Ó×Ö¶Î
+*/
+alter table chargeback
+add dishName varchar(20)
 
 create view orderdish_orders
 as
