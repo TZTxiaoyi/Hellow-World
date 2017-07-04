@@ -147,7 +147,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			
 			<a class="btn btn-info btn-lg col-sm-offset-1" href="" role="button" data-toggle="modal" data-target="#myModal1">交班</a>
-			<a class="btn btn-info btn-lg col-sm-offset-1" href="" role="button" id="tflash">刷新</a>
 
 			<a class="btn btn-success btn-lg col-sm-offset-1" href=""role="button"
 			data-toggle="modal" data-target="#myModalclear"  data-toggle="modal" data-target="#myModalclear">清扫结束</a> 
@@ -304,6 +303,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			function tabonload() {
 				$.ajax({
+					async: false,
 					url : "SxmTable_tableAdmin.action",
 					type : "post",
 					data : {map : null},
@@ -357,6 +357,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				快速搜索,搜索到的内容动态到第一个；
 			*/
 			$("#btn").click(function(){
+				tabonload();
 				var allput=$("#inpbtn").val();
 				$.ajax({
 					url : "SxmTable_indexTable.action",
@@ -389,10 +390,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 			/*
 				点击刷新按钮
-			*/
+			
 			$("#tflash").click(function(){
 				tabonload();
 			})
+			*/
 			/*
 				登陆成功后带值显示到本页面；
 			*/

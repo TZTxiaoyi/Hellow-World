@@ -255,6 +255,7 @@ public class SxmTableAction {
 		hsr.setContentType("text/html;charset=UTF-8");
 		try {
 			hsr.getWriter().print(json);
+			System.out.print(json);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage()+3333);
