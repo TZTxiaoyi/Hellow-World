@@ -38,6 +38,9 @@
 			width:40%;
 			height:35px;
 		}
+		#ementer_span{
+			color:red;
+		}
 	</style>
 		
 	</head>
@@ -88,7 +91,7 @@
 						-->									 
 					<div class="modal-body1">
 						<div>								
-							<span>账	号：</span><input type="text" id="ementer" name="ementer"><br/>
+							<span>账	号：</span><input type="text" id="ementer" name="ementer"><span id="ementer_span"></span><br/>
 						</div>
 						<div>
 							<span>密	码：</span><input type="text" id="emword" name="emword"><br/>									
@@ -110,7 +113,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
 						<div class="text-center margin-big padding-big-top">
 
-								<h2>密码或状态修改</h2>
+								<h2>密码修改</h2>
 						</div>
 					</div>
 					<div id="modalform">
@@ -120,10 +123,7 @@
 						<div>
 							<span>&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;</span><input type="text" name="st.deskName" id="perid"/>
 
-						</div>
-						<div>
-							<span>当前状态</span><input type="text" name="st.deskState" id="perphone"/>
-						</div>					   
+						</div>									   
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-warning btn-default confirm-btn" data-dismiss="modal" id="sureup">确定更改</button>
@@ -150,23 +150,14 @@
 									alert("添加失败");
 								}else if(data==1){								 	 
 									 allpages();
-									 var inputvalue=parseInt($("#pagenum").html());//获取共多少页								
-									 alert("9999:"+inputvalue);
-									 if(pagestate==1){								 	
-									 	$("#someone").val(inputvalue);
-									 	liyang(inputvalue-1);
-									 }else{
-									 	if(pagestate==0){
-										 	$("#someone").val(inputvalue);
-										 	//alert("565:"+inputvalue)
-										 	liyang(inputvalue-1);
-									 	}else if(pagestae==2){
-									 		$("#someone").val(inputvalue+1);
-										 	//alert("565:"+inputvalue)
+									 var inputvalue=parseInt($("#pagenum").html());//获取共多少页																	
+									 	if(pagestate==1){
+										 	$("#someone").val(inputvalue+1);
 										 	liyang(inputvalue);
-									 	}
-									 	
-									 }
+									 	}else{
+									 		$("#someone").val(inputvalue);
+										 	liyang(inputvalue-1);
+									 	}										
 									alert("添加成功");
 								}else{
 									alert("没有权限");
@@ -393,15 +384,14 @@
 		/**
 		*添加员工账号的失焦事件，查询是否添加的账号是否已存在
 		*/
-		$("#ementer").blur(function() {	
-		//alert("0000");		
+		$("#ementer").blur(function(){	
 				$.ajax({
 					url : "achieve_selaccount.action",
 					type : "post",
 					data : {"employId.ementer":$(this).val()},
 					success : function(data){						
 						if(data == 1){
-							alert("该账号已存在！");
+							$("#ementer_span").html("该角色已存在")
 						}
 					},
 				});

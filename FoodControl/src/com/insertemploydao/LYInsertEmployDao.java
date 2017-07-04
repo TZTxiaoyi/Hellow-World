@@ -202,10 +202,9 @@ public class LYInsertEmployDao {
 
 		//System.out.println("aaaaaaaaaa");
 		String sql="select top 5 ss.Name,ss.staffId,ss.phone,ss.codeName,ss.age,ss.adress,ss.accession,ss.partName,ss.account"+
-				   " from (select * from staffinfo_sf s1 where s1.staffInfoState=19) ss where ss.staffId"+
-				   " not in (select top ("+startIndex+"*5) staffId from staffinfo_sf s2 where s2.staffInfoState =19) and ss.staffInfoState=19";
-		//System.out.println("ddddddddddd");         
-
+				   " from (select * from staffinfo_sf s1 where s1.staffInfoState=19 and s1.staffId not in (1)) ss where ss.staffId"+
+				   " not in (select top ("+startIndex+"*5) staffId from staffinfo_sf s2 where s2.staffInfoState =19 and s2.staffId not in (1)) " +
+				   " and ss.staffInfoState=19 and ss.staffId not in (1)";      
 		return DaoFactory.Query(sql);
 	}
 	
@@ -267,10 +266,10 @@ public class LYInsertEmployDao {
 		//System.out.println("aaaaaaaaaa");
 		String sql="select top 5 aa.account,aa.pwd,aa.codeName " +
 				"from(select * from staffEnter_pic ss where " +
-				"ss.codeName not in ('已禁用')) aa where aa.enterId " +
+				"ss.codeName not in ('已禁用') and ss.enterId not in (1)) aa where aa.enterId " +
 				"not in(select top ("+startIndex+"*5) enterId from staffEnter_pic  " +
-				"s1 where s1.codeName not in ('已禁用')) and aa.codeName " +
-				"not in ('已禁用')";
+				"s1 where s1.codeName not in ('已禁用') and s1.enterId not in (1)) and aa.codeName " +
+				"not in ('已禁用') and aa.enterId not in (1)";
 		//System.out.println("ddddddddddd");
 		return DaoFactory.Query(sql);
 	}

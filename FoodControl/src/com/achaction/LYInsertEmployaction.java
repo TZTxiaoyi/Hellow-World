@@ -82,6 +82,7 @@ public class LYInsertEmployaction {
 	 */
 	public void selemid(){
 		HttpServletResponse response=ServletActionContext.getResponse();
+		System.out.println(00000);
 		List list=ied.selstaffid(employee);		
 		try {	
 				response.getWriter().print(list.size());
@@ -116,8 +117,10 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");	
+		//System.out.println("888888888");
 		List list = ied.selpaList();
-		JSON json=toJson.toJson("value", list);		
+		JSON json=toJson.toJson("value", list);	
+		//System.out.println(json);
 		try {
 			response.getWriter().print(json);
 		} catch (Exception e) {
@@ -281,7 +284,7 @@ public class LYInsertEmployaction {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
 		List list=ied.pagepage(countpage);
-		JSON json=toJson.toJson("value", list);
+		JSON json=toJson.toJsonArray("value", list);
 		try {
 			response.getWriter().print(json);
 		} catch (Exception e) {
@@ -350,7 +353,7 @@ public class LYInsertEmployaction {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");		
 		List list=ied.setpages(countpage);
-		JSON json=toJson.toJson("value", list);
+		JSON json=toJson.toJsonArray("value", list);
 		//System.out.println(json);
 		try {
 			response.getWriter().print(json);

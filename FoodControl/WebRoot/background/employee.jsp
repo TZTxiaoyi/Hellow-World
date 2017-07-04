@@ -48,6 +48,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			height:35px;
 
 		}
+		#emid_span{
+			color:red;
+		}
+		#emage_span{
+			color:red;
+		}
+		#emphone_span{
+			color:red;
+		}
 	</style>
 </head>
   <!-- 
@@ -89,12 +98,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<div class="modal-body1">
 									<div>
 										<span>&nbsp;&nbsp;编	&nbsp;&nbsp;号：&nbsp;&nbsp;</span>
-										<input type="text" class="inputname1" id="emid" name="employee.emid"><br/>
+										<input type="text" class="inputname1" id="emid" name="employee.emid"><span id="emid_span"></span><br/>
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;姓	&nbsp;&nbsp;名：&nbsp;&nbsp;</span>
 										<input type="text" class="inputname2" id="emname" name="employee.emname"><br/>
-										<!--  性	别：<input type="text" class="inputname3" id="emsex" name="employee.emsex"><br/>-->
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;性&nbsp;&nbsp;别：&nbsp;&nbsp;&nbsp;</span>
@@ -105,11 +113,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;年	&nbsp;&nbsp;龄：&nbsp;&nbsp;</span>
-										<input type="text" class="inputname4" id="emage" name="employee.emage"><br/>
+										<input type="text" class="inputname4" id="emage" name="employee.emage"><span id="emage_span"></span><br/>
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;电	&nbsp;&nbsp;话：&nbsp;&nbsp;</span>
-										<input type="text" class="inputname5" id="emphone" name="employee.emphone"><br/> 									
+										<input type="text" class="inputname5" id="emphone" name="employee.emphone"><span id="emphone_span"></span><br/> 									
 									</div>
 									<div>
 										<span>&nbsp;&nbsp;地&nbsp;&nbsp;	址：&nbsp;&nbsp;</span>
@@ -124,8 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 											
 										</select><br/>
 									</div>
-									<div>
-										<!--  员工角色：<input type="text" class="inputname8" id="empart" name="empart"><br>-->
+									<div>					
 										<span>员工账号：</span>
 										<select id="ementer">
 										
@@ -214,20 +221,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    	<input type="text" name="st.deskState" id="perdress"/>
 					    </div>
 				   		<div>
-					    	<span>&nbsp;&nbsp;角&nbsp;&nbsp;色&nbsp;&nbsp;</span>
-					    	<input type="text" name="st.deskState" id="perpart"/>
+					    	<span>角色</span><select id="perpart">					    		
+					    	</select>
 					    </div>
 					    <div>
 					    	<span>就职时间</span><input type="text" name="st.deskState" id="pertime"/>
 					    </div>
 
-				   		<div>
-					    	<span>角色</span><select id="perpart">					    		
-					    	</select><!--  <input type="text" name="st.deskState" id="perpart"/>-->
-					    </div>
-					   <!--  <div>
-					    	<span>负责桌台</span><input type="text" name="st.deskState" id="pertable"/>
-					    </div>	-->
+				   							 
 					 </div>
 					</div>
 					<div class="modal-footer">
@@ -279,8 +280,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var pagesize=$("#pagenum").html();
 				if(somename=="firstname"){
 					onepage=1;					
-				}else if(somename=="minusname"){
-					
+				}else if(somename=="minusname"){				
 					if(onepage<=1){
 						onepage=1;
 					}else{
@@ -458,7 +458,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					success:function(data){
 					//alert(data);
 						$("#perpart").html("");
-						var json=JSON.parse(data);						
+						var json=JSON.parse(data);
+												
 							$.each(json,function(index,value){							
 								var partname="<option value=\""+value[1]+"\">"+value[0]+"</option>";
 								$("#perpart").append(partname);
@@ -466,7 +467,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 				});
 			
-		};
+		}
 			/*
 			* tableid：表id
 			* deskbtn：删除id
@@ -564,8 +565,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 			$("#addem").click(function(){
 			
-				var emid=$("#emid").val();
-				
+				var emid=$("#emid").val();				
 				var emname=$("#emname").val();
 				var emsex=$("#emsex option:selected").val();
 				//alert("55555:"+emsex);
@@ -574,10 +574,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var emphone=$("#emphone").val();
 				var emadress=$("#emadress").val();
 				var emjointime=$("#emjointime").val();
-				var empart=$("#empart option:selected").html();
-				
-				var ementer=$("#ementer").val();
-					
+				var empart=$("#empart option:selected").html();			
+				var ementer=$("#ementer option:selected").html();
+				alert(ementer);	
 				//alert(empart+";"+ementer);							
 					if(emsex=="男"){
 						emsex=4;
@@ -627,11 +626,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		*员工编号失焦事件
 		*/
 		
-	$("#emid").blur(function() {
+	$("#emid").blur(function(){
 				var emidvalue=$("#emid").val();
 				//alert("sss:"+emidvalue);
-				if(emidvalue==""){
-				
+				if(emidvalue==""){				
 					$("#emid_span").html("员工编号必须填写！");
 				}			
 				$.ajax({
@@ -685,7 +683,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	* 聚焦清空提示信息
 	*/	
 	$("#emphone").focus(function(){	
-		$("#emage_phone").html("");
+		$("#emphone_span").html("");
 	})
 	/**
 	* 失焦表单验证手机号
@@ -695,7 +693,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var emphone=$("#emphone").val();
 		if(reg.test(emphone)){			
 		}else{
-			$("#emage_phone").html("号码格式有误");
+			$("#emphone_span").html("号码格式有误");
 		}
 	});
 		/**
@@ -703,8 +701,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		*/
 		$(function(){
 			$("#commitone").click(function(){
-				var input_page=$("#someone").val();
-				liyang(input_page);
+				var inputpage=paprseInt($("#someone").val());
+				liyang(inputpage-1);
 			});
 		});
 </script>

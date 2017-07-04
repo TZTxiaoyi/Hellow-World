@@ -94,7 +94,7 @@ public class TztQuerDishAction {
 		rep.setContentType("text/html;charset=utf-8");
 		createImp(method);
 		List result= sort.queryMade();
-		System.out.println("made"+result);
+		//System.out.println("made"+result);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
 		} catch (IOException e) {
@@ -124,7 +124,7 @@ public class TztQuerDishAction {
 		rep.setContentType("html/text;charset =utf-8");
 		createImp(method);
 		List result= sort.queryMading();
-		System.out.println("mading"+result);
+		//System.out.println("mading"+result);
 		session.setAttribute("desk", desknum);
 		try {
 			rep.getWriter().print(toJson.toJsonArray("tztjs", result).toString());
