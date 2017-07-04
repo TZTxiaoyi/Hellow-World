@@ -124,7 +124,7 @@
 	//===========================快速查询=========================
 		$("#searchinfo").click(function(){
 			var allput = $(".input").val();
-			alert(allput);
+			//alert(allput);
 			$.ajax({
 				url : "../home_zbquinfo.action",
 				data : {"ser":allput},

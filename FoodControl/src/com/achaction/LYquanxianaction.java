@@ -89,12 +89,11 @@ public class LYquanxianaction {
 			
 			request.getSession().invalidate();
 			String partname =ied.selectpart(employId);			
-			if(partname.equals("服务员")){			
-				
+			if(partname.equals("服务员")){							
 				request.getSession().setAttribute("username", employId.getEmenter());
 				return "part";
 			}else if(partname.equals("厨师")){
-				request.getSession().setAttribute("username", employId.getEmenter());
+				//request.getSession().setAttribute("username", employId.getEmenter());
 				return "cook";
 			}else{
 

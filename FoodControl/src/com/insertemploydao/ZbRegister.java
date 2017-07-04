@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.daointerface.DaoInterface;
 import com.entity.ZbCustomerInfo;
+import com.entity.ZbDetails;
 import com.entity.ZbUsagedata;
 import com.entity.ZbUserdata;
 import com.entity.Zbcus_enter1;
@@ -130,6 +131,11 @@ public class ZbRegister implements DaoInterface{
 		
 		return list;
 	}
+	public List zbSelectDesk(){
+		String sql = "select * from desk";
+		List list = DaoFactory.Query(sql);
+		return list;
+	}
 	/**
 	 * 
 	 * 方法功能说明：     		--分页中得到的总条数--cus_enter (视图)
@@ -149,6 +155,15 @@ public class ZbRegister implements DaoInterface{
 		total = (Integer) li.get(0);
 		return total;
 	}
+	public int getCount1(){
+		System.out.println("--------------getcount1----------------");
+		String sql = "select count(*) from orders";
+		List list = DaoFactory.Query(sql);
+		int total = 0;
+		List li = (List) list.get(0);
+		total = (Integer) li.get(0);
+		return total;
+	}
 	public List page(int currPage) {
 		System.out.println("currPage:"+currPage);
 		String sql="select top ("+3+") * from cus_enter1 where Id not in(select top "+(currPage)*3+" Id from cus_enter1)";
@@ -156,10 +171,45 @@ public class ZbRegister implements DaoInterface{
 		
 		return list;
 	}
+	/**
+	 * 
+	 * 方法功能说明：  桌台销售统计查询
+	 * 创建：2017-7-1 by zhubin   
+	 * 修改：日期 by 修改者  
+	 * 修改内容：  
+	 * @参数： @param currPage1
+	 * @参数： @return      
+	 * @return List     
+	 * @throws
+	 */
+	public List page1(int currPage) {
+		
+		System.out.println("currPage:"+currPage);
+		String sql="select top ("+3+") * from orders where ordersId not in(select top "+(currPage)*3+" ordersId from orders)";
+		List list = DaoFactory.Query(sql);
+		
+		return list;
+	}
+	
 	//----------------------------------------------------------------------28--------
 	public List userInfo(String user){
 		String sql="select * from customerEnter ce,customerInfo ci where ce.account='"+user+"' and ce.enterId=ci.enterId";
 		return DaoFactory.Query(sql);
 	}
-	
+	//===========================订单详情=============================
+	public List zbordersInfo(int orderid){
+		
+		String sql = "select * from zb_order where ordersId="+orderid;
+		List list =DaoFactory.Query(sql);
+		
+		return list;
+	}
+	public List ZbOrderss(ZbDetails zbde){
+		
+		String sql ="select * from orders where ordersTime<'"+zbde.getVa2()+"' and ordersTime>'"+zbde.getVa1()+"' and deskId = "+zbde.getVa();
+		
+		List list = DaoFactory.Query(sql);
+		return list;
+		
+	}
 }

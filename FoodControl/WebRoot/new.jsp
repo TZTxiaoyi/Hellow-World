@@ -61,18 +61,8 @@
 			
 			display:none;
 		}
-		div input {
-			margin-top:30px;
+		#food-btn{
 			
-			
-		}
-		#aa2{
-			color:red;
-		}
-		#zbid{
-			float:left;
-			margin-left:300px;
-			margin-top:-330px;
 		}
 		.active{
 			margin-top:50px;
@@ -91,6 +81,9 @@
 			font-size:18px;
 			margin-left:25%;
 		}
+		/* #order_Total{
+			padding-right:80%;
+		} */
    </style>
    </head>
   
@@ -102,92 +95,10 @@
 		<div id="zbtop">
 			<a type="button" class="btn btn-default"id="zbbutton1" href = "addfood_backhome.action"><h1 class="glyphicon glyphicon-home"></h1></a><!-- 主页 -->
 			
-
-			<span>当前系统时间：</span><span id="date_1"></span>
-			<span id="deskname">${sessionScope.dname}</span>
-			<span id ="desk2"></span>
 			
-			<%	String desknub = request.getParameter("desknub");
-				String personnub = request.getParameter("personnub");
-				String zbphone = request.getParameter("zbphone");
-				String zbaddress = request.getParameter("zbaddress");
-				
-				out.println("桌号:"+desknub);
-				out.println("人数:"+personnub);
-				out.println("电话:"+zbphone);
-				out.println("地址："+zbaddress);
-				
-			 %>	
-			 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1">
-		  我的资料
-		</button>
-
-<!-- Modal -->
-		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">个人基本信息</h4>
-		      </div>
-<!-- form表单 -->	
-				<form action ="home_nom.action" method ="post" onsubmit ="return show()">
-					<div>
-						<input placeholder="姓名" type="text" id="zb_name" name ="zb.name"/><br/>
-					</div>
-					<div>
-						<input placeholder="年龄" type="text" id="zb_age" name ="zb.age"/><br/>
-					</div>
-					
-					<div>
-						<input type ="radio" name ="zb.sex"  value ="4"/>男<input type ="radio" name ="zb.sex" value ="5"/>女<br>
-					</div>
-					<div>
-						<input placeholder="电话" type="text" id="zb_phone1" name ="zb.phone1"/><br/>
-					</div>
-					<div>
-						<input placeholder="地址" type="text" id="zb_adress" name ="zb.adress"/><br/>
-					</div>
-					
-					<button type="submit" class="btn btn-warning btn-group-lg" id ="zbsub">提交</button>
-				</form>
-				
-				<form action ="home_nom.action" method ="post" id = "zbid">
-					
-					<h4 class="modal-title" id="myModalLabel">修改密码</h4>
-					<div>
-						<input placeholder="输入旧密码" type="password" id="zb_pwd0" name ="zb.pwd0"/><br/>
-					</div>
-					<div>
-						<input placeholder="输入新密码" type="password" id="zb_pwd1" name ="zb.pwd1"/><br/>
-					</div>
-					<div>
-						<input placeholder="再次输入新密码" type="password" id="zb_pwd2"
-							onfocus="passFocus()" onblur="passBlur()" name ="zb.pwd2"/> <span
-							id="aa2"></span>
-					</div>
-					
-					<button type="submit" class="btn btn-warning btn-group-lg" id ="zbsub">确认修改</button>
-				</form>
-<!--form表单  -->		      
-		      <!-- <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">×</button>
-		        
-		        <button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >保存更改</button>
-		        $("#usagepwd").blur(function(){
-					alert($("#usagepwd").val());
-				});	
-		        
-		      </div> -->
-		    </div>
-		  </div>
+			<span id="deskname">当前桌号：${sessionScope.dname}</span>
+			<span id ="desk2"></span>
 		</div>
-			 
-			 
-			 
-			 
-			 
-		</div>	
 <!-- 左侧 -->		
 		<div class=" col-md-2" id="zbleft">
 			<div id="navbarExample" class="navbar navbar-static">
@@ -262,8 +173,8 @@
 								</table>
 							</div>
 							
-							<div class="modal-footer"> <!-- 模态框下的关闭和保存按钮--> 
-								<span>点菜数量：</span><span id="order_num"></span> <span>总价：</span><span id="order_Total"></span>
+							<div class="modal-footer" id="ordermodal"> <!-- 模态框下的关闭和保存按钮--> 
+								<span>订单状态：</span><span id="orderstatus"></span><span>结账方式：</span><span id="ordercost"></span><span> 点菜数量：</span><span id="order_num"></span> <span> 总价：</span><span id="order_Total"></span>
 								<button type="button" class="btn btn-default" data-dismiss="modal">
 									关闭
 								</button>
@@ -274,47 +185,6 @@
 	  		</div>
 		</div><!-- 底部div -->
 		<script>
-			
-				
-			/* 
-			$sex=$_POST["sex"];
-			alert($_POST['sex']);
-			
-			
-			$("#zbsub").click(function(){
-			alert("++++++++++++++");
-				var sex = $($("input[name=\"sex\"]")[0]).val;
-				alert(sex);
-				var s = $(s).attr("sex").val();
-				
-				
-			}); */
-			//++++++++++++++++++++++++++修改密码++++++++++++++++++++++++++++++++++++++++++++++
-			$("#zb_pwd0").blur(function(){
-				var password = $("#usagepwd").val();a
-				$.ajax({
-					url : "",
-					data: {},
-					type "post",
-					success:function(data){
-						
-					},
-				});
-				alert(password);
-			});
-			$("#zb_pwd2").blur(function(){
-				var pwd1 = $("#zb_pwd1").val();
-				var pwd2 = $("#zb_pwd2").val();
-				alert(pwd1);
-				alert(pwd2);
-				if(pwd1 != pwd2){
-					$("#aa2").html("*两次密码不一致");
-				}else{
-					$("#aa2").html("");
-				}
-			});
-			
-=======
 				function kindfood(){
 					$.ajax({
 						type:"post",
@@ -350,10 +220,9 @@
 						}
 					});
 				};
-				
->>>>>>> 287b559215696a71f8c7abc3722500aeee7f9cb9:FoodControl/WebRoot/new.jsp
 				//添加菜品，更新菜单和总价
 				function upfood(btnid,foodname,uprice,number,price){	
+				 alert(2);
 					$.ajax({
 						type:"post",
 						url:"addfood_addFood.action",
@@ -363,7 +232,6 @@
 						}
 					});
 				};
-				
 				function OrderTotal(){
 					$.ajax({
 						type:"post",
@@ -392,6 +260,48 @@
 					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())+1;
 					$($("input[name=\""+btnid+"\"]")[1]).val(number);
 				});
+				//购物车数量变动
+				function shopfoodnum(btnid,foodname,uprice,number,price){	
+					$.ajax({
+						type:"post",
+						url:"addfood_shopfoodnum.action",
+						data:{"addfood.foodname":foodname,"addfood.uprice":uprice,"addfood.number":number,"addfood.price":price},
+						success:function(data){
+							$($("td[name=\""+btnid+"\"]")[2]).html(price)
+							OrderTotal();	
+						}
+					});
+					if(number==0){
+						LookOrder();
+					}
+				};
+				//购物车减少点菜的数量更新总价
+				$("#modall-table").on('click',".remove",function(){
+					var btnid=$(this).attr("name");//当前点击的按钮的name
+					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())-1;
+					if(number<0){
+						number=0;
+					}
+					//var price=uprice*number;//价格*数量获得总价	
+					$($("input[name=\""+btnid+"\"]")[1]).val(number);
+					var btnid=$(this).attr("name");
+					var foodname=$($("td[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
+					var uprice=parseInt($($("td[name=\""+btnid+"\"]")[1]).html());//单价
+					var price=parseInt(uprice*number);//价格*数量获得总价
+					shopfoodnum(btnid,foodname,uprice,number,price);
+					
+				});
+				//购物车增加点菜的数量更新总价
+				$("#modall-table").on('click',".add",function(){
+					var btnid=$(this).attr("name");//当前点击的按钮的name
+					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())+1;
+					$($("input[name=\""+btnid+"\"]")[1]).val(number);
+					var btnid=$(this).attr("name");
+					var foodname=$($("td[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
+					var uprice=parseInt($($("td[name=\""+btnid+"\"]")[1]).html());//单价
+					var price=parseInt(uprice*number);//价格*数量获得总价
+					shopfoodnum(btnid,foodname,uprice,number,price);
+				});
 				
 				//点击种类刷新菜单
 				$("#kindli").on('click',".kindbtn",function(){
@@ -410,7 +320,7 @@
 									"<input type=\"text\" value=\"0\" class=\"number-cl btn btn-default\" size=\"3\" name=\""+index+"\">"+
 									"<input type=\"button\" name=\""+index+"\" value=\"+1\" class=\"add btn btn-default\"><input type=\"button\" class=\"btn btn-default\" name=\""+index+"\" id=\"addto\" value=\"添加\"></div></div></div>";
 									$("#zbright").append(food);
-								});
+								});        
 							}
 						});
 				});
@@ -439,8 +349,11 @@
 							var json=JSON.parse(data);
 							$("#modall-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
-									var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td>"+value.uprice+"</td>"+"<td>"+value.number+"</td>"+"<td>"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
-									$("#modall-table").append(dd);
+								var dd="<tr>"+"<td name=\""+index+"\">"+value.foodname+"</td>"+"<td name=\""+index+"\">"+value.uprice+"</td>"+"<td>"+
+								"<input type=\"button\" name=\""+index+"\" value=\"-\" class=\"remove btn btn-default\">"+
+								"<input type=\"text\" value=\""+value.number+"\" class=\"number-cl btn btn-default\" size=\"3\" name=\""+index+"\">"+
+								"<input type=\"button\" name=\""+index+"\" value=\"+\" class=\"add btn btn-default\">"+"</td>"+"<td name=\""+index+"\">"+value.price+"</td>"+"<td><button class=\"btn btn-danger\" name=\""+index+"\" id=\"del\">删除</button></td>"+"</tr>";
+								$("#modall-table").append(dd);
 							});	
 							OrderTotal(); 
 						}
@@ -461,13 +374,40 @@
 							var num=0;
 							$("#selOrder-table").html("<tr><td>菜名</td><td>单价</td><td>数量</td><td>总价</td><td></td></tr>");
 							$.each(json,function(index,value){
-								var tdclass="<td></td>";;
+								var trclass="";
+								var tdstate="<td></td>";
+								var ordercost="";
+								var orderStatus="";
 								if(value[9]==1){
-									tdclass="<td>新增</td>";	
+									trclass="class=\"trclass\"";	
+								}
+								if(value[8]==14){
+									tdstate="<td>已完成</td>";
+								}else if(value[8]==17){
+									tdstate="<td>已取消</td>";
+								}
+								if(value[12]==21){
+									ordercost="未支付";
+								}else if(value[12]==9){
+									ordercost="现金支付";
+								}else if(value[12]==11){
+									ordercost="微信支付";
+								}else if(value[12]==10){
+									ordercost="支付宝支付";
+								}
+								if(value[13]==15){
+									orderStatus="进行中";
+								}else if(value[13]==16){
+									orderStatus="已完成";
+								}else if(value[13]==17){
+									orderStatus="已取消";
 								}
 								price=value[5]*value[6];
-								var dd="<tr>"+"<td name=\""+index+"\">"+value[3]+"</td>"+"<td>"+value[5]+"</td>"+"<td>"+value[6]+"</td>"+"<td>"+price+"</td>"+tdclass+"</tr>";
+								var dd="<tr "+trclass+">"+"<td name=\""+index+"\">"+value[3]+"</td>"+"<td>"+value[5]+"</td>"+"<td>"+value[6]+"</td>"+"<td>"+price+"</td>"+tdstate+"</tr>";
 								$("#selOrder-table").append(dd);
+								$(".trclass").css("background-color","#66ccff");
+								$("#ordercost").html(ordercost);
+								$("#orderstatus").html(orderStatus);
 							});	
 							ordertotal();
 							//OrderTotal();
@@ -485,7 +425,6 @@
 						url:"addfood_addOrderfood.action",
 						data:{"df":"df"},
 						success:function(data){
-						alert("ddd");
 							if(data==1){
 							alert("添菜成功!");
 								clearfood();
@@ -553,7 +492,7 @@
 						var orderStatus=15;
 						var orderPrice=parseInt($("#mtTotal").html());
 						var foodNum=parseInt($("#foodnum").html());
-						var cost=21;
+						var cost=9;
 						//获得菜单数据
 						$.ajax({
 							type:"post",

@@ -40,17 +40,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						$.each(json,function(index,value){
 						var oldTime = (new Date(value[5])).getTime()/1000;
 						//time=value[5].getfullyear+"-"+value[5].getfullmonth+"-"+value[5].getfullday
+							var timett=format(value[5].time);
+							
 							var emtable=
 								"<tr><td id=\"anum"+value[0]+"\">"+value[0]+
 								"</td><td id=\"bnum"+value[0]+"\">"+value[1]+"</td><td id=\"cnum"+value[0]+"\">"+value[2]+"</td><td id=\"dnum"+value[0]+"\">"+value[3]+"</td><td id=\"enum"+value[0]+"\">"+value[4]+
-								"</td><td id=\"fnum"+value[0]+"\">"+oldTime+"</td><td id=\"gnum"+value[0]+"\">"+value[6]+"</td>"+
+								"</td><td id=\"fnum"+value[0]+"\">"+timett+"</td><td id=\"gnum"+value[0]+"\">"+value[6]+"</td>"+
 								"<td id=\"fnum"+value[0]+"\">"+
-								"<a class=\"button border-main alterbtn\" id=\"num"+value[0]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal\" data-toggle=\"modal\">"+
-								"<span class=\"icon-edit\"></span> 订单详情</a></td></tr>";
+								"<button class=\"button border-main  orderD\" name =\""+value[0]+"\" id=\"num"+value[0]+"\" aria-labelledby=\"myModalLabel\"  data-target=\"#myModal\" data-toggle=\"modal\">"+
+								"<span class=\"icon-edit\"></span> 订单详情</button></td></tr>";
 							$("#tableid").append(emtable);																												
 						});
 								
 			}
+			//-----------------------------------------订单详情6.30--------------------------------------
+			$(function(){
+				$("#tableid").on('click',".orderD",function(){
+				
+					var name =$(this).attr("name");
+					$.ajax({
+						url:"zborders_ZbOrder.action",
+						type:"post",
+						data:{"orderD":name},
+						success:function(data){
+						alert("zhubin");
+						var json =JSON.parse(data);
+						$("#zbTable").html("");
+						var tab ="<tr><td>菜品名称</td><td>菜品数量</td><td>菜品价格</td><td>菜品状态</td><td>合计</td></tr>";
+						$("#zbTable").append(tab);
+						$.each(json,function(index,value){
+							var price=value[4]*value[5];
+							var orderTable=
+								"<tr><td>"+value[2]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[9]+"</td>"+
+								"<td>"+price+"元</td></tr>"
+								
+								
+								$("#zbTable").append(orderTable);
+						});
+						},
+					});
+					 
+					
+			});
+			});
+						
+			//-------------------------------------------------------------------------------
 		$(function(){
 			
 				$.ajax({
@@ -100,6 +134,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				liyang(a);				
 			});			
 		});
+		//时间戳转时间
+		function add0(m){return m<10?'0'+m:m }
+		function format(shijianchuo){
+		//shijianchuo是整数，否则要parseInt转换
+			var time = new Date(shijianchuo);
+			var y = time.getFullYear();
+			var m = time.getMonth()+1;
+			var d = time.getDate();
+			var h = time.getHours();
+			var mm = time.getMinutes();
+			var s = time.getSeconds();
+			return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+		} 
 		function liyang(a){
 		//alert(a);
 			$.ajax({				
@@ -115,7 +162,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		/*
 		* 将每个订单传给action
 		*/
-		$(function(){
+		/* $(function(){
 			$("#tableid").on('click',".alterbtn",function(){
 				var alterbtn = $(this).attr("id");
 				//alert("sss:"+alterbtn);
@@ -127,7 +174,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					data:{"countpage":namehtml}
 				});							
 			});
-		});
+		}); */
 		$(function(){
 			$("#searchorder").click(function(){
 				var readyvalue=$("#readytime").val();
@@ -241,15 +288,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close"></button>
 						<div class="text-center margin-big padding-big-top">
-							<h1>订单详细信息</h1>
+							<h1>订单菜品信息</h1>
 						</div>
 						<div id="modalform">
 
-					    	
+					    	<table class="table table-hover text-center" id ="zbTable">
+					    		
+					    	</table>
 					 </div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >确定更改</button>
+						<button type="button" class="btn btn-warning btn-default modal-alterbtn" data-dismiss="modal" >取消</button>
 
 					</div>
 				</div>

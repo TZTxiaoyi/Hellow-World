@@ -59,6 +59,7 @@ public class ZbCustomerAction {
 	}
 	ZbCustomerInfo zbcin;
 	int currpage;
+	int currpage1;
 	private Zbcus_enter1 zb;
 	public Zbcus_enter1 getZb() {
 		return zb;
@@ -145,6 +146,7 @@ public class ZbCustomerAction {
 		}
 		
 	}
+	
 	//+++++++++++++++++++++++++++++++++++-----------------------------------
 	/**
 	 * 
@@ -208,6 +210,7 @@ public class ZbCustomerAction {
 				e.printStackTrace();
 			}
 		}
+		
 		//------------------------------------------------------------------------------------
 		/**
 		 * 

@@ -1,7 +1,5 @@
 package com.achaction;
 
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,6 +9,8 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
+
+
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSON;
@@ -18,39 +18,42 @@ import net.sf.json.JSON;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.GJYFoodCategory;
-import com.logic.GJYInsertFoodcategory;
+import com.insertemploydao.GJYInsertFoodcategory;
 import com.utils.toJson;
 
 
 public class GJYFCaction {
 	
-	private String search;
-	private GJYFoodCategory fdCry;
-	GJYInsertFoodcategory inFc=new GJYInsertFoodcategory();
-	File phone;
-	String phoneFileName;
-	public File getPhone() {
-		return phone;
+	private String search;/*搜索菜品的关键词*/
+	private int countpage;/*当前分页的页码*/
+	File myfile;
+	String myfileFileName;
+
+	public File getMyfile() {
+		return myfile;
+	}
+
+	public void setMyfile(File myfile) {
+		this.myfile = myfile;
 	}
 
 
 
-	public void setPhone(File phone) {
-		this.phone = phone;
+	public String getMyfileFileName() {
+		return myfileFileName;
 	}
 
 
 
-	public String getPhoneFileName() {
-		return phoneFileName;
+	public void setMyfileFileName(String myfileFileName) {
+		this.myfileFileName = myfileFileName;
 	}
 
 
 
-	public void setPhoneFileName(String phoneFileName) {
-		this.phoneFileName = phoneFileName;
-	}
-
+	private GJYFoodCategory fdCry = new GJYFoodCategory();/*创建菜品实体类*/
+	GJYInsertFoodcategory inFc=new GJYInsertFoodcategory();/*创建Dao对象*/
+	
 	
 	
 	public GJYFoodCategory getFdCry() {
@@ -63,39 +66,52 @@ public class GJYFCaction {
 		this.fdCry = fdCry;
 	}
 
+	
 
-
-	public void insertfood(){	
-		int a=inFc.FCinsert(fdCry);
+	public int getCountpage() {
+		return countpage;
 	}
-	
-	
+
+
+
+	public void setCountpage(int countpage) {
+		this.countpage = countpage;
+	}
+
+
+
 	
 
-	public void FindAll(){	
+	
+	public String getSearch() {
+		return search;
+	}
+
+
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	/**
+	 * 添加菜品
+	 */
+
+	public void insertFood(){		
+		System.out.println("22121");
 		HttpServletResponse response=ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		List list=inFc.FCFindAll();
-		//System.out.println("lll"+toJson.toJson("value", list));
+		int a=inFc.FCinsert(fdCry);
 		try {
-			
-			JSON json=toJson.toJson("vc", list);
-			response.getWriter().println(json);
-		
+			response.getWriter().print(a);
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}	
-
+		}
 	}
 	
+	/*查询菜品action*/
 	public void seekfood(){
+		System.out.println("seekfood()");
 		List ser=inFc.sekFood(search);
-		System.out.println("list"+ser);
 		JSON json=toJson.toJson("ss", ser);
-		System.out.println("json"+json);
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		hsr.setContentType("textml;charset=UTF-8");
 		hsr.setCharacterEncoding("UTF-8");
@@ -106,26 +122,74 @@ public class GJYFCaction {
 			System.out.println(e.getMessage()+3333);
 		}
 	}
-
-
-
-	public String getSearch() {
-		return search;
-	}
-
-
-
-	public void setSearch(String search) {
-		this.search = search;
-	}
-	public void uploads(){
-		System.out.println("-----");
+	
+	/* 修改菜品action*/
+	public void FCchange(){
+		System.out.println("FCchange()");
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		int a=inFc.Change(fdCry);
 		try {
-			
-			String name=new Date().getTime()+phoneFileName.substring(phoneFileName.lastIndexOf("."));
+			response.getWriter().print(a);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//System.out.println(e.getMessage()+3333);
+		}
+	}
+	
+	/*删除菜品action*/
+	public void FCdelete(){
+		System.out.println("-------");
+		System.out.println(fdCry.getDishId());
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		int n=inFc.delect(fdCry);
+		try {
+			response.getWriter().print(n);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//System.out.println(e.getMessage()+3333);
+		}
+	}
+	
+	
+	
+	/* 总页数查询action*/
+	public void getcount(){
+		
+		HttpServletResponse response=ServletActionContext.getResponse();
+		int a=inFc.getallpage();		
+		try {
+			response.getWriter().print(a);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 		
+	} 
+	
+	
+	/* 接收JSP中的页码并返回页码结果action*/
+	public void getpage(){
+		
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");		
+		List list=inFc.pagepage(countpage);
+		JSON json=toJson.toJson("value", list);
+		try {
+			response.getWriter().print(json);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void uploads(){
+		try {
+			String name=new Date().getTime()+myfileFileName.substring(myfileFileName.lastIndexOf("."));
 			System.out.println(name);
-			File file=new File("e:/"+name);
-			InputStream is=new FileInputStream(phone);
+			File file=new File("D:/NO9/FoodControl/WebRoot/image/"+name);
+			InputStream is=new FileInputStream(myfile);
 			OutputStream os=new FileOutputStream(file);
 			byte[] b=new byte[1024];
 			try {
@@ -134,14 +198,19 @@ public class GJYFCaction {
 				}
 				is.close();
 				os.close();
+				HttpServletResponse response=ServletActionContext.getResponse();
+
+				response.getWriter().print(name);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
+			
 		}
 	}
 	
-
+	
+	
 }

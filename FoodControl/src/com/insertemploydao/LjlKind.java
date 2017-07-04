@@ -18,7 +18,7 @@ public class LjlKind implements DaoInterface {
 	}
 
 	public List sel(Object obj) {
-		String sql="select * from kind";
+		String sql="select * from kind where kindState=19";
 		return DaoFactory.Query(sql);
 	}
 

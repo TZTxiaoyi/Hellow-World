@@ -106,8 +106,9 @@ public class LYInsertEmployaction {
 	 * 将员工账号的实体类对象传给插入员工账号的实现类方法
 	 */
 	public void enterid(){
+		System.out.println("1515:");
 		HttpServletResponse response=ServletActionContext.getResponse();
-		int flag=ied.emidinsert(employId);
+		int flag=ied.emidinsert(employId);		
 		try {
 			response.getWriter().print(flag);
 		} catch (Exception e) {
