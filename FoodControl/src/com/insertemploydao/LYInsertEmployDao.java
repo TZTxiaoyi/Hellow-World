@@ -208,7 +208,7 @@ public class LYInsertEmployDao {
 	 * @retur\n
 	 */
 	public int getallpage(){
-		String sql="select count(*) from staffInfo where staffInfoState=19";
+		String sql="select count(*) from staffInfo where staffInfoState=19 and staffId not in (1)";
 		List list =DaoFactory.Query(sql);
 		List list1=(List) list.get(0);
 		int li=(Integer) list1.get(0);
@@ -271,11 +271,11 @@ public class LYInsertEmployDao {
 	 * @return
 	 */
 	public int getpages(String putvalue){
-		String sql="select count(*) from (select * from staffEnter_pic " +
-				"where codeName not in('已禁用')) sp " +
+		String sql="select count(*) from (select * from staffEnter_pic s " +
+				"where codeName not in('已禁用') and s.enterId not in (1)) sp " +
 				"where sp.codeName not in('已禁用') and account" +
 				" like '%"+putvalue+"%' or pwd like'%"+putvalue+"%'" +
-				" or codeName like'%"+putvalue+"%'";
+				" or codeName like'%"+putvalue+"%' and sp.enterId not in (1)";
 		List list =DaoFactory.Query(sql);
 		List list1=(List) list.get(0);
 		int li=(Integer) list1.get(0);

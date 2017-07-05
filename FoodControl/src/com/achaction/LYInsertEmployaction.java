@@ -279,13 +279,13 @@ public class LYInsertEmployaction {
 		HttpServletResponse response=ServletActionContext.getResponse();
 		int a=-1;
 		if(pageflag==0){
-			System.out.println("getewfd");
+			//System.out.println("getewfd");
 			a=ied.getallpage();		
 		}else if(pageflag==1){
-			System.out.println("getewfd11111111");
+			//System.out.println("getewfd11111111");
 			a=ied.searchsometatol(putvalue);
 		}
-		System.out.println("a:"+a);
+		//System.out.println("a:"+a);
 		try {
 			response.getWriter().print(a);
 		} catch (Exception e) {
