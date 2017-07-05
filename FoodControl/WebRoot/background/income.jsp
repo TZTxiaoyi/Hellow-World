@@ -148,7 +148,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				type:"type",
 				data:{},
 				success:function(data){
-				//alert("dd");
 						$("#desknub").html("");
 						var json = JSON.parse(data);
 						var op="<option value=\"desk\">全部桌子</option>";

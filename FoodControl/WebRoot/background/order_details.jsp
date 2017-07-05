@@ -63,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<li id="timedate">
 					  			
 					  			<input placeholder="起始时间" size="16" type="text" value="" readonly class="form_datetime" id="readytime">
-					  			——&nbsp;<input placeholder="终止时间" size="16" type="text" value="" readonly class="form_datetime" id="lasttime">
+					  			--&nbsp;<input placeholder="终止时间" size="16" type="text" value="" readonly class="form_datetime" id="lasttime">
 					  			<a type="button" href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" id="searchorder"> 搜索</a>
 					  		</li>	
 					  	</ul>  
