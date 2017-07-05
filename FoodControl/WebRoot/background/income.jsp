@@ -177,7 +177,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});
 		};
 		$("#zbdesk").click(function(){
-			//alert("desk");
 			var curr=0;
 			//alert("clickselfalg:"+selflag);
 			$("#zbsome").val(1);
@@ -544,17 +543,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			});
 
-		/*function zbtabonload(curr){
-			$.ajax({
-				url : "zborders_zbtabpage.action",
-				data : {"currpage":curr},
-				type : "post",
-				success : function flash(data){
-					var json = JSON.parse(data);
-					refresh(json);
-				},
-			});
-		};   */
 	</script>
 </body>
 </html>

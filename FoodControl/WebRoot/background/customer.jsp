@@ -74,28 +74,7 @@
 	
 	<!-- +++++++++++++++++++++++++++6.24顾客++++++++++++++++++++++++++++++++++ -->
 	<script type ="text/javascript">
-		$(function(){
-			/* $.ajax({
-				url:"home_client.action",
-				data:{},
-				type:"post",
-				success:function(data){
-					alert("guke");
-					var json = JSON.parse(data);
-					var th = "<tr><td></td><td>姓名</td><td>性别</td><td>电话</td><td>地址</td><td>帐号</td></tr>";
-					
-					$("#tableid").append(th);
-					$.each(json,function(index, value) {
-						var dd = "<tr><td><input type=\"checkbox\" name=\"id[]\" value=\"1\" /></td><td class=\"deskalter"+
-						value[0]+"\" id=\"desknumId"+value[0]+"\">"+ value[0]+ "</td><td id=\"namealter"+value[0]+"\">"+ 
-						value[1]+ "</td><td id=\"personalter"+value[0]+"\">"+ value[2]+ "</td><td>"+ value[3]+
-						"</td><td id=\"statealter"+value[0]+"\">"+ value[4]+ "</td>";
-						$("#tableid").append(dd);
-					});
-					
-				},
-			}); */
-		});
+		
 		function refresh(json) {
 				var th = "<tr><td>编号</td><td>姓名</td><td>性别</td><td>电话</td><td>地址</td><td>年龄</td></tr>";
 					$("#tableid").html("");

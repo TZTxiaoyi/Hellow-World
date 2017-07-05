@@ -344,7 +344,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			分页完成动态添加；
 		*/
 		function liyang(a){
-		alert("ddf1"+a);
+		//alert("ddf1"+a);
 			$.ajax({				
 					url:"achieve_getpage.action",
 					type:"post",
@@ -439,19 +439,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$(function(){
 			$("#tableid").on('click',".alterbtn",function(){
 				var alterbtn = $(this).attr("id");
-				//alert("sss:"+alterbtn);
-				var namehtml =$("#a"+alterbtn).html();	
-				//alert(namehtml);			
+				var namehtml =$("#a"+alterbtn).html();			
 				var idhtml =$("#b"+alterbtn).html();
-				//alert(idhtml); 
 				var phonehtml =$("#c"+alterbtn).html();
 				var sexhtml =$("#d"+alterbtn).html();
 				var agehtml =$("#e"+alterbtn).html();
 				var adresshtml =$("#f"+alterbtn).html();
 				var timehtml =$("#g"+alterbtn).html();
 				//var parthtml =$("#h"+alterbtn).html();
-				
-				 
 				
 				$("#per").val(namehtml);//将要修改某行的数据放入到模态框中
 				$("#perid").val(idhtml);
@@ -495,7 +490,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								var inputvalue=parseInt($("#someone").val());
 									 	//alert("565:"+inputvalue)
 								liyang(inputvalue-1);
-								alert("修改成功");
+								//alert("修改成功");
 							}else{
 								alert("没有权限");
 							}		
@@ -550,7 +545,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							pagetotal();
 							var inputvalue=parseInt($("#someone").val());//获取当前页																
 							if(pagestate==0){
-							alert("111:"+inputvalue);								 	
+							//alert("111:"+inputvalue);								 	
 								$("#someone").val(inputvalue-1);
 								liyang(inputvalue-2);
 							}else{
@@ -646,7 +641,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							"employee.emphone":emphone,"employee.emadress":emadress,"employee.emjointime":emjointime,
 							"partname.partname":empart,"employId.ementer":ementer},
 						success:function(data){
-							alert(data);
+							//alert(data);
 							if(data==-1){
 								alert("添加失败");
 							}else if(data==1){

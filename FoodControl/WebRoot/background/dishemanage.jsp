@@ -23,15 +23,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <style>
 	
-	.modal-body1 input{width:145px;height:25px;}
-	.modal-body1 div{margin-bottom:15px;width:350px;}
-	#sel{width:140px;}
-	#loag input{display:inline-block;}
-	#file1{width:300px;margin:5px 5px 5px 0px;}
-	#upload{width:70px;height:33px;}
-	#aimg{display:block;}
-	#fileloadchg{width:500px;float:left;text-align:center;}
-	.chgError{display:none;margin:5px 5px 5px 5px;color:red;border:1px solid black;}
+	.modal-body1 input{
+		width:145px;
+		height:25px;
+	}
+	.modal-body1 div{
+		margin-bottom:15px;
+		width:350px;
+	}
+	#sel{
+		width:140px;
+	}
+	#loag input{
+		display:inline-block;
+	}
+	#file1{
+		width:300px;
+		margin:5px 5px 5px 0px;
+	}
+	#upload{
+		width:70px;
+		height:33px;
+	}
+	#aimg{
+		display:block;
+	}
+	#fileloadchg{
+		width:500px;
+		float:left;
+		text-align:center;
+	}
+	.chgError{
+		display:none;
+		margin:5px 5px 5px 5px;
+		color:red;
+		border:1px solid black;
+	}
 	
 	
 </style>
@@ -197,10 +224,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				菜品搜索
 			*/
 			
-			$("#sekbt").click(function(){
-				var currpage=0;
-				fastsearch(currpage);
-				$("#someone").val("1");
+		$("#sekbt").click(function(){
+			var currpage=0;
+			fastsearch(currpage);
+			$("#someone").val("1");
 		});
 		function fastsearch(curr){
 			var allput=$("#sekm").val();
@@ -344,12 +371,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		/*
 			添加菜品
 		*/
-		//$("#togo").click(function(){
-		
-			/*判断是否选择照片
-			$(function(){
-				$().click
-			});*/	
 		$("#togo").bind('click', function() {//绑定事件处理函数
 			$(this).unbind('click');//移除当前事件处理函数	
 			var dishName=$("#dishName").val();
@@ -364,7 +385,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			else if(kindId=="拌饭"){kindId=3;}
 			else if(kindId=="小炒"){kindId=4;}
 			else if(kindId=="汤类"){kindId=5;}
-			
 			if( (namchg&&namNul)&&(prichg&&pricNul)&&(Timchg&&TimNul)&&(prtchg&&prtNul)&&(maCopichg&&maCopiNul)&& uppicture && kindId ){
 				$.ajax({
 					type:"post",
@@ -374,8 +394,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						if(data==-1){
 							alert("添加失败");
 						}else if(data==1){
-							//alert("添加成功");
-							//location.reload(true);
 							allpage("");
 									var inpval=parseInt($("#pagenum").html());
 									if(pagestate==1){
@@ -536,7 +554,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			 
 		$("#caghave").click(function(){
-			
 		  		$("#dishNamechg").trigger("blur");
 			  	$("#pricechg").trigger("blur");
 			  	$("#makeTimechg").trigger("blur");
@@ -563,18 +580,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					url:"GJYFC_FCchange.action",
 					data:{"fdCry.dishName":name,"fdCry.price":pri,"fdCry.kindId":sech,"fdCry.makeTime":mati,"fdCry.priority":pror,"fdCry.pictureName":picname,"fdCry.maxCopies":maco,"fdCry.dishState":19,"fdCry.dishId":dsid},
 					success:function(data){
-						
-						//loaction.reload();
 						ces(aa-1);
 					}													
 				});
 			}else{
 				alert("修改失败");
 			}
-		
-		});
-	
-		
+		});。	
 	});
 
 		/*显示具体数据*/
@@ -620,7 +632,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#tab").on('click',".deskbtn",function(){
 			var onepage=parseInt($("#someone").val());
 			var selct=confirm("确定要删除这条数据吗？");
-				if(selct==false){return};
+			if(selct==false){return};
 			var p1=$(this).attr("id");
 			var endStr=parseInt(p1.replace(/[^0-9]/ig,""));
 				endStr=parseInt(endStr); 
@@ -710,8 +722,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}				
 				$("#someone").val(onepage);
 				a=onepage-1;
-				//alert(inputnum);	
-				
 				if(allput==""){
 						ces(a);	
 				}else{

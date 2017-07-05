@@ -13,53 +13,53 @@
 
 
 <!--自定义CSS样式-->
-<style>
-body{
-	margin:0;
-	padding:0;
-}
-
-* div{
-	border: 1px solid #cacaca;
-}
-td{
-	width:150px;
-}
-
-#top {
-	height: 9%;
-}
-
-#cbody {
-	height: 75%;
-}
-
-#col1 {
-
-	width: 49%;
-	margin-right: 1%;
-	float: left;
-}
-
-
-#col2 {
-	
-	width: 49%;
-	margin-left:1%;
-	float: left;
-}
-#time{
-	font-size:150%;
-}
-.top1{
-	float:left;
-	width:50%;
-	
-}
-.bottom{
-	height:15%;
-}
-</style>
+	<style>
+		body{
+			margin:0;
+			padding:0;
+		}
+		
+		* div{
+			border: 1px solid #cacaca;
+		}
+		td{
+			width:150px;
+		}
+		
+		#top {
+			height: 9%;
+		}
+		
+		#cbody {
+			height: 75%;
+		}
+		
+		#col1 {
+		
+			width: 49%;
+			margin-right: 1%;
+			float: left;
+		}
+		
+		
+		#col2 {
+			
+			width: 49%;
+			margin-left:1%;
+			float: left;
+		}
+		#time{
+			font-size:150%;
+		}
+		.top1{
+			float:left;
+			width:50%;
+			
+		}
+		.bottom{
+			height:15%;
+		}
+	</style>
 </head>
 
 <body>
@@ -146,12 +146,12 @@ td{
  		}
  		$("#default").click(function(){
  			method=0;
- 			alert(method);
+ 			//alert(method);
  		});
  	
  		$("#ttme").click(function(){
  			 method=1;
- 			alert(method);
+ 			//alert(method);
  		});
  			
  			$("#querymading").click(function(){

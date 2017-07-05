@@ -209,8 +209,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var allput=$(".input").val();//获取输入框的值
 					var name=$(this).attr("name");
 					var inpval=parseInt($("#pageinp").val());
-					
-					
 					if(name=="first"){
 						inpval=1;
 					}

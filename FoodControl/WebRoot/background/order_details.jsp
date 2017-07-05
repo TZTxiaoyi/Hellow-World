@@ -132,23 +132,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				总页数
 			*/
 			function stamp(json){			
-						var th="<tr><td>订单号</td><td>订单状态</td><td>订单价格</td><td>点菜数量</td><td>支付方式</td><td>订单时间</td><td>桌台名称</td><td>操作</td></tr>";
-					 	$("#tableid").html("");	
-					 	$("#tableid").append(th);				 
-						$.each(json,function(index,value){
+				var th="<tr><td>订单号</td><td>订单状态</td><td>订单价格</td><td>点菜数量</td><td>支付方式</td><td>订单时间</td><td>桌台名称</td><td>操作</td></tr>";
+				$("#tableid").html("");	
+				$("#tableid").append(th);				 
+				$.each(json,function(index,value){
 						
-						var oldTime = (new Date(value[5])).getTime()/1000;
-						//time=value[5].getfullyear+"-"+value[5].getfullmonth+"-"+value[5].getfullday
-							var timett=format(value[5].time);
-							var emtable=
-								"<tr><td id=\"anum"+value[0]+"\">"+value[0]+
-								"</td><td id=\"bnum"+value[0]+"\">"+value[1]+"</td><td id=\"cnum"+value[0]+"\">"+value[2]+"</td><td id=\"dnum"+value[0]+"\">"+value[3]+"</td><td id=\"enum"+value[0]+"\">"+value[4]+
-								"</td><td id=\"fnum"+value[0]+"\">"+timett+"</td><td id=\"gnum"+value[0]+"\">"+value[6]+"</td>"+
-								"<td id=\"fnum"+value[0]+"\">"+
-								"<button class=\"button border-main  orderD\" name =\""+value[0]+"\"  aria-labelledby=\"myModalLabel\"  data-target=\"#myModal\" data-toggle=\"modal\">"+
-								"<span class=\"icon-edit\"></span> 订单详情</button></td></tr>";
-							$("#tableid").append(emtable);																												
-						});
+					var oldTime = (new Date(value[5])).getTime()/1000;
+					//time=value[5].getfullyear+"-"+value[5].getfullmonth+"-"+value[5].getfullday
+					var timett=format(value[5].time);
+					var emtable=
+					"<tr><td id=\"anum"+value[0]+"\">"+value[0]+
+					"</td><td id=\"bnum"+value[0]+"\">"+value[1]+"</td><td id=\"cnum"+value[0]+"\">"+value[2]+"</td><td id=\"dnum"+value[0]+"\">"+value[3]+"</td><td id=\"enum"+value[0]+"\">"+value[4]+
+					"</td><td id=\"fnum"+value[0]+"\">"+timett+"</td><td id=\"gnum"+value[0]+"\">"+value[6]+"</td>"+
+					"<td id=\"fnum"+value[0]+"\">"+
+					"<button class=\"button border-main  orderD\" name =\""+value[0]+"\"  aria-labelledby=\"myModalLabel\"  data-target=\"#myModal\" data-toggle=\"modal\">"+
+					"<span class=\"icon-edit\"></span> 订单详情</button></td></tr>";
+					$("#tableid").append(emtable);																												
+				});
 								
 			}
 			//-----------------------------------------订单详情6.30--------------------------------------

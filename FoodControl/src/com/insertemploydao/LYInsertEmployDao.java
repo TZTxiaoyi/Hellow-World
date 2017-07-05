@@ -237,14 +237,14 @@ public class LYInsertEmployDao {
 		return DaoFactory.Query(sql);
 	}
 	/**
-	 * selectpartname:查询角色表除管理员、服务员、厨师外
+	 * selectpartname:查询角色表除管理员
 	 * 将查询的结果返回给调用其方法的action
 	 * @return
 	 */
 	public List selectpartname(){
 		String sql="select p1.partName"+
 					" from part p1"+
-					" where partName not in('管理员','服务员','厨师') and partState=19";
+					" where partName not in('管理员') and partState=19";
 		 return DaoFactory.Query(sql);
 	}
 	/**

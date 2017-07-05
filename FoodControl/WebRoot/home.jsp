@@ -392,10 +392,9 @@
 		
 	//开始点餐================================
 		$(function(){
-			$("#orderfood").click(function(){
+			/*$("#orderfood").click(function(){
 				
-				
-			});
+			});*/
 			$.ajax({
 				url:"home_orders.action",
 				type:"type",
@@ -431,23 +430,7 @@
 				return true;
 			}
 		}
-//======================================
-	//开始点餐里的触发按钮事件orderfood2   body第145行
-		
-//---------------------------------------------------------------------------------------------
-	//外卖点餐   body  第110 行
-		/* $(function(){
-			$("#zbclick").click(function(){
-				//alert($("#zbphone").val());
-				//alert($("#zbaddress").val());
-				var zbphone = $("#zbphone").val();
-				var zbaddress = $("#zbaddress").val();
-					if(zbphone == "" || zbaddress == ""){
-						alert("以上信息须填写完整");
-						$("#zbclick").attr("href","");
-					}
-			});
-		}); */
+
 //聚焦事件
 		$(function(){
 			$("#zbphone").focus(function(){
@@ -465,13 +448,9 @@
 		});
 //=================================================	
 		$(function(){
-		 
-		 
 			if('${na}' == "k"){
-				alert("用户名或密码不一致");
-				
-			}
-			
+				alert("用户名或密码不一致");	
+			}	
 		});
 		$(function(){
 			if('${zb}' == 1){

@@ -224,7 +224,7 @@
 				};
 				//添加菜品，更新菜单和总价
 				function upfood(btnid,foodname,uprice,number,price){	
-				 alert(2);
+				
 					$.ajax({
 						type:"post",
 						url:"addfood_addFood.action",

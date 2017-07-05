@@ -276,19 +276,7 @@
 		<script>
 			
 				
-			/* 
-			$sex=$_POST["sex"];
-			alert($_POST['sex']);
 			
-			
-			$("#zbsub").click(function(){
-			alert("++++++++++++++");
-				var sex = $($("input[name=\"sex\"]")[0]).val;
-				alert(sex);
-				var s = $(s).attr("sex").val();
-				
-				
-			}); */
 			//++++++++++++++++++++++++++修改密码++++++++++++++++++++++++++++++++++++++++++++++
 			$("#zb_pwd0").blur(function(){
 				var password = $("#usagepwd").val();a
@@ -305,8 +293,8 @@
 			$("#zb_pwd2").blur(function(){
 				var pwd1 = $("#zb_pwd1").val();
 				var pwd2 = $("#zb_pwd2").val();
-				alert(pwd1);
-				alert(pwd2);
+				//alert(pwd1);
+				//alert(pwd2);
 				if(pwd1 != pwd2){
 					$("#aa2").html("*两次密码不一致");
 				}else{
@@ -483,7 +471,7 @@
 						url:"addfood_addOrderfood.action",
 						data:{"df":"df"},
 						success:function(data){
-						alert("ddd");
+						//alert("ddd");
 							if(data==1){
 							alert("添菜成功!");
 								clearfood();

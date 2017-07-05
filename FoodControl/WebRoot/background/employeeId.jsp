@@ -330,7 +330,7 @@
 								
 								//alert("565:"+inputvalue)
 								liyang(inputvalue-1);
-								alert("修改成功");
+								//alert("修改成功");
 							}else{
 								alert("没有权限");
 							}		

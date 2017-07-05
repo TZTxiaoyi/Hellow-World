@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript">
 		$("#submit").click(function(){
 			inputvalue=$("#inputvalue").val();
-			alert(inputvalue);
+			//alert(inputvalue);
 			$.ajax({
 				url:"achieve_updateadminid.action",
 				type:"post",

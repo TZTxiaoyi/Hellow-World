@@ -298,8 +298,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			/*
 				获取系统时间;
 			*/
-			function getTime()
-			{
+			function getTime(){
     			var time = new Date();
    				 $("#times").html(time.toLocaleString());
 			}

@@ -349,7 +349,7 @@
 						url:"addfood_addOrderfood.action",
 						data:{"df":"df"},
 						success:function(data){
-						alert("ddd");
+						//alert("ddd");
 							if(data==1){
 							alert("添菜成功!");
 								clearfood();

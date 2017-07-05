@@ -28,6 +28,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <h1>你没有访问权限哦!</h1>
+    <h1>你没有访问权限!</h1>
   </body>
 </html>

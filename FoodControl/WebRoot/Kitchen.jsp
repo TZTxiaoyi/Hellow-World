@@ -13,86 +13,86 @@
 
 
 <!--自定义CSS样式-->
-<style>
-body{
-	margin:0;
-	padding:0;
-	
-}
-
-td{
-	width:230px;
-	padding-right:30px;
-	margin-top:10px;
-	margin-bottom:10px;
-	border-bottom:1px solid #ff6600;
-}
-table td{
-	width:120px;
-	font-size:18px;
-}
- .firsthead{
-	background:#6666ff;
-	width: 100%;
-}
-
-#top {
-	height: 9%;
-	font-size:20px;
-	margin-left:20px;
-}
-#cbody {
-	height: 60%;
-	border-bottom:1px solid #ff6666;
-}
-
-#col1 {
-	height: 100%;
-	width: 48%;
-	float: left;
-	border-right:1px solid #99ff99;
-}
-
-
-#col2 {
-	width: 48%;
-	margin-left:1%;
-	float: left;
-}
-#time{
-	font-size:150%;
-}
-#top{
-	float:left;
-	width:50%;
-}
-#bottom{
-	height:20%;
-	background-color:#ffcc99;
-	font-size:25px;
-}
-#titlemading{
-	max-height:400px;
-	margin-left:10px;
-	margin-right:10px;
-	background-color:#ffcc99;
-}
-#titlemade{
-	background-color:#ff99cc;
-	max-height:350px;
-}
-#bhead{
-	padding-top:15px;
-	border-bottom:1px solid #ff6666;
-	background-color:#ffffcc;
-}
-.pre-scrollable{
-	overflow:auto;
-}
-
-
-
-</style>
+	<style>
+		body{
+			margin:0;
+			padding:0;
+			
+		}
+		
+		td{
+			width:230px;
+			padding-right:30px;
+			margin-top:10px;
+			margin-bottom:10px;
+			border-bottom:1px solid #ff6600;
+		}
+		table td{
+			width:120px;
+			font-size:18px;
+		}
+		 .firsthead{
+			background:#6666ff;
+			width: 100%;
+		}
+		
+		#top {
+			height: 9%;
+			font-size:20px;
+			margin-left:20px;
+		}
+		#cbody {
+			height: 60%;
+			border-bottom:1px solid #ff6666;
+		}
+		
+		#col1 {
+			height: 100%;
+			width: 48%;
+			float: left;
+			border-right:1px solid #99ff99;
+		}
+		
+		
+		#col2 {
+			width: 48%;
+			margin-left:1%;
+			float: left;
+		}
+		#time{
+			font-size:150%;
+		}
+		#top{
+			float:left;
+			width:50%;
+		}
+		#bottom{
+			height:20%;
+			background-color:#ffcc99;
+			font-size:25px;
+		}
+		#titlemading{
+			max-height:400px;
+			margin-left:10px;
+			margin-right:10px;
+			background-color:#ffcc99;
+		}
+		#titlemade{
+			background-color:#ff99cc;
+			max-height:350px;
+		}
+		#bhead{
+			padding-top:15px;
+			border-bottom:1px solid #ff6666;
+			background-color:#ffffcc;
+		}
+		.pre-scrollable{
+			overflow:auto;
+		}
+		
+		
+		
+	</style>
 </head>
 
 <body>
