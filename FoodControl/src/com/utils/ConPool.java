@@ -36,7 +36,7 @@ public class ConPool {
 	private void setcon(){
 		dataScource = new BasicDataSource();
 		dataScource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		dataScource.setUrl("jdbc:sqlserver://localhost:1433; DatabaseName= FoodControl");
+		dataScource.setUrl("jdbc:sqlserver://172.16.22.35:1433; DatabaseName= FoodControl");
 
 		//dataScource.setUrl("jdbc:sqlserver://172.16.22.62:1433; DatabaseName= FoodControl");
 

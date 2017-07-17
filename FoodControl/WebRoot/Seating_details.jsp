@@ -224,7 +224,7 @@
 					</span>
 			</div>
 			<div class="col-md-3">
-				<!--<a class="btn btn-lg" style="color:#66ccff" href="" id="shuxin">查看新增</a>  -->
+				<a class="btn btn-lg" style="color:#66ccff" href="" id="shuxin">刷新</a>
 				<a class="btn close btn-lg" data-dismiss="modal"aria-label="Close" style="color:#ff00ff" href="service.jsp">返回</a>
 			</div>
 		</div>
@@ -322,7 +322,6 @@
 		*/
 		$(function() {
 			setInterval("getTime()",1000);
-			setInterval("outfood()",1000*10);
 			if($("#order").html()!="undefined"){
 				setInterval("outtime()",1000);
 			}

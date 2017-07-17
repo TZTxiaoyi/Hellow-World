@@ -187,12 +187,11 @@
 	  		</div>
 		</div><!-- 底部div -->
 		<script>
-			var orderflag=0;
 				function kindfood(){
 					$.ajax({
 						type:"post",
 						url:"addfood_kindfood.action",
-						data:{},
+						data:{"d1":"d1"},
 						success:function(data){
 							var json=JSON.parse(data);
 							var kindz="<li class=\"active\"><button type=\"button\" class=\"btn btn-primary btn-lg \" id=\"kindz\">全部菜品</button></li>";
@@ -208,22 +207,16 @@
 					$.ajax({
 						type:"post",
 						url:"addfood_newlfood.action",
-						data:{},
+						data:{"d":"d"},
 						success:function(data){
 							var json=JSON.parse(data);
 							$("#zbright").html("");
 							$.each(json,function(index,value){
-							alert("jian:"+index);
-								var food="<div ><img  src=\"image/"+value[3]+
-								"\"  class=\"img-circle\" width=\"250\" height=\"250\"><br/><span name=\""+index+
-								"\">"+value[1]+"</span>:  <span name=\""+index+
-								"\">"+value[2]+"</span>元 / 份<br/><div class=\"row\" >"+
+								var food="<div ><img  src=\"image/"+value[3]+"\"  class=\"img-circle\" width=\"250\" height=\"250\"><br/><span name=\""+index+"\">"+value[1]+"</span>:  <span name=\""+index+"\">"+value[2]+"</span>元 / 份<br/><div class=\"row\" >"+
 								"<div class=\" center-block\"  id=\"food-btn\">"+
 								"<input type=\"button\" name=\""+index+"\" value=\"-\" class=\"remove btn btn-default\">"+
 								"<input type=\"text\" value=\"0\" class=\"number-cl btn btn-default\" size=\"3\" name=\""+index+"\">"+
-								"<input type=\"button\" name=\""+index+"\" value=\"+\" class=\"add btn btn-default\">"+
-								"<input type=\"button\" class=\"btn btn-default\" name=\""+index+
-								"\" id=\"addto\" value=\"添加\"></div></div></div>";
+								"<input type=\"button\" name=\""+index+"\" value=\"+\" class=\"add btn btn-default\"><input type=\"button\" class=\"btn btn-default\" name=\""+index+"\" id=\"addto\" value=\"添加\"></div></div></div>";
 								$("#zbright").append(food);
 							});
 						}
@@ -255,9 +248,7 @@
 				};
 				//减少点菜的数量更新总价
 				$("#zbright").on('click',".remove",function(){
-					
 					var btnid=$(this).attr("name");//当前点击的按钮的name
-					alert("jian:"+btnid);
 					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())-1;
 					if(number<0){
 						number=0;
@@ -267,9 +258,7 @@
 				});
 				//增加点菜的数量更新总价
 				$("#zbright").on('click',".add",function(){
-				//alert("jia:"+index);
 					var btnid=$(this).attr("name");//当前点击的按钮的name
-					alert("jia:"+btnid);
 					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val())+1;
 					$($("input[name=\""+btnid+"\"]")[1]).val(number);
 				});
@@ -329,9 +318,9 @@
 								$.each(json,function(index,value){
 									var food="<div ><img  src=\"image/"+value[3]+"\"  class=\"img-circle\" width=\"250\" height=\"250\"><br/><span name=\""+index+"\">"+value[1]+"</span>:  <span name=\""+index+"\">"+value[2]+"</span>元 / 份<br/><div class=\"row\" >"+
 									"<div class=\" center-block\"  id=\"food-btn\">"+
-									"<input type=\"button\" name=\""+index+"\" value=\"-\" class=\"remove btn btn-default\">"+
+									"<input type=\"button\" name=\""+index+"\" value=\"-1\" class=\"remove btn btn-default\">"+
 									"<input type=\"text\" value=\"0\" class=\"number-cl btn btn-default\" size=\"3\" name=\""+index+"\">"+
-									"<input type=\"button\" name=\""+index+"\" value=\"+\" class=\"add btn btn-default\"><input type=\"button\" class=\"btn btn-default\" name=\""+index+"\" id=\"addto\" value=\"添加\"></div></div></div>";
+									"<input type=\"button\" name=\""+index+"\" value=\"+1\" class=\"add btn btn-default\"><input type=\"button\" class=\"btn btn-default\" name=\""+index+"\" id=\"addto\" value=\"添加\"></div></div></div>";
 									$("#zbright").append(food);
 								});        
 							}
@@ -341,19 +330,13 @@
 					newlfood();
 				});
 				$("#zbright").on('click',"#addto",function(){
-					
 					var btnid=$(this).attr("name");
 					var foodname=$($("span[name=\""+btnid+"\"]")[0]).html();//当前添加的菜名
 					var uprice=parseInt($($("span[name=\""+btnid+"\"]")[1]).html());//单价
 					var number=parseInt($($("input[name=\""+btnid+"\"]")[1]).val());
 					var price=parseInt(uprice*number);//价格*数量获得总价
-					if(orderflag==1){
-						alert("订单已完成,不能添菜");
-					}else{
-						upfood(btnid,foodname,uprice,number,price);
-						$($("input[name=\""+btnid+"\"]")[1]).val(0);
-					}
-					
+					upfood(btnid,foodname,uprice,number,price);
+					$($("input[name=\""+btnid+"\"]")[1]).val(0);
 				});
 				//点击查看我的菜单
 				$("#LookOrder").click(function(){				
@@ -419,7 +402,6 @@
 									orderStatus="进行中";
 								}else if(value[13]==16){
 									orderStatus="已完成";
-									orderflag=1;
 								}else if(value[13]==17){
 									orderStatus="已取消";
 								}
@@ -437,12 +419,9 @@
 				}
 				//添菜
 				$("#addorderfood").click(function(){
-					if(orderflag==1){
-						alert("订单已完成，不能添菜");
-					}else{
-						addOrderfood();
-					};
-				});
+					addOrderfood();
+					
+				})
 				function addOrderfood(){
 					$.ajax({
 						type:"post",
@@ -518,26 +497,22 @@
 						var foodNum=parseInt($("#foodnum").html());
 						var cost=9;
 						//获得菜单数据
-						if(orderflag==1){
-							alert("订单已完成，不能再次下单");
-						}else{
-							$.ajax({
-								type:"post",
-								url:"addfood_addOrder.action",
-								data:{"addorder.orderStatus":orderStatus,"addorder.orderPrice":orderPrice,"addorder.foodNum":foodNum,"addorder.cost":cost},
-								success:function(data){
-										if(data==1){
-											alert("下单成功!");
-											clearfood();
-											ordertotal();	
-										}else if(data==2){
-											alert("已下过订单请使用加菜功能!");
-										}else if(data==-1){
-											alert("下单失败!");
-										}
-								}
-							});
-						}				
+						$.ajax({
+							type:"post",
+							url:"addfood_addOrder.action",
+							data:{"addorder.orderStatus":orderStatus,"addorder.orderPrice":orderPrice,"addorder.foodNum":foodNum,"addorder.cost":cost},
+							success:function(data){
+									if(data==1){
+										alert("下单成功!");
+										clearfood();
+										ordertotal();	
+									}else if(data==2){
+										alert("已下过订单请使用加菜功能!");
+									}else if(data==-1){
+										alert("下单失败!");
+									}
+							}
+						});			
 				});
 				
 				function ordertotal(){
@@ -566,7 +541,6 @@
 				$(function(){
     				setInterval("getTime()",1000);
 				});
-				
 		</script>
 </body>
 </html>

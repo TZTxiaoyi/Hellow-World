@@ -266,7 +266,7 @@ public class ZbRegister implements DaoInterface{
 		return DaoFactory.Query(sql);
 	}
 	public List ZbDishAll(ZbDetails zbde){
-		String sql="select top(5) *from(select d.dishId,d.dishName,d.price,odnum.num from dish d left join "+
+		String sql="select top(5) *from(select top(5) d.dishId,d.dishName,d.price,odnum.num from dish d left join "+
 				"(select od.dishId,COUNT(od.dishId) num from orders_dish od where od.dishtime>'"+zbde.getVa1()+"' and od.dishtime<'"+zbde.getVa2()+"' group by od.dishId) odnum on "+
 				"d.dishId=odnum.dishId) btop where btop.dishId not in "+
 				"(select atop.dishId from (select top("+zbde.getCurr()*5+") d.dishId,d.dishName,d.price,odnum.num from dish d left join "+

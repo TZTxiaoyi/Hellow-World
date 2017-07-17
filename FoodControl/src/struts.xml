@@ -31,7 +31,7 @@
 		<interceptors>
 			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
 				<param name="includeMethods">staffinfo,staffid,powers,deskmanage,
-				dishmanage,kindmanage,orderdetail,returnorder,incomedetail,adminword</param><!-- 拦截的方法 -->
+				dishmanage,kindmanage,orderdetail,returnorder,incomedetail</param><!-- 拦截的方法 -->
 			</interceptor>
 			<!-- 构建一个拦截器栈 -->
 			<interceptor-stack name="aaabbb">
@@ -58,13 +58,14 @@
 			<result name="sg" type="redirect">/background/order_details.jsp</result>
 			<result name="sh" type="redirect">/background/finance.jsp</result>
 			<result name="si" type="redirect">/background/income.jsp</result>
-			<result name="ad" type="redirect">/background/admin.jsp</result>
+			<result name="sj" type="redirect">/kitchen.jsp</result>
+			<result name="sk" type="redirect">/service.jsp</result>
 		</action>	
 	</package>
 	<package name="lanjieqi2" extends="struts-default">
 		<interceptors>
 			<interceptor name="sessInter" class="com.lanjieqi.interceptor.LyLanJieQi">
-				<param name="includeMethods">kiddelete,kidinsert,kidchange,updatestaff,enterid,delaccount,save,delem,updatestaffid,appendTable,upLineTable,delLineTable,FCchange,insertFood,FCdelete</param><!-- 拦截的方法 -->
+				<param name="includeMethods">updatestaff,enterid,delaccount,save,delem,updatestaffid,appendTable,upLineTable,delLineTable,FCchange,insertFood,FCdelete</param><!-- 拦截的方法 -->
 			</interceptor>
 <!-- 构建一个拦截器栈 -->
 			<interceptor-stack name="aaabbb">
@@ -84,9 +85,7 @@
 		<action name="achieve_*" class="com.achaction.LYInsertEmployaction" method="{1}">
 			<result name="okjj">/a123.jsp</result>			
 		</action>
-		<action name="GJYKID_*" class="com.achaction.GJYFDaction" method="{1}">
-			<result name="ok">/a123.jsp</result>
-		</action> 
+		
 <!-- 桌台 -->		
 		<action name="SxmTable_*" class="com.achaction.SxmTableAction" method="{1}">
 			<result name="ok" type="redirect">/home.jsp</result>

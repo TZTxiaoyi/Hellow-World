@@ -151,7 +151,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<a class="btn btn-success btn-lg col-sm-offset-1" href=""role="button"
 			data-toggle="modal" data-target="#myModalclear"  data-toggle="modal" data-target="#myModalclear">清扫结束</a> 
-			<a class="btn btn-success btn-lg col-sm-offset-1" href="background/index.jsp">进入后台</a>
+
 			<span id="doper">操作员：<span id="user"></span></span>
 			
 				<a class="btn close btn-lg" data-dismiss="modal"aria-label="Close" style="color:#ff00ff" href="background/login.jsp">退出系统</a>
@@ -293,7 +293,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				tabonload();
 				orderonload();
 				setInterval("getTime()",1000);
-				setInterval("tabonload()",1000*10);
 				$("#user").html("asd");
 			});
 			/*

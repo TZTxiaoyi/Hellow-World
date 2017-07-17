@@ -70,9 +70,7 @@ public class LYquanxianaction {
 	public String incomedetail(){
 		return "si";
 	}	
-	public String adminword(){
-		return "ad";
-	}
+	
 	
 	LYInsertEmployDao ied=new LYInsertEmployDao();
 	/**
@@ -93,15 +91,11 @@ public class LYquanxianaction {
 		if (list.size()==1){			
 			request.getSession().invalidate();
 			String partname =ied.selectpart(employId);			
-			if(partname.equals("服务员")){	
-				List list4 = ied.aperson(partname);
-				request.getSession().setAttribute("listvalue", list4);
+			if(partname.equals("服务员")){							
 				request.getSession().setAttribute("username", employId.getEmenter());
 				return "part";
 			}else if(partname.equals("厨师")){
-				List list4 = ied.aperson(partname);
-				request.getSession().setAttribute("listvalue", list4);
-				request.getSession().setAttribute("username", employId.getEmenter());
+				//request.getSession().setAttribute("username", employId.getEmenter());
 				return "cook";
 			}else{
 				request.setAttribute("username", employId.getEmenter());

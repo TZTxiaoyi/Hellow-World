@@ -88,7 +88,6 @@
 		form span{
 			font-size:18px;
 			white-space:nowrap;
-			color:red;
 		}
 	</style>
 	
@@ -193,7 +192,7 @@
 					</div>
 					<div>
 						<input placeholder="请输入人数" type="text" id="personnub"
-							 name ="personnub"/><span id="pernum"></span>
+							 name ="personnub"/>
 					</div>
 					<div>
 						<!-- <a class="btn btn-lg btn-info bg-main text-big input-big"  href="addfood_newFood.action" id="orderfood2">
@@ -462,19 +461,11 @@
 			var pnum=$(this).val();
 			var reg=new RegExp("[^0-9]+","gi");
 			if(reg.test(pnum)){
-				//alert("请正确输入人数");
-				$("#pernum").html("请正确输入人数");
+				alert("请正确输入人数");
 			}
-			if(pnum>20 || pnum<1){
-					//alert("输入人数过多");
-				$("#pernum").html("输入人数过多");
+			if(pnum>20){
+					alert("输入人数过多");
 			}
-			if(pnum==0){
-				$("#pernum").html("至少输入1人");
-			}
-		});
-		$("#personnub").focus(function(){
-			$("#pernum").html("");
 		});
 		</script>
 		

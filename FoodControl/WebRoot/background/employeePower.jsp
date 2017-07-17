@@ -61,6 +61,7 @@
         		添加员工账号<input type="checkbox" checkflag="check2" name="check10" aria-label="..." class="children1">
         		删除员工账号<input type="checkbox" checkflag="check2" name="check24" aria-label="..." class="children1">
         		修改员工账号<input type="checkbox" checkflag="check2" name="check18" aria-label="..." class="children1"><br>       		
+
         		<hr>
         		桌台管理<input type="checkbox" checkflag="check3" name="check4" aria-label="..." class="parent_one"><br>
         		添加桌台<input type="checkbox" checkflag="check3" name="check14" aria-label="..." class="children1">  
@@ -72,19 +73,13 @@
         		修改菜品<input type="checkbox" checkflag="check4" name="check22" aria-label="..." class="children1" >  
         		删除菜品<input type="checkbox" checkflag="check4" name="check23" aria-label="..."class="children1"><br>
         		<hr>
-        		分类管理<input type="checkbox" checkflag="check5" name="check6" aria-label="..." class="parent_one"><br>
-        		添加分类<input type="checkbox" checkflag="check5" name="check28" aria-label="..." class="children1">  
-        		修改分类<input type="checkbox" checkflag="check5" name="check29" aria-label="..." class="children1" >  
-        		删除分类<input type="checkbox" checkflag="check5" name="check30" aria-label="..."class="children1"><br>
-        		<hr>
         		订单详情<input type="checkbox" name="check19" aria-label="...">
         		退单详情<input type="checkbox" name="check20" aria-label="...">  
         		收入详情<input type="checkbox" name="check21" aria-label="...">
         		<hr>
         		 后厨界面<input type="checkbox" name="check25" aria-label="...">
         		 服务员面<input type="checkbox" name="check26" aria-label="...">                     		      			
-				<hr>
-								
+
 			</div>
 			<div class="modal-footer">			
 				<button type="button" class="btn btn-warning" id="save_powers" data-dismiss="modal">保存</button>
@@ -197,7 +192,7 @@
 					data:{"partname.partname":namehtml},
 					success:function(data){
 						var json=JSON.parse(data);
-						for(var i=1;i<31;i++){
+						for(var i=1;i<27;i++){
 							$($("input[name=\"check"+i+"\"]")[0]).prop("checked",false);
 						}	
 						$.each(json,function(index,value){						
@@ -217,7 +212,7 @@
 		var j=0;
 		var powersname=$("#powersname").html();
 		//alert("000:"+powersname);
-			for(var i=1;i<31;i++){	
+			for(var i=1;i<27;i++){	
 			//$("#chk2").prop("checked") == true				
 				if($($("input[name=\"check"+i+"\"]")[0]).prop("checked")){
 					powersId.push(i);
@@ -268,6 +263,7 @@
 	 	//alert("8888");
 	 		$(".parent_one").click(function(){
 	 			var checkflag=$(this).attr("checkflag");
+	 			alert("fu:"+checkflag);
 	 			if(!$(this).prop("checked")){
 	 			//alert("222");
 	 				//$(".children1").prop("checked",false);

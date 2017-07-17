@@ -24,7 +24,7 @@ import com.utils.toJson;
 public class GJYFDaction {
 	
 	private String search;/*搜索菜品的关键词*/
-	private int countpage;
+	private int countpage;/*当前分页的页码*/
 
 	private  GJYKIDCategory KID = new GJYKIDCategory();/*创建菜品实体类*/
 	GJYFDInsertemploydao inFKD=new GJYFDInsertemploydao();/*创建Dao对象*/
@@ -63,7 +63,7 @@ public class GJYFDaction {
 		this.search = search;
 	}
 	
-	/*添加分类*/
+	/*添加菜品*/
 	public void kidinsert(){	
 		HttpServletResponse hsr=ServletActionContext.getResponse();
 		int a=inFKD.insert(KID);
@@ -73,7 +73,7 @@ public class GJYFDaction {
 			// TODO: handle exception
 		}
 	}
-	/*查询分类action*/
+	/*查询菜品action*/
 	public void kidseek(){
 		System.out.println("seekfood()");
 		List ser=inFKD.sekKID(search);
@@ -89,18 +89,13 @@ public class GJYFDaction {
 		}
 	}
 	
-	/* 修改分类action*/
+	/* 修改菜品action*/
 	public void kidchange(){
 		System.out.println("FCchange()");
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		int a=inFKD.Change(KID);
-		try {
-			response.getWriter().print(a);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 	}
 	
 	/*删除菜品action*/
@@ -111,11 +106,6 @@ public class GJYFDaction {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		int n=inFKD.delect(KID);
-		try {
-			response.getWriter().print(n);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 		
 	}
 	
