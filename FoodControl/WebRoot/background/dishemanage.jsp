@@ -411,8 +411,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}else{
 				alert("菜品添加失败");
 			}
+		});
 	});
-});
 		
 		
 		/*修改选项*/
@@ -422,7 +422,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 $("#dishNamechg").val($("#b"+p1).html());// 菜品编号的值    第一个td里面的值
 			 $("#pricechg").val($("#c"+p1).html());
 			 $("#selchg").val($("#d"+p1).html());
-			 $("#makeTimechg").val($("#e"+p1).html());			/*获得数据库中的值放入input中*/
+			 $("#makeTimechg").val($("#e"+p1).html());			//获得数据库中的值放入input中
 		 	 $("#prioritychg").val($("#f"+p1).html());
 		 	 $("#fileloadchg").text($("#j"+p1).html());
 			 $("#maxCopieschg").val($("#h"+p1).html());
@@ -586,7 +586,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}else{
 				alert("修改失败");
 			}
-		});。	
+		});	
 	});
 
 		/*显示具体数据*/
@@ -670,15 +670,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	/*获得总页数及判断用户点击选项做出相应*/
 	var pagestate=0;
 	$(function(){
-			allpage("");
-			ces(0);						
-		});
+		allpage("");
+		ces(0);	
+							
+	});
 		function allpage(allput){
 			$.ajax({
 				url:"GJYFC_getcount.action",
 				type:"post",
 				data:{"search":allput},
-				success:function(data){	
+				success:function(data){
 					var pagesize=parseInt(data/5);				
 					if(data%5==0){
 						$("#pagenum").html(pagesize);

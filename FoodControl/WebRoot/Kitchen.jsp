@@ -125,7 +125,7 @@
 							<td style="width:150px">数量</td>
 							<td>桌位</td>
 							<td>操作
-							<input class="btn btn-info" id="querymading" type="button" value="刷新" /></td>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -145,7 +145,7 @@
 							<td>数量</td>
 							<td style="width:190px">桌位</td>
 							<td>操作
-							<input class="btn btn-info\" id="querymade" type="button" value="刷新" /></td>
+							</td>
 						</tr>
 					</table>
 				</div>

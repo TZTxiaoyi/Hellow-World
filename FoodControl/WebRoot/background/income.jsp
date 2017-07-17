@@ -185,6 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   		var va2 = $("#inpu2").val();
 	   		//alert("desk:"+va);
 	   		if (va=="desk"&&va1!=""&&va2!=""){
+	   			$("#tabs").html("");
 	   			selflag=3;
 	   			totalpage(va,va1,va2);
 	   			Zbdeskall(curr);
@@ -216,6 +217,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   		var va1 = $("#inpu1").val();
 	   		var va2 = $("#inpu2").val();
 	   		if (va=="dish"&&va1!=""&&va2!=""){
+	   		
+	   			$("#tabs").html("");
 	   			selflag=4;
 	   			totalpage(va,va1,va2);
 	   			Zbdedishall(curr);

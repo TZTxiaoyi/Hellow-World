@@ -62,7 +62,7 @@ public class GJYFDInsertemploydao {
 	public List pagepage(int startIndex){
 	
 		
-		String sql="select top (2) kindId,kindName from kind  where KindId not in (select top("+startIndex+"*2)k1.kindId from kind k1) and kindState=19 order by kindId asc";
+		String sql="select top (5) kindId,kindName from kind  where KindId not in (select top("+startIndex+"*6)k1.kindId from kind k1) and kindState=19 order by kindId asc";
 		return DaoFactory.Query(sql);
 	}
 

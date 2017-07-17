@@ -79,7 +79,7 @@
 		
 				<!-- 左边窗口 -->
 				<table>
-					<tr><td>菜名</td><td>数量</td><td>操作</td><td><input class="btn btn-info" id="querymading" type="button" value="刷新" /></td></tr>
+					<tr><td>菜名</td><td>数量</td><td>操作</td></tr>
 				</table>
 				
 				<div >
@@ -91,7 +91,7 @@
 
  				<!------------右边窗口--------------> 
 				<table>
-					<tr><td>菜名</td><td>数量</td><td>操作</td><td><input  class="btn btn-info" "id="querymade" type="button" value="刷新" /></td></tr>
+					<tr><td>菜名</td><td>数量</td><td>操作</td></tr>
 				</table>
 				
 				<div >

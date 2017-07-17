@@ -411,7 +411,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			};
 			function refresh(json) {
-				var th = "<tr><td>Id</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
+				var th = "<tr><td>编号</td><td>桌台名</td><td>桌台人数</td><td>负责人</td><td>桌台状态</td><td>操作</td></tr>";
 					$("#tab").html("");
 					$("#tab").append(th);
 					$.each(json,function(index, value) {

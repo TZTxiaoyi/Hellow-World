@@ -190,9 +190,9 @@ public class LjlAddFoodAction {
 			for (int i = 0; i < foodnames.length; i++) {
 				if (foodnames[i]!="dname"&&foodnames[i]!="orderid") {
 					List list=dish.seldishName(foodnames[i]);
-					session.getAttribute(foodnames[i]);
+					//session.getAttribute(foodnames[i]);
 					LjlAddFood addf= (LjlAddFood)session.getAttribute(foodnames[i]);
-					int dishnum=addf.getNumber();
+					//int dishnum=addf.getNumber();
 					int number=addf.getNumber();//每个菜的数量
 					List listdish=(List) list.get(0);
 					int dishid=(Integer) listdish.get(0);
@@ -760,7 +760,7 @@ public class LjlAddFoodAction {
 		List list=orders.anxiousOrder(addorder);
 		List li=(List) list.get(0);
 		int pri=(Integer) li.get(0);
-		int anx=pri+1;
+		int anx=pri+5;
 		int orderspro=orders.proty(anx, addorder);
 		try {
 			response.getWriter().println(orderspro);

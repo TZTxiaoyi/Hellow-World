@@ -72,7 +72,7 @@
   </ul>
   <h2><span class="icon-pencil-square-o"></span>其他</h2>
   <ul>
-  	<li><a href="admin.jsp" target="right"><span class="icon-caret-right"></span>修改密码</a></li>
+  	<li><a href="fresh_adminword.action" target="right"><span class="icon-caret-right"></span>修改密码</a></li>
 	<li><a href="customer.jsp" target="right"><span class="icon-caret-right"></span>顾客信息</a></li>     
   </ul>    
 </div>
